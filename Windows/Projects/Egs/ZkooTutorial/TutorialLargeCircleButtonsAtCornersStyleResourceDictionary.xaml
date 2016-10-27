@@ -1,0 +1,597 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d"
+        xmlns:local="clr-namespace:Egs.ZkooTutorial" xmlns:dotNetUtilViews="clr-namespace:Egs.DotNetUtility.Views">
+
+    <Style x:Key="TutorialLargeCircleAreaOutlinedTextStyle" TargetType="{x:Type local:OutlinedText}">
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Stroke" Value="Black" />
+        <Setter Property="Fill" Value="White" />
+    </Style>
+
+    <Style x:Key="TutorialLargeCircleAreaAtRightTopCornerButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="Height" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="FontSize" Value="{DynamicResource TutorialLargeCircleButtonFontSize}" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Margin" Value="{StaticResource TutorialLargeCircleButtonRightTopMargin}" />
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.LayoutTransform>
+                            <ScaleTransform x:Name="WholeButtonScaleTransformScale" />
+                        </Grid.LayoutTransform>
+                        <Ellipse x:Name="OuterBorderShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="Black" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="OuterShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeEdgeFillBrush" Color="#5050FF" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="InnerShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeInsideFillBrush" Color="#0000FF" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#7070FF" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#0000FF" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseDown">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleX" From="1.0" To="0.9" Duration="0:0:0.1" />
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleY" From="1.0" To="0.9" Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseUp">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleX" From="0.9" To="1.0" Duration="0:0:0.1" />
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleY" From="0.9" To="1.0" Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TutorialLargeCircleAreaAtRightBottomCornerButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="Height" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="FontSize" Value="{DynamicResource TutorialLargeCircleButtonFontSize}" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="Margin" Value="{StaticResource TutorialLargeCircleButtonRightBottomMargin}" />
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.LayoutTransform>
+                            <ScaleTransform x:Name="WholeButtonScaleTransformScale" />
+                        </Grid.LayoutTransform>
+                        <Ellipse x:Name="OuterBorderShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="Black" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="OuterShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeEdgeFillBrush" Color="#E0E070" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="InnerShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeInsideFillBrush" Color="#E0E000" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#FFFF50" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#E0E000" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseDown">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleX" From="1.0" To="0.9" Duration="0:0:0.1" />
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleY" From="1.0" To="0.9" Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseUp">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleX" From="0.9" To="1.0" Duration="0:0:0.1" />
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleY" From="0.9" To="1.0" Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TutorialLargeCircleAreaAtLeftBottomCornerButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="Height" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="FontSize" Value="{DynamicResource TutorialLargeCircleButtonFontSize}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="Margin" Value="{StaticResource TutorialLargeCircleButtonLeftBottomMargin}" />
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.LayoutTransform>
+                            <ScaleTransform x:Name="WholeButtonScaleTransformScale" />
+                        </Grid.LayoutTransform>
+                        <Ellipse x:Name="OuterBorderShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="Black" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="OuterShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeEdgeFillBrush" Color="#50FF50" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="InnerShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeInsideFillBrush" Color="#00FF00" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#70FF70" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#00FF00" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseDown">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleX" From="1.0" To="0.9" Duration="0:0:0.1" />
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleY" From="1.0" To="0.9" Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseUp">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleX" From="0.9" To="1.0" Duration="0:0:0.1" />
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleY" From="0.9" To="1.0" Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TutorialLargeCircleAreaAtLeftTopCornerButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="Height" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="FontSize" Value="{DynamicResource TutorialLargeCircleButtonFontSize}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Margin" Value="{StaticResource TutorialLargeCircleButtonLeftTopMargin}" />
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.LayoutTransform>
+                            <ScaleTransform x:Name="WholeButtonScaleTransformScale" />
+                        </Grid.LayoutTransform>
+                        <Ellipse x:Name="OuterBorderShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="Black" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="OuterShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeEdgeFillBrush" Color="#FF5050" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="InnerShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeInsideFillBrush" Color="#FF0000" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#FF7070" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#FF0000" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseDown">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleX" From="1.0" To="0.9" Duration="0:0:0.1" />
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleY" From="1.0" To="0.9" Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseUp">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleX" From="0.9" To="1.0" Duration="0:0:0.1" />
+                                    <DoubleAnimation Storyboard.TargetName="WholeButtonScaleTransformScale"
+                                            Storyboard.TargetProperty="ScaleY" From="0.9" To="1.0" Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TutorialLargeCircleAreaAtRightTopCornerStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="Height" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="FontSize" Value="{DynamicResource TutorialLargeCircleButtonFontSize}" />
+        <!--<Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Margin" Value="{StaticResource TutorialLargeCircleButtonRightTopMargin}" />-->
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.LayoutTransform>
+                            <ScaleTransform x:Name="WholeButtonScaleTransformScale" />
+                        </Grid.LayoutTransform>
+                        <Ellipse x:Name="OuterBorderShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="Black" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="OuterShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeEdgeFillBrush" Color="#5050FF" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="InnerShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeInsideFillBrush" Color="#0000FF" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#7070FF" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#0000FF" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TutorialLargeCircleAreaAtRightBottomCornerStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="Height" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="FontSize" Value="{DynamicResource TutorialLargeCircleButtonFontSize}" />
+        <!--<Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="Margin" Value="{StaticResource TutorialLargeCircleButtonRightBottomMargin}" />-->
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.LayoutTransform>
+                            <ScaleTransform x:Name="WholeButtonScaleTransformScale" />
+                        </Grid.LayoutTransform>
+                        <Ellipse x:Name="OuterBorderShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="Black" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="OuterShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeEdgeFillBrush" Color="#E0E070" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="InnerShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeInsideFillBrush" Color="#E0E000" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#FFFF50" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#E0E000" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TutorialLargeCircleAreaAtLeftBottomCornerStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="Height" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="FontSize" Value="{DynamicResource TutorialLargeCircleButtonFontSize}" />
+        <!--<Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="Margin" Value="{StaticResource TutorialLargeCircleButtonLeftBottomMargin}" />-->
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.LayoutTransform>
+                            <ScaleTransform x:Name="WholeButtonScaleTransformScale" />
+                        </Grid.LayoutTransform>
+                        <Ellipse x:Name="OuterBorderShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="Black" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="OuterShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeEdgeFillBrush" Color="#50FF50" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="InnerShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeInsideFillBrush" Color="#00FF00" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#70FF70" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#00FF00" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TutorialLargeCircleAreaAtLeftTopCornerStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="Height" Value="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}" />
+        <Setter Property="FontSize" Value="{DynamicResource TutorialLargeCircleButtonFontSize}" />
+        <!--<Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Margin" Value="{StaticResource TutorialLargeCircleButtonLeftTopMargin}" />-->
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.LayoutTransform>
+                            <ScaleTransform x:Name="WholeButtonScaleTransformScale" />
+                        </Grid.LayoutTransform>
+                        <Ellipse x:Name="OuterBorderShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterBorderDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="Black" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="OuterShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonOuterShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeEdgeFillBrush" Color="#FF5050" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="InnerShape"
+                                Width="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}"
+                                Height="{DynamicResource TutorialLargeCircleButtonInnerShapeDiameter}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeInsideFillBrush" Color="#FF0000" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#FF7070" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="#FF0000" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,43 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:hostAppCoreViews="clr-namespace:Egs.Views;assembly=EgsHostAppCore"
+        xmlns:local="clr-namespace:Egs.ZkooTutorial" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:ClassModifier="internal"
+        x:Class="Egs.ZkooTutorial.TutorialAppHeaderMenuUserControl" mc:Ignorable="d" Width="1920" Height="100"
+        Background="{DynamicResource PageBackgroundBrush}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ZkooTutorial;component/ZkooTutorialResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="ImageButtonUserControlStyleResource" TargetType="{x:Type local:ImageButtonUserControl}">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="Height" Value="100" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel d:DataContext="{StaticResource TutorialAppHeaderMenuViewModelForXamlDesign}" Orientation="Horizontal">
+        <local:ImageButtonUserControl x:Name="MenuStartButtonUserControl" DataContext="{Binding MenuStartButtonModel}"
+                Width="240" />
+        <local:ImageButtonUserControl x:Name="MenuMoveButtonUserControl" DataContext="{Binding MenuMoveButtonModel}"
+                Width="240" />
+        <local:ImageButtonUserControl x:Name="MenuTapButtonUserControl" DataContext="{Binding MenuTapButtonModel}"
+                Width="240" />
+        <local:ImageButtonUserControl x:Name="MenuDragButtonUserControl" DataContext="{Binding MenuDragButtonModel}"
+                Width="240" />
+        <local:ImageButtonUserControl x:Name="MenuFlickButtonUserControl" DataContext="{Binding MenuFlickButtonModel}"
+                Width="240" />
+        <local:ImageButtonUserControl x:Name="MenuMoreButtonUserControl" DataContext="{Binding MenuMoreButtonModel}"
+                Width="240" />
+        <local:ImageButtonUserControl x:Name="MenuReplayButtonUserControl" DataContext="{Binding MenuReplayButtonModel}"
+                Width="120" />
+        <local:ImageButtonUserControl x:Name="MenuPracticeButtonUserControl"
+                DataContext="{Binding MenuPracticeButtonModel}" Width="120" />
+        <local:ImageButtonUserControl x:Name="MenuNextButtonUserControl" DataContext="{Binding MenuNextButtonModel}"
+                Width="120" />
+        <local:ImageButtonUserControl x:Name="MenuExitButtonUserControl" DataContext="{Binding MenuExitButtonModel}"
+                Width="120" />
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,11 @@
+﻿<Window x:Class="ExcelXamlConverterForLocalization.ExcelXamlConverterForLocalizationMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="350" Width="525" SizeToContent="WidthAndHeight">
+    <StackPanel>
+        <Button x:Name="CreateTestDataButton" Content="Create Test Dictionary" />
+        <Button x:Name="SaveToXamlButton" Content="Save to XAML File" />
+        <Button x:Name="SaveToExcelButton" Content="Save to Excel File" />
+        <Button x:Name="CreateFromXamlFileButton" Content="Create from XAML File" />
+        <Button x:Name="CreateFromExcelFileButton" Content="Create from Excel File" />
+    </StackPanel>
+</Window>

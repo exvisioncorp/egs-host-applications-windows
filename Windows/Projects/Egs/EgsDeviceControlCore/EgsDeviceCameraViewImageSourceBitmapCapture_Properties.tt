@@ -1,0 +1,12 @@
+﻿<#
+var namespaceName = "Egs";
+var classDescription = "public partial class EgsDeviceCameraViewImageSourceBitmapCapture";
+
+var propertyElementsList = new List<PropertyInfoForT4Template>()
+{
+    new PropertyInfoForT4Template("", "public", "uint?", "VideoCaptureDeviceIndex", "internal", false),
+    new PropertyInfoForT4Template("", "public", "string", "VideoCaptureDeviceName", "internal", false),
+    new PropertyInfoForT4Template("", "public", "string", "VideoCaptureDeviceDevicePath", "internal", false),
+};
+#>
+<#@ include file=".\DotNetUtility\PartialClass_Properties.t4" #>

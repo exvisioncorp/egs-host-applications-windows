@@ -1,0 +1,183 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:local="clr-namespace:Egs.ZkooTutorial"
+        xmlns:hostAppCoreViews="clr-namespace:Egs.Views;assembly=EgsHostAppCore">
+
+    <local:Tutorial01StartGestureTrainingPageModel x:Key="Tutorial01StartGestureTrainingPageModelForXamlDesign" />
+    <local:Tutorial02MoveCursorTrainingPageModel x:Key="Tutorial02MoveCursorTrainingPageModelForXamlDesign" />
+    <local:Tutorial03TapGestureTrainingPageModel x:Key="Tutorial03TapGestureTrainingPageModelForXamlDesign" />
+    <local:Tutorial04DragGestureTrainingPageModel x:Key="Tutorial04DragGestureTrainingPageModelForXamlDesign" />
+    <local:Tutorial05FlickGestureTrainingPageModel x:Key="Tutorial05FlickGestureTrainingPageModelForXamlDesign" />
+    <local:TutorialAppHeaderMenuViewModel x:Key="TutorialAppHeaderMenuViewModelForXamlDesign" />
+    <local:LauncherPageModel x:Key="LauncherPageModelForXamlDesign" />
+
+    <System:Double x:Key="TutorialLargeCircleButtonOuterBorderDiameter">280</System:Double>
+    <System:Double x:Key="TutorialLargeCircleButtonOuterShapeDiameter">278</System:Double>
+    <System:Double x:Key="TutorialLargeCircleButtonInnerShapeDiameter">250</System:Double>
+    <System:Double x:Key="TutorialLargeCircleButtonFontSize">150</System:Double>
+    <Thickness x:Key="TutorialLargeCircleButtonRightTopMargin">0,180,150,0</Thickness>
+    <Thickness x:Key="TutorialLargeCircleButtonRightBottomMargin">0,0,150,200</Thickness>
+    <Thickness x:Key="TutorialLargeCircleButtonLeftBottomMargin">150,0,0,200</Thickness>
+    <Thickness x:Key="TutorialLargeCircleButtonLeftTopMargin">150,180,0,0</Thickness>
+
+    <!--seino-->
+    <!--<SolidColorBrush x:Key="PageBackgroundBrush" Color="#FFF2F2F2" />
+            <SolidColorBrush x:Key="PageForegroundBrush" Color="#FF373737" />
+            <SolidColorBrush x:Key="ButtonBorderBrush" Color="#FFF2F2F2" />
+            <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#FF2FF7FB" />
+            <SolidColorBrush x:Key="ButtonHoveredBackgroundBrush" Color="RoyalBlue" />
+            <SolidColorBrush x:Key="ButtonPressedBackgroundBrush" Color="#7F003FFF" />
+            <SolidColorBrush x:Key="ButtonForegroundBrush" Color="#FFFDFCFE" />
+            <SolidColorBrush x:Key="NarrationTextBlockForegroundBrush" Color="#FF373737" />-->
+
+    <!--old-->
+    <!--<SolidColorBrush x:Key="PageBackgroundBrush" Color="#FF000000" />
+            <SolidColorBrush x:Key="PageForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ButtonBorderBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#FF000000" />
+            <SolidColorBrush x:Key="ButtonHoveredBackgroundBrush" Color="RoyalBlue" />
+            <SolidColorBrush x:Key="ButtonPressedBackgroundBrush" Color="#7F003FFF" />
+            <SolidColorBrush x:Key="ButtonForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="NarrationTextBlockForegroundBrush" Color="#FFFFFFFF" />-->
+
+    <SolidColorBrush x:Key="PageBackgroundBrush" Color="#FFF2F2F2" />
+    <SolidColorBrush x:Key="PageForegroundBrush" Color="#FF373737" />
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="#FF373737" />
+    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#FFF2F2F2" />
+    <SolidColorBrush x:Key="ButtonHoveredBackgroundBrush" Color="#7F003FFF" />
+    <SolidColorBrush x:Key="ButtonPressedBackgroundBrush" Color="#7F003FFF" />
+    <SolidColorBrush x:Key="ButtonForegroundBrush" Color="#FF373737" />
+    <SolidColorBrush x:Key="NarrationTextBlockForegroundBrush" Color="#FF373737" />
+
+    <ControlTemplate x:Key="TutorialPageButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Border x:Name="border" BorderBrush="{DynamicResource ButtonBorderBrush}" BorderThickness="2"
+                    CornerRadius="3" Background="{DynamicResource ButtonBackgroundBrush}" Opacity="1" />
+            <Border x:Name="hoverAlpha" BorderBrush="{DynamicResource ButtonBorderBrush}" BorderThickness="2"
+                    CornerRadius="3" Background="{DynamicResource ButtonHoveredBackgroundBrush}" Opacity="0" />
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBackgroundBrush}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="hoverAlpha"
+                                    Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.100" Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="hoverAlpha"
+                                    Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.200" Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="TransparentBackgroundButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TutorialAppHeaderMenuUserControlStyle" TargetType="{x:Type local:TutorialAppHeaderMenuUserControl}">
+        <Setter Property="DockPanel.Dock" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+
+    <Style x:Key="TutorialAppHeaderMenuButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+        <Setter Property="Content">
+            <Setter.Value>
+                <Image Source="{Binding ImageSource}" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Command" Value="{Binding Command}" />
+    </Style>
+
+    <Style x:Key="TutorialReplayPracticeNextButtonsUserControlStyle"
+            TargetType="{x:Type local:ReplayPracticeNextButtonsUserControl}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Width" Value="608" />
+        <Setter Property="Height" Value="226" />
+        <Setter Property="Margin" Value="0,588,0,0" />
+    </Style>
+
+    <Style x:Key="TutorialReplayPracticeNextButtonsUserControlImageButtonUserControlStyle"
+            TargetType="{x:Type local:ImageButtonUserControl}">
+        <Setter Property="Margin" Value="1" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="TutorialCameraViewUserControlStyle" TargetType="{x:Type hostAppCoreViews:CameraViewUserControl}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Width" Value="610" />
+        <Setter Property="Height" Value="388" />
+        <Setter Property="Margin" Value="0,160,0,0" />
+    </Style>
+
+    <Style x:Key="PracticeSlideShowVideoUserControlStyle" TargetType="{x:Type hostAppCoreViews:MediaElementUserControl}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Width" Value="600" />
+        <Setter Property="Height" Value="360" />
+        <Setter Property="Margin" Value="0,588,0,0" />
+        <Setter Property="TimelineSliderVisibility" Value="Collapsed" />
+        <Setter Property="IsToShowResumeButton" Value="False" />
+        <Setter Property="IsToReplayAutomatically" Value="True" />
+        <Setter Property="CanPauseAndResumeByMouseDown" Value="False" />
+    </Style>
+
+    <Style x:Key="TutorialCurrentMessageTextBlockStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="97,968,0,0" />
+        <Setter Property="Width" Value="1727" />
+        <Setter Property="Height" Value="100" />
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="FontFamily" Value="Segoe UI Bold, Franklin Gothic Medium, Meiryo UI Bold" />
+        <Setter Property="FontSize" Value="36" />
+        <!--<Setter Property="FontWeight" Value="Bold" />-->
+        <Setter Property="Foreground" Value="{DynamicResource NarrationTextBlockForegroundBrush}" />
+    </Style>
+
+    <Style x:Key="Tutorial05ScrollAreaStackPanelStyle" TargetType="{x:Type StackPanel}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Margin" Value="0,680,0,0" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+</ResourceDictionary>

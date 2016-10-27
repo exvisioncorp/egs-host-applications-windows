@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EgsHostAppCore</name>
+    </assembly>
+    <members>
+        <member name="T:Egs.CameraViewWindowModel">
+            <summary>
+            ViewModel of CameraViewWindow.  When you use CameraViewWindow,
+            (1) Create an object of this ViewModel
+            (2) Initialize it by (EgsDevice device)
+            (3) Send it to CameraViewWindow.InitializeOnceAtStartup() as an argument
+            </summary>
+        </member>
+        <member name="P:Egs.CameraViewWindowModel.Device">
+            <summary>Reference to an EgsDevice object.  Users have to set this as an argument of InitializeOnceAtStartup() method.</summary>
+        </member>
+        <member name="T:Egs.DotNetUtility.Views.TrueToCollapsedFalseToVisibleConverter">
+            <summary>
+            Convert true to Visibility.Collapsed and false to Visibility.Visible
+            </summary>
+        </member>
+        <member name="M:Egs.DotNetUtility.BitmapImageUtility.LoadBitmapImageFromFile(System.String)">
+            <summary>
+            Load a bitmap image from a file more safely
+            </summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ManualOnOff">
+            <summary>0: Manual Show / Hide by Icons on Task Bar and System Tray.  Hide by the Minimize Button on the Menu</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandTrackingStart">
+            <summary>1: Show When Face Recognition Starts.  Hide Soon After Hand Tracking Starts</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandDetectionStart_ShowWhenHandTrackingStart">
+            <summary>2: Show When Face Recognition Starts, and Hide if Recognized.  Show in Hand Tracking</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandDetectionStart_ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart">
+            <summary>3: Show When Face Recognition Starts, and Hide if Recognized.  Show for a While After Hand Tracking Starts</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandDetectionStart_HideWhenHandDetectionEnd_HideWhenHandTrackingEnd">
+            <summary>4: Show if Faces are Recognized.</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandDetectionStart_HideWhenHandDetectionEnd_HideSoonAfterHandTrackingStart">
+            <summary>5: Show if Faces are Recognized.  Hide Soon After Hand Tracking Starts</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideWhenHandTrackingEnd">
+            <summary>6: Show in Hand Tracking</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart">
+            <summary>7: Show for a While After Hand Tracking Starts</summary>
+        </member>
+        <member name="P:Egs.EgsDeviceFirmwareUpdateImageFileModel.ImageType">
+            <summary>
+            3: App1
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceFirmwareUpdateImageFileModel.ChipSet">
+            <summary>
+            ChipSet (0=MA2100, 1=MA2150), added from payloadHeaderFormatRevision=0x01 ??
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceFirmwareUpdateModel.CurrentIndexInFirmwareImageFilePathListForView">
+            <summary>
+            CurrentIndexInFirmwareImageFilePathList + 1
+            </summary>
+        </member>
+        <member name="T:Egs.EgsHostOnUserControl">
+            <summary>
+            The minimum set of EGS host application, which can run on some UserControl or Window.
+            </summary>
+        </member>
+        <member name="T:Egs.CameraViewUserControlModel">
+            <summary>
+            ViewModel of CameraViewUserControl.  When you use CameraViewUserControl,
+            (1) Create an object of this ViewModel
+            (2) Initialize it by (EgsDevice device)
+            (3) Send it to CameraViewUserControl.InitializeOnceAtStartup() as an argument
+            </summary>
+        </member>
+        <member name="P:Egs.CameraViewUserControlModel.Device">
+            <summary>Reference to an EgsDevice object.  Users have to set this as an argument of InitializeOnceAtStartup() method.</summary>
+        </member>
+        <member name="T:Egs.EgsHostAppBaseComponents">
+            <summary>
+            Base components of EGS host application.
+            </summary>
+        </member>
+        <member name="T:Egs.OnePersonBothHandsViewModel">
+            <summary>
+            ViewModel which has information about one person and his two hands
+            </summary>
+        </member>
+        <member name="T:Egs.Views.ApplicationUpdateProgressWindow">
+            <summary>
+            ApplicationUpdateProgressWindow
+            </summary>
+        </member>
+        <member name="M:Egs.Views.ApplicationUpdateProgressWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="F:Egs.Views.AppTrayIconAndMenuItemsComponent.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Egs.Views.AppTrayIconAndMenuItemsComponent.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Egs.Views.AppTrayIconAndMenuItemsComponent.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Egs.Views.CameraViewUserControl">
+            <summary>
+            CameraViewUserControl
+            </summary>
+        </member>
+        <member name="M:Egs.Views.CameraViewUserControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Egs.Views.CameraViewWindow">
+            <summary>
+            CameraViewWindow
+            </summary>
+        </member>
+        <member name="M:Egs.Views.CameraViewWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Egs.Views.CameraViewWithoutDataBindingUserControl">
+            <summary>
+            CameraViewWithoutDataBindingUserControl
+            </summary>
+        </member>
+        <member name="M:Egs.Views.CameraViewWithoutDataBindingUserControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:Egs.Views.EgsDeviceFirmwareUpdateUserControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Egs.Views.MediaElementUserControl">
+            <summary>
+            When you play multiple different videos on the same Application at the same time, 
+            create a new instance of "class MediaElementReusableInMultipleUserControls", 
+            and call SetTheOtherMediaElementReusableInMultipleUserControls method of this class.
+            </summary>
+            <summary>
+            MediaElementUserControl
+            </summary>
+        </member>
+        <member name="M:Egs.Views.MediaElementUserControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Egs.Views.MediaElementReusableInMultipleUserControls">
+            <summary>
+            In some PCs, a driver error can occur when more than 4 MediaElements are created, even if they are not displayed.  
+            But in various case, you need to create some UserControl which has MediaElement inside, and create more than 4 instances of the UserControl in multiple Pages.  
+            So, in that case, make the instances of this class which can run at the same time on a Application, 
+            and call MediaElementUserControl.SetTheOtherMediaElementReusableInMultipleUserControls() with a related instance selected from the instances.  
+            </summary>
+        </member>
+        <member name="T:Egs.Views.NotHandledExceptionReportWindow">
+            <summary>
+            NotHandledExceptionReportWindow
+            </summary>
+        </member>
+        <member name="M:Egs.Views.NotHandledExceptionReportWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Egs.Views.SettingsUserControl">
+            <summary>
+            SettingsUserControl
+            </summary>
+        </member>
+        <member name="M:Egs.Views.SettingsUserControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Egs.Views.SettingsWindow">
+            <summary>
+            SettingsWindow
+            </summary>
+        </member>
+        <member name="M:Egs.Views.SettingsWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

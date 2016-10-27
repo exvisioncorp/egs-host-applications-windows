@@ -1,0 +1,13 @@
+﻿<#
+var namespaceName = "Egs.ZkooTutorial";
+var classDescription = "partial class TutorialLargeCircleAreaButtonModel";
+
+var propertyElementsList = new List<PropertyInfoForT4Template>()
+{
+    new PropertyInfoForT4Template("", "public", "int", "Index", "", true),
+    new PropertyInfoForT4Template("", "public", "bool", "IsThumbDragged", "", true),
+    new PropertyInfoForT4Template("", "public", "int", "TapsCount", "", true),
+    new PropertyInfoForT4Template("", "public", "int", "LongTapsCount", "", true),
+};
+#>
+<#@ include file="..\EgsHostAppCore\DotNetUtility\PartialClass_Properties.t4" #>

@@ -1,0 +1,1997 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EgsDeviceControlCore</name>
+    </assembly>
+    <members>
+        <member name="T:Egs.ApplicationCommonSettings">
+            <summary>
+            Application common settings and constants for attributes defined in AssemblyInfo.cs in each project.
+            </summary>
+        </member>
+        <member name="F:Egs.ApplicationCommonSettings.HostAppCoreDllAssemblyVersionMajorMinorString">
+            <summary>This dll's major version and minor version as string.</summary>
+        </member>
+        <member name="F:Egs.ApplicationCommonSettings.HostAppCoreDllAssemblyVersionMajorMinorBuildString">
+            <summary>This dll's major version, minor version and build number as string.</summary>
+        </member>
+        <member name="F:Egs.ApplicationCommonSettings.HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString">
+            <summary>This dll's major version, minor version, build number and revision as string.</summary>
+        </member>
+        <member name="F:Egs.ApplicationCommonSettings.ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString">
+            <summary>Host application's major version, minor version, build number and revision as string.</summary>
+        </member>
+        <member name="F:Egs.ApplicationCommonSettings.DefaultCultureInfoName">
+            <summary>Default CultureInfo.Name as string.</summary>
+        </member>
+        <member name="F:Egs.ApplicationCommonSettings.FirmwareVersionInImageFileString">
+            <summary>Firmware version in an image file of this application.</summary>
+        </member>
+        <member name="P:Egs.ApplicationCommonSettings.IsDebugging">
+            <summary>When you set this value to true, HostAppCore.dll shows "Developer" tab on SettingsWindow and output messages for debugging.</summary>
+        </member>
+        <member name="T:Egs.BindableResources">
+            <summary>
+            Wrapper of EgsHostAppCore.Properties.Resources class for DataBinding on XAML.
+            You can use this like "{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsHostSettings_...}" in data binding in XAML files.
+            </summary>
+        </member>
+        <member name="M:Egs.BindableResources.OnPropertyChanged(System.String)">
+            <summary>OnPropertyChanged to raise PropertyChanged event</summary>
+        </member>
+        <member name="M:Egs.BindableResources.ChangeCulture(System.String)">
+            <summary>
+            Set Properties.Resources.Culture by CultureInfo.GetCultureInfo(name)
+            </summary>
+            <param name="name">CultureInfo.Name.  e.g. "en", "ja" and "zh-Hans"...  If you set this value to null or empty, CultureInfo.InstalledUICulture will be used.</param>
+        </member>
+        <member name="P:Egs.BindableResources.Current">
+            <summary>
+            static readonly instance of this class.
+            </summary>
+        </member>
+        <member name="P:Egs.BindableResources.Resources">
+            <summary>
+            Readonly instance of Properties.Resources.
+            </summary>
+        </member>
+        <member name="E:Egs.BindableResources.PropertyChanged">
+            <summary>Implementation of INotifyPropertyChanged.PropertyChanged.</summary>
+        </member>
+        <member name="E:Egs.BindableResources.CultureChanged">
+            <summary>
+            When ChangeCulture() is called, this event raises.
+            </summary>
+        </member>
+        <member name="T:Egs.CursorTapKind">
+            <summary>
+            State of touch, or kind of tap (Unknown, Touching, Tap, LongTap)
+            </summary>
+        </member>
+        <member name="F:Egs.CursorTapKind.Unknown">
+            <summary>Touch state or tap kind is unknown.</summary>
+        </member>
+        <member name="F:Egs.CursorTapKind.Touching">
+            <summary>Users are touching now, so Tap Gesture is not occurred yet.</summary>
+        </member>
+        <member name="F:Egs.CursorTapKind.Tap">
+            <summary>Users bended and opened their hands, so Tap Gesture is recognized, not LongTap.</summary>
+        </member>
+        <member name="F:Egs.CursorTapKind.LongTap">
+            <summary>Users bended their hands for a while, and then opened the hand.  So LongTap Gesture is recognized.</summary>
+        </member>
+        <member name="T:Egs.CursorImageIndexLabels">
+            <summary>
+            Index of kind of a cursor image
+            </summary>
+        </member>
+        <member name="F:Egs.CursorImageIndexLabels.None">
+            <summary>Index is None (-1).</summary>
+        </member>
+        <member name="F:Egs.CursorImageIndexLabels.OpenHand">
+            <summary>The image of gesture cursor should be opened hand.  The index value in some image array is 0.</summary>
+        </member>
+        <member name="F:Egs.CursorImageIndexLabels.CloseHand">
+            <summary>The image of gesture cursor should be closed hand.  The index value in some image array is 1.</summary>
+        </member>
+        <member name="T:Egs.CursorViewModel">
+            <summary>
+            This class is used to draw a "Gesture Cursor".  Initialize method must be called.
+            In the event handler of "EgsDevice.EgsGestureHidReport.ReportUpdated" event,
+            the UpdateByTouchScreenHidReportContact(EgsDeviceTouchScreenHidReportContact contact) method should be called.
+            </summary>
+        </member>
+        <member name="M:Egs.CursorViewModel.InitializeOnceAtStartup(Egs.EgsDevice)">
+            <summary>
+            This method must be called after an object of EgsDevice is constructed.
+            </summary>
+        </member>
+        <member name="T:Egs.DotNetUtility.Dpi">
+            <summary>Information about DPI of a display</summary>
+        </member>
+        <member name="F:Egs.DotNetUtility.Dpi.Default">
+            <summary>new Dpi(96, 96)</summary>
+        </member>
+        <member name="M:Egs.DotNetUtility.DuplicatedProcessStartBlocking.TryGetMutexOnTheBeginningOfApplicationConstructor">
+            <summary>
+            If it return false, exit program.  (ex. call if (Application.Current != null) { Application.Current.Shutdown(); })
+            </summary>
+        </member>
+        <member name="P:Egs.DotNetUtility.OptionalValue`1.Options">
+            <summary>
+            ObservableCollection of T.
+            [NOTE]: SelectedIndex has [DataMember], but Options does not have [DataMember].
+            Because Json.NET Deserialize / PopulateObject methods DO NOT "RE"SET items but "ADD" items to constructed objects of List, Collection and so on.
+            Array is reset, but not used.
+            </summary>
+        </member>
+        <member name="M:Egs.DotNetUtility.RangedNumericType`1.Equals(`0)">
+            <summary>Only Value is compared.</summary>
+        </member>
+        <member name="M:Egs.DotNetUtility.RangedNumericType`1.CompareTo(`0)">
+            <summary>Only Value is compared.</summary>
+        </member>
+        <member name="M:Egs.DotNetUtility.RangedNumericType`1.GetHashCode">
+            <summary>Get the hashcode of the Value.</summary>
+        </member>
+        <member name="M:Egs.DotNetUtility.RangedNumericType`1.Equals(System.Object)">
+            <summary>Value, Minimum, Maximum, SmallChange, LargeChange and TickFrequency are compared.</summary>
+        </member>
+        <member name="P:Egs.DotNetUtility.RangedInt.PositionCount">
+            <summary>Maximum - Minimum + 1</summary>
+        </member>
+        <member name="P:Egs.DotNetUtility.RangedInt.DivisionCount">
+            <summary>Maximum - Minimum</summary>
+        </member>
+        <member name="P:Egs.DotNetUtility.RangedLong.PositionCount">
+            <summary>Maximum - Minimum + 1</summary>
+        </member>
+        <member name="P:Egs.DotNetUtility.RangedLong.DivisionCount">
+            <summary>Maximum - Minimum</summary>
+        </member>
+        <member name="P:Egs.DotNetUtility.RangedDouble.Distance">
+            <summary>Maximum - Minimum</summary>
+        </member>
+        <member name="P:Egs.DotNetUtility.RangedFloat.Distance">
+            <summary>Maximum - Minimum</summary>
+        </member>
+        <member name="M:Egs.DotNetUtility.RangedRangeType`1.Equals(Egs.DotNetUtility.RangedRangeType{`0})">
+            <summary>Only Value is compared.</summary>
+        </member>
+        <member name="M:Egs.DotNetUtility.RangedRangeType`1.GetHashCode">
+            <summary>Get the hashcode of the Value.</summary>
+        </member>
+        <member name="M:Egs.DotNetUtility.RangedRangeType`1.Equals(System.Object)">
+            <summary>Value, Minimum, Maximum, SmallChange, LargeChange and TickFrequency are compared.</summary>
+        </member>
+        <member name="T:Egs.Win32.MonitorDpiType">
+            <summary>
+            Identifies dots per inch (dpi) type.  Refer to https://msdn.microsoft.com/en-us/library/windows/desktop/dn280511(v=vs.85).aspx
+            </summary>
+        </member>
+        <member name="F:Egs.Win32.MonitorDpiType.EffectiveDpi">
+            <summary>
+            MDT_Effective_DPI
+            <para>Effective DPI that incorporates accessibility overrides and matches what Desktop Window Manage (DWM) uses to scale desktop applications.</para>
+            </summary>
+        </member>
+        <member name="F:Egs.Win32.MonitorDpiType.AngularDpi">
+            <summary>
+            MDT_Angular_DPI
+            <para>DPI that ensures rendering at a compliant angular resolution on the screen, without incorporating accessibility overrides.</para>
+            </summary>
+        </member>
+        <member name="F:Egs.Win32.MonitorDpiType.RawDpi">
+            <summary>
+            MDT_Raw_DPI
+            <para>Linear DPI of the screen as measures on the screen itself.</para>
+            </summary>
+        </member>
+        <member name="F:Egs.Win32.MonitorDpiType.Default">
+            <summary>
+            MDT_Default
+            </summary>
+        </member>
+        <member name="M:Egs.Win32.NativeMethods.GetDC(System.IntPtr)">
+            <summary>
+            The GetDC function retrieves a handle to a device context (DC) for the client area of a specified window or for the entire screen.  
+            You can use the returned handle in subsequent GDI functions to draw in the DC.  
+            The device context is an opaque data structure, whose values are used internally by GDI.  
+            The GetDCEx function is an extension to GetDC, which gives an application more control over how and whether clipping occurs in the client area.
+            </summary>
+            <param name="hWnd">
+            hWnd [in] A handle to the window whose DC is to be retrieved.  If this value is NULL, GetDC retrieves the DC for the entire screen.
+            </param>
+            <returns>
+            If the function succeeds, the return value is a handle to the DC for the specified window's client area.  
+            If the function fails, the return value is NULL.
+            </returns>
+        </member>
+        <member name="M:Egs.Win32.NativeMethods.SetWindowPos(System.IntPtr,System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,Egs.Win32.NativeMethods.SetWindowPosFlags)">
+            <summary>
+                Changes the size, position, and Z order of a child, pop-up, or top-level window. These windows are ordered
+                according to their appearance on the screen. The topmost window receives the highest rank and is the first window
+                in the Z order.
+                <para>See https://msdn.microsoft.com/en-us/library/windows/desktop/ms633545%28v=vs.85%29.aspx for more information.</para>
+            </summary>
+            <param name="hWnd">C++ ( hWnd [in]. Type: HWND )<br />A handle to the window.</param>
+            <param name="hWndInsertAfter">
+                C++ ( hWndInsertAfter [in, optional]. Type: HWND )<br />A handle to the window to precede the positioned window in
+                the Z order. This parameter must be a window handle or one of the following values.
+                <list type="table">
+                <itemheader>
+                    <term>HWND placement</term><description>Window to precede placement</description>
+                </itemheader>
+                <item>
+                    <term>HWND_BOTTOM ((HWND)1)</term>
+                    <description>
+                    Places the window at the bottom of the Z order. If the hWnd parameter identifies a topmost
+                    window, the window loses its topmost status and is placed at the bottom of all other windows.
+                    </description>
+                </item>
+                <item>
+                    <term>HWND_NOTOPMOST ((HWND)-2)</term>
+                    <description>
+                    Places the window above all non-topmost windows (that is, behind all topmost windows). This
+                    flag has no effect if the window is already a non-topmost window.
+                    </description>
+                </item>
+                <item>
+                    <term>HWND_TOP ((HWND)0)</term><description>Places the window at the top of the Z order.</description>
+                </item>
+                <item>
+                    <term>HWND_TOPMOST ((HWND)-1)</term>
+                    <description>
+                    Places the window above all non-topmost windows. The window maintains its topmost position
+                    even when it is deactivated.
+                    </description>
+                </item>
+                </list>
+                <para>For more information about how this parameter is used, see the following Remarks section.</para>
+            </param>
+            <param name="x">C++ ( X [in]. Type: int )<br />The new position of the left side of the window, in client coordinates.</param>
+            <param name="y">C++ ( Y [in]. Type: int )<br />The new position of the top of the window, in client coordinates.</param>
+            <param name="cx">C++ ( cx [in]. Type: int )<br />The new width of the window, in pixels.</param>
+            <param name="cy">C++ ( cy [in]. Type: int )<br />The new height of the window, in pixels.</param>
+            <param name="uFlags">
+                C++ ( uFlags [in]. Type: UINT )<br />The window sizing and positioning flags. This parameter can be a combination
+                of the following values.
+                <list type="table">
+                <itemheader>
+                    <term>HWND sizing and positioning flags</term>
+                    <description>Where to place and size window. Can be a combination of any</description>
+                </itemheader>
+                <item>
+                    <term>SWP_ASYNCWINDOWPOS (0x4000)</term>
+                    <description>
+                    If the calling thread and the thread that owns the window are attached to different input
+                    queues, the system posts the request to the thread that owns the window. This prevents the calling
+                    thread from blocking its execution while other threads process the request.
+                    </description>
+                </item>
+                <item>
+                    <term>SWP_DEFERERASE (0x2000)</term>
+                    <description>Prevents generation of the WM_SYNCPAINT message. </description>
+                </item>
+                <item>
+                    <term>SWP_DRAWFRAME (0x0020)</term>
+                    <description>Draws a frame (defined in the window's class description) around the window.</description>
+                </item>
+                <item>
+                    <term>SWP_FRAMECHANGED (0x0020)</term>
+                    <description>
+                    Applies new frame styles set using the SetWindowLong function. Sends a WM_NCCALCSIZE message
+                    to the window, even if the window's size is not being changed. If this flag is not specified,
+                    WM_NCCALCSIZE is sent only when the window's size is being changed
+                    </description>
+                </item>
+                <item>
+                    <term>SWP_HIDEWINDOW (0x0080)</term><description>Hides the window.</description>
+                </item>
+                <item>
+                    <term>SWP_NOACTIVATE (0x0010)</term>
+                    <description>
+                    Does not activate the window. If this flag is not set, the window is activated and moved to
+                    the top of either the topmost or non-topmost group (depending on the setting of the hWndInsertAfter
+                    parameter).
+                    </description>
+                </item>
+                <item>
+                    <term>SWP_NOCOPYBITS (0x0100)</term>
+                    <description>
+                    Discards the entire contents of the client area. If this flag is not specified, the valid
+                    contents of the client area are saved and copied back into the client area after the window is sized or
+                    repositioned.
+                    </description>
+                </item>
+                <item>
+                    <term>SWP_NOMOVE (0x0002)</term>
+                    <description>Retains the current position (ignores X and Y parameters).</description>
+                </item>
+                <item>
+                    <term>SWP_NOOWNERZORDER (0x0200)</term>
+                    <description>Does not change the owner window's position in the Z order.</description>
+                </item>
+                <item>
+                    <term>SWP_NOREDRAW (0x0008)</term>
+                    <description>
+                    Does not redraw changes. If this flag is set, no repainting of any kind occurs. This applies
+                    to the client area, the nonclient area (including the title bar and scroll bars), and any part of the
+                    parent window uncovered as a result of the window being moved. When this flag is set, the application
+                    must explicitly invalidate or redraw any parts of the window and parent window that need redrawing.
+                    </description>
+                </item>
+                <item>
+                    <term>SWP_NOREPOSITION (0x0200)</term><description>Same as the SWP_NOOWNERZORDER flag.</description>
+                </item>
+                <item>
+                    <term>SWP_NOSENDCHANGING (0x0400)</term>
+                    <description>Prevents the window from receiving the WM_WINDOWPOSCHANGING message.</description>
+                </item>
+                <item>
+                    <term>SWP_NOSIZE (0x0001)</term>
+                    <description>Retains the current size (ignores the cx and cy parameters).</description>
+                </item>
+                <item>
+                    <term>SWP_NOZORDER (0x0004)</term>
+                    <description>Retains the current Z order (ignores the hWndInsertAfter parameter).</description>
+                </item>
+                <item>
+                    <term>SWP_SHOWWINDOW (0x0040)</term><description>Displays the window.</description>
+                </item>
+                </list>
+            </param>
+            <returns><c>true</c> or nonzero if the function succeeds, <c>false</c> or zero otherwise or if function fails.</returns>
+            <remarks>
+                <para>
+                As part of the Vista re-architecture, all services were moved off the interactive desktop into Session 0.
+                hwnd and window manager operations are only effective inside a session and cross-session attempts to manipulate
+                the hwnd will fail. For more information, see The Windows Vista Developer Story: Application Compatibility
+                Cookbook.
+                </para>
+                <para>
+                If you have changed certain window data using SetWindowLong, you must call SetWindowPos for the changes to
+                take effect. Use the following combination for uFlags: SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER |
+                SWP_FRAMECHANGED.
+                </para>
+                <para>
+                A window can be made a topmost window either by setting the hWndInsertAfter parameter to HWND_TOPMOST and
+                ensuring that the SWP_NOZORDER flag is not set, or by setting a window's position in the Z order so that it is
+                above any existing topmost windows. When a non-topmost window is made topmost, its owned windows are also made
+                topmost. Its owners, however, are not changed.
+                </para>
+                <para>
+                If neither the SWP_NOACTIVATE nor SWP_NOZORDER flag is specified (that is, when the application requests that
+                a window be simultaneously activated and its position in the Z order changed), the value specified in
+                hWndInsertAfter is used only in the following circumstances.
+                </para>
+                <list type="bullet">
+                <item>Neither the HWND_TOPMOST nor HWND_NOTOPMOST flag is specified in hWndInsertAfter. </item>
+                <item>The window identified by hWnd is not the active window. </item>
+                </list>
+                <para>
+                An application cannot activate an inactive window without also bringing it to the top of the Z order.
+                Applications can change an activated window's position in the Z order without restrictions, or it can activate
+                a window and then move it to the top of the topmost or non-topmost windows.
+                </para>
+                <para>
+                If a topmost window is repositioned to the bottom (HWND_BOTTOM) of the Z order or after any non-topmost
+                window, it is no longer topmost. When a topmost window is made non-topmost, its owners and its owned windows
+                are also made non-topmost windows.
+                </para>
+                <para>
+                A non-topmost window can own a topmost window, but the reverse cannot occur. Any window (for example, a
+                dialog box) owned by a topmost window is itself made a topmost window, to ensure that all owned windows stay
+                above their owner.
+                </para>
+                <para>
+                If an application is not in the foreground, and should be in the foreground, it must call the
+                SetForegroundWindow function.
+                </para>
+                <para>
+                To use SetWindowPos to bring a window to the top, the process that owns the window must have
+                SetForegroundWindow permission.
+                </para>
+            </remarks>
+        </member>
+        <member name="M:Egs.Win32.NativeMethods.GetResultOfApiCall(System.String)">
+            <summary>
+            Get text that describes the result of an API call
+            </summary>
+            <param name="functionName"> the name of the API function. </param>
+        </member>
+        <member name="M:Egs.Win32.NativeMethods.HidD_FlushQueue(Microsoft.Win32.SafeHandles.SafeFileHandle)">
+            <summary>
+            Remove any Input reports waiting in the buffer.
+            </summary>
+            <param name="HidDeviceObject"> a handle to a device. </param>
+            <returns>
+            True on success, False on failure.
+            </returns>
+        </member>
+        <member name="M:Egs.Win32.NativeMethods.HidD_GetFeature(Microsoft.Win32.SafeHandles.SafeFileHandle,System.Byte[],System.Int32)">
+            <summary>
+            reads a Feature report from the device.
+            </summary>
+            <param name="HidDeviceObject"> the handle for learning about the device and exchanging Feature reports. </param>
+            <param name="ReportBuffer"> contains the requested report.</param>
+            <param name="ReportBufferLength"></param>
+        </member>
+        <member name="M:Egs.Win32.NativeMethods.HidD_GetInputReport(Microsoft.Win32.SafeHandles.SafeFileHandle,System.Byte[],System.Int32)">
+            <summary>
+            reads an Input report from the device using a control transfer.
+            </summary>
+            <param name="HidDeviceObject"> the handle for learning about the device and exchanging Feature reports. </param>
+            <param name="ReportBuffer"> contains the requested report. </param>
+            <param name="ReportBufferLength"></param>
+        </member>
+        <member name="M:Egs.Win32.NativeMethods.HidD_SetOutputReport(Microsoft.Win32.SafeHandles.SafeFileHandle,System.Byte[],System.Int32)">
+            <summary>
+            Writes an Output report to the device using a control transfer.
+            </summary>
+            <param name="HidDeviceObject"> handle to the device.  </param>
+            <param name="ReportBuffer"> contains the report ID and report data. </param>
+            <param name="ReportBufferLength"></param>
+        </member>
+        <member name="M:Egs.Win32.NativeMethods.SetupDiDestroyDeviceInfoList(System.IntPtr)">
+            <summary>
+            Frees the memory reserved for the DeviceInfoSet returned by SetupDiGetClassDevs.
+            </summary>
+        </member>
+        <member name="T:Egs.Win32.NativeMethods.SetWindowPosFlags">
+            <summary>
+            Refer to https://msdn.microsoft.com/ja-jp/library/cc411206.aspx
+            </summary>
+        </member>
+        <member name="F:Egs.Win32.NativeMethods.RID.HEADER">
+            <summary> Get header information. </summary>
+        </member>
+        <member name="F:Egs.Win32.NativeMethods.RID.INPUT">
+            <summary> Get raw pData. </summary>
+        </member>
+        <member name="F:Egs.Win32.NativeMethods.RawMouseButtonFlagsAndData.usButtonData">
+            <summary>
+            If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed device that specifies the wheel delta.
+            </summary>
+        </member>
+        <member name="T:Egs.EgsDevice">
+            <summary>
+            The instance of EgsDevice class receives information from EGS device and reconstruct current state of the device.  Main roles are 
+            (1) Monitoring of connection state of the device, and open HID and UVC (camera) devices while it is connected
+            (2) Querying bitmap images for "Camera View"
+            (3) Receiving HID gesture information and notifies the updates to other components
+            (4) Changing settings of the device through "EgsDeviceSettings Settings" object as a member of EgsDevice
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.SetSettings(Egs.EgsDeviceSettings)">
+            <summary>
+            Update the settings of this device.  If the device is already connected, the settings will be set to the device immediately.  If the device is not connected, it will be set when the device is re-connected.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.GetDefaultEgsDevice(Egs.EgsDeviceSettings)">
+            <summary>
+            To get EgsDevice easily, please use this method.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.CloseDefaultEgsDevice">
+            <summary>
+            Device should be closed by this method, when applications exit.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.#ctor">
+            <summary>
+            This class object is not deserializable, and should be created by EgsDevicesManager.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.SaveSettingsToFlash">
+            <summary>
+            In some Android device or some applications, host application is not allowed to run on the device.  
+            But the device can send mouse or touch report only by the device (without host), in that case, the default settings are load from the flash in the device.
+            With this method, host application can send a command to save the current settings (saved and managed in host) into the flash in the device.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.ResetDevice">
+            <summary>
+            Send a reset command to connected Device.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.ResetHidReportObjects">
+            <summary>
+            Reset TouchScreenHidReport and EgsGestureHidReport properties.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.UpdateTemperatureProperties">
+            <summary>
+            Sorry but this is internal.  But for DataBinding, it is public.  Only in newer device hardware can measure temperature.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.UpdateHidDeviceConnectionStatus">
+            <summary>
+            Call this method about all registered devices, after calling MessageReceivingForm.SetupDi.Update(); in EgsDevicesManagers
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.TrySetIsCameraDeviceConnectedToTrue">
+            <summary>
+            This method should be called only from EgsDevicesManager.  This updates only connection state of "Camera".
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.SetIsCameraDeviceConnectedToFalse">
+            <summary>
+            This method should be called only from EgsDevicesManager.  This updates only connection state of "Camera".
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDevice.TrackableHandsCountMaximum">
+            <summary>
+            Currently the maximum number of objects which EGS device can detect and track is 2.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDevice.DetectableFacesCountMaximum">
+            <summary>
+            EGS device can detect 5 faces in one image, and the device selects only one face as a device user.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDevice.Settings">
+            <summary>
+            The current settings of this device.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDevice.TrackableHandsCount">
+            <summary>
+            This number depends on "TouchInterfaceKind".  MultiTouch mode returns 0.  Mouse mode and SingleTouch mode return 1.  If settings is not set, it returns 0.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDevice.CameraViewImageSourceBitmapCapture">
+            <summary>
+            Informations related to camera device is gathered to this object.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDevice.TouchScreenHidReport">
+            <summary>
+            HID report for OS.  Just only touch information is contained.  EgsGestureHidReport has more information for applications by this SDK users.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDevice.EgsGestureHidReport">
+            <summary>
+            HID report for applications by this SDK users.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDevice.HidDeviceDevicePath">
+            <summary>
+            The "DevicePath" of the HID device of the connected device.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDevice.TemperatureInCelsiusString">
+            <summary>
+            If the device can get temperature, this value will be update by EachDeviceStatusMonitoringTimer (System.Windows.Forms.Timer).  
+            You can change the interval of the timer by EgsDevice.TemperatureMonitoringTimerIntervalTotalSeconds property.
+            </summary>
+        </member>
+        <member name="T:Egs.EgsDeviceCameraViewImageSourceBitmapCapture">
+            <summary>
+            It opens camera device and gets images for WinForms bitmap.  EgsDevice has an object of this class.  Basically this class is managed by EgsDevice.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDeviceCameraViewImageSourceBitmapCapture.GetDeepCopiedBitmap(System.Boolean)">
+            <summary>
+            Return deep-copied bitmap data.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDeviceCameraViewImageSourceBitmapCapture.DeepCopyBitmap(System.Drawing.Bitmap,System.Drawing.Bitmap,System.Boolean)">
+            <summary>
+            Deep-copy bitmap data.  Bitmaps must have same size and pixel format.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceCameraViewImageSourceBitmapCapture.IsToUpdateImageSource">
+            <summary>
+            When this value is set true and device can work correctly, image source will be updated continuously.
+            </summary>
+        </member>
+        <member name="E:Egs.EgsDeviceCameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged">
+            <summary>
+            To draw your "CameraView" by your code, please use this event.
+            </summary>
+        </member>
+        <member name="E:Egs.EgsDeviceCameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapSizeOrPixelFormatChanged">
+            <summary>
+            When the image (captured by Windows) size is changed by some reason, this event will be raised.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceCameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap">
+            <summary>
+            When you use this for WinForms PictureBox, use like "PictureBox.Image.Dispose(); PictureBox.Image = (Bitmap)CameraViewImageSourceBitmap.Clone();".
+            It needs Clone() method, and "Bitmap.Clone()" method is shallow copy and it does not copy image data itself, so it is fast.
+            This class has an instance of "AForge.Video.DirectShow.VideoCaptureDevice".
+            And each "VideoCaptureDevice.NewFrame" event sends an instance of "AForge.Video.NewFrameEventArgs" class.
+            This CameraViewImageSourceBitmap is just a reference to the "NewFrameEventArgs.Frame" property.
+            That's why Bitmap is IDisposable, but this class does not implement IDIsposable.
+            So please do not call the Dispose() method by yourself to the return value of this property.
+            </summary>
+        </member>
+        <member name="T:Egs.EgsDeviceEgsGestureHidReport">
+            <summary>
+            Vendor specific HID report for applications of EgsSDK users.  This class does not implement INotifyProperty.  Just this reconstructs the recognition state from byte array reports.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceEgsGestureHidReport.tx">
+            <summary>X_host = sx * (X_device - tx).  Translation Offset X of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        </member>
+        <member name="P:Egs.EgsDeviceEgsGestureHidReport.sx">
+            <summary>X_host = sx * (X_device - tx).  Scaling X of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        </member>
+        <member name="P:Egs.EgsDeviceEgsGestureHidReport.ty">
+            <summary>Y_host = sy * (Y_device - ty).  Translation Offset Y of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        </member>
+        <member name="P:Egs.EgsDeviceEgsGestureHidReport.sy">
+            <summary>Y_host = sy * (Y_device - ty).  Scaling Y of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        </member>
+        <member name="T:Egs.EgsDeviceEgsGestureHidReportHand">
+            <summary>
+            Information about one hand made from Vendor Specific HID Report
+            </summary>
+        </member>
+        <member name="T:Egs.IHidReportForCursorViewModel">
+            <summary>
+            Implemented in EgsDeviceTouchScreenHidReport and EgsDeviceEgsGestureHidReport
+            </summary>
+        </member>
+        <member name="P:Egs.IHidReportForCursorViewModel.IsTracking">
+            <summary>
+            The device is tracking the hand or not
+            </summary>
+        </member>
+        <member name="P:Egs.IHidReportForCursorViewModel.X">
+            <summary>
+            Recognized hand's X position
+            </summary>
+        </member>
+        <member name="P:Egs.IHidReportForCursorViewModel.Y">
+            <summary>
+            Recognized hand's Y position
+            </summary>
+        </member>
+        <member name="P:Egs.IHidReportForCursorViewModel.IsTouching">
+            <summary>
+            Recognized hand is bended or not
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceEgsGestureHidReportHand.X">
+            <summary>X position on primary screen</summary>
+        </member>
+        <member name="P:Egs.EgsDeviceEgsGestureHidReportHand.Y">
+            <summary>Y position on primary screen</summary>
+        </member>
+        <member name="F:Egs.EgsGestureHidReportRecognitionState.NotDetecting">
+            <summary>0x00</summary>
+        </member>
+        <member name="F:Egs.EgsGestureHidReportRecognitionState.Detecting">
+            <summary>0x02</summary>
+        </member>
+        <member name="F:Egs.EgsGestureHidReportRecognitionState.OnScreenMappedAreaUpdated">
+            <summary>0x08</summary>
+        </member>
+        <member name="F:Egs.EgsGestureHidReportRecognitionState.Tracking">
+            <summary>0x20</summary>
+        </member>
+        <member name="F:Egs.EgsGestureHidReportRecognitionState.OnTrackingEnded">
+            <summary>0x80</summary>
+        </member>
+        <member name="F:Egs.EgsGestureHidReportMessageIds.Unknown">
+            <summary>0x00</summary>
+        </member>
+        <member name="F:Egs.EgsGestureHidReportMessageIds.StandingBy">
+            <summary>0x01</summary>
+        </member>
+        <member name="F:Egs.EgsGestureHidReportMessageIds.DetectingFaces">
+            <summary>0x08</summary>
+        </member>
+        <member name="F:Egs.EgsGestureHidReportMessageIds.DetectingOrTrackingHands">
+            <summary>0x10</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.HidReportIds.TouchScreen">
+            <summary>0x01</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.HidReportIds.Keyboard">
+            <summary>0x02</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.HidReportIds.Mouse">
+            <summary>0x03</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.HidReportIds.Gamepad">
+            <summary>0x04</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.HidReportIds.Joystick">
+            <summary>0x05</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.HidReportIds.EgsGesture">
+            <summary>0x0A</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.HidReportIds.EgsDeviceSettings">
+            <summary>0x0B</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.HidReportIds.EgsDeviceFirmwareUpdate">
+            <summary>0x0C.  (EgsDeviceQualityAssurance is also 0x0C.)</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.HidReportIds.EgsDeviceQualityAssurance">
+            <summary>0x0C.  (EgsDeviceFirmwareUpdate is also 0x0C.)</summary>
+        </member>
+        <member name="T:Egs.EgsDeviceSettings">
+            <summary>
+            The settings set from host application to connected device, when device is (re)connected or host application is started.
+            The information about capability and the status of "being connected" device, is not contained to this class.
+            SDK users can change EGS settings through "Value" properties etc. of each property in this object.
+            This also needs calling of "InitializeOnceAtStartup" method after construction.
+            </summary>
+        </member>
+        <member name="T:Egs.EgsHostApplicationIsClosingException">
+            <summary>
+            Exception thrown by some process (e.g. Firmware Update) in the application, to close the host application
+            </summary>
+        </member>
+        <member name="F:Egs.EgsDevicesWindowMessageReceivingForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevicesWindowMessageReceivingForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Egs.EgsDevicesWindowMessageReceivingForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Egs.EgsDeviceTouchScreenHidReport">
+            <summary>
+            HID Report for OS.  Information defined in this class are contained inside EgsDeviceEgsGestureHidReport.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceTouchScreenHidReport.ContactCount">
+            <summary>
+            In original Win32 implementation, not "contacts" but "contact" is used.
+            </summary>
+        </member>
+        <member name="T:Egs.EgsDeviceTouchScreenHidReportContact">
+            <summary>
+            HID Report for Windows OS.  Device Driver of Touch Screen is used.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceTouchScreenHidReportContact.ContactId">
+            <summary>
+            Specifies the identifier of the current contact. An identifier must remain constant while the contact is detected by the device. Each separate concurrent contact must have a unique identifier. Identifiers can be reused if a contact is no longer detected. If the device supports "in-air" packets (the contact is hovering above the surface), the identifier must persist from the time that the contact is detected until the time that it goes out of range. In the report descriptor in the EloMT sample, the comment for this usage is "Temp Identifier."
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceTouchScreenHidReportContact.TipSwitch">
+            <summary>
+            EgsDevice sends 0 (not touched) for an opened hand, 1 (touched) for a bended hand.  
+            "Use the tip switch to indicate finger contact and liftoff from the digitizer surface, similar to how a pen reports contact with the digitizer."
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceTouchScreenHidReportContact.InRange">
+            <summary>
+            EgsDevice sends 0 (far enough from touch panel) for an opened hand, 1 (touched or close enough) for a bended hand.
+            "If the device supports z-axis detection, it reports in-range when the transducer is within the region where digitizing is possible. If the device does not support z-axis detection, the driver should set in-range and tip switch when a finger comes in contact with the digitizer."
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceTouchScreenHidReportContact.Confidence">
+            <summary>
+            EgsDevice always sends 1.
+            Suggestion from the device about whether the touch contact was an intended or accidental touch. Your device should reject accidental touches as thoroughly as it can and report that information by using the confidence usage. The operating system uses confidence to help improve accidental touch rejection.
+            </summary>
+        </member>
+        <member name="T:Egs.EgsDeviceControlCore.Properties.Resources">
+            <summary>
+              ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.ResourceManager">
+            <summary>
+              このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.Culture">
+            <summary>
+              厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
+              現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewBordersAndPointersAreDrawnByDetail_ByDevice_Description">
+            <summary>
+              by Device (for Lower Spec PC) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewBordersAndPointersAreDrawnByDetail_ByHostApplication_Description">
+            <summary>
+              by Host Application に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewBordersAndPointersAreDrawnByDetail_Type_Description">
+            <summary>
+              Draw Borders and Pointers of Camera View に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewImageSourceBitmapSizeDetail_Value0_Description">
+            <summary>
+              320*240 に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewImageSourceBitmapSizeDetail_Value1_Description">
+            <summary>
+              384*240 に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewImageSourceBitmapSizeDetail_Value2_Description">
+            <summary>
+              640*480 に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewUserControlModel_ImageSetIndex_Description">
+            <summary>
+              Borders and Pointers Type に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewUserControlModel_IsToDrawImageSet_Description">
+            <summary>
+              Show Borders and Pointers に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_CanDragMove_Description">
+            <summary>
+              Enable Dragging に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_CanDragMoveDisabled_Description">
+            <summary>
+              Disable Dragging Camera View Window に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_CanDragMoveEnabled_Description">
+            <summary>
+              Enable Dragging Camera View Window に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_CanResize_Description">
+            <summary>
+              Enable Resizing に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_CanShowMenu_Description">
+            <summary>
+              Show Menu by Tap に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_LocationAndSize_Description">
+            <summary>
+              Window Position and Size に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_Topmost_Description">
+            <summary>
+              Bring Camera View to Front に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_WindowStateControlMethodSetByUser_Description">
+            <summary>
+              When to Show / Hide に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_KeepMinimized_Description">
+            <summary>
+              Keep Minimized に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_KeepNormal_Description">
+            <summary>
+              Keep Normal に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_Type_Description">
+            <summary>
+              Camera View Window State Control By Applications に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_UseUsersControlMethods_Description">
+            <summary>
+              Use User Settings に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ManualOnOff_Description">
+            <summary>
+              Show/Hide Manually by Selecting ZKOO Icon on Task Bar or System Tray.  Hide by Selecting &quot;Minimize&quot; Button on the Menu. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandDetectionStarts_ShowWhenHandTrackingStarts_Description">
+            <summary>
+              Show When Face Recognition Starts, and Hide After Recognized.  Show During Hand Tracking. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandDetectionStarts_ShowWhenHandTrackingStarts_HideSoonAfterHandTrackingStarts_Description">
+            <summary>
+              Show When Face Recognition Starts, and Hide After Recognized.  Show for a While After Hand Tracking Starts. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandTrackingStarts_Description">
+            <summary>
+              Show When Face Recognition Starts.  Hide Soon After Hand Tracking Starts. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandDetectionStarts_HideWhenHandDetectionEnds_HideSoonAfterHandTrackingStarts_Description">
+            <summary>
+              Show When a Face is Recognized.  Hide Soon After Hand Tracking Starts. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandDetectionStarts_HideWhenHandDetectionEnds_HideWhenHandTrackingEnds_Description">
+            <summary>
+              Show When a Face is Recognized. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandTrackingStarts_HideSoonAfterHandTrackingStarts_Description">
+            <summary>
+              Show for a While After Hand Tracking Starts. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandTrackingStarts_HideWhenHandTrackingEnds_Description">
+            <summary>
+              Show During Hand Tracking. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_Type_Description">
+            <summary>
+              Camera View Auto On/Off Control に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value1_Description">
+            <summary>
+              1x1 (not tested yet) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value2_Description">
+            <summary>
+              2x2 に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value3_Description">
+            <summary>
+              3x3 に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value4_Description">
+            <summary>
+              4x4 に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureExposureModeDetail_Value0_Description">
+            <summary>
+              Auto に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureExposureModeDetail_Value1_Description">
+            <summary>
+              Manual に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureExposureModeDetail_Value2_Description">
+            <summary>
+              User Detected Faces に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureFpsDetail_Value0_Description">
+            <summary>
+              Auto に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureFpsDetail_Value100_Description">
+            <summary>
+              100 fps に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureFpsDetail_Value120_Description">
+            <summary>
+              120 fps に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Accept">
+            <summary>
+              Accept に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0FailedToStart">
+            <summary>
+              {0} failed to start. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0IsAlreadyRunning">
+            <summary>
+              {0} is already running. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0IsLatest">
+            <summary>
+              No update is available.  You have installed the latest {0} application. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0Started">
+            <summary>
+              {0} started. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ApplicationVersion">
+            <summary>
+              Application Version に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ApplicationWillExit">
+            <summary>
+              Application will exit. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Auto">
+            <summary>
+              Auto に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Bottom">
+            <summary>
+              Bottom に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_CameraView">
+            <summary>
+              Camera View に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Cancel">
+            <summary>
+              Cancel に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_CanDownloadNewApplication0">
+            <summary>
+              New {0} application is available.  Please select OK to access {0} website to download new application. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_CheckForApplicationUpdates">
+            <summary>
+              Check for Updates に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Commands">
+            <summary>
+              Commands に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Confirmation">
+            <summary>
+              Confirmation に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Downloading">
+            <summary>
+              Downloading に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Drag">
+            <summary>
+              Drag に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Exit">
+            <summary>
+              Exit に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Flick">
+            <summary>
+              Flick に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Gesture">
+            <summary>
+              Gesture に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_GestureCursor">
+            <summary>
+              Gesture Cursor に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Height">
+            <summary>
+              Height に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_IsConnected">
+            <summary>
+              Connected に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_IsNotConnected">
+            <summary>
+              Not Connected に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Left">
+            <summary>
+              Left に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Log">
+            <summary>
+              Log に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Manual">
+            <summary>
+              Manual に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Maximum">
+            <summary>
+              Maximum に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Minimize">
+            <summary>
+              Minimize に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Minimum">
+            <summary>
+              Minimum に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_More">
+            <summary>
+              More に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Move">
+            <summary>
+              Move に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Options">
+            <summary>
+              Options に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseCheckYourNetworkConnection">
+            <summary>
+              Please check your network connection. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseConnectTheZkooCamera">
+            <summary>
+              Please connect the ZKOO camera. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseConnectYourHostDeviceToInternetAndThenClickOk">
+            <summary>
+              Please connect your host device to internet, and then click OK. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseStartHostApplicationsAfterZkooIsConnected">
+             <summary>
+               Please connect ZKOO with PC 
+            before starting ZKOO application. に類似しているローカライズされた文字列を検索します。
+             </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Preferences">
+            <summary>
+              Preferences に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Progress">
+            <summary>
+              Progress に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ResetDevice">
+            <summary>
+              Reset Device に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ResetDeviceConfirmation">
+            <summary>
+              Reset Device? に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ResetSettings">
+            <summary>
+              Reset Settings に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ResetSettingsConfirmation">
+            <summary>
+              Reset Settings to Default? に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Right">
+            <summary>
+              Right に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_SaveSettingsToFlash">
+            <summary>
+              Save Settings to Device に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_SaveSettingsToFlashConfirmation">
+            <summary>
+              Save Settings to Device? に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Settings">
+            <summary>
+              Settings に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Skip">
+            <summary>
+              Skip に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Start">
+            <summary>
+              Start に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Tap">
+            <summary>
+              Tap に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Top">
+            <summary>
+              Top に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Value">
+            <summary>
+              Value に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Width">
+            <summary>
+              Width に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_WouldYouExitApplication0">
+            <summary>
+              Would you exit {0}? に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ZkooRecognizeYourHands">
+            <summary>
+              ZKOO recognize your hands. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_Chinese_Description">
+            <summary>
+              简体中文 に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_English_Description">
+            <summary>
+              English に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_Japanese_Description">
+            <summary>
+              日本語 に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_Type_Description">
+            <summary>
+              Language に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_UseOSCulture_Description">
+            <summary>
+              Use OS Culture に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorDrawingTimingMethodDetail_ByHidReportUpdatedEvent_Description">
+            <summary>
+              Maximum に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorDrawingTimingMethodDetail_ByTimer30Fps_Description">
+            <summary>
+              30 fps に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorDrawingTimingMethodDetail_ByTimer60Fps_Description">
+            <summary>
+              60 fps に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorDrawingTimingMethodDetail_Type_Description">
+            <summary>
+              Gesture Cursor Drawing Frequency (Smaller Value for Lower Spec PC) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorSpeedAndPrecisionModeDetail_Value0_Description">
+            <summary>
+              Beginner: For slower hand moving and easier tapping.  2 cursors cannot cross. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorSpeedAndPrecisionModeDetail_Value1_Description">
+            <summary>
+              Standard: For standard speed hand moving.  2 cursors can cross. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorSpeedAndPrecisionModeDetail_Value2_Description">
+            <summary>
+              Fruit Ninja: Good for Fruit Ninja Game.  Cut fruits by fast moving opened hand. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value0_Description">
+            <summary>
+              0: Landscape に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value1_Description">
+            <summary>
+              90: Portrait (flipped) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value2_Description">
+            <summary>
+              180: Landscape (flipped) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value3_Description">
+            <summary>
+              270: Portrait に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceUsageDetail_Value0_Description">
+            <summary>
+              Gesture Camera に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceUsageDetail_Value1_Description">
+            <summary>
+              Web Camera に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_CameraDeviceDevicePath_Description">
+            <summary>
+              Camera Device DevicePath に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_DeviceSerialNumber_Description">
+            <summary>
+              Device Serial Number に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_DeviceStatusDetailString_Description">
+            <summary>
+              Device Status に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_FirmwareVersion_Description">
+            <summary>
+              Firmware Version に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HardwareType_Description">
+            <summary>
+              Hardware Type に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HidDeviceDevicePath_Description">
+            <summary>
+              Touch Device DevicePath に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_TemperatureInCelsius_Description">
+            <summary>
+              Temperature [C] に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_TemperatureInFahrenheit_Description">
+            <summary>
+              Temperature [F] に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_AppWillRetrySendingImageAgain">
+            <summary>
+              The application will retry sending image file again. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DeviceFirmwareUpdate">
+            <summary>
+              Device Firmware Update に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DfuCanceled">
+            <summary>
+              Device firmware update was canceled. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DfuCompleted">
+            <summary>
+              Device firmware update was completed. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DfuFailed">
+            <summary>
+              Device firmware update was failed. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DfuImageFileIsInvalid">
+            <summary>
+              Image file is invalid. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DoNotDisconnectTheDevice">
+            <summary>
+              Please do not disconnect ZKOO from AC adapter and PC. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_PleaseUpdateDeviceFirmware">
+            <summary>
+              Please update device firmware to use ZKOO and ZKOO application by selecting OK.  During update, you need to reboot ZKOO a few times. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_RestartDfuFromBeginning">
+            <summary>
+              Please restart the firmware update process from the beginning. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_UpdateDeviceFirmware">
+            <summary>
+              Update Device Firmware に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsReboot">
+            <summary>
+              ZKOO needs reboot. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsToConnectPowerCable">
+            <summary>
+              Please connect ZKOO with AC adapter and PC and check LED is on. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsToDisconnectPowerCable">
+            <summary>
+              Please disconnect ZKOO from AC adapter and PC and check LED is off. に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Description">
+            <summary>
+              Source Image Resolution に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceRectInCapturedImage_Description">
+            <summary>
+              Camera View Image Source Rect in Captured Image に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureBinning_Description">
+            <summary>
+              Binning Mode に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureExposureMode_Description">
+            <summary>
+              Exposure Mode に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureFps_Description">
+            <summary>
+              Camera Frame Per Second に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureImageSize_Description">
+            <summary>
+              Capture Image Size に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureManualExposureParameters_Description">
+            <summary>
+              Exposure Parameters に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Description">
+            <summary>
+              Gesture Usage に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Description">
+            <summary>
+              Primary Screen Orientation に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Description">
+            <summary>
+              Use ZKOO for に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionAreaOnFixed_Description">
+            <summary>
+              Face Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionScaleOnFixed_Description">
+            <summary>
+              Face Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionMethodKind_Description">
+            <summary>
+              How to Select a Player に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Description">
+            <summary>
+              Gesture by Fast Moving Hands に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HandDetectionParameters_Description">
+            <summary>
+              Hand Detection Parameters に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HostMachineOperatingSystem_Description">
+            <summary>
+              Host Machine OS に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToDetectFaces_Description">
+            <summary>
+              Detect Faces に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToDetectHands_Description">
+            <summary>
+              Detect Hands に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description">
+            <summary>
+              Draw Borders on Camera View Image By Device に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixFaceDetectionRegion_Description">
+            <summary>
+              Fix Face Detection Region に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixHandDetectionRegions_Description">
+            <summary>
+              Fix Hand Detection Regions に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixHandTrackingAreas_Description">
+            <summary>
+              Fix Hand Tracking Areas に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixScreenMappedAreas_Description">
+            <summary>
+              Fix Screen Mapped Areas に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToSendEgsGestureHidReport_Description">
+            <summary>
+              Send Touch Information to Apps に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToSendHoveringStateOnTouchScreenHidReport_Description">
+            <summary>
+              Send Hovering State on Touch Information to OS (On Windows 10, problems can happen) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToSendTouchScreenHidReport_Description">
+            <summary>
+              Send Touch Information to OS に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandCloseHand_Description">
+            <summary>
+              Left Hand Close Hand に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandDetectionAreaOnFixed_Description">
+            <summary>
+              Left Hand Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandDetectionScaleOnFixed_Description">
+            <summary>
+              Left Hand Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandInnerRotation_Description">
+            <summary>
+              Left Hand Inner Rotation に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandOuterRotation_Description">
+            <summary>
+              Left Hand Outer Rotation に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandScreenMappedAreaOnFixed_Description">
+            <summary>
+              Left Hand Screen Mapped Area (when fixed) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandTrackingAreaOnFixed_Description">
+            <summary>
+              Left Hand Tracking Area (when fixed) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LensEquivalentFocalLengthInMillimeters_Description">
+            <summary>
+              Focal Length [mm] に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LensFNumber_Description">
+            <summary>
+              F Number に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_ModelSetId_Description">
+            <summary>
+              Model Set ID に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_PowerMode_Description">
+            <summary>
+              Power Mode に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandCloseHand_Description">
+            <summary>
+              Right Hand Close Hand に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandDetectionAreaOnFixed_Description">
+            <summary>
+              Right Hand Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandDetectionScaleOnFixed_Description">
+            <summary>
+              Right Hand Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandInnerRotation_Description">
+            <summary>
+              Right Hand Inner Rotation に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandOuterRotation_Description">
+            <summary>
+              Right Hand Outer Rotation に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandScreenMappedAreaOnFixed_Description">
+            <summary>
+              Right Hand Screen Mapped Area (when fixed) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandTrackingAreaOnFixed_Description">
+            <summary>
+              Right Hand Tracking Area (when fixed) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_ScreenMappedAreaResolutionSize_Description">
+            <summary>
+              Screen Mapped Area Resolution Size on Device に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_SensorExposureTimeInMilliseconds_Description">
+            <summary>
+              Exposure [ms] に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_SensorOnePixelSideLengthInMillimeters_Description">
+            <summary>
+              One Pixel Side Length [mm] に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_StatusLedBrightnessMaximum_Description">
+            <summary>
+              Brightness of Status LED に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TouchInterfaceKind_Description">
+            <summary>
+              Touch Interface Kind に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TouchTargetScreenSize_Description">
+            <summary>
+              Touch Target Screen Size に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TrackableHandsCount_Description">
+            <summary>
+              The Number of Trackable Objects に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_UsbProtocolRevision_Description">
+            <summary>
+              USB Communication Protocol Revision に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceSelectionMethodKindDetail_Value0_Description">
+            <summary>
+              Auto: Select a person who moves a hand automatically に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceSelectionMethodKindDetail_Value1_Description">
+            <summary>
+              One by One: Select a person one by one to find who moves a hand に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceSelectionMethodKindDetail_Value2_Description">
+            <summary>
+              Most Center: Select the most center person in Camera View に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FastMovingHandsGestureModeDetail_Value0_Description">
+            <summary>
+              None に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FastMovingHandsGestureModeDetail_Value1_Description">
+            <summary>
+              Touch に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value0_Description">
+            <summary>
+              No Information に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value1_Description">
+            <summary>
+              ZKOO for Kickstarter Backers に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value2_Description">
+            <summary>
+              MA2150 + IMX208 に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value3_Description">
+            <summary>
+              MA2150 + IMX208 + PIC に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HostMachineOperatingSystemDetail_Value0_Description">
+            <summary>
+              Windows に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HostMachineOperatingSystemDetail_Value1_Description">
+            <summary>
+              Android に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.ModelSetIdDetail_Value0_Description">
+            <summary>
+              Five Fingers for TV に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.ModelSetIdDetail_Value1_Description">
+            <summary>
+              Wands? に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_FirstFoundHand_Description">
+            <summary>
+              First Found Hand に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_LeftHand_Description">
+            <summary>
+              Left Hand に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_None_Description">
+            <summary>
+              None に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_RightHand_Description">
+            <summary>
+              Right Hand に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_Type_Description">
+            <summary>
+              Move Mouse Cursor&apos;s Position to Follow Gesture Cursor&apos;s Position に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.OnePersonBothHandsViewModel_GestureCursorType_Description">
+            <summary>
+              Gesture Cursor Type に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.OnePersonBothHandsViewModel_IsToShowGestureCursors_Description">
+            <summary>
+              Show Gesture Cursors に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.PowerModeDetail_Value0_Description">
+            <summary>
+              Active に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.PowerModeDetail_Value1_Description">
+            <summary>
+              StandingBy に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_AdvancedSettings_Description">
+            <summary>
+              Advanced に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_AnalogGain_Description">
+            <summary>
+              Analog Gain (1-32):  に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_BasicSettings_Description">
+            <summary>
+              Basic に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_CameraViewSettings_Description">
+            <summary>
+              Camera View に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_DeveloperSettings_Description">
+            <summary>
+              Developer に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_ExvisionSettings_Description">
+            <summary>
+              Exvision に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_OptionsForLowerSpecPc_Description">
+            <summary>
+              Options for Lower Spec PC に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_StartTutorial_Description">
+            <summary>
+              Start Tutorial に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_TutorialAppSettings_Description">
+            <summary>
+              Tutorial App に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.TouchInterfaceKindDetail_Value0_Description">
+            <summary>
+              MultiTouch に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.TouchInterfaceKindDetail_Value1_Description">
+            <summary>
+              SingleTouch (for Android) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.TouchInterfaceKindDetail_Value2_Description">
+            <summary>
+              Mouse に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="T:Egs.PropertyTypes.HidAccessPropertyBase">
+            <summary>
+            The classes derived from this class have information to set settings and get state of the device.
+            </summary>
+        </member>
+        <member name="P:Egs.PropertyTypes.HidAccessPropertyBase.DescriptionKey">
+            <summary>
+            The key to Resource.ResourceManager.GetString.
+            </summary>
+        </member>
+        <member name="P:Egs.PropertyTypes.HidAccessPropertyBase.Description">
+            <summary>
+            In this base class, Resources.ResourceManager.GetString(DescriptionKey, Resources.Culture) is returned.  The list of key and value is described in some excel sheets.  
+            EgsSourceCodeGeneration.exe runs in a build event, and it converts the excel sheets and generates the multi-lingual "Resource.resx" files.
+            </summary>
+        </member>
+        <member name="P:Egs.PropertyTypes.HidAccessPropertyRatioRect.ValuesAsString">
+            <summary>
+            "Left, Top, Right, Bottom"
+            </summary>
+        </member>
+        <member name="T:Egs.Views.CursorForm">
+            <summary>
+            This class shows "Gesture Cursor".  This class must be initialized by InitializeOnceAtStartup() method.
+            </summary>
+        </member>
+        <member name="M:Egs.Views.CursorForm.InitializeOnceAtStartup(Egs.CursorViewModel,System.Collections.Generic.IList{Egs.Views.ImageInformationSet})">
+            <summary>
+            This method must be called after CursorViewModel and List of ImageInformationSet are constructed.
+            </summary>
+        </member>
+        <member name="M:Egs.Views.CursorForm.UpdatePosition">
+            <summary>
+            By calling this method, the Gesture Cursor position will be updated.  Typically, this method is called after updating CursorViewModel object in "EgsDevice.EgsGestureHidReport.ReportUpdated" event's event handler.
+            </summary>
+        </member>
+        <member name="F:Egs.Views.CursorForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Egs.Views.CursorForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Egs.Views.CursorForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:Egs.Views.CursorForm.CursorImageInformationSetList">
+            <summary>
+            List of ImageInformationSet.  One ImageInformationSet has "open hand" and "closed hand" images and so on.  And this list has the list of the image set, i.e. "00_Defalut", "01_Blue", "02_Blue" and so on.
+            </summary>
+        </member>
+        <member name="T:Egs.Views.ImageInformation">
+            <summary>
+            Information about one image.  This class does not have image data itself.
+            </summary>
+        </member>
+        <member name="T:Egs.Views.ImageInformationSet">
+            <summary>
+            Information about multiple images in one folder.  This class does not have image data itself.
+            </summary>
+        </member>
+        <member name="T:Egs.HidSimpleAccessException">
+            <summary>
+            Exception when HID access causes some problems
+            </summary>
+        </member>
+        <member name="P:Egs.HidSimpleAccessException.CreateFileFailedErrorMessage">
+            <summary>
+            Error message when CreateFile() failed
+            </summary>
+        </member>
+        <member name="M:Egs.Win32SetupDiForEgsDevice.GetInstalledDeviceDevicePathListByInterfaceClassGuid(System.Guid)">
+            <summary>
+            Use SetupDi API functions to retrieve the device path name of an attached device that belongs to a device interface class.
+            </summary>
+            <param name="interfaceClassGuid"> an interface class GUID. </param>
+        </member>
+        <member name="P:Egs.Win32SetupDiForEgsDevice.HidDevicePathList">
+            <summary>
+            The list of HidEgsGestureInterface VendorSpecificCollection's DevicePath
+            </summary>
+        </member>
+        <member name="P:Egs.Win32SetupDiForEgsDevice.AllConnectedHidDeviceFirstDeviceDevicePathList">
+            <summary>
+            DevicePath list of first device which does not have "col" or have "col01", in all connected HID device
+            </summary>
+        </member>
+        <member name="P:Egs.Win32SetupDiForEgsDevice.MatchedConnectedHidDeviceFirstDeviceDevicePathList">
+            <summary>
+            DevicePath list which is matched to camera, in first device which does not have "col" or have "col01", in all connected HID device
+            </summary>
+        </member>
+    </members>
+</doc>

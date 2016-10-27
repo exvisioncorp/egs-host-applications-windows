@@ -1,0 +1,41 @@
+<#@ template debug="true" language="C#" #>
+<#@ output extension=".cmd" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="..\EgsDeviceControlCore\VersionAndCultureInfo.t4" #>
+REM DO NOT add double quotation to the folder paths!!
+SET ResourceSourceFolderPath=%1..\..\..\..\Assets\Egs\ZkooTutorial\Resources
+SET ResourceDestinationFolderPath=%1\Resources
+<#
+switch (DefaultCultureInfoName)
+{
+    case "en":
+    case "ja":
+#>
+SET CultureInfoName=
+<#
+        break;
+    case "zh-Hans":
+#>
+REM SET CultureInfoName=-zh-Hans
+SET CultureInfoName=
+<#
+        break;
+}
+#>
+
+
+
+rmdir /S /Q "%ResourceDestinationFolderPath%\drawable-mdpi\"
+rmdir /S /Q "%ResourceDestinationFolderPath%\raw\"
+echo xcopy /E /I /Q /Y "%ResourceSourceFolderPath%\drawable-mdpi%CultureInfoName%" "%ResourceDestinationFolderPath%\drawable-mdpi\"
+echo xcopy /E /I /Q /Y "%ResourceSourceFolderPath%\raw%CultureInfoName%" "%ResourceDestinationFolderPath%\raw\"
+xcopy /E /I /Q /Y "%ResourceSourceFolderPath%\drawable-mdpi%CultureInfoName%" "%ResourceDestinationFolderPath%\drawable-mdpi\"
+xcopy /E /I /Q /Y "%ResourceSourceFolderPath%\raw%CultureInfoName%" "%ResourceDestinationFolderPath%\raw\"
+
+
+
+:End
+pause

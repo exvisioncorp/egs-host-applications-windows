@@ -1,0 +1,18 @@
+﻿<#
+var namespaceName = "Egs";
+var classDescription = "public partial class CameraViewWindowModel";
+
+var propertyElementsList = new List<PropertyInfoForT4Template>()
+{
+    new PropertyInfoForT4Template("[DataMember]", "public", "bool", "CanDragMove", "", false),
+    new PropertyInfoForT4Template("[DataMember]", "public", "bool", "CanResize", "", false),
+    new PropertyInfoForT4Template("[DataMember]", "public", "bool", "Topmost", "", false),
+    new PropertyInfoForT4Template("[DataMember]", "public", "int", "Left", "", false),
+    new PropertyInfoForT4Template("[DataMember]", "public", "int", "Top", "", false),
+    new PropertyInfoForT4Template("[DataMember]", "public", "int", "Width", "", false),
+    new PropertyInfoForT4Template("[DataMember]", "public", "int", "Height", "", false),
+
+    new PropertyInfoForT4Template("[DataMember]", "public", "bool", "CanShowMenu", "", false),
+};
+#>
+<#@ include file="DotNetUtility\PartialClass_Properties.t4" #>

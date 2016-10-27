@@ -1,0 +1,11 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".generated.cs" #>
+// NOTE: impossible: include file = "../../DotNetUtility/" + "DuplicatedProcessStartBlocking.cs"
+namespace Egs
+{
+<#@ include file = "../../DotNetWpfUtility/Views/AspectRatioKeepingWindowResize.cs" #>
+<#@ include file = "../../DotNetWpfUtility/Views/Converters.cs" #>
+<#@ include file = "../../DotNetWpfUtility/ApplicationUpdateModel.cs" #>
+<#@ include file = "../../DotNetWpfUtility/BitmapImageUtility.cs" #>
+<#@ include file = "../../DotNetWpfUtility/SimpleDelegateCommand.cs" #>
+}

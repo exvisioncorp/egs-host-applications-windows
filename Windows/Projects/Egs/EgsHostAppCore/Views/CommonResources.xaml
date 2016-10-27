@@ -1,0 +1,609 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" xmlns:local="clr-namespace:Egs"
+        xmlns:dotNetUtilViews="clr-namespace:Egs.DotNetUtility.Views">
+
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <dotNetUtilViews:TrueToCollapsedFalseToVisibleConverter x:Key="TrueToCollapsedFalseToVisibleConverter" />
+    <dotNetUtilViews:BoolToOppositeBoolConverter x:Key="BoolToOppositeBoolConverter" />
+    <dotNetUtilViews:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <dotNetUtilViews:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+    <dotNetUtilViews:Int32IndexToBooleanConverter x:Key="Int32IndexToBooleanConverter" />
+
+    <Style x:Key="LauncherButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="14.5" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="Width" Value="116" />
+        <Setter Property="Height" Value="116" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Content" Value="{Binding ButtonContentText}" />
+        <Setter Property="Command" Value="{Binding Command}" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Ellipse x:Name="OuterBorderShape" Width="106" Height="106">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="Black" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="OuterShape" Width="104" Height="104">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeEdgeFillBrush" Color="White" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="InnerShape" Width="98" Height="98">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="ShapeInsideFillBrush" Color="Black" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="RoyalBlue" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ShapeInsideFillBrush"
+                                                Storyboard.TargetProperty="Color" To="Black" Duration="0:0:0.05" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="OuterBorderShape" Property="Width" Value="102" />
+                            <Setter TargetName="OuterBorderShape" Property="Height" Value="102" />
+                            <Setter TargetName="OuterShape" Property="Width" Value="100" />
+                            <Setter TargetName="OuterShape" Property="Height" Value="100" />
+                            <Setter TargetName="InnerShape" Property="Width" Value="92" />
+                            <Setter TargetName="InnerShape" Property="Height" Value="92" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LauncherSmallButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Width" Value="92" />
+        <Setter Property="Height" Value="92" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="FontSize" Value="14.5" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="Content" Value="{Binding ButtonContentText}" />
+        <Setter Property="Command" Value="{Binding Command}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Ellipse x:Name="OuterBorderShape" Width="84" Height="84" Fill="Black" />
+                        <Ellipse x:Name="OuterShape" Width="82" Height="82" Stroke="White" StrokeThickness="3">
+                            <!--<Ellipse.Fill>
+                                    <SolidColorBrush Color="OrangeRed" Opacity="{Binding IsSelectedOpacity}" />
+                                </Ellipse.Fill>-->
+                        </Ellipse>
+                        <Ellipse x:Name="IsMouseOverFillBrushShape" Width="76" Height="76">
+                            <Ellipse.Fill>
+                                <SolidColorBrush x:Name="IsMouseOverFillBrush" Color="RoyalBlue" Opacity="0" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="IsMouseOverFillBrush"
+                                                Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="IsMouseOverFillBrush"
+                                                Storyboard.TargetProperty="Opacity" To="0.0" Duration="0:0:0.05" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="OuterBorderShape" Property="Width" Value="80" />
+                            <Setter TargetName="OuterBorderShape" Property="Height" Value="80" />
+                            <Setter TargetName="OuterShape" Property="Width" Value="78" />
+                            <Setter TargetName="OuterShape" Property="Height" Value="78" />
+                            <Setter TargetName="IsMouseOverFillBrushShape" Property="Width" Value="70" />
+                            <Setter TargetName="IsMouseOverFillBrushShape" Property="Height" Value="70" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LauncherLaunchableApplicationButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="14.5" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="Command" Value="{Binding LaunchingOtherApplicationButtonModel.Command}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="OuterBorderPanel" Width="120" MinHeight="60">
+                        <Grid.Background>
+                            <SolidColorBrush x:Name="panelBackgroundBrush" Color="Black" />
+                        </Grid.Background>
+                        <StackPanel VerticalAlignment="Center">
+                            <Image Source="{Binding AppIconImageSource}" />
+                            <TextBlock Text="{Binding AppTitle}" />
+                        </StackPanel>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="panelBackgroundBrush"
+                                                Storyboard.TargetProperty="Color" To="RoyalBlue" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="panelBackgroundBrush"
+                                                Storyboard.TargetProperty="Color" To="Black" Duration="0:0:0.05" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="OuterBorderPanel" Property="Width" Value="118" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="cameraViewGlassButtonTemplate" TargetType="{x:Type Button}">
+        <ControlTemplate.Resources>
+            <SolidColorBrush x:Key="GlassButtonBorder01BorderBrush" Color="#FF00FFFF" />
+            <SolidColorBrush x:Key="GlassButtonBorder02BorderBrush" Color="#FF007FFF" />
+            <SolidColorBrush x:Key="GlassButtonBorder02Background" Color="#7F003FFF" />
+            <SolidColorBrush x:Key="GlassButtonBorder02BackgroundMouseDown" Color="#7F003FFF" />
+            <Storyboard x:Key="ButtonEnterActionTimeline">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="glow"
+                        Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.100" Value="1" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="ButtonExitActionTimeline">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="glow"
+                        Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.200" Value="0" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </ControlTemplate.Resources>
+        <Border BorderBrush="{StaticResource GlassButtonBorder01BorderBrush}" BorderThickness="0" CornerRadius="10">
+            <Border x:Name="border" BorderBrush="{StaticResource GlassButtonBorder02BorderBrush}"
+                    Background="{StaticResource GlassButtonBorder02Background}" BorderThickness="3" CornerRadius="8.5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.507*" />
+                        <RowDefinition Height="0.493*" />
+                    </Grid.RowDefinitions>
+                    <Border Opacity="0" HorizontalAlignment="Stretch" x:Name="glow" Width="Auto" Grid.RowSpan="2"
+                            CornerRadius="7">
+                        <Border.Background>
+                            <RadialGradientBrush>
+                                <RadialGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="1.702" ScaleY="2.243" />
+                                        <SkewTransform AngleX="0" AngleY="0" />
+                                        <RotateTransform Angle="0" />
+                                        <TranslateTransform X="-0.368" Y="-0.152" />
+                                    </TransformGroup>
+                                </RadialGradientBrush.RelativeTransform>
+                                <GradientStop Color="#B28DBDFF" Offset="0" />
+                                <GradientStop Color="#008DBDFF" Offset="1" />
+                            </RadialGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto"
+                            Grid.RowSpan="2" />
+                    <Border HorizontalAlignment="Stretch" Margin="0" x:Name="shine" Width="Auto" CornerRadius="7,7,0,0">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.494,0.889" StartPoint="0.494,0.028">
+                                <GradientStop Color="#99FFFFFF" Offset="0" />
+                                <GradientStop Color="#33FFFFFF" Offset="1" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                </Grid>
+            </Border>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Opacity" TargetName="shine" Value="0.4" />
+                <Setter Property="Background" TargetName="border"
+                        Value="{StaticResource GlassButtonBorder02BackgroundMouseDown}" />
+                <Setter Property="Visibility" TargetName="glow" Value="Hidden" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource ButtonEnterActionTimeline}" />
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard Storyboard="{StaticResource ButtonExitActionTimeline}" />
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="GroupBox">
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" Foreground="RoyalBlue" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Margin" Value="1" />
+    </Style>
+    <Style TargetType="CheckBox">
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="MinHeight" Value="20" />
+    </Style>
+    <Style TargetType="Label">
+        <Setter Property="MinHeight" Value="20" />
+    </Style>
+    <Style TargetType="ComboBox">
+        <Setter Property="MinHeight" Value="20" />
+    </Style>
+    <Style TargetType="Expander">
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" Foreground="RoyalBlue" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Margin" Value="1" />
+    </Style>
+
+    <Style x:Key="listBoxWithRadioButton" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <RadioButton Content="{TemplateBinding Content}" Margin="5,10" VerticalContentAlignment="Center"
+                            IsChecked="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CursorImageSetInformationOptionalValueListBoxWithRadioButton" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <RadioButton Margin="5,10" VerticalContentAlignment="Center"
+                            IsChecked="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+                        <Image Source="{Binding SampleImageSource}" />
+                    </RadioButton>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ItemsPanelTemplate x:Key="ItemsPanelTemplateIsWrapPanel">
+        <WrapPanel />
+    </ItemsPanelTemplate>
+    <ItemsPanelTemplate x:Key="ItemsPanelTemplateIsVerticalStackPanel">
+        <StackPanel Orientation="Vertical" />
+    </ItemsPanelTemplate>
+    <ItemsPanelTemplate x:Key="ItemsPanelTemplateIsUniformGrid">
+        <UniformGrid />
+    </ItemsPanelTemplate>
+    <ItemsPanelTemplate x:Key="ItemsPanelTemplateIsTwoColumnsUniformGrid">
+        <UniformGrid Columns="2" />
+    </ItemsPanelTemplate>
+    <ItemsPanelTemplate x:Key="ItemsPanelTemplateIsFiveColumnsUniformGrid">
+        <UniformGrid Columns="5" />
+    </ItemsPanelTemplate>
+    <ItemsPanelTemplate x:Key="ItemsPanelTemplateIsSixColumnsUniformGrid">
+        <UniformGrid Columns="6" />
+    </ItemsPanelTemplate>
+
+    <Storyboard x:Key="SetVisibilityToCollapsedWithOpacityDecreaseStoryboardKey">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0.200" From="1.0" To="0.0" />
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.200" Value="{x:Static Visibility.Collapsed}" />
+        </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="SetVisibilityToVisibleWithOpacityIncreaseStoryboardKey">
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+        </ObjectAnimationUsingKeyFrames>
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0.050" From="0.0" To="1.0" />
+    </Storyboard>
+
+    <Storyboard x:Key="SetWindowStateToMinimizedWithOpacityDecreaseStoryboardKey">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0.200" From="1.0" To="0.0" />
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="WindowState">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.200" Value="{x:Static WindowState.Minimized}" />
+        </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="SetWindowStateToNormalWithOpacityIncreaseStoryboardKey">
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="WindowState">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static WindowState.Normal}" />
+        </ObjectAnimationUsingKeyFrames>
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0.050" From="0.0" To="1.0" />
+    </Storyboard>
+
+    <!--<Style x:Key="CaptionButtonStyleKey" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontFamily" Value="Marlett" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Padding" Value="1" />
+        -->
+    <!--<Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />-->
+    <!--
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" Background="Transparent" SnapsToDevicePixels="True">
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0" />
+                        </Border.Effect>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                Storyboard.TargetName="border">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.6" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                Storyboard.TargetName="border">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                Storyboard.TargetName="border">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)"
+                                                Storyboard.TargetName="border">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames
+                                                Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Color)"
+                                                Storyboard.TargetName="border">
+                                            <EasingColorKeyFrame KeyTime="0" Value="White" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                                Storyboard.TargetName="border">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.6" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    </Style>-->
+
+    <Viewbox x:Shared="False" x:Key="FaceDetectionAreaPathsOnCanvas" Stretch="Fill">
+        <Canvas Width="100" Height="100">
+            <Path
+                    Data="F1M98.171,85.859C98.171,92.491,92.759,97.916,86.145,97.916L13.856,97.916C7.241,97.916,1.83,92.491,1.83,85.859L1.83,14.146C1.83,7.514,7.241,2.089,13.856,2.089L86.145,2.089C92.759,2.089,98.171,7.514,98.171,14.146z M96.059,0.505L3.941,0.505C2.052,0.505,0.505,2.055,0.505,3.95L0.505,96.055C0.505,97.95,2.052,99.5,3.941,99.5L96.059,99.5C97.949,99.5,99.495,97.95,99.495,96.055L99.495,3.95C99.495,2.055,97.949,0.505,96.059,0.505"
+                    Fill="Cyan" Width="100" Height="100" Opacity="0.9" Stroke="Cyan" StrokeThickness="1" />
+        </Canvas>
+    </Viewbox>
+
+    <Viewbox x:Shared="False" x:Key="SelectedFaceAreaPathsOnCanvas" Stretch="Fill">
+        <Canvas Width="98.99" Height="98.989" Opacity="0.7">
+            <Path
+                    Data="F1M98.171,85.854C98.171,92.486,92.759,97.912,86.145,97.912L13.856,97.912C7.242,97.912,1.83,92.486,1.83,85.854L1.83,14.146C1.83,7.514,7.242,2.088,13.856,2.088L86.145,2.088C92.759,2.088,98.171,7.514,98.171,14.146z M96.059,0.505L3.942,0.505C2.052,0.505,0.505,2.056,0.505,3.95L0.505,96.05C0.505,97.944,2.052,99.494,3.942,99.494L96.059,99.494C97.949,99.494,99.495,97.944,99.495,96.05L99.495,3.95C99.495,2.056,97.949,0.505,96.059,0.505"
+                    Fill="Cyan" Height="99.999" Canvas.Left="-0.505" Stroke="Cyan" StrokeThickness="1.01"
+                    Canvas.Top="-0.506" Width="100" />
+            <Path Data="M0,0.758L12.026,0.758" Height="1.515" Canvas.Left="85.932" StrokeStartLineCap="Round"
+                    StrokeEndLineCap="Round" Stroke="Cyan" StrokeThickness="1.515" StrokeLineJoin="Round"
+                    Canvas.Top="48.363" Width="12.026" />
+            <Path Data="M0,0.758L12.026,0.758" Height="1.515" Canvas.Left="1.031" StrokeStartLineCap="Round"
+                    StrokeEndLineCap="Round" Stroke="Cyan" StrokeThickness="1.515" StrokeLineJoin="Round"
+                    Canvas.Top="48.363" Width="12.026" />
+            <Path Data="M0.757,0L0.757,12.057" Height="12.057" Canvas.Left="46.492" StrokeStartLineCap="Round"
+                    StrokeEndLineCap="Round" Stroke="Cyan" StrokeThickness="1.515" StrokeLineJoin="Round"
+                    Canvas.Top="85.901" Width="1.515" />
+            <Path Data="M0.757,0L0.757,12.057" Height="12.057" Canvas.Left="46.492" StrokeStartLineCap="Round"
+                    StrokeEndLineCap="Round" Stroke="Cyan" StrokeThickness="1.515" StrokeLineJoin="Round"
+                    Canvas.Top="1.03" Width="1.515" />
+        </Canvas>
+    </Viewbox>
+
+    <Viewbox x:Shared="False" x:Key="Hand0RightDetectionAreaPathsOnCanvas" Stretch="Fill">
+        <Canvas Opacity="0.5" Width="145.326" Height="120">
+            <Canvas.RenderTransform>
+                <ScaleTransform ScaleX="0.9" ScaleY="1.0" CenterX="145.326" />
+            </Canvas.RenderTransform>
+            <Path
+                    Data="M138.64,118.526L14.18,118.526 3.752,94.468 3.752,21.172C3.752,19.638,14.788,1.474,14.736,1.474L135.718,1.474C141.508,1.474,143.854,2.727,143.854,4.26L143.854,115.74C143.854,117.272,141.508,118.526,138.64,118.526z"
+                    Height="120" Canvas.Left="-3.753" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stroke="Cyan"
+                    StrokeThickness="2.947" StrokeLineJoin="Round" Canvas.Top="-1.474" Width="145.326" />
+            <Path Data="M10.791,16.908L17.204,16.86C12.518,16.542,10.598,15.66,8.447,12.716z" Height="18.389"
+                    Canvas.Left="0.164" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stroke="Cyan"
+                    StrokeThickness="2.947" StrokeLineJoin="Round" Canvas.Top="100.144" Width="31.96" />
+            <Path Data="M10.791,1.48L17.204,1.528C12.518,1.847,10.598,2.728,8.447,5.672z" Height="18.389"
+                    Canvas.Left="0.164" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stroke="Cyan"
+                    StrokeThickness="2.947" StrokeLineJoin="Round" Canvas.Top="-1.469" Width="31.96" />
+            <Path
+                    Data="F1M21.687,1.474L14.735,1.474C20.523,1.474,22.87,3.564,22.87,7.786L22.87,112.214C22.87,115.304,22.278,118.17,17.656,118.526L24.608,118.526C27.768,118.526,29.827,115.966,29.822,112.214L29.822,7.786C29.822,4.004,28.745,1.474,21.687,1.474"
+                    Fill="Cyan" Height="120" Canvas.Left="117.231" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                    Stroke="Cyan" StrokeThickness="2.947" StrokeLineJoin="Round" Canvas.Top="-1.474" Width="31.295" />
+        </Canvas>
+    </Viewbox>
+
+    <Viewbox x:Shared="False" x:Key="Hand1LeftDetectionAreaPathsOnCanvas" Stretch="Fill">
+        <Canvas Opacity="0.5" Width="145.327" Height="120">
+            <Canvas.RenderTransform>
+                <ScaleTransform ScaleX="0.9" ScaleY="1.0" />
+            </Canvas.RenderTransform>
+            <Path
+                    Data="M6.688,118.526L131.146,118.526 141.574,94.468 141.574,21.172C141.574,19.638,130.538,1.474,130.592,1.474L9.608,1.474C3.82,1.474,1.474,2.727,1.474,4.26L1.474,115.74C1.474,117.272,3.82,118.526,6.688,118.526z"
+                    Height="120" Canvas.Left="5.479" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stroke="Cyan"
+                    StrokeThickness="2.947" StrokeLineJoin="Round" Canvas.Top="-1.474" Width="145.327" />
+            <Path Data="M21.169,16.908L14.756,16.86C19.442,16.542,21.362,15.66,23.513,12.716z" Height="18.389"
+                    Canvas.Left="114.929" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stroke="Cyan"
+                    StrokeThickness="2.947" StrokeLineJoin="Round" Canvas.Top="100.144" Width="31.96" />
+            <Path Data="M21.169,1.48L14.756,1.528C19.442,1.847,21.362,2.728,23.513,5.672z" Height="18.389"
+                    Canvas.Left="114.929" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stroke="Cyan"
+                    StrokeThickness="2.947" StrokeLineJoin="Round" Canvas.Top="-1.469" Width="31.96" />
+            <Path
+                    Data="F1M9.608,1.474L16.56,1.474C10.772,1.474,8.425,3.564,8.425,7.786L8.425,112.214C8.425,115.304,9.017,118.17,13.639,118.526L6.687,118.526C3.527,118.526,1.468,115.966,1.473,112.214L1.473,7.786C1.473,4.004,2.55,1.474,9.608,1.474"
+                    Fill="Cyan" Height="120" Canvas.Left="-1.473" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                    Stroke="Cyan" StrokeThickness="2.947" StrokeLineJoin="Round" Canvas.Top="-1.474" Width="31.296" />
+        </Canvas>
+    </Viewbox>
+
+    <Viewbox x:Shared="False" x:Key="HandScreenMappedAreaPathsOnCanvas" Stretch="Fill">
+        <Canvas Width="98.99" Height="98.995">
+            <Path
+                    Data="F1M98.171,85.859C98.171,92.491,92.759,97.916,86.145,97.916L13.856,97.916C7.241,97.916,1.83,92.491,1.83,85.859L1.83,14.146C1.83,7.514,7.241,2.089,13.856,2.089L86.145,2.089C92.759,2.089,98.171,7.514,98.171,14.146z M96.059,0.505L3.941,0.505C2.052,0.505,0.505,2.055,0.505,3.95L0.505,96.055C0.505,97.95,2.052,99.5,3.941,99.5L96.059,99.5C97.949,99.5,99.495,97.95,99.495,96.055L99.495,3.95C99.495,2.055,97.949,0.505,96.059,0.505"
+                    Fill="Cyan" Height="100.005" Canvas.Left="-0.505" Opacity="0.9" Stroke="Cyan" StrokeThickness="1.01"
+                    Canvas.Top="-0.505" Width="100" />
+        </Canvas>
+    </Viewbox>
+
+    <Viewbox x:Shared="False" x:Key="HandPointerHoveringPathsOnCanvas" Stretch="Fill">
+        <Canvas Width="35" Height="34" Opacity="0.9">
+            <Path Data="F1M0.695,5.314L1.947,1.575 3.199,5.314z" Fill="Cyan" Height="5.814" Canvas.Left="15.553"
+                    StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stroke="Cyan" StrokeLineJoin="Round"
+                    Canvas.Top="28.342" Width="3.893" />
+            <Path Data="F1M0.73,0.525L1.982,4.264 3.234,0.525z" Fill="Cyan" Height="5.92" Canvas.Left="15.518"
+                    StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stroke="Cyan" StrokeThickness="1.051"
+                    StrokeLineJoin="Round" Canvas.Top="-0.525" Width="3.964" />
+            <Path
+                    Data="F1M10.73,9.633C6.803,8.266,3.878,4.756,3.35,0.5L0.551,0.5C1.092,5.986,4.815,10.536,9.846,12.274z"
+                    Fill="Cyan" Height="12.911" Canvas.Left="3.103" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                    Stroke="Cyan" StrokeLineJoin="Round" Canvas.Top="17.737" Width="11.362" />
+            <Path
+                    Data="F1M8.011,0.5C7.483,4.756,4.558,8.266,0.631,9.633L1.516,12.275C6.547,10.536,10.269,5.986,10.81,0.5z"
+                    Fill="Cyan" Height="12.912" Canvas.Left="20.522" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                    Stroke="Cyan" StrokeLineJoin="Round" Canvas.Top="17.737" Width="11.362" />
+            <Path
+                    Data="F1M9.999,0.632C4.853,2.346,1.044,6.992,0.547,12.593L3.339,12.593C3.826,8.221,6.839,4.615,10.883,3.271z"
+                    Fill="Cyan" Height="13.093" Canvas.Left="3.108" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                    Stroke="Cyan" StrokeLineJoin="Round" Canvas.Top="3.013" Width="11.516" />
+            <Path
+                    Data="F1M1.518,0.475L0.634,3.114C4.678,4.458,7.691,8.064,8.178,12.436L10.97,12.436C10.473,6.835,6.664,2.189,1.518,0.475"
+                    Fill="Cyan" Height="12.935" Canvas.Left="20.363" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                    Stroke="Cyan" StrokeLineJoin="Round" Canvas.Top="3.17" Width="11.516" />
+            <Path Data="F1M6.883,1.841L0,1.841 0,0 7.211,0z" Fill="Cyan" Height="1.841" Canvas.Left="0"
+                    Canvas.Top="14.29" Width="7.211" />
+            <Path Data="F1M6.883,0.001L0,0.001 0,1.842 7.211,1.842z" Fill="Cyan" Height="1.841" Canvas.Left="0"
+                    Canvas.Top="17.714" Width="7.211" />
+            <Path Data="F1M0.328,1.841L7.211,1.841 7.211,0 0,0z" Fill="Cyan" Height="1.841" Canvas.Left="27.789"
+                    Canvas.Top="14.29" Width="7.211" />
+            <Path Data="F1M0.328,0.001L7.211,0.001 7.211,1.842 0,1.842z" Fill="Cyan" Height="1.841" Canvas.Left="27.789"
+                    Canvas.Top="17.714" Width="7.211" />
+        </Canvas>
+    </Viewbox>
+
+    <Viewbox x:Shared="False" x:Key="HandPointerTouchingPathsOnCanvas" Stretch="Fill">
+        <Canvas Width="27" Height="25.406" Opacity="0.9">
+            <Path Data="F1M0.566,4.14L1.491,1.317 2.415,4.14z" Fill="#FFFF8500" Height="4.55" Canvas.Left="12.007"
+                    StrokeStartLineCap="Square" StrokeEndLineCap="Square" Stroke="#FFFF8500" StrokeThickness="0.82"
+                    StrokeLineJoin="Round" Canvas.Top="21.266" Width="2.98" />
+            <Path Data="F1M0.566,0.41L1.491,3.233 2.415,0.41z" Fill="#FFFF8500" Height="4.55" Canvas.Left="12.007"
+                    StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stroke="#FFFF8500" StrokeThickness="0.82"
+                    StrokeLineJoin="Round" Canvas.Top="-0.41" Width="2.98" />
+            <Path Data="F1M5.765,1.026L0,1.026 0,0 5.845,0z" Fill="#FFFF8500" Height="1.026" Canvas.Left="0"
+                    Canvas.Top="10.918" Width="5.845" />
+            <Path Data="F1M5.765,0L0,0 0,1.026 5.845,1.026z" Fill="#FFFF8500" Height="1.026" Canvas.Left="0"
+                    Canvas.Top="13.105" Width="5.845" />
+            <Path Data="F1M0.08,1.026L5.845,1.026 5.845,0 0,0z" Fill="#FFFF8500" Height="1.026" Canvas.Left="21.155"
+                    Canvas.Top="10.918" Width="5.845" />
+            <Path Data="F1M0.08,0L5.845,0 5.845,1.026 0,1.026z" Fill="#FFFF8500" Height="1.026" Canvas.Left="21.155"
+                    Canvas.Top="13.105" Width="5.845" />
+            <Path
+                    Data="F1M7.427,0.522C3.627,1.816,0.814,5.323,0.447,9.551L2.509,9.551C2.868,6.251,5.093,3.529,8.079,2.514z"
+                    Fill="#FFFF8500" Height="9.961" Canvas.Left="2.831" StrokeStartLineCap="Square"
+                    StrokeEndLineCap="Square" Stroke="#FFFF8500" StrokeThickness="0.82" StrokeLineJoin="Round"
+                    Canvas.Top="1.977" Width="8.595" />
+            <Path
+                    Data="F1M1.168,0.388L0.516,2.38C3.502,3.395,5.727,6.117,6.086,9.417L8.148,9.417C7.781,5.189,4.968,1.682,1.168,0.388"
+                    Fill="#FFFF8500" Height="9.827" Canvas.Left="15.569" StrokeStartLineCap="Square"
+                    StrokeEndLineCap="Square" Stroke="#FFFF8500" StrokeThickness="0.82" StrokeLineJoin="Round"
+                    Canvas.Top="2.111" Width="8.595" />
+            <Path
+                    Data="F1M7.967,7.305C5.067,6.273,2.907,3.623,2.518,0.41L0.451,0.41C0.85,4.552,3.599,7.987,7.314,9.299z"
+                    Fill="#FFFF8500" Height="9.825" Canvas.Left="2.835" StrokeStartLineCap="Square"
+                    StrokeEndLineCap="Square" Stroke="#FFFF8500" StrokeThickness="0.82" StrokeLineJoin="Round"
+                    Canvas.Top="13.104" Width="8.481" />
+            <Path Data="F1M5.963,0.41C5.573,3.623,3.413,6.272,0.514,7.305L1.167,9.299C4.882,7.986,7.63,4.552,8.03,0.41z"
+                    Fill="#FFFF8500" Height="9.825" Canvas.Left="15.679" StrokeStartLineCap="Square"
+                    StrokeEndLineCap="Square" Stroke="#FFFF8500" StrokeThickness="0.82" StrokeLineJoin="Round"
+                    Canvas.Top="13.104" Width="8.481" />
+            <Path
+                    Data="M10.86,6.06C10.86,8.84 8.658,11.094 5.942,11.094 3.226,11.094 1.026,8.84 1.026,6.06 1.026,3.28 3.226,1.026 5.942,1.026 8.658,1.026 10.86,3.28 10.86,6.06z"
+                    Height="12.119" Canvas.Left="7.555" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                    Stroke="#FFFF8500" StrokeThickness="2.051" StrokeLineJoin="Round" Canvas.Top="6.324" Width="11.885" />
+        </Canvas>
+    </Viewbox>
+
+    <!--<Viewbox x:Shared="False" x:Key="BorderWith2PtLine" Stretch="Fill">
+        <Canvas Width="100" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top" UseLayoutRounding="False"
+                Opacity="0.9">
+            <Path
+                    Data="F1M12.855,0.593C5.951,0.593,0.334,6.224,0.334,13.146L0.334,84.855C0.334,91.777,5.951,97.407,12.855,97.407L85.144,97.407C92.048,97.407,97.665,91.777,97.665,84.855L97.665,13.146C97.665,6.224,92.048,0.593,85.144,0.593z M2.94,98C1.319,98,0,96.677,0,95.051L0,2.949C0,1.323,1.319,0,2.94,0L95.058,0C96.68,0,97.999,1.323,97.999,2.949L97.999,95.051C97.999,96.677,96.68,98,95.058,98z"
+                    Fill="Cyan" Height="98" Canvas.Left="1" Canvas.Top="1" Width="97.999" />
+            <Path
+                    Data="F1M13.855,97.407C7.502,97.407,2.334,92.224,2.334,85.855L2.334,14.145C2.334,7.775,7.502,2.593,13.855,2.593L86.144,2.593C92.497,2.593,97.665,7.775,97.665,14.145L97.665,85.855C97.665,92.224,92.497,97.407,86.144,97.407z M96.058,0L3.94,0C1.767,0,0,1.771,0,3.949L0,96.051C0,98.228,1.767,100,3.94,100L96.058,100C98.231,100,99.999,98.228,99.999,96.051L99.999,3.949C99.999,1.771,98.231,0,96.058,0 M2,92.367C3.33,94.791,5.38,96.766,7.858,98L3.94,98C2.87,98,2,97.125,2,96.051L2,92.367 M97.999,92.367L97.999,96.051C97.999,97.125,97.128,98,96.058,98L92.141,98C94.619,96.766,96.668,94.791,97.999,92.367 M7.858,2C5.38,3.234,3.33,5.209,2,7.633L2,3.949C2,2.874,2.87,2,3.94,2L7.858,2 M96.058,2C97.128,2,97.999,2.874,97.999,3.949L97.999,7.633C96.668,5.209,94.618,3.234,92.14,2L96.058,2"
+                    Fill="Cyan" Height="100" Canvas.Left="0" Canvas.Top="0" Width="99.999" />
+        </Canvas>
+    </Viewbox>-->
+
+</ResourceDictionary>

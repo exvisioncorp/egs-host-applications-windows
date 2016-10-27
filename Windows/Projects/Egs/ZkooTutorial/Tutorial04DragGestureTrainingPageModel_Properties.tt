@@ -1,0 +1,20 @@
+﻿<#
+var namespaceName = "Egs.ZkooTutorial";
+var classDescription = "partial class Tutorial04DragGestureTrainingPageModel";
+
+var propertyElementsList = new List<PropertyInfoForT4Template>()
+{
+    new PropertyInfoForT4Template("", "public", "Visibility", "DraggingThumbVisibility", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "DraggingThumbLeft", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "DraggingThumbTop", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "DraggingThumbWidth", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "DraggingThumbHeight", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "DraggingThumbOpacity", "", true),
+    new PropertyInfoForT4Template("", "public", "Point", "DraggingThumbCenterPoint", "", true),
+    new PropertyInfoForT4Template("", "public", "Point[]", "LargeCircleAreaCenterPoint", "", true),
+    new PropertyInfoForT4Template("", "public", "double[]", "ThumbToLargeCircleAreaCenterDistanceList", "", true),
+    new PropertyInfoForT4Template("", "public", "bool", "IsDraggingThumbDragging", "", true),
+    new PropertyInfoForT4Template("", "public", "bool", "IsDraggingThumbHovered", "", true),
+};
+#>
+<#@ include file="..\EgsHostAppCore\DotNetUtility\PartialClass_Properties.t4" #>

@@ -1,0 +1,101 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:deviceControl="clr-namespace:Egs;assembly=EgsDeviceControlCore" x:ClassModifier="internal"
+        x:Class="Egs.Views.EgsDeviceFirmwareUpdateUserControl" Background="White" BorderThickness="1"
+        BorderBrush="Black">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/EgsHostAppCore;component/Views/CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <GroupBox DockPanel.Dock="Top" x:Name="DevicePathTextBoxPanel" Header="HID Device's DevicePath" Margin="5,0,5,0">
+            <TextBox x:Name="DevicePathTextBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="2,3,2,3"
+                    IsReadOnly="True" TextWrapping="Wrap" />
+        </GroupBox>
+        <GroupBox x:Name="LogTextBoxPanel" Height="500"
+                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Log}"
+                Margin="5,0,5,0">
+            <TextBox x:Name="LogTextBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="2,3,2,3" IsReadOnly="True"
+                    TextWrapping="Wrap" />
+        </GroupBox>
+        <GroupBox x:Name="MessageTextBlockPanel"
+                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceFirmwareUpdateModel_DeviceFirmwareUpdate}"
+                Margin="5,0,5,0">
+            <Grid Height="200">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type Image}">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="TextAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="24" />
+                            <Setter Property="FontWeight" Value="ExtraBold" />
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                        </Style>
+                    </Grid.Resources>
+                    <Image x:Name="PleaseConnectTheDeviceImage" Width="256" Height="143" Margin="16"
+                            Visibility="{Binding ExpectedUserAction, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=ConnectDevice}" />
+                    <Image x:Name="PleaseDisconnectTheDeviceImage" Width="256" Height="143" Margin="16"
+                            Visibility="{Binding ExpectedUserAction, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=DisconnectDevice}" />
+                    <!--<TextBlock Foreground="Green" Text="Connect"
+                                Visibility="{Binding ExpectedUserAction, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=ConnectDevice}" />
+                        <TextBlock Foreground="Red" Text="Disconnect"
+                                Visibility="{Binding ExpectedUserAction, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=DisconnectDevice}" />
+                        <TextBlock Foreground="Blue" Text="DO NOT Disconnect"
+                                Visibility="{Binding ExpectedUserAction, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=DoNotDisconnectDevice}" />-->
+                </Grid>
+                <TextBlock Grid.Column="1" Text="{Binding MessageText}" Margin="8" HorizontalAlignment="Center"
+                        VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" />
+            </Grid>
+        </GroupBox>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Right" x:Name="ButtonsPanel" Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Width" Value="80" />
+                        <Setter Property="Margin" Value="0,10,7,7" />
+                    </Style>
+                </StackPanel.Resources>
+                <Button Command="{Binding FileSelectionCommand}" Content="File" />
+                <Button Command="{Binding StartOrCancelCommand}" Content="{Binding StartOrCancelButtonContent}" />
+            </StackPanel>
+            <GroupBox
+                    Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Progress}"
+                    Margin="5,0,5,5">
+                <Grid Height="30">
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="TextAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ProgressBar Grid.Column="0" Value="{Binding PercentProgressInOneFile, Mode=OneWay}" Margin="2"
+                            MinWidth="300" />
+                    <TextBlock Grid.Column="1" Text="{Binding CurrentIndexInFirmwareImageFilePathListForView}"
+                            MinWidth="20" />
+                    <TextBlock Grid.Column="2" Text="/" />
+                    <TextBlock Grid.Column="3" Text="{Binding FirmwareImageFilePathListCount}" MinWidth="20" />
+                </Grid>
+            </GroupBox>
+        </DockPanel>
+    </StackPanel>
+</UserControl>

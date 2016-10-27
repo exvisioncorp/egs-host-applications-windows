@@ -1,0 +1,27 @@
+﻿<Window x:Class="Egs.EgsSourceCodeGeneration.EgsDeviceSettingsGenerationMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="MainWindow">
+    <Window.SizeToContent>WidthAndHeight</Window.SizeToContent>
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Padding" Value="5" />
+        </Style>
+    </Window.Resources>
+    <StackPanel Orientation="Vertical">
+        <GroupBox Header="USB Protocol">
+            <StackPanel>
+                <Button x:Name="GenerateHostAppSettingsFromCsvFileButton"
+                        Content="Generate from PiemonteOnMyriad/HostApplications/Documents/UsbProtocol_EgsDeviceSettingsHidReport_HostAppSettings_PropertyList.xlsx" />
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Zkoo Tutorial narrations">
+            <Button x:Name="GenerateZkooTutorialNarrationInformationsButton"
+                    Content="Generate from PiemonteOnMyriad/HostApplications/Documents/ZkooTutorial/ZkooTutorialMultilingualNarrationStringTable.xlsx" />
+        </GroupBox>
+        <GroupBox Header="EgsDeviceControlCore.dll::Resources.resx">
+            <Button x:Name="GenerateDeviceControlCoreResourcesButton"
+                    Content="Generate from PiemonteOnMyriad/HostApplications/Documents/HostApplications_Resources_Strings.xlsx and &#x0a;UsbProtocol_EgsDeviceSettingsHidReport_HostAppSettings_PropertyList.xlsx" />
+        </GroupBox>
+    </StackPanel>
+</Window>

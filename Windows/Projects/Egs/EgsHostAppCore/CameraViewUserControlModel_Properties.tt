@@ -1,0 +1,14 @@
+﻿<#
+var namespaceName = "Egs";
+var classDescription = "public partial class CameraViewUserControlModel";
+
+var propertyElementsList = new List<PropertyInfoForT4Template>()
+{
+    new PropertyInfoForT4Template("[DataMember]", "public", "bool", "IsToDrawImageSet", "", false),
+
+    new PropertyInfoForT4Template("", "public", "System.Windows.Media.Imaging.BitmapSource", "CameraViewWpfBitmapSource", "private", false),
+    new PropertyInfoForT4Template("", "public", "int", "CameraViewWpfBitmapSourceWidth", "private", false),
+    new PropertyInfoForT4Template("", "public", "int", "CameraViewWpfBitmapSourceHeight", "private", false),
+};
+#>
+<#@ include file="DotNetUtility\PartialClass_Properties.t4" #>

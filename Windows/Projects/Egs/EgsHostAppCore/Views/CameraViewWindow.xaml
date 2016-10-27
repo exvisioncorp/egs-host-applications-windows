@@ -1,0 +1,47 @@
+﻿<Window x:Class="Egs.Views.CameraViewWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d"
+        xmlns:dotNetUtilViews="clr-namespace:Egs.DotNetUtility.Views"
+        xmlns:deviceControl="clr-namespace:Egs;assembly=EgsDeviceControlCore" xmlns:local="clr-namespace:Egs"
+        xmlns:localViews="clr-namespace:Egs.Views" WindowStyle="None" Background="Transparent" AllowsTransparency="True"
+        d:DesignWidth="384" d:DesignHeight="240" ShowInTaskbar="True" Left="{Binding Left, Mode=TwoWay}"
+        Top="{Binding Top, Mode=TwoWay}" Width="{Binding Width, Mode=TwoWay}" Height="{Binding Height, Mode=TwoWay}"
+        Topmost="{Binding Topmost}" BorderThickness="0" Margin="0">
+    <Window.WindowState>
+        <Binding Path="WindowState" Mode="TwoWay" />
+    </Window.WindowState>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/EgsHostAppCore;component/Views/CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <localViews:CameraViewUserControl x:Name="cameraViewUserControl" />
+        <!--<localViews:CameraViewWithoutDataBindingUserControl x:Name="cameraViewUserControl" />-->
+
+        <Viewbox>
+            <UniformGrid x:Name="mainMenuItemsPanel" Rows="1" Columns="3" Margin="5" Width="384" Height="240"
+                    Visibility="Collapsed">
+                <UniformGrid.Resources>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="FontSize" Value="14.5" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Margin" Value="5" />
+                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                        <Setter Property="Template" Value="{StaticResource cameraViewGlassButtonTemplate}" />
+                    </Style>
+                </UniformGrid.Resources>
+                <Button x:Name="minimizeButton" Command="{Binding MinimizeCommand}"
+                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Minimize}" />
+                <Button x:Name="settingsButton" Command="{Binding SettingsCommand}"
+                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Settings}" />
+                <Button x:Name="exitButton" Command="{Binding ExitCommand}"
+                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Exit}" />
+            </UniformGrid>
+        </Viewbox>
+    </Grid>
+</Window>

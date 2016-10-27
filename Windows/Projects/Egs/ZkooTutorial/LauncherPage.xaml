@@ -1,0 +1,71 @@
+﻿<Page x:Class="Egs.ZkooTutorial.LauncherPage" x:ClassModifier="internal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+        xmlns:local="clr-namespace:Egs.ZkooTutorial" Background="Black">
+    <Page.Width>560</Page.Width>
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Page.Resources>
+
+    <Border DataContext="{Binding Launcher}" d:DataContext="{StaticResource LauncherPageModelForXamlDesign}"
+            BorderBrush="White" BorderThickness="2">
+        <StackPanel Orientation="Vertical" Margin="10">
+            <TextBlock Text="{Binding PageTitle}" />
+
+            <Border BorderBrush="White" BorderThickness="1" Margin="0,5" />
+
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0">
+                    <Button x:Name="tutorialVideoButton" Style="{DynamicResource LauncherSmallButtonStyle}"
+                            DataContext="{Binding TutorialVideoButtonModel}" />
+                    <Button x:Name="tutorialAppButton" Style="{DynamicResource LauncherSmallButtonStyle}"
+                            DataContext="{Binding TutorialAppButtonModel}" />
+                    <Button x:Name="exitButton" Style="{DynamicResource LauncherSmallButtonStyle}"
+                            DataContext="{Binding ExitButtonModel}" />
+                </StackPanel>
+            </Grid>
+
+            <Border BorderBrush="White" BorderThickness="1" Margin="0,5" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="beginnerModeButton" Style="{DynamicResource LauncherButtonStyle}"
+                        DataContext="{Binding BeginnerModeButtonModel}" />
+                <Button x:Name="standardModeButton" Style="{DynamicResource LauncherButtonStyle}"
+                        DataContext="{Binding StandardModeButtonModel}" />
+                <!--<Button x:Name="advancedButton" Style="{DynamicResource LauncherButtonStyle}"
+                        DataContext="{Binding AdvancedButtonModel}" Visibility="Collapsed" />
+                <Button x:Name="highSpeedModeButton" Style="{DynamicResource LauncherButtonStyle}"
+                        DataContext="{Binding HighSpeedModeButtonModel}" />
+                <Button x:Name="highPrecisionModeButton" Style="{DynamicResource LauncherButtonStyle}"
+                        DataContext="{Binding HighPrecisionModeButtonModel}" />-->
+            </StackPanel>
+
+            <Border BorderBrush="White" BorderThickness="1" Margin="0,5" />
+
+            <Grid Height="40" Margin="30,5">
+                <TextBlock Text="{Binding CursorOveringLauncherButtonSummary.ButtonDescriptionText}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+            </Grid>
+
+            <Border BorderBrush="White" BorderThickness="1" Margin="0,5" />
+
+            <StackPanel DataContext="{Binding CursorSpeedAndPrecisionModeAndRecommendedApps}" Margin="10">
+                <TextBlock Text="{Binding RecommendedAppsToPlayText}" HorizontalAlignment="Center" Height="20" />
+
+                <UniformGrid Columns="2" Margin="80,10,80,0">
+                    <Button Style="{DynamicResource LauncherLaunchableApplicationButtonStyle}"
+                            DataContext="{Binding RecommendedAppLeft}" />
+                    <Button Style="{DynamicResource LauncherLaunchableApplicationButtonStyle}"
+                            DataContext="{Binding RecommendedAppRight}" />
+                </UniformGrid>
+            </StackPanel>
+
+        </StackPanel>
+    </Border>
+</Page>

@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication1", "WpfApplication1\WpfApplication1.csproj", "{9C82D8A6-C1C5-4114-AA4B-B89E4EFA07B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.csproj", "{4734D114-2465-4145-8A6A-D9B3EDBD1B0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication2", "WpfApplication2\WpfApplication2.csproj", "{5E56F695-9CDE-4291-858E-1DD17F687E6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZkooHostAppWithoutTutorial", "ZkooHostAppWithoutTutorial\ZkooHostAppWithoutTutorial.csproj", "{9479962F-A413-44F9-94CA-650721BC8398}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{19703FEB-0882-4F24-A84A-7E5936E2FD14}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EgsHostAppExtensions", "..\Lib\EgsHostAppExtensions.csproj", "{8C2977C3-247E-4BAC-9420-0196B5541BA2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C82D8A6-C1C5-4114-AA4B-B89E4EFA07B9}.Debug|x86.ActiveCfg = Debug|x86
+		{9C82D8A6-C1C5-4114-AA4B-B89E4EFA07B9}.Debug|x86.Build.0 = Debug|x86
+		{9C82D8A6-C1C5-4114-AA4B-B89E4EFA07B9}.Release|x86.ActiveCfg = Release|x86
+		{9C82D8A6-C1C5-4114-AA4B-B89E4EFA07B9}.Release|x86.Build.0 = Release|x86
+		{4734D114-2465-4145-8A6A-D9B3EDBD1B0A}.Debug|x86.ActiveCfg = Debug|x86
+		{4734D114-2465-4145-8A6A-D9B3EDBD1B0A}.Debug|x86.Build.0 = Debug|x86
+		{4734D114-2465-4145-8A6A-D9B3EDBD1B0A}.Release|x86.ActiveCfg = Release|x86
+		{4734D114-2465-4145-8A6A-D9B3EDBD1B0A}.Release|x86.Build.0 = Release|x86
+		{5E56F695-9CDE-4291-858E-1DD17F687E6E}.Debug|x86.ActiveCfg = Debug|x86
+		{5E56F695-9CDE-4291-858E-1DD17F687E6E}.Debug|x86.Build.0 = Debug|x86
+		{5E56F695-9CDE-4291-858E-1DD17F687E6E}.Release|x86.ActiveCfg = Release|x86
+		{5E56F695-9CDE-4291-858E-1DD17F687E6E}.Release|x86.Build.0 = Release|x86
+		{9479962F-A413-44F9-94CA-650721BC8398}.Debug|x86.ActiveCfg = Debug|x86
+		{9479962F-A413-44F9-94CA-650721BC8398}.Debug|x86.Build.0 = Debug|x86
+		{9479962F-A413-44F9-94CA-650721BC8398}.Release|x86.ActiveCfg = Release|x86
+		{9479962F-A413-44F9-94CA-650721BC8398}.Release|x86.Build.0 = Release|x86
+		{8C2977C3-247E-4BAC-9420-0196B5541BA2}.Debug|x86.ActiveCfg = Debug|x86
+		{8C2977C3-247E-4BAC-9420-0196B5541BA2}.Debug|x86.Build.0 = Debug|x86
+		{8C2977C3-247E-4BAC-9420-0196B5541BA2}.Release|x86.ActiveCfg = Release|x86
+		{8C2977C3-247E-4BAC-9420-0196B5541BA2}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

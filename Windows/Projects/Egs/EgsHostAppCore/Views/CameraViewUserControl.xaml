@@ -1,0 +1,218 @@
+﻿<UserControl x:Class="Egs.Views.CameraViewUserControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:deviceControl="clr-namespace:Egs;assembly=EgsDeviceControlCore" xmlns:local="clr-namespace:Egs"
+        xmlns:properties="clr-namespace:Egs.EgsDeviceControlCore.Properties" xmlns:localViews="clr-namespace:Egs.Views"
+        xmlns:dotNetUtilViews="clr-namespace:Egs.DotNetUtility.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" d:DesignWidth="384"
+        d:DesignHeight="240" x:Name="cameraViewUserControl">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/EgsHostAppCore;component/Views/CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!-- NOTE: Use the same value in both Border.Margin and DropSHadowEffect.BlurRadius.  "Background=Black" decides the color of margin from border. -->
+    <Border x:Name="cameraViewBorder" BorderBrush="#FFFFFFFF" BorderThickness="3" CornerRadius="7" Margin="5"
+            Background="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Border.Effect>
+            <DropShadowEffect Color="{Binding GlowColor, RelativeSource={RelativeSource TemplatedParent}}"
+                    ShadowDepth="3" BlurRadius="5" />
+        </Border.Effect>
+        <Viewbox x:Name="cameraViewViewbox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform">
+            <Viewbox.OpacityMask>
+                <VisualBrush>
+                    <VisualBrush.Visual>
+                        <!-- NOTE: White area is masked area. -->
+                        <Border Background="White" BorderThickness="0" CornerRadius="5"
+                                Width="{Binding ActualWidth, ElementName=cameraViewViewbox}"
+                                Height="{Binding ActualHeight, ElementName=cameraViewViewbox}" />
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Viewbox.OpacityMask>
+
+            <Grid x:Name="mainGrid" Width="{Binding CameraViewWpfBitmapSourceWidth}"
+                    Height="{Binding CameraViewWpfBitmapSourceHeight}" Background="Black">
+                <Grid x:Name="cameraDeviceIsDisconnectedMessageGrid"
+                        DataContext="{Binding Device.CameraViewImageSourceBitmapCapture}"
+                        Visibility="{Binding IsCameraDeviceConnected, Converter={StaticResource TrueToCollapsedFalseToVisibleConverter}}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" Width="320" Height="240">
+                    <TextBlock
+                            Text="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_PleaseStartHostApplicationsAfterZkooIsConnected}"
+                            FontSize="20" Foreground="White" Background="Transparent" Padding="0,0,0,50"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"
+                            TextAlignment="Left" />
+                </Grid>
+
+                <Image x:Name="cameraViewImage" Source="{Binding CameraViewWpfBitmapSource}"
+                        Visibility="{Binding Device.CameraViewImageSourceBitmapCapture.IsUpdatingImageSource, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                <Grid x:Name="cameraViewImageBordersAndPointersGrid"
+                        Visibility="{Binding IsToDrawImageSet, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Width="{Binding CameraViewWpfBitmapSourceWidth}"
+                        Height="{Binding CameraViewWpfBitmapSourceHeight}">
+
+                    <Grid x:Name="FaceDetectionAreaGrid" HorizontalAlignment="Left" VerticalAlignment="Top"
+                            Visibility="Collapsed">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="FaceDetectionAreaLocation" X="{Binding FaceDetectionArea.X}"
+                                    Y="{Binding FaceDetectionArea.Y}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="FaceDetectionAreaSize"
+                                Content="{StaticResource FaceDetectionAreaPathsOnCanvas}"
+                                Width="{Binding FaceDetectionArea.Width}" Height="{Binding FaceDetectionArea.Height}" />
+                    </Grid>
+
+                    <Grid x:Name="Face0Grid"
+                            Visibility="{Binding Face0.IsDetected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="Face0Location" X="{Binding Face0.Area.X}"
+                                    Y="{Binding Face0.Area.Y}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="Face0Size" Content="{StaticResource SelectedFaceAreaPathsOnCanvas}"
+                                Width="{Binding Face0.Area.Width}" Height="{Binding Face0.Area.Height}" />
+                    </Grid>
+                    <Grid x:Name="Face1Grid"
+                            Visibility="{Binding Face1.IsDetected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="Face1Location" X="{Binding Face1.Area.X}"
+                                    Y="{Binding Face1.Area.Y}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="Face1Size" Content="{StaticResource SelectedFaceAreaPathsOnCanvas}"
+                                Width="{Binding Face1.Area.Width}" Height="{Binding Face1.Area.Height}" />
+                    </Grid>
+                    <Grid x:Name="Face2Grid"
+                            Visibility="{Binding Face2.IsDetected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="Face2Location" X="{Binding Face2.Area.X}"
+                                    Y="{Binding Face2.Area.Y}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="Face2Size" Content="{StaticResource SelectedFaceAreaPathsOnCanvas}"
+                                Width="{Binding Face2.Area.Width}" Height="{Binding Face2.Area.Height}" />
+                    </Grid>
+                    <Grid x:Name="Face3Grid"
+                            Visibility="{Binding Face3.IsDetected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="Face3Location" X="{Binding Face3.Area.X}"
+                                    Y="{Binding Face3.Area.Y}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="Face3Size" Content="{StaticResource SelectedFaceAreaPathsOnCanvas}"
+                                Width="{Binding Face3.Area.Width}" Height="{Binding Face3.Area.Height}" />
+                    </Grid>
+                    <Grid x:Name="Face4Grid"
+                            Visibility="{Binding Face4.IsDetected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="Face4Location" X="{Binding Face4.Area.X}"
+                                    Y="{Binding Face4.Area.Y}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="Face4Size" Content="{StaticResource SelectedFaceAreaPathsOnCanvas}"
+                                Width="{Binding Face4.Area.Width}" Height="{Binding Face4.Area.Height}" />
+                    </Grid>
+
+                    <Grid x:Name="Hand0DetectionAreaGrid"
+                            Visibility="{Binding Hand0.IsDetecting, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="Hand0DetectionAreaLocation" X="{Binding Hand0.DetectionArea.X}"
+                                    Y="{Binding Hand0.DetectionArea.Y}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="Hand0DetectionAreaSize"
+                                Content="{StaticResource Hand0RightDetectionAreaPathsOnCanvas}"
+                                Width="{Binding Hand0.DetectionArea.Width}"
+                                Height="{Binding Hand0.DetectionArea.Height}" />
+                    </Grid>
+                    <Grid x:Name="Hand1DetectionAreaGrid"
+                            Visibility="{Binding Hand1.IsDetecting, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="Hand1DetectionAreaLocation" X="{Binding Hand1.DetectionArea.X}"
+                                    Y="{Binding Hand1.DetectionArea.Y}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="Hand1DetectionAreaSize"
+                                Content="{StaticResource Hand1LeftDetectionAreaPathsOnCanvas}"
+                                Width="{Binding Hand1.DetectionArea.Width}"
+                                Height="{Binding Hand1.DetectionArea.Height}" />
+                    </Grid>
+
+                    <Grid x:Name="Hand0ScreenMappedAreaGrid"
+                            Visibility="{Binding Hand0.IsTracking, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="Hand0ScreenMappedAreaLocation"
+                                    X="{Binding Hand0.ScreenMappedArea.X}" Y="{Binding Hand0.ScreenMappedArea.Y}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="Hand0ScreenMappedAreaSize"
+                                Content="{StaticResource HandScreenMappedAreaPathsOnCanvas}"
+                                Width="{Binding Hand0.ScreenMappedArea.Width}"
+                                Height="{Binding Hand0.ScreenMappedArea.Height}" />
+                    </Grid>
+                    <Grid x:Name="Hand1ScreenMappedAreaGrid"
+                            Visibility="{Binding Hand1.IsTracking, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="Hand1ScreenMappedAreaLocation"
+                                    X="{Binding Hand1.ScreenMappedArea.X}" Y="{Binding Hand1.ScreenMappedArea.Y}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="Hand1ScreenMappedAreaSize"
+                                Content="{StaticResource HandScreenMappedAreaPathsOnCanvas}"
+                                Width="{Binding Hand1.ScreenMappedArea.Width}"
+                                Height="{Binding Hand1.ScreenMappedArea.Height}" />
+                    </Grid>
+
+                    <Grid x:Name="Hand0PointerGrid"
+                            Visibility="{Binding Hand0.IsTracking, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="Hand0PointerPosition" X="{Binding Hand0.XInCameraViewImage}"
+                                    Y="{Binding Hand0.YInCameraViewImage}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="Hand0PointerHoveringContentControl"
+                                Content="{StaticResource HandPointerHoveringPathsOnCanvas}" Width="35" Height="34"
+                                Visibility="{Binding Hand0.IsTouching, Converter={StaticResource TrueToCollapsedFalseToVisibleConverter}}">
+                            <ContentControl.RenderTransform>
+                                <TranslateTransform X="-17.5" Y="-17" />
+                            </ContentControl.RenderTransform>
+                        </ContentControl>
+                        <ContentControl x:Name="Hand0PointerTouchingContentControl"
+                                Content="{StaticResource HandPointerTouchingPathsOnCanvas}" Width="27" Height="25.406"
+                                Visibility="{Binding Hand0.IsTouching, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ContentControl.RenderTransform>
+                                <TranslateTransform X="-13.5" Y="-12.7" />
+                            </ContentControl.RenderTransform>
+                        </ContentControl>
+                    </Grid>
+
+                    <Grid x:Name="Hand1PointerGrid"
+                            Visibility="{Binding Hand1.IsTracking, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="Hand1PointerPosition" X="{Binding Hand1.XInCameraViewImage}"
+                                    Y="{Binding Hand1.YInCameraViewImage}" />
+                        </Grid.RenderTransform>
+                        <ContentControl x:Name="Hand1PointerHoveringContentControl"
+                                Content="{StaticResource HandPointerHoveringPathsOnCanvas}" Width="35" Height="34"
+                                Visibility="{Binding Hand1.IsTouching, Converter={StaticResource TrueToCollapsedFalseToVisibleConverter}}">
+                            <ContentControl.RenderTransform>
+                                <TranslateTransform X="-17.5" Y="-17" />
+                            </ContentControl.RenderTransform>
+                        </ContentControl>
+                        <ContentControl x:Name="Hand1PointerTouchingContentControl"
+                                Content="{StaticResource HandPointerTouchingPathsOnCanvas}" Width="27" Height="25.406"
+                                Visibility="{Binding Hand1.IsTouching, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ContentControl.RenderTransform>
+                                <TranslateTransform X="-13.5" Y="-12.7" />
+                            </ContentControl.RenderTransform>
+                        </ContentControl>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Viewbox>
+    </Border>
+</UserControl>

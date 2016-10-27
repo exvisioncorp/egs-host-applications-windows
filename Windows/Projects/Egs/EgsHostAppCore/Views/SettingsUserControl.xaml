@@ -1,0 +1,484 @@
+﻿<UserControl x:Class="Egs.Views.SettingsUserControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:deviceControl="clr-namespace:Egs;assembly=EgsDeviceControlCore" xmlns:local="clr-namespace:Egs"
+        xmlns:localViews="clr-namespace:Egs.Views" xmlns:properties="clr-namespace:Egs.EgsDeviceControlCore.Properties"
+        xmlns:dotnetutilviews="clr-namespace:Egs.DotNetUtility.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" SnapsToDevicePixels="True"
+        Background="White">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/EgsHostAppCore;component/Views/CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <TabControl x:Name="SettingsTabControl" Width="800" MinHeight="300">
+        <TabControl.Resources>
+            <Style TargetType="{x:Type TabItem}">
+                <Setter Property="MinWidth" Value="80" />
+            </Style>
+        </TabControl.Resources>
+        <TabItem x:Name="BasicSettingsTabItem"
+                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_BasicSettings_Description}">
+            <StackPanel>
+
+                <UniformGrid Columns="2">
+                    <GroupBox
+                            Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDevice_DeviceStatusDetailString_Description}">
+                        <Label Content="{Binding Device.DeviceStatusString}" Margin="5,0" />
+                    </GroupBox>
+                    <GroupBox
+                            Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDevice_HardwareType_Description}">
+                        <Label Content="{Binding Device.HardwareTypeString}" Margin="5,0" />
+                    </GroupBox>
+                </UniformGrid>
+
+                <GroupBox x:Name="tutorialAppSettingsGroupBox" Visibility="Collapsed"
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_TutorialAppSettings_Description}">
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_StartTutorial_Description}"
+                                Height="40" Margin="5" Padding="20,0" Background="Transparent"
+                                Command="{Binding StartTutorialCommand}" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Description}">
+                    <StackPanel>
+                        <ListBox DataContext="{Binding DeviceSettings.CursorSpeedAndPrecisionMode}"
+                                Style="{StaticResource listBoxWithRadioButton}"
+                                ItemsSource="{Binding OptionalValue.Options}"
+                                SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                                ItemsPanel="{StaticResource ItemsPanelTemplateIsVerticalStackPanel}" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.OnePersonBothHandsViewModel_GestureCursorType_Description}">
+                    <ListBox DataContext="{Binding OnePersonBothHandsViewModel.CursorImageSetInformationOptionalValue}"
+                            Style="{StaticResource CursorImageSetInformationOptionalValueListBoxWithRadioButton}"
+                            ItemsSource="{Binding Options}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                            ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                </GroupBox>
+            </StackPanel>
+        </TabItem>
+
+        <TabItem x:Name="CameraViewSettingsTabItem"
+                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_CameraViewSettings_Description}">
+            <StackPanel>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowModel_LocationAndSize_Description}">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowModel_CanDragMove_Description}"
+                                IsChecked="{Binding CameraViewWindowModel.CanDragMove, Mode=TwoWay}"
+                                VerticalContentAlignment="Center" Margin="10" />
+                        <CheckBox x:Name="cameraViewWindowModelCanRisizeCheckBox"
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowModel_CanResize_Description}"
+                                IsChecked="{Binding CameraViewWindowModel.CanResize, Mode=TwoWay}"
+                                VerticalContentAlignment="Center" Margin="10" />
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,10">
+                            <Label
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Left}" />
+                            <Label Content="{Binding CameraViewWindowModel.Left}" />
+                            <Label
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Top}" />
+                            <Label Content="{Binding CameraViewWindowModel.Top}" />
+                            <Label
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Width}" />
+                            <Label Content="{Binding CameraViewWindowModel.Width}" />
+                            <Label
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Height}" />
+                            <Label Content="{Binding CameraViewWindowModel.Height}" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Options}">
+                    <WrapPanel>
+                        <CheckBox
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowModel_CanShowMenu_Description}"
+                                IsChecked="{Binding CameraViewWindowModel.CanShowMenu}" Margin="10" />
+                        <CheckBox
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowModel_Topmost_Description}"
+                                IsChecked="{Binding CameraViewWindowModel.Topmost}" Margin="10" />
+                    </WrapPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowStateUsersControlMethodDetail_Type_Description}">
+                    <StackPanel DataContext="{Binding CameraViewWindowModel.WindowStateUsersControlMethod}">
+                        <RadioButton x:Name="WindowStateUsersControlMethodValue0RadioButton"
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowStateUsersControlMethodDetail_ManualOnOff_Description}"
+                                Margin="10,10" VerticalAlignment="Center"
+                                IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=0}" />
+                        <RadioButton x:Name="WindowStateUsersControlMethodValue1RadioButton"
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandTrackingStarts_Description}"
+                                Margin="10,10" VerticalAlignment="Center"
+                                IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=1}" />
+                        <RadioButton x:Name="WindowStateUsersControlMethodValue7RadioButton"
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandTrackingStarts_HideSoonAfterHandTrackingStarts_Description}"
+                                Margin="10,10" VerticalAlignment="Center"
+                                IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=7}" />
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </TabItem>
+
+        <TabItem x:Name="AdvancedSettings01TabItem">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Label
+                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_AdvancedSettings_Description}" />
+                    <Label Content="1" Margin="-5,0,0,0" />
+                </StackPanel>
+            </TabItem.Header>
+            <StackPanel>
+                <UniformGrid Rows="1" Columns="3">
+                    <GroupBox
+                            Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_ApplicationVersion}">
+                        <Label
+                                Content="{Binding Source={x:Static deviceControl:ApplicationCommonSettings.ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString}}"
+                                Margin="5,0" />
+                    </GroupBox>
+                    <GroupBox
+                            Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDevice_FirmwareVersion_Description}">
+                        <Label Content="{Binding Device.FirmwareVersionString}" Margin="5,0" />
+                    </GroupBox>
+                    <GroupBox
+                            Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDevice_DeviceSerialNumber_Description}">
+                        <Label Content="{Binding Device.DeviceSerialNumberString}" Margin="5,0" />
+                    </GroupBox>
+                </UniformGrid>
+
+                <UniformGrid Rows="1" Columns="2">
+                    <GroupBox
+                            Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_CaptureFps_Description}">
+                        <ListBox DataContext="{Binding DeviceSettings.CaptureFps}"
+                                Style="{StaticResource listBoxWithRadioButton}"
+                                ItemsSource="{Binding OptionalValue.Options}"
+                                SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                                ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                    </GroupBox>
+
+                    <GroupBox
+                            Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_CaptureBinning_Description}">
+                        <ListBox DataContext="{Binding DeviceSettings.CaptureBinning}"
+                                Style="{StaticResource listBoxWithRadioButton}"
+                                ItemsSource="{Binding OptionalValue.Options}"
+                                SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                                ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                    </GroupBox>
+                </UniformGrid>
+
+                <GroupBox x:Name="AdvancedSettings_CaptureExposureModeGroupBox"
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_CaptureExposureMode_Description}">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Left"
+                                DataContext="{Binding DeviceSettings.CaptureExposureMode.OptionalValue}"
+                                Orientation="Horizontal">
+                            <RadioButton x:Name="CaptureExposureModeValue0RadioButton"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CaptureExposureModeDetail_Value0_Description}"
+                                    Margin="10,5" VerticalAlignment="Center"
+                                    IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=0}" />
+                            <RadioButton x:Name="CaptureExposureModeValue1RadioButton"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CaptureExposureModeDetail_Value1_Description}"
+                                    Margin="10,5" VerticalAlignment="Center"
+                                    IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=1}" />
+                        </StackPanel>
+                        <DockPanel DataContext="{Binding DeviceSettings.CaptureManualExposureParameters}"
+                                IsEnabled="{Binding ElementName=CaptureExposureModeValue1RadioButton, Path=IsChecked}">
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_AnalogGain_Description}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=CaptureManualExposureParameters_Value00_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="CaptureManualExposureParameters_Value00_Slider"
+                                    Value="{Binding Value00, Mode=TwoWay}" Minimum="1" Maximum="32"
+                                    VerticalAlignment="Center" TickFrequency="0.2" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                            <!-- ValueOnThumbDragCompleted -->
+                        </DockPanel>
+                    </DockPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceSelectionMethodKind_Description}">
+                    <ListBox DataContext="{Binding DeviceSettings.FaceSelectionMethodKind}"
+                            Style="{StaticResource listBoxWithRadioButton}"
+                            ItemsSource="{Binding OptionalValue.Options}"
+                            SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                            ItemsPanel="{StaticResource ItemsPanelTemplateIsVerticalStackPanel}" />
+                </GroupBox>
+
+                <UniformGrid Rows="1" Columns="2">
+                    <GroupBox x:Name="AdvancedSettings_StatusLedBrightnessMaximumGroupBox"
+                            Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_StatusLedBrightnessMaximum_Description}">
+                        <DockPanel DataContext="{Binding DeviceSettings.StatusLedBrightnessMaximum}">
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=StatusLedBrightnessMaximum_Slider, StringFormat={}{0:G3}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="StatusLedBrightnessMaximum_Slider" Value="{Binding Value, Mode=TwoWay}"
+                                    Minimum="0" Maximum="255" VerticalAlignment="Center" TickFrequency="5"
+                                    IsSnapToTickEnabled="true" TickPlacement="Both" />
+                            <!-- ValueOnThumbDragCompleted -->
+                        </DockPanel>
+                    </GroupBox>
+                </UniformGrid>
+            </StackPanel>
+        </TabItem>
+
+        <TabItem x:Name="AdvancedSettings02TabItem">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Label
+                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_AdvancedSettings_Description}" />
+                    <Label Content="2" Margin="-5,0,0,0" />
+                </StackPanel>
+            </TabItem.Header>
+            <StackPanel>
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Description}">
+                    <ListBox DataContext="{Binding DeviceSettings.DeviceRotationAngleInClockwise}"
+                            Style="{StaticResource listBoxWithRadioButton}"
+                            ItemsSource="{Binding OptionalValue.Options}"
+                            SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                            ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_OptionsForLowerSpecPc_Description}">
+                    <StackPanel>
+                        <GroupBox
+                                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CursorDrawingTimingMethodDetail_Type_Description}">
+                            <ListBox DataContext="{Binding CursorDrawingTimingMethod}"
+                                    Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding Options}"
+                                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                    ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                        </GroupBox>
+
+                        <GroupBox
+                                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewBordersAndPointersAreDrawnByDetail_Type_Description}">
+                            <ListBox DataContext="{Binding CameraViewBordersAndPointersAreDrawnBy}"
+                                    Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding Options}"
+                                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                    ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                        </GroupBox>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Commands}">
+                    <UniformGrid HorizontalAlignment="Right" Rows="1">
+                        <Button
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_ResetSettings}"
+                                Height="40" Margin="5" Padding="20,0" Background="Transparent"
+                                Command="{Binding ResetSettingsCommand}" />
+                        <Button
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_CheckForApplicationUpdates}"
+                                Height="40" Margin="5" Padding="20,0" Background="Transparent"
+                                Command="{Binding CheckForEgsHostAppCoreUpdateCommand}" />
+                    </UniformGrid>
+                </GroupBox>
+            </StackPanel>
+        </TabItem>
+
+        <TabItem x:Name="DeveloperSettingsTabItem"
+                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_DeveloperSettings_Description}">
+            <TabControl x:Name="DeveloperSettingsTabControl" Margin="10">
+                <TabItem Header="Settings 1">
+                    <StackPanel>
+                        <GroupBox x:Name="LanguageSelectionGroupBox"
+                                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CultureInfoAndDescriptionDetail_Type_Description}">
+                            <ListBox DataContext="{Binding CultureInfoAndDescription}"
+                                    Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding Options}"
+                                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                    ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                        </GroupBox>
+
+                        <GroupBox Header="Device Status">
+                            <StackPanel Orientation="Vertical" DataContext="{Binding Device}">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Content="IsHidDeviceConnected" IsEnabled="False"
+                                            IsChecked="{Binding IsHidDeviceConnected, Mode=OneWay}" />
+                                    <CheckBox Content="CameraViewImageSourceBitmapCapture.IsCameraDeviceConnected"
+                                            IsEnabled="False"
+                                            IsChecked="{Binding CameraViewImageSourceBitmapCapture.IsCameraDeviceConnected, Mode=OneWay}" />
+                                    <CheckBox Content="Connected" IsEnabled="False"
+                                            IsChecked="{Binding IsConnected, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Content="Detecting Faces" IsEnabled="False"
+                                            IsChecked="{Binding IsDetectingFaces, Mode=OneWay}" />
+                                    <CheckBox Content="Detecting Hands" IsEnabled="False"
+                                            IsChecked="{Binding IsDetectingHands, Mode=OneWay}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Device Settings">
+                            <StackPanel Orientation="Vertical" DataContext="{Binding DeviceSettings}">
+                                <TextBlock Margin="10"
+                                        Text="Settings are saved on host devices basically.  The host app sets the settings to a connected device when the app starts or a new device is connected."
+                                        TextWrapping="Wrap" />
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectFaces_Description}"
+                                            IsChecked="{Binding IsToDetectFaces.Value}" Margin="10" />
+                                    <CheckBox
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectHands_Description}"
+                                            IsChecked="{Binding IsToDetectHands.Value}" Margin="10" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToSendTouchScreenHidReport_Description}"
+                                            IsChecked="{Binding IsToSendTouchScreenHidReport.Value}" Margin="10" />
+                                    <CheckBox
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToSendEgsGestureHidReport_Description}"
+                                            IsChecked="{Binding IsToSendEgsGestureHidReport.Value}" Margin="10" />
+                                </StackPanel>
+                                <CheckBox
+                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToSendHoveringStateOnTouchScreenHidReport_Description}"
+                                        IsChecked="{Binding IsToSendHoveringStateOnTouchScreenHidReport.Value}"
+                                        Margin="10" />
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox DataContext="{Binding DeviceSettings.TouchInterfaceKind}"
+                                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_TouchInterfaceKind_Description}">
+                            <ListBox Style="{StaticResource listBoxWithRadioButton}"
+                                    ItemsSource="{Binding OptionalValue.Options}"
+                                    SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                                    ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                        </GroupBox>
+
+                        <GroupBox DataContext="{Binding MouseCursorPositionUpdatedByGestureCursorMethod}"
+                                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_Type_Description}">
+                            <ListBox Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding Options}"
+                                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                    ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem Header="Settings 2">
+                    <StackPanel>
+                        <GroupBox Header="Video Capture DirectShow Information">
+                            <StackPanel>
+                                <StackPanel DataContext="{Binding Device.CameraViewImageSourceBitmapCapture}"
+                                        Margin="5,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Index: " />
+                                        <Label Content="{Binding VideoCaptureDeviceIndex}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Name (=Description): " />
+                                        <Label Content="{Binding VideoCaptureDeviceName}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="DevicePath: " VerticalAlignment="Top" Margin="5,5" />
+                                        <TextBlock Text="{Binding VideoCaptureDeviceDevicePath}" TextWrapping="Wrap"
+                                                VerticalAlignment="Top" Width="500" Margin="0,5" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Device Status (Capability)">
+                            <StackPanel>
+                                <WrapPanel DataContext="{Binding DeviceSettings}">
+                                    <StackPanel Orientation="Horizontal" Margin="5,5,10,5">
+                                        <Label
+                                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_CaptureImageSize_Description}" />
+                                        <Label Content="{Binding CaptureImageSize.Width}" Margin="0,0,-5,0" />
+                                        <Label Content="*" Margin="0,0,-5,0" />
+                                        <Label Content="{Binding CaptureImageSize.Height}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5,10,5">
+                                        <Label
+                                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_CaptureFps_Description}" />
+                                        <Label Content="{Binding CaptureFps.OptionalValue.SelectedItem.Description}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5,10,5">
+                                        <Label
+                                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_LensEquivalentFocalLengthInMillimeters_Description}" />
+                                        <Label Content="{Binding LensEquivalentFocalLengthInMillimeters.Value}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5,10,5">
+                                        <Label
+                                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_SensorOnePixelSideLengthInMillimeters_Description}" />
+                                        <Label Content="{Binding SensorOnePixelSideLengthInMillimeters.Value}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5,10,5">
+                                        <Label
+                                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_LensFNumber_Description}" />
+                                        <Label Content="{Binding LensFNumber.Value}" />
+                                    </StackPanel>
+                                </WrapPanel>
+
+                                <WrapPanel DataContext="{Binding DeviceSettings}">
+                                    <StackPanel Orientation="Horizontal" Margin="5,5,10,5">
+                                        <Label
+                                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_ScreenMappedAreaResolutionSize_Description}" />
+                                        <Label Content="{Binding ScreenMappedAreaResolutionSize.Width}"
+                                                Margin="0,0,-5,0" />
+                                        <Label Content="*" Margin="0,0,-5,0" />
+                                        <Label Content="{Binding ScreenMappedAreaResolutionSize.Height}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5,5,10,5">
+                                        <Label
+                                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_TouchTargetScreenSize_Description}" />
+                                        <Label Content="{Binding TouchTargetScreenSize.Width}" Margin="0,0,-5,0" />
+                                        <Label Content="*" Margin="0,0,-5,0" />
+                                        <Label Content="{Binding TouchTargetScreenSize.Height}" />
+                                    </StackPanel>
+                                </WrapPanel>
+
+                                <GroupBox
+                                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_CameraView}">
+                                    <StackPanel DataContext="{Binding DeviceSettings}">
+                                        <CheckBox DataContext="{Binding IsToDrawBordersOnCameraViewImageByDevice}"
+                                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description}"
+                                                IsChecked="{Binding Value}" />
+                                        <StackPanel DataContext="{Binding CameraViewImageSourceRectInCapturedImage}"
+                                                Orientation="Horizontal">
+                                            <Label
+                                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_CameraViewImageSourceRectInCapturedImage_Description}"
+                                                    Margin="5,0,20,0" />
+                                            <Label Content="Left:" />
+                                            <Label Content="{Binding X}" />
+                                            <Label Content="Top:" />
+                                            <Label Content="{Binding Y}" />
+                                            <Label Content="Width:" />
+                                            <Label Content="{Binding Width}" />
+                                            <Label Content="Height:" />
+                                            <Label Content="{Binding Height}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox
+                                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Commands}">
+                                    <UniformGrid HorizontalAlignment="Right" Rows="1">
+                                        <Button
+                                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_SaveSettingsToFlash}"
+                                                Height="40" Margin="5" Padding="20,0" Background="Transparent"
+                                                Command="{Binding SaveSettingsToFlashCommand}" />
+                                    </UniformGrid>
+                                </GroupBox>
+
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </TabItem>
+    </TabControl>
+</UserControl>

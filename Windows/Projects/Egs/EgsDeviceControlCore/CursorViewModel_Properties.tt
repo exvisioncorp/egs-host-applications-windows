@@ -1,0 +1,15 @@
+﻿<#
+var namespaceName = "Egs";
+var classDescription = "public partial class CursorViewModel";
+
+var propertyElementsList = new List<PropertyInfoForT4Template>()
+{
+    new PropertyInfoForT4Template("[DataMember]", "public", "RightOrLeftKind", "RightOrLeft", "", true),
+    new PropertyInfoForT4Template("[DataMember]", "public", "bool", "IsToShowCursor", "", true),
+    new PropertyInfoForT4Template("[DataMember]", "public", "bool", "IsToDetectLongTouch", "", true),
+    new PropertyInfoForT4Template("[DataMember]", "public", "bool", "IsToUpdateVelocities", "", true),
+    new PropertyInfoForT4Template("[DataMember]", "public", "double", "LongTapElapsedThresholdInMilliseconds", "", true),
+    new PropertyInfoForT4Template("", "public", "int", "CurrentCursorImageSetIndex", "", false),
+};
+#>
+<#@ include file=".\DotNetUtility\PartialClass_Properties.t4" #>
