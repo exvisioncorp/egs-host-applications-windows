@@ -17,6 +17,7 @@
         /// </summary>
         public static bool TryGetMutexOnTheBeginningOfApplicationConstructor()
         {
+			// Refer to: http://stackoverflow.com/questions/229565/what-is-a-good-pattern-for-using-a-global-mutex-in-c
             var entryAssemblyFullName = Assembly.GetEntryAssembly().FullName;
 
             mutex = new System.Threading.Mutex(false, entryAssemblyFullName);
