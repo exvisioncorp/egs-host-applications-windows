@@ -8,13 +8,14 @@ ZKOO device sends recognition result to a host device as HID reports, same as a 
 In this OSS version, assemblies are not strictly signed, so Gesture Cursors and Camera View cannot appear on Windows Start Screen.  Our official signed version can do that.
 
 ## Contents
-* EgsSourceCodeGenerator.exe - It generates some source codes and .resx files from some excel sheets in "Documents" folder, based on settings written in Windows/Projects/Egs/DeviceControlCore/VersionAndCultureInfo.t4 (<https://github.com/exvisioncorp/egs-host-applications-windows/blob/master/Windows/Projects/Egs/EgsDeviceControlCore/VersionAndCultureInfo.t4>).
+* EgsSourceCodeGeneration.exe - It generates some source codes and .resx files from some excel sheets in "Documents" folder, based on settings written in Windows/Projects/Egs/DeviceControlCore/VersionAndCultureInfo.t4 (<https://github.com/exvisioncorp/egs-host-applications-windows/blob/master/Windows/Projects/Egs/EgsDeviceControlCore/VersionAndCultureInfo.t4>).
 * EgsDeviceControlCore.dll - It monitors device connection, sets settings, gets hand position and opened/bended status, draw "Gesture Cursors" on desktop and captures camera images.  It is built on .NET 3.5.
 * EgsHostAppCore.dll - It shows "Settings" window and "Camera View" window, updates device firmware and host application itself.  It is built on .NET 4.5.2.
 * ZkooTutorial.dll - A tutorial application of usage of ZKOO device.  It is build on .NET 4.5.2.
 * ZkooHostApp.exe - It is the ZKOO host application.  It composites the above dlls, and save and load the whole application settings.  It is build on .NET 4.5.2.
-* EGS SDK - SDK of EGS host applications.  Lib folder contains our official signed dll binaries.  Examples folder has some example programs which use the dll files.
+* EGS SDK - SDK for making your EGS host applications.  Lib folder contains our official signed dll binaries.  Examples folder has some example programs which use the dll files.
 * Documents/Test - Before we release our binaries, we do tests based on the Documents/Test/WindowsHostTestScenario_en.xlsx (<https://github.com/exvisioncorp/egs-host-applications-windows/blob/master/Documents/Test/WindowsHostTestScenario_en.xlsx>).
+* Assets - Files will be copied to some folders in the ZkooTutorial project.
 
 ## Requirement
 Windows 7 or above.
