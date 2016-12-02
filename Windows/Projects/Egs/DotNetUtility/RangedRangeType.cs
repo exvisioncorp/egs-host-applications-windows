@@ -241,7 +241,7 @@
             }
             catch (Exception ex)
             {
-                if (CanRaiseDebbugerBreak) { Debugger.Break(); System.Windows.Forms.MessageBox.Show(ex.Message); }
+                if (CanRaiseDebbugerBreak) { Debugger.Break(); Console.WriteLine(ex.Message); }
                 return false;
             }
         }

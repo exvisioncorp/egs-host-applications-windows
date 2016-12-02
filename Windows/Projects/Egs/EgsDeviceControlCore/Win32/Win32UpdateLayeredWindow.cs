@@ -76,8 +76,20 @@
         [return: MarshalAs(UnmanagedType.Bool)]
         extern internal static bool DeleteObject(IntPtr hObject);
 
+        [DllImport("user32.dll")]
+        extern internal static IntPtr GetActiveWindow();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        extern internal static IntPtr GetForegroundWindow();
+
         [DllImport("user32")]
         extern internal static int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll")]
+        static internal extern IntPtr SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        [DllImport("user32.dll")]
+        extern internal static IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32")]
         extern internal static int GetWindowLong(IntPtr hWnd, int nIndex);

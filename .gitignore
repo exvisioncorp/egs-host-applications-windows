@@ -250,4 +250,6 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-Windows/Projects/Egs/ZkooTutorial/Resources/
+
+# Unity
+[Ll]ibrary/

@@ -75,6 +75,38 @@ namespace Egs.Win32
             [MarshalAs(UnmanagedType.U4)] EFileAttributes flags,
             IntPtr template);
 
+#if false
+        [DllImport("kernel32", SetLastError = true)]
+        extern internal static bool ReadFile(
+            IntPtr hFile,
+            byte[] buffer,
+            int numberOfBytesToRead,
+            ref int numberOfBytesRead,
+            ref int overlappedBuffer
+        );
+
+        // http://www.pinvoke.net/default.aspx/kernel32.readfile
+        [DllImport("kernel32", SetLastError = true)]
+        extern internal static SafeFileHandle ReadFile(
+            SafeFileHandle hFile,
+            byte[] buffer,
+            int numberOfBytesToRead,
+            ref int numberOfBytesRead,
+            ref System.Threading.NativeOverlapped overlappedBuffer
+        );
+#endif
+
+        // http://buiba.blogspot.jp/2009/06/using-winapi-createfile-readfile.html
+        [DllImport("kernel32", SetLastError = true)]
+        extern internal static bool ReadFile(
+            SafeFileHandle hFile,
+            byte[] buffer,
+            int numberOfBytesToRead,
+            ref int numberOfBytesRead,
+            IntPtr overlappedBuffer
+        );
+
+
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         extern internal static bool CloseHandle(IntPtr hObject);

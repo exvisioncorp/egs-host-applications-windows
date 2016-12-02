@@ -218,7 +218,10 @@
             else
             {
                 var bmp = imagesDict[CursorImageInformationSetList[imageSetIndex].ImageInformationList[cursorImageIndex]];
-                Win32.NativeMethods.CallWin32UpdateLayeredWindow(this, bmp.CursorBitmap, bmp.CursorHBitmapForUiAccessTrue, 255, ActualWindowLeft, ActualWindowTop);
+                this.BeginInvoke(new Action(() =>
+                {
+                    Win32.NativeMethods.CallWin32UpdateLayeredWindow(this, bmp.CursorBitmap, bmp.CursorHBitmapForUiAccessTrue, 255, ActualWindowLeft, ActualWindowTop);
+                }));
                 setWindowPosition.SetWindowPosition(ActualWindowLeft, ActualWindowTop);
             }
             hasToRedrawCursor = false;

@@ -443,17 +443,6 @@
             Refer to https://msdn.microsoft.com/ja-jp/library/cc411206.aspx
             </summary>
         </member>
-        <member name="F:Egs.Win32.NativeMethods.RID.HEADER">
-            <summary> Get header information. </summary>
-        </member>
-        <member name="F:Egs.Win32.NativeMethods.RID.INPUT">
-            <summary> Get raw pData. </summary>
-        </member>
-        <member name="F:Egs.Win32.NativeMethods.RawMouseButtonFlagsAndData.usButtonData">
-            <summary>
-            If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed device that specifies the wheel delta.
-            </summary>
-        </member>
         <member name="T:Egs.EgsDevice">
             <summary>
             The instance of EgsDevice class receives information from EGS device and reconstruct current state of the device.  Main roles are 
@@ -1349,16 +1338,6 @@
               270: Portrait に類似しているローカライズされた文字列を検索します。
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceUsageDetail_Value0_Description">
-            <summary>
-              Gesture Camera に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceUsageDetail_Value1_Description">
-            <summary>
-              Web Camera に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_CameraDeviceDevicePath_Description">
             <summary>
               Camera Device DevicePath に類似しているローカライズされた文字列を検索します。
@@ -1509,21 +1488,6 @@
               Primary Screen Orientation に類似しているローカライズされた文字列を検索します。
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Description">
-            <summary>
-              Use ZKOO for に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionAreaOnFixed_Description">
-            <summary>
-              Face Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionScaleOnFixed_Description">
-            <summary>
-              Face Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionMethodKind_Description">
             <summary>
               How to Select a Player に類似しているローカライズされた文字列を検索します。
@@ -1532,11 +1496,6 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Description">
             <summary>
               Gesture by Fast Moving Hands に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HandDetectionParameters_Description">
-            <summary>
-              Hand Detection Parameters に類似しているローカライズされた文字列を検索します。
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HostMachineOperatingSystem_Description">
@@ -1559,26 +1518,6 @@
               Draw Borders on Camera View Image By Device に類似しているローカライズされた文字列を検索します。
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixFaceDetectionRegion_Description">
-            <summary>
-              Fix Face Detection Region に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixHandDetectionRegions_Description">
-            <summary>
-              Fix Hand Detection Regions に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixHandTrackingAreas_Description">
-            <summary>
-              Fix Hand Tracking Areas に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixScreenMappedAreas_Description">
-            <summary>
-              Fix Screen Mapped Areas に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToSendEgsGestureHidReport_Description">
             <summary>
               Send Touch Information to Apps に類似しているローカライズされた文字列を検索します。
@@ -1594,41 +1533,6 @@
               Send Touch Information to OS に類似しているローカライズされた文字列を検索します。
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandCloseHand_Description">
-            <summary>
-              Left Hand Close Hand に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandDetectionAreaOnFixed_Description">
-            <summary>
-              Left Hand Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandDetectionScaleOnFixed_Description">
-            <summary>
-              Left Hand Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandInnerRotation_Description">
-            <summary>
-              Left Hand Inner Rotation に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandOuterRotation_Description">
-            <summary>
-              Left Hand Outer Rotation に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandScreenMappedAreaOnFixed_Description">
-            <summary>
-              Left Hand Screen Mapped Area (when fixed) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandTrackingAreaOnFixed_Description">
-            <summary>
-              Left Hand Tracking Area (when fixed) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LensEquivalentFocalLengthInMillimeters_Description">
             <summary>
               Focal Length [mm] に類似しているローカライズされた文字列を検索します。
@@ -1639,49 +1543,9 @@
               F Number に類似しているローカライズされた文字列を検索します。
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_ModelSetId_Description">
-            <summary>
-              Model Set ID に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_PowerMode_Description">
             <summary>
               Power Mode に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandCloseHand_Description">
-            <summary>
-              Right Hand Close Hand に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandDetectionAreaOnFixed_Description">
-            <summary>
-              Right Hand Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandDetectionScaleOnFixed_Description">
-            <summary>
-              Right Hand Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandInnerRotation_Description">
-            <summary>
-              Right Hand Inner Rotation に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandOuterRotation_Description">
-            <summary>
-              Right Hand Outer Rotation に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandScreenMappedAreaOnFixed_Description">
-            <summary>
-              Right Hand Screen Mapped Area (when fixed) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandTrackingAreaOnFixed_Description">
-            <summary>
-              Right Hand Tracking Area (when fixed) に類似しているローカライズされた文字列を検索します。
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_ScreenMappedAreaResolutionSize_Description">
@@ -1777,16 +1641,6 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HostMachineOperatingSystemDetail_Value1_Description">
             <summary>
               Android に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.ModelSetIdDetail_Value0_Description">
-            <summary>
-              Five Fingers for TV に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.ModelSetIdDetail_Value1_Description">
-            <summary>
-              Wands? に類似しているローカライズされた文字列を検索します。
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_FirstFoundHand_Description">

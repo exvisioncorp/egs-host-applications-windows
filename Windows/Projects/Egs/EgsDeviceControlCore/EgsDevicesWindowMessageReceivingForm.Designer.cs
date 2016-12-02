@@ -1,5 +1,8 @@
 ﻿namespace Egs
 {
+    using System;
+    using Egs.Win32;
+
     partial class EgsDevicesWindowMessageReceivingForm
     {
         /// <summary>
@@ -16,9 +19,21 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
-                if (touchRawInputDevices != null) { touchRawInputDevices.Dispose(); touchRawInputDevices = null; }
+
                 if (deviceNotification != null) { deviceNotification.Dispose(); deviceNotification = null; }
+#if USE_OLD_HID
+                if (touchRawInputDevices != null) { touchRawInputDevices.Dispose(); touchRawInputDevices = null; }
                 if (HidReportsUpdateByWin32RawInput != null) { HidReportsUpdateByWin32RawInput.Dispose(); HidReportsUpdateByWin32RawInput = null; }
+#endif
+
+                if (IsToUseActiveWindowHWnd)
+                {
+                    NativeMethods.SetWindowLong(hMainWindow, -4, oldWndProcPtr);
+                    hMainWindow = IntPtr.Zero;
+                    oldWndProcPtr = IntPtr.Zero;
+                    newWndProcPtr = IntPtr.Zero;
+                    newWndProc = null;
+                }
             }
             base.Dispose(disposing);
         }

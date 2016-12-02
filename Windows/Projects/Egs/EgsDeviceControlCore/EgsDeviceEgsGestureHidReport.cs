@@ -411,6 +411,8 @@
                 Debug.WriteLine("Emulated Status Changed: " + StatusForMouseEmulation);
             }
         }
+
+#if USE_OLD_HID
         internal void UpdateByRawMouse(ref NativeMethods.RAWMOUSE mouse)
         {
             FrameNumber++;
@@ -548,5 +550,7 @@
             // It does not use 2nd point.
             Hands[1].Reset();
         }
+#endif
+
     }
 }

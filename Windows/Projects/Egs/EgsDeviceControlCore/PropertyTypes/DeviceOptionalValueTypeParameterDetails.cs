@@ -109,6 +109,7 @@
         }
     }
 
+#if false
     public partial class DeviceUsageDetail : HidAccessPropertyOptionalTypeParameterBase
     {
         public static List<DeviceUsageDetail> GetDefaultList()
@@ -129,6 +130,7 @@
             return ret;
         }
     }
+#endif
 
     public partial class CaptureBinningDetail : HidAccessPropertyOptionalTypeParameterBase
     {

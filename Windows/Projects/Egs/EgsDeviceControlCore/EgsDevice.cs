@@ -25,6 +25,8 @@
     [DataContract]
     public partial class EgsDevice : INotifyPropertyChanged
     {
+        public static bool IsToUseActiveWindowHWnd = false;
+
         /// <summary>
         /// Currently the maximum number of objects which EGS device can detect and track is 2.
         /// </summary>
@@ -129,10 +131,14 @@
         /// Informations related to camera device is gathered to this object.
         /// </summary>
         public EgsDeviceCameraViewImageSourceBitmapCapture CameraViewImageSourceBitmapCapture { get; private set; }
+
+        internal EgsDeviceHidReportsUpdate HidReportsUpdate { get; private set; }
+
         /// <summary>
         /// HID report for OS.  Just only touch information is contained.  EgsGestureHidReport has more information for applications by this SDK users.
         /// </summary>
         public EgsDeviceTouchScreenHidReport TouchScreenHidReport { get; private set; }
+
         /// <summary>
         /// HID report for applications by this SDK users.
         /// </summary>
@@ -321,6 +327,7 @@
             CreateProperties();
 
             CameraViewImageSourceBitmapCapture = new EgsDeviceCameraViewImageSourceBitmapCapture();
+            HidReportsUpdate = new EgsDeviceHidReportsUpdate();
             TouchScreenHidReport = new EgsDeviceTouchScreenHidReport();
             EgsGestureHidReport = new EgsDeviceEgsGestureHidReport();
 
@@ -331,6 +338,7 @@
         internal void InitializeOnceAtStartup()
         {
             CameraViewImageSourceBitmapCapture.InitializeOnceAtStartup(this);
+            HidReportsUpdate.InitializeOnceAtStartup(this);
             TouchScreenHidReport.InitializeOnceAtStartup(this);
             EgsGestureHidReport.InitializeOnceAtStartup(this);
 
@@ -509,6 +517,7 @@
             else
             {
                 _HidDeviceDevicePath = newDevicePath;
+                HidReportsUpdate.Start(_HidDeviceDevicePath);
                 _IsHidDeviceConnected = true;
                 SetAllSettingsToDeviceAndReadStatusFromDevice();
             }
@@ -573,6 +582,11 @@
                 CameraViewImageSourceBitmapCapture.DisposeWithClearingVideoCaptureDeviceInformationOnDeviceDisconnected();
                 // TODO: FIX: The next line can cause exception, in the other threads or in getting images with a Timer.
                 CameraViewImageSourceBitmapCapture = null;
+            }
+            if (HidReportsUpdate != null)
+            {
+                HidReportsUpdate.Stop();
+                HidReportsUpdate = null;
             }
         }
 

@@ -1062,24 +1062,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Gesture Camera に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string DeviceUsageDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("DeviceUsageDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Web Camera に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string DeviceUsageDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("DeviceUsageDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Camera Device DevicePath に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string EgsDevice_CameraDeviceDevicePath_Description {
@@ -1350,33 +1332,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Use ZKOO for に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_DeviceUsage_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_DeviceUsage_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Face Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_FaceDetectionAreaOnFixed_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_FaceDetectionAreaOnFixed_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Face Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_FaceDetectionScaleOnFixed_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_FaceDetectionScaleOnFixed_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   How to Select a Player に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string EgsDeviceSettings_FaceSelectionMethodKind_Description {
@@ -1391,15 +1346,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDeviceSettings_FastMovingHandsGestureMode_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_FastMovingHandsGestureMode_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Hand Detection Parameters に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_HandDetectionParameters_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_HandDetectionParameters_Description", resourceCulture);
             }
         }
         
@@ -1440,42 +1386,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Fix Face Detection Region に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_IsToFixFaceDetectionRegion_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_IsToFixFaceDetectionRegion_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Fix Hand Detection Regions に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_IsToFixHandDetectionRegions_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_IsToFixHandDetectionRegions_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Fix Hand Tracking Areas に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_IsToFixHandTrackingAreas_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_IsToFixHandTrackingAreas_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Fix Screen Mapped Areas に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_IsToFixScreenMappedAreas_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_IsToFixScreenMappedAreas_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Send Touch Information to Apps に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string EgsDeviceSettings_IsToSendEgsGestureHidReport_Description {
@@ -1503,69 +1413,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Left Hand Close Hand に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_LeftHandCloseHand_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_LeftHandCloseHand_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Left Hand Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_LeftHandDetectionAreaOnFixed_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_LeftHandDetectionAreaOnFixed_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Left Hand Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_LeftHandDetectionScaleOnFixed_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_LeftHandDetectionScaleOnFixed_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Left Hand Inner Rotation に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_LeftHandInnerRotation_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_LeftHandInnerRotation_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Left Hand Outer Rotation に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_LeftHandOuterRotation_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_LeftHandOuterRotation_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Left Hand Screen Mapped Area (when fixed) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_LeftHandScreenMappedAreaOnFixed_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_LeftHandScreenMappedAreaOnFixed_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Left Hand Tracking Area (when fixed) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_LeftHandTrackingAreaOnFixed_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_LeftHandTrackingAreaOnFixed_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Focal Length [mm] に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string EgsDeviceSettings_LensEquivalentFocalLengthInMillimeters_Description {
@@ -1584,83 +1431,11 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Model Set ID に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_ModelSetId_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_ModelSetId_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Power Mode に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string EgsDeviceSettings_PowerMode_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_PowerMode_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Right Hand Close Hand に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_RightHandCloseHand_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_RightHandCloseHand_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Right Hand Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_RightHandDetectionAreaOnFixed_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_RightHandDetectionAreaOnFixed_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Right Hand Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_RightHandDetectionScaleOnFixed_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_RightHandDetectionScaleOnFixed_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Right Hand Inner Rotation に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_RightHandInnerRotation_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_RightHandInnerRotation_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Right Hand Outer Rotation に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_RightHandOuterRotation_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_RightHandOuterRotation_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Right Hand Screen Mapped Area (when fixed) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_RightHandScreenMappedAreaOnFixed_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_RightHandScreenMappedAreaOnFixed_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Right Hand Tracking Area (when fixed) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string EgsDeviceSettings_RightHandTrackingAreaOnFixed_Description {
-            get {
-                return ResourceManager.GetString("EgsDeviceSettings_RightHandTrackingAreaOnFixed_Description", resourceCulture);
             }
         }
         
@@ -1832,24 +1607,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string HostMachineOperatingSystemDetail_Value1_Description {
             get {
                 return ResourceManager.GetString("HostMachineOperatingSystemDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Five Fingers for TV に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string ModelSetIdDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("ModelSetIdDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Wands? に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string ModelSetIdDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("ModelSetIdDetail_Value1_Description", resourceCulture);
             }
         }
         

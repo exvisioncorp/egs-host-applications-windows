@@ -20,6 +20,7 @@ In this OSS version, assemblies are not strictly signed.  Thus, Gesture Cursors 
 ## Requirement
 Windows 7 or above.
 .NET 3.5 and .NET 4.5.2 are required.  Our official installer (<http://zkoocamera.com/setup/>) helps with their installation.
+When you use this SDK, please check "prefer 32-bit" in your EXE projects.
 
 ## Usage
 Open Windows/EgsHostAppsOnWindows.sln (<https://github.com/exvisioncorp/egs-host-applications-windows/blob/master/Windows/EgsHostAppsOnWindows.sln>) and build it.

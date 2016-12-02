@@ -36,6 +36,7 @@
                         throw new HidSimpleAccessException(HidSimpleAccessException.CreateFileFailedErrorMessage);
                     }
                     // Don't attempt to send an Output report if the Win32HidSimpleAccess has no Output report.  (It ignores this because we assume that device is not re-connected.）
+                    //using (var deviceDataFileStream = new FileStream(handle.DangerousGetHandle(), FileAccess.Read | FileAccess.Write, false, outputReport.Length, true))
                     using (var deviceDataFileStream = new FileStream(handle, FileAccess.Read | FileAccess.Write, outputReport.Length, true))
                     {
                         // TODO: Define the correct specification.
