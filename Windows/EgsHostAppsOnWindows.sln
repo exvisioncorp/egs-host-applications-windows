@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "Proj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EgsDeviceControlCoreForConsoleApp", "Projects\Egs\EgsDeviceControlCoreForConsoleApp\EgsDeviceControlCoreForConsoleApp.csproj", "{27912159-98C9-4496-9F91-04295045BB01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixedHandDetectionAreasExample01", "Projects\EgsSDK\EgsSDK-0.9\Examples\FixedHandDetectionAreasExample01\FixedHandDetectionAreasExample01.csproj", "{ADC01950-48A3-4AB6-BF36-117CD524D539}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{27912159-98C9-4496-9F91-04295045BB01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27912159-98C9-4496-9F91-04295045BB01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27912159-98C9-4496-9F91-04295045BB01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADC01950-48A3-4AB6-BF36-117CD524D539}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADC01950-48A3-4AB6-BF36-117CD524D539}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADC01950-48A3-4AB6-BF36-117CD524D539}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADC01950-48A3-4AB6-BF36-117CD524D539}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,5 +145,6 @@ Global
 		{7570A9FD-A34C-41B9-B3ED-B53A054D9D7C} = {01EA5DF0-122F-4131-86EC-8320D7400F09}
 		{22FE8061-B3EC-4519-90BB-822162EBC251} = {FFD1CAEA-333A-48D9-9727-CA8245278084}
 		{27912159-98C9-4496-9F91-04295045BB01} = {01EA5DF0-122F-4131-86EC-8320D7400F09}
+		{ADC01950-48A3-4AB6-BF36-117CD524D539} = {FFD1CAEA-333A-48D9-9727-CA8245278084}
 	EndGlobalSection
 EndGlobal
