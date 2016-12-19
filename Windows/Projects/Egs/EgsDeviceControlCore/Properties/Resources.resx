@@ -707,6 +707,18 @@ before starting ZKOO application.</comment>
     <value>270: Portrait</value>
     <comment>270: Portrait</comment>
   </data>
+  <data name="EgsDeviceSettings_DeviceUsage_Description" xml:space="preserve">
+    <value>Use ZKOO for</value>
+    <comment>Use ZKOO for</comment>
+  </data>
+  <data name="DeviceUsageDetail_Value0_Description" xml:space="preserve">
+    <value>Gesture Camera</value>
+    <comment>Gesture Camera</comment>
+  </data>
+  <data name="DeviceUsageDetail_Value1_Description" xml:space="preserve">
+    <value>Web Camera</value>
+    <comment>Web Camera</comment>
+  </data>
   <data name="EgsDeviceSettings_IsToDetectFaces_Description" xml:space="preserve">
     <value>Detect Faces</value>
     <comment>Detect Faces</comment>
@@ -726,6 +738,18 @@ before starting ZKOO application.</comment>
   <data name="EgsDeviceSettings_IsToSendEgsGestureHidReport_Description" xml:space="preserve">
     <value>Send Touch Information to Apps</value>
     <comment>Send Touch Information to Apps</comment>
+  </data>
+  <data name="EgsDeviceSettings_ModelSetId_Description" xml:space="preserve">
+    <value>Model Set ID</value>
+    <comment>Model Set ID</comment>
+  </data>
+  <data name="ModelSetIdDetail_Value0_Description" xml:space="preserve">
+    <value>Five Fingers for TV</value>
+    <comment>Five Fingers for TV</comment>
+  </data>
+  <data name="ModelSetIdDetail_Value1_Description" xml:space="preserve">
+    <value>Wands?</value>
+    <comment>Wands?</comment>
   </data>
   <data name="EgsDeviceSettings_TrackableHandsCount_Description" xml:space="preserve">
     <value>The Number of Trackable Objects</value>
@@ -831,6 +855,18 @@ before starting ZKOO application.</comment>
     <value>Draw Borders on Camera View Image By Device</value>
     <comment>Draw Borders on Camera View Image By Device</comment>
   </data>
+  <data name="EgsDeviceSettings_IsToFixFaceDetectionRegion_Description" xml:space="preserve">
+    <value>Fix Face Detection Region</value>
+    <comment>Fix Face Detection Region</comment>
+  </data>
+  <data name="EgsDeviceSettings_FaceDetectionAreaOnFixed_Description" xml:space="preserve">
+    <value>Face Detection Area (when fixed)</value>
+    <comment>Face Detection Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_FaceDetectionScaleOnFixed_Description" xml:space="preserve">
+    <value>Face Detection Scale (when fixed)</value>
+    <comment>Face Detection Scale (when fixed)</comment>
+  </data>
   <data name="EgsDeviceSettings_FaceSelectionMethodKind_Description" xml:space="preserve">
     <value>How to Select a Player</value>
     <comment>How to Select a Player</comment>
@@ -846,6 +882,54 @@ before starting ZKOO application.</comment>
   <data name="FaceSelectionMethodKindDetail_Value2_Description" xml:space="preserve">
     <value>Most Center: Select the most center person in Camera View</value>
     <comment>Most Center: Select the most center person in Camera View</comment>
+  </data>
+  <data name="EgsDeviceSettings_IsToFixHandDetectionRegions_Description" xml:space="preserve">
+    <value>Fix Hand Detection Regions</value>
+    <comment>Fix Hand Detection Regions</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandDetectionAreaOnFixed_Description" xml:space="preserve">
+    <value>Right Hand Detection Area (when fixed)</value>
+    <comment>Right Hand Detection Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandDetectionScaleOnFixed_Description" xml:space="preserve">
+    <value>Right Hand Detection Scale (when fixed)</value>
+    <comment>Right Hand Detection Scale (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandDetectionAreaOnFixed_Description" xml:space="preserve">
+    <value>Left Hand Detection Area (when fixed)</value>
+    <comment>Left Hand Detection Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandDetectionScaleOnFixed_Description" xml:space="preserve">
+    <value>Left Hand Detection Scale (when fixed)</value>
+    <comment>Left Hand Detection Scale (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_HandDetectionParameters_Description" xml:space="preserve">
+    <value>Hand Detection Parameters</value>
+    <comment>Hand Detection Parameters</comment>
+  </data>
+  <data name="EgsDeviceSettings_IsToFixHandTrackingAreas_Description" xml:space="preserve">
+    <value>Fix Hand Tracking Areas</value>
+    <comment>Fix Hand Tracking Areas</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandTrackingAreaOnFixed_Description" xml:space="preserve">
+    <value>Right Hand Tracking Area (when fixed)</value>
+    <comment>Right Hand Tracking Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandTrackingAreaOnFixed_Description" xml:space="preserve">
+    <value>Left Hand Tracking Area (when fixed)</value>
+    <comment>Left Hand Tracking Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_IsToFixScreenMappedAreas_Description" xml:space="preserve">
+    <value>Fix Screen Mapped Areas</value>
+    <comment>Fix Screen Mapped Areas</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandScreenMappedAreaOnFixed_Description" xml:space="preserve">
+    <value>Right Hand Screen Mapped Area (when fixed)</value>
+    <comment>Right Hand Screen Mapped Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandScreenMappedAreaOnFixed_Description" xml:space="preserve">
+    <value>Left Hand Screen Mapped Area (when fixed)</value>
+    <comment>Left Hand Screen Mapped Area (when fixed)</comment>
   </data>
   <data name="EgsDeviceSettings_CursorSpeedAndPrecisionMode_Description" xml:space="preserve">
     <value>Gesture Usage</value>
@@ -874,6 +958,30 @@ before starting ZKOO application.</comment>
   <data name="FastMovingHandsGestureModeDetail_Value1_Description" xml:space="preserve">
     <value>Touch</value>
     <comment>Touch</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandOuterRotation_Description" xml:space="preserve">
+    <value>Right Hand Outer Rotation</value>
+    <comment>Right Hand Outer Rotation</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandInnerRotation_Description" xml:space="preserve">
+    <value>Right Hand Inner Rotation</value>
+    <comment>Right Hand Inner Rotation</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandCloseHand_Description" xml:space="preserve">
+    <value>Right Hand Close Hand</value>
+    <comment>Right Hand Close Hand</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandOuterRotation_Description" xml:space="preserve">
+    <value>Left Hand Outer Rotation</value>
+    <comment>Left Hand Outer Rotation</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandInnerRotation_Description" xml:space="preserve">
+    <value>Left Hand Inner Rotation</value>
+    <comment>Left Hand Inner Rotation</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandCloseHand_Description" xml:space="preserve">
+    <value>Left Hand Close Hand</value>
+    <comment>Left Hand Close Hand</comment>
   </data>
   <data name="EgsDeviceSettings_ScreenMappedAreaResolutionSize_Description" xml:space="preserve">
     <value>Screen Mapped Area Resolution Size on Device</value>
