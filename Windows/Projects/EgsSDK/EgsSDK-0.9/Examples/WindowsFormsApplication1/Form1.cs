@@ -133,10 +133,10 @@
                 DeviceSettings.IsToDetectFaces.Value = false;
                 DeviceSettings.IsToDetectHands.Value = false;
                 DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+                EgsDevice.CloseDefaultEgsDevice();
 
                 CameraViewImagePictureBox.Dispose();
                 foreach (var cursorView in CursorViews) { cursorView.Close(); }
-                EgsDevice.CloseDefaultEgsDevice();
             };
         }
     }

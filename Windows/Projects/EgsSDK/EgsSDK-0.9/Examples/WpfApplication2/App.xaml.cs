@@ -118,13 +118,15 @@
             CameraViewWindow.Closed += delegate
             {
                 // When you get EgsDevice by EgsDevice.GetDefaultEgsDevice, you need to call EgsDevice.CloseDefaultEgsDevice(). 
-                foreach (var cursorView in CursorViews) { cursorView.Close(); }
                 EgsDevice.CloseDefaultEgsDevice();
+                // And then, you need to close cursorViews.
+                foreach (var cursorView in CursorViews) { cursorView.Close(); }
             };
 
-
-
-            this.Exit += delegate { DuplicatedProcessStartBlocking.ReleaseMutex(); };
+            this.Exit += delegate
+            {
+                DuplicatedProcessStartBlocking.ReleaseMutex();
+            };
         }
     }
 }
