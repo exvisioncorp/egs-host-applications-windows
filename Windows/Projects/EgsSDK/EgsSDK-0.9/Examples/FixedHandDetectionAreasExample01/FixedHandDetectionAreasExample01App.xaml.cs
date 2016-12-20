@@ -76,7 +76,7 @@
             base.MainWindow = CameraViewBackgroundWindow;
 
             CameraViewBackgroundWindowModel.InitializeOnceAtStartup(Device);
-            // CameraViewBackgroundWindow.DataContext = CameraViewBackgroundWindowModel;
+            CameraViewBackgroundWindow.DataContext = CameraViewBackgroundWindowModel;
 
             CameraViewBackgroundWindow.KeyDown += (sender, e) =>
             {
@@ -91,7 +91,7 @@
 
 
             {
-                FaceDetection = new FaceDetectionModel(Device);
+                FaceDetection = new FaceDetectionModel();
                 var FaceDetectionStopwatch = Stopwatch.StartNew();
                 var FaceDetectionIntervalMilliseconds = 100;
                 Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged += delegate
@@ -99,24 +99,50 @@
                     if (FaceDetectionStopwatch.ElapsedMilliseconds < FaceDetectionIntervalMilliseconds) { return; }
                     FaceDetectionStopwatch.Stop();
                     var isTrackingMoreThanOneHand = CursorViewModels[0].IsTracking || CursorViewModels[1].IsTracking;
-                    if (isTrackingMoreThanOneHand == false) { FaceDetection.DetectFaces(); }
+                    if (isTrackingMoreThanOneHand == false)
+                    {
+                        using (var bmp = (System.Drawing.Bitmap)Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap.Clone())
+                        {
+                            FaceDetection.DetectFaces(bmp);
+                        }
+                    }
                     FaceDetectionStopwatch.Restart();
                 };
                 FaceDetection.FaceDetectionCompleted += delegate
                 {
-                    DeviceSettings.RightHandDetectionAreaOnFixed.Value = FaceDetection.RightHandDetectionAreaRatioRect;
-                    DeviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = FaceDetection.RightHandDetectionScale;
-                    DeviceSettings.LeftHandDetectionAreaOnFixed.Value = FaceDetection.LeftHandDetectionAreaRatioRect;
-                    DeviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = FaceDetection.LeftHandDetectionScale;
+                    var RightHandDetectionAreaRatioRect = new Egs.DotNetUtility.RatioRect();
+                    var LeftHandDetectionAreaRatioRect = new Egs.DotNetUtility.RatioRect();
+                    var imageWidth = FaceDetection.ImageWidth;
+                    var imageHeight = FaceDetection.ImageHeight;
+                    var right = FaceDetection.RightHandDetectionArea;
+                    var left = FaceDetection.LeftHandDetectionArea;
+                    RightHandDetectionAreaRatioRect.XRange.From = (float)(right.X / imageWidth);
+                    RightHandDetectionAreaRatioRect.XRange.To = (float)((right.X + right.Width) / imageWidth);
+                    RightHandDetectionAreaRatioRect.YRange.From = (float)(right.Y / imageHeight);
+                    RightHandDetectionAreaRatioRect.YRange.To = (float)((right.Y + right.Height) / imageHeight);
+                    LeftHandDetectionAreaRatioRect.XRange.From = (float)(left.X / imageWidth);
+                    LeftHandDetectionAreaRatioRect.XRange.To = (float)((left.X + left.Width) / imageWidth);
+                    LeftHandDetectionAreaRatioRect.YRange.From = (float)(left.Y / imageHeight);
+                    LeftHandDetectionAreaRatioRect.YRange.To = (float)((left.Y + left.Height) / imageHeight);
+
+                    // TODO: fix
+                    var RightHandDetectionScale = (int)(FaceDetection.RightHandDetectionArea.Width / 8.0) + 4;
+                    var LeftHandDetectionScale = (int)(FaceDetection.LeftHandDetectionArea.Width / 8.0) + 4;
+                    Debug.WriteLine("HandDetectionScale: {0}, {1}", RightHandDetectionScale, LeftHandDetectionScale);
+
+                    DeviceSettings.RightHandDetectionAreaOnFixed.Value = RightHandDetectionAreaRatioRect;
+                    DeviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = RightHandDetectionScale;
+                    DeviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
+                    DeviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = LeftHandDetectionScale;
                 };
             }
 
 
             this.Exit += delegate
             {
+                DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
                 DeviceSettings.IsToDetectFaces.Value = false;
                 DeviceSettings.IsToDetectHands.Value = false;
-                DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
                 DeviceSettings.IsToFixHandDetectionRegions.Value = false;
                 EgsDevice.CloseDefaultEgsDevice();
 
