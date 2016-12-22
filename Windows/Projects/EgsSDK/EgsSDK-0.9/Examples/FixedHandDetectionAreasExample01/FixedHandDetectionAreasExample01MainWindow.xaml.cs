@@ -20,6 +20,12 @@
         public FixedHandDetectionAreasExample01MainWindow()
         {
             InitializeComponent();
+
+            this.MouseLeftButtonDown += (sender, e) =>
+            {
+                if (e.ButtonState != MouseButtonState.Pressed) { return; }
+                this.DragMove();
+            };
         }
     }
 }

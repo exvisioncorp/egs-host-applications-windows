@@ -21,8 +21,7 @@
         public IList<CursorForm> CursorViews { get; private set; }
         public CameraViewModel CameraViewBackgroundWindowModel { get; private set; }
         public FixedHandDetectionAreasExample01MainWindow CameraViewBackgroundWindow { get; private set; }
-
-        FaceDetectionModel FaceDetection { get; set; }
+        public FaceDetectionModel FaceDetection { get; private set; }
 
         public FixedHandDetectionAreasExample01App()
             : base()
@@ -42,80 +41,56 @@
             DeviceSettings.IsToDetectHands.Value = true;
             DeviceSettings.IsToFixHandDetectionRegions.Value = true;
 
-
             Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
 
-            CursorViewModels = new CursorViewModel[Device.TrackableHandsCountMaximum];
-            CursorViewModels[0] = new CursorViewModel();
-            CursorViewModels[1] = new CursorViewModel();
-            CursorViews = new CursorForm[Device.TrackableHandsCountMaximum];
-            CursorViews[0] = new CursorForm();
-            CursorViews[1] = new CursorForm();
-            var imageSetListRight = new List<ImageInformationSet>();
-            var imageSetListLeft = new List<ImageInformationSet>();
-            imageSetListRight.Add(new ImageInformationSet() { ImageSetIndex = 0, FolderPath = "Resources\\", SampleImageFileRelativePath = "Resources\\Sample.Png" });
-            imageSetListRight[0].AddImage((int)CursorImageIndexLabels.OpenHand, "Right_OpenHand.png");
-            imageSetListRight[0].AddImage((int)CursorImageIndexLabels.CloseHand, "Right_CloseHand.png");
-            imageSetListLeft.Add(new ImageInformationSet() { ImageSetIndex = 0, FolderPath = "Resources\\", SampleImageFileRelativePath = "Resources\\Sample.Png" });
-            imageSetListLeft[0].AddImage((int)CursorImageIndexLabels.OpenHand, "Left_OpenHand.png");
-            imageSetListLeft[0].AddImage((int)CursorImageIndexLabels.CloseHand, "Left_CloseHand.png");
-            CursorViews[0].InitializeOnceAtStartup(CursorViewModels[0], imageSetListRight);
-            CursorViews[1].InitializeOnceAtStartup(CursorViewModels[1], imageSetListLeft);
-            Device.EgsGestureHidReport.ReportUpdated += (sender, e) =>
+
             {
-                for (int i = 0; i < Device.TrackableHandsCount; i++)
-                {
-                    CursorViewModels[i].UpdateByEgsGestureHidReportHand(Device.EgsGestureHidReport.Hands[i]);
-                    CursorViews[i].UpdatePosition();
-                }
-            };
-
-
-            CameraViewBackgroundWindowModel = new CameraViewModel();
-            CameraViewBackgroundWindow = new FixedHandDetectionAreasExample01MainWindow();
-            base.MainWindow = CameraViewBackgroundWindow;
-
-            CameraViewBackgroundWindowModel.InitializeOnceAtStartup(Device);
-            CameraViewBackgroundWindow.DataContext = CameraViewBackgroundWindowModel;
-
-            CameraViewBackgroundWindow.KeyDown += (sender, e) =>
-            {
-                switch (e.Key)
-                {
-                    case System.Windows.Input.Key.Escape:
-                        CameraViewBackgroundWindow.Close();
-                        break;
-                }
-            };
-            CameraViewBackgroundWindow.Show();
+                CursorViewModels = new CursorViewModel[Device.TrackableHandsCountMaximum];
+                CursorViewModels[0] = new CursorViewModel();
+                CursorViewModels[1] = new CursorViewModel();
+                CursorViews = new CursorForm[Device.TrackableHandsCountMaximum];
+                CursorViews[0] = new CursorForm();
+                CursorViews[1] = new CursorForm();
+                var imageSetListRight = new List<ImageInformationSet>();
+                var imageSetListLeft = new List<ImageInformationSet>();
+                imageSetListRight.Add(new ImageInformationSet() { ImageSetIndex = 0, FolderPath = "Resources\\", SampleImageFileRelativePath = "Resources\\Sample.png" });
+                imageSetListRight[0].AddImage((int)CursorImageIndexLabels.OpenHand, "Right_OpenHand.png");
+                imageSetListRight[0].AddImage((int)CursorImageIndexLabels.CloseHand, "Right_CloseHand.png");
+                imageSetListLeft.Add(new ImageInformationSet() { ImageSetIndex = 0, FolderPath = "Resources\\", SampleImageFileRelativePath = "Resources\\Sample.png" });
+                imageSetListLeft[0].AddImage((int)CursorImageIndexLabels.OpenHand, "Left_OpenHand.png");
+                imageSetListLeft[0].AddImage((int)CursorImageIndexLabels.CloseHand, "Left_CloseHand.png");
+                CursorViews[0].InitializeOnceAtStartup(CursorViewModels[0], imageSetListRight);
+                CursorViews[1].InitializeOnceAtStartup(CursorViewModels[1], imageSetListLeft);
+                Device.EgsGestureHidReport.ReportUpdated += EgsGestureHidReport_ReportUpdated;
+            }
 
 
             {
                 FaceDetection = new FaceDetectionModel();
+                FaceDetection.IsToShowResultImage = true;
+
+                // TODO: check the minimum value.  200[ms]?
+                var FaceDetectionIntervalMilliseconds = 200;
                 var FaceDetectionStopwatch = Stopwatch.StartNew();
-                var FaceDetectionIntervalMilliseconds = 100;
                 Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged += delegate
                 {
                     if (FaceDetectionStopwatch.ElapsedMilliseconds < FaceDetectionIntervalMilliseconds) { return; }
                     FaceDetectionStopwatch.Stop();
                     var isTrackingMoreThanOneHand = CursorViewModels[0].IsTracking || CursorViewModels[1].IsTracking;
-                    if (isTrackingMoreThanOneHand == false)
-                    {
-                        using (var bmp = (System.Drawing.Bitmap)Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap.Clone())
-                        {
-                            FaceDetection.DetectFaces(bmp);
-                        }
-                    }
+                    FaceDetection.IsToDetectFaces = isTrackingMoreThanOneHand == false;
+                    FaceDetection.UpdateAsync(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
                     FaceDetectionStopwatch.Restart();
                 };
                 FaceDetection.FaceDetectionCompleted += delegate
                 {
-                    var RightHandDetectionAreaRatioRect = new Egs.DotNetUtility.RatioRect();
-                    var LeftHandDetectionAreaRatioRect = new Egs.DotNetUtility.RatioRect();
-                    var imageWidth = FaceDetection.ImageWidth;
-                    var imageHeight = FaceDetection.ImageHeight;
+                    var imageWidth = FaceDetection.CameraViewImageWidth;
+                    var imageHeight = FaceDetection.CameraViewImageHeight;
                     var right = FaceDetection.RightHandDetectionArea;
                     var left = FaceDetection.LeftHandDetectionArea;
+                    Debug.WriteLine("FaceDetection.HandDetectionScaleForEgsDevice: " + FaceDetection.HandDetectionScaleForEgsDevice);
+
+                    var RightHandDetectionAreaRatioRect = new Egs.DotNetUtility.RatioRect();
+                    var LeftHandDetectionAreaRatioRect = new Egs.DotNetUtility.RatioRect();
                     RightHandDetectionAreaRatioRect.XRange.From = (float)(right.X / imageWidth);
                     RightHandDetectionAreaRatioRect.XRange.To = (float)((right.X + right.Width) / imageWidth);
                     RightHandDetectionAreaRatioRect.YRange.From = (float)(right.Y / imageHeight);
@@ -124,31 +99,75 @@
                     LeftHandDetectionAreaRatioRect.XRange.To = (float)((left.X + left.Width) / imageWidth);
                     LeftHandDetectionAreaRatioRect.YRange.From = (float)(left.Y / imageHeight);
                     LeftHandDetectionAreaRatioRect.YRange.To = (float)((left.Y + left.Height) / imageHeight);
-
-                    // TODO: fix
-                    var RightHandDetectionScale = (int)(FaceDetection.RightHandDetectionArea.Width / 8.0) + 4;
-                    var LeftHandDetectionScale = (int)(FaceDetection.LeftHandDetectionArea.Width / 8.0) + 4;
-                    Debug.WriteLine("HandDetectionScale: {0}, {1}", RightHandDetectionScale, LeftHandDetectionScale);
-
                     DeviceSettings.RightHandDetectionAreaOnFixed.Value = RightHandDetectionAreaRatioRect;
-                    DeviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = RightHandDetectionScale;
+                    DeviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = FaceDetection.HandDetectionScaleForEgsDevice;
                     DeviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
-                    DeviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = LeftHandDetectionScale;
+                    DeviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = FaceDetection.HandDetectionScaleForEgsDevice;
                 };
             }
 
 
             this.Exit += delegate
             {
+                // By detaching this event handler, Exception does not happen.
+                Device.EgsGestureHidReport.ReportUpdated -= EgsGestureHidReport_ReportUpdated;
+
                 DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
                 DeviceSettings.IsToDetectFaces.Value = false;
                 DeviceSettings.IsToDetectHands.Value = false;
                 DeviceSettings.IsToFixHandDetectionRegions.Value = false;
+                // Call this method before CursorView.Close().
                 EgsDevice.CloseDefaultEgsDevice();
 
                 foreach (var cursorView in CursorViews) { cursorView.Close(); }
                 DuplicatedProcessStartBlocking.ReleaseMutex();
             };
+
+
+            {
+                CameraViewBackgroundWindowModel = new CameraViewModel();
+                CameraViewBackgroundWindow = new FixedHandDetectionAreasExample01MainWindow();
+                CameraViewBackgroundWindowModel.InitializeOnceAtStartup(Device);
+                Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged += delegate
+                {
+                    // Unfortunately, DataBinding does not seem to be able to solve "different thread" InvalidOperationException.
+                    CameraViewBackgroundWindow.CameraViewImage.Dispatcher.InvokeAsync(() =>
+                    {
+                        CameraViewBackgroundWindow.CameraViewImage.Source = CameraViewBackgroundWindowModel.CameraViewWpfBitmapSource;
+                    });
+                };
+                CameraViewBackgroundWindow.KeyDown += (sender, e) =>
+                {
+                    switch (e.Key)
+                    {
+                        case System.Windows.Input.Key.Escape:
+                            CameraViewBackgroundWindow.Close();
+                            break;
+                    }
+                };
+                base.MainWindow = CameraViewBackgroundWindow;
+                CameraViewBackgroundWindow.Show();
+            }
+        }
+
+        bool isDrawingCursors = false;
+        void EgsGestureHidReport_ReportUpdated(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Device.TrackableHandsCount; i++)
+            {
+                CursorViewModels[i].UpdateByEgsGestureHidReportHand(Device.EgsGestureHidReport.Hands[i]);
+            }
+            // If Task is not used, delay in moving cursors accumulates.
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                if (isDrawingCursors) { return; }
+                isDrawingCursors = true;
+                for (int i = 0; i < Device.TrackableHandsCount; i++)
+                {
+                    CursorViews[i].UpdatePosition();
+                }
+                isDrawingCursors = false;
+            });
         }
     }
 }
