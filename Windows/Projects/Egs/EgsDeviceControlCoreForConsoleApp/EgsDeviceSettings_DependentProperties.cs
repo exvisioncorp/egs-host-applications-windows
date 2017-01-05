@@ -53,7 +53,7 @@
             var hMax = TouchTargetScreenSize.Height;
             // MUSTDO: test with changing DPI, because it can change the position of Camera View.
             var dpi = Dpi.DpiFromHdcForTheEntireScreen;
-            var width = dpi.ScaledPrimaryScreenBounds.Width;
+            var width = dpi.GetScaledRectangle(System.Windows.Forms.Screen.PrimaryScreen.Bounds).Width;
             var xVal = (int)(width - wVal - 50);
             var yVal = 100;
             return new HidAccessPropertyRect(
