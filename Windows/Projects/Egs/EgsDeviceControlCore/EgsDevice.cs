@@ -25,7 +25,12 @@
     [DataContract]
     public partial class EgsDevice : INotifyPropertyChanged
     {
-        public static bool IsToUseActiveWindowHWnd = false;
+        public const bool IsToUseActiveWindowHWnd = false;
+#if USE_OLD_HID
+        public const bool IsToUseWin32CreateFile = false;
+#else
+        public const bool IsToUseWin32CreateFile = true;
+#endif
 
         /// <summary>
         /// Currently the maximum number of objects which EGS device can detect and track is 2.
@@ -327,7 +332,7 @@
             CreateProperties();
 
             CameraViewImageSourceBitmapCapture = new EgsDeviceCameraViewImageSourceBitmapCapture();
-            HidReportsUpdate = new EgsDeviceHidReportsUpdate();
+            if (IsToUseWin32CreateFile) { HidReportsUpdate = new EgsDeviceHidReportsUpdate(); }
             TouchScreenHidReport = new EgsDeviceTouchScreenHidReport();
             EgsGestureHidReport = new EgsDeviceEgsGestureHidReport();
 
@@ -338,7 +343,7 @@
         internal void InitializeOnceAtStartup()
         {
             CameraViewImageSourceBitmapCapture.InitializeOnceAtStartup(this);
-            HidReportsUpdate.InitializeOnceAtStartup(this);
+            if (HidReportsUpdate != null) { HidReportsUpdate.InitializeOnceAtStartup(this); }
             TouchScreenHidReport.InitializeOnceAtStartup(this);
             EgsGestureHidReport.InitializeOnceAtStartup(this);
 
@@ -517,7 +522,7 @@
             else
             {
                 _HidDeviceDevicePath = newDevicePath;
-                HidReportsUpdate.Start(_HidDeviceDevicePath);
+                if (HidReportsUpdate != null) { HidReportsUpdate.Start(_HidDeviceDevicePath); }
                 _IsHidDeviceConnected = true;
                 SetAllSettingsToDeviceAndReadStatusFromDevice();
             }

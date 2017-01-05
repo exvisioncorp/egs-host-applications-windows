@@ -43,6 +43,8 @@
 
         internal EgsDevicesWindowMessageReceivingForm()
         {
+            InitializeComponent();
+            this.Visible = false;
             IsToUseActiveWindowHWnd = EgsDevice.IsToUseActiveWindowHWnd;
 
             IntPtr monitoringHWnd = IntPtr.Zero;

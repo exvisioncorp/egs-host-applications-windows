@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;USE_OLD_HID</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\EgsDeviceControlCore.xml</DocumentationFile>
@@ -31,7 +31,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;USE_OLD_HID</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -103,6 +103,7 @@
     <Compile Include="EgsDeviceEgsGestureHidReportHand.cs" />
     <Compile Include="EgsDeviceEnumTypes.cs" />
     <Compile Include="EgsDeviceHidAccessProperties.generated.cs" />
+    <Compile Include="EgsDeviceHidReportsUpdateByWin32RawInput.cs" />
     <Compile Include="EgsDeviceSettings.cs" />
     <Compile Include="EgsDeviceSettings_DependentProperties.cs" />
     <Compile Include="EgsDevicesManager.cs" />
@@ -151,11 +152,13 @@
     <Compile Include="Views\ImageInformationSet.cs" />
     <Compile Include="Win32\Win32CreateFile.cs" />
     <Compile Include="Win32\Win32DeviceNotification.cs" />
+    <Compile Include="Win32\Win32GetRawInputData.cs" />
     <Compile Include="Win32\Win32GuidConstants.cs" />
     <Compile Include="Win32\Win32Hid.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Win32\Win32HidSimpleAccess.cs" />
+    <Compile Include="Win32\Win32RegisterRawInputDevices.cs" />
     <Compile Include="Win32\Win32SetupDiForEgsDevice.cs" />
     <Compile Include="Win32\Win32SetWindowPosition.cs" />
     <Compile Include="Win32\Win32UpdateLayeredWindow.cs" />

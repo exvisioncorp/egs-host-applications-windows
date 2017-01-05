@@ -195,6 +195,7 @@
 
             cameraViewWindowModel.WindowStateChanged += delegate
             {
+            	// TODO: MUSTDO: find the better way
                 this.Dispatcher.Invoke(() =>
                 {
                     if (WindowState == WindowState.Maximized)
