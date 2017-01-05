@@ -3,6 +3,8 @@
 
 # User-specific files
 .svn/
+Windows/Projects/Egs/ZkooTutorial/Resources/
+
 *.suo
 *.user
 *.userosscache
@@ -251,6 +253,3 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-
-# Unity
-[Ll]ibrary/
