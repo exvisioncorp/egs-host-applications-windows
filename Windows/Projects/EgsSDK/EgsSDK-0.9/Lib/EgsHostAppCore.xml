@@ -25,23 +25,6 @@
             Load a bitmap image from a file more safely
             </summary>
         </member>
-        <member name="M:Egs.DotNetUtility.DpiExtensions.GetDpiFromCompositionTargetTransformToDevice(System.Windows.Media.Visual)">
-            <summary>
-            Get primary screen's DPI from PresentationSource.FromVisual(visual).CompositionTarget.TransformToDevice
-            </summary>
-        </member>
-        <member name="M:Egs.DotNetUtility.DpiExtensions.GetDpiFromGetDpiForMonitor(System.Windows.Media.Visual,Egs.Win32.MonitorDpiType)">
-            <summary>
-            You can get current screen's DPi (screen which has mouse cursor currently), when you set dpiType to RawDpi or AngularDpi.
-            Refer to https://msdn.microsoft.com/en-us/library/windows/desktop/dn280510(v=vs.85).aspx
-            </summary>
-        </member>
-        <member name="P:Egs.DotNetUtility.DpiExtensions.IsPerMonitorDpiServiceSupported">
-            <summary>
-            Just return the result of "Environment.OSVersion.Version >= new Version(6, 3)".  Before you use this, you have to activate "Application is designed for Windows 8.1" in app.manifest.
-            Refer to https://github.com/Grabacr07/XamClaudia (Japanese)
-            </summary>
-        </member>
         <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ManualOnOff">
             <summary>0: Manual Show / Hide by Icons on Task Bar and System Tray.  Hide by the Minimize Button on the Menu</summary>
         </member>

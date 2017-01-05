@@ -103,7 +103,6 @@
     <Compile Include="EgsDeviceEgsGestureHidReportHand.cs" />
     <Compile Include="EgsDeviceEnumTypes.cs" />
     <Compile Include="EgsDeviceHidAccessProperties.generated.cs" />
-    <Compile Include="EgsDeviceHidReportsUpdateByWin32RawInput.cs" />
     <Compile Include="EgsDeviceSettings.cs" />
     <Compile Include="EgsDeviceSettings_DependentProperties.cs" />
     <Compile Include="EgsDevicesManager.cs" />
@@ -152,16 +151,17 @@
     <Compile Include="Views\ImageInformationSet.cs" />
     <Compile Include="Win32\Win32CreateFile.cs" />
     <Compile Include="Win32\Win32DeviceNotification.cs" />
-    <Compile Include="Win32\Win32GetRawInputData.cs" />
     <Compile Include="Win32\Win32GuidConstants.cs" />
     <Compile Include="Win32\Win32Hid.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Win32\Win32HidSimpleAccess.cs" />
-    <Compile Include="Win32\Win32RegisterRawInputDevices.cs" />
     <Compile Include="Win32\Win32SetupDiForEgsDevice.cs" />
     <Compile Include="Win32\Win32SetWindowPosition.cs" />
     <Compile Include="Win32\Win32UpdateLayeredWindow.cs" />
+    <Compile Include="WmInput\EgsDeviceHidReportsUpdateByWin32RawInput.cs" />
+    <Compile Include="WmInput\Win32GetRawInputData.cs" />
+    <Compile Include="WmInput\Win32RegisterRawInputDevices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DotNetUtility\PartialClass_Properties.t4" />
