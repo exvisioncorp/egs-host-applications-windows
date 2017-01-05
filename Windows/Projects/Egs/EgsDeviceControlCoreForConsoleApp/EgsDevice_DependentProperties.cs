@@ -10,7 +10,7 @@
     using System.Runtime.InteropServices;
     using System.Globalization;
     using Egs;
-    using Egs.EgsDeviceControlCoreForConsoleApp.Properties;
+    using Egs.EgsDeviceControlCore.Properties;
     using Egs.PropertyTypes;
     using Egs.DotNetUtility;
 

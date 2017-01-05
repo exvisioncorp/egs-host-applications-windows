@@ -6,7 +6,7 @@ namespace Egs
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.Serialization;
-    using Egs.EgsDeviceControlCoreForConsoleApp.Properties;
+    using Egs.EgsDeviceControlCore.Properties;
     using Egs.DotNetUtility;
     using Egs.PropertyTypes;
 
@@ -90,6 +90,22 @@ namespace Egs
         [DataMember]
         public HidAccessPropertyOptional<FaceSelectionMethodKindDetail> FaceSelectionMethodKind { get; private set; }
         [DataMember]
+        public HidAccessPropertyBoolean IsToFixHandDetectionRegions { get; private set; }
+        [DataMember]
+        public HidAccessPropertyRatioRect RightHandDetectionAreaOnFixed { get; private set; }
+        [DataMember]
+        public HidAccessPropertyRangedInt RightHandDetectionScaleOnFixed { get; private set; }
+        [DataMember]
+        public HidAccessPropertyRatioRect LeftHandDetectionAreaOnFixed { get; private set; }
+        [DataMember]
+        public HidAccessPropertyRangedInt LeftHandDetectionScaleOnFixed { get; private set; }
+        [DataMember]
+        public HidAccessPropertyBoolean IsToFixScreenMappedAreas { get; private set; }
+        [DataMember]
+        public HidAccessPropertyRatioRect RightHandScreenMappedAreaOnFixed { get; private set; }
+        [DataMember]
+        public HidAccessPropertyRatioRect LeftHandScreenMappedAreaOnFixed { get; private set; }
+        [DataMember]
         public HidAccessPropertyOptional<CursorSpeedAndPrecisionModeDetail> CursorSpeedAndPrecisionMode { get; private set; }
         [DataMember]
         public HidAccessPropertyOptional<FastMovingHandsGestureModeDetail> FastMovingHandsGestureMode { get; private set; }
@@ -125,6 +141,14 @@ namespace Egs
             CameraViewImageSourceRectInCapturedImage = new HidAccessPropertyRect() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x30, PropertyId = 0x01, ValueTypeOnDevice = "int", DataLength = 4, IsReadOnly = true, NameOfProperty = "CameraViewImageSourceRectInCapturedImage", AvailableFirmwareVersion = new Version("1.0"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_CameraViewImageSourceRectInCapturedImage_Description) };
             IsToDrawBordersOnCameraViewImageByDevice = new HidAccessPropertyBoolean() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x30, PropertyId = 0x02, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToDrawBordersOnCameraViewImageByDevice", AvailableFirmwareVersion = new Version("1.0"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description) };
             FaceSelectionMethodKind = new HidAccessPropertyOptional<FaceSelectionMethodKindDetail>() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x40, PropertyId = 0xA0, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "FaceSelectionMethodKind", AvailableFirmwareVersion = new Version("1.0"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_FaceSelectionMethodKind_Description) }; FaceSelectionMethodKind.OptionalValue.Options = FaceSelectionMethodKindDetail.GetDefaultList(); FaceSelectionMethodKind.InitializeOnceAtStartup();
+            IsToFixHandDetectionRegions = new HidAccessPropertyBoolean() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x50, PropertyId = 0x10, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToFixHandDetectionRegions", AvailableFirmwareVersion = new Version("1.1.8109"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToFixHandDetectionRegions_Description) };
+            RightHandDetectionAreaOnFixed = new HidAccessPropertyRatioRect() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x50, PropertyId = 0x20, ValueTypeOnDevice = "float", DataLength = 4, IsReadOnly = false, NameOfProperty = "RightHandDetectionAreaOnFixed", AvailableFirmwareVersion = new Version("1.1.8109"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_RightHandDetectionAreaOnFixed_Description) }; RightHandDetectionAreaOnFixed.InitializeOnceAtStartup();
+            RightHandDetectionScaleOnFixed = new HidAccessPropertyRangedInt() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x50, PropertyId = 0x21, ValueTypeOnDevice = "int", DataLength = 1, IsReadOnly = false, NameOfProperty = "RightHandDetectionScaleOnFixed", AvailableFirmwareVersion = new Version("1.1.8109"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_RightHandDetectionScaleOnFixed_Description) }; RightHandDetectionScaleOnFixed.InitializeOnceAtStartup();
+            LeftHandDetectionAreaOnFixed = new HidAccessPropertyRatioRect() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x50, PropertyId = 0x30, ValueTypeOnDevice = "float", DataLength = 4, IsReadOnly = false, NameOfProperty = "LeftHandDetectionAreaOnFixed", AvailableFirmwareVersion = new Version("1.1.8109"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_LeftHandDetectionAreaOnFixed_Description) }; LeftHandDetectionAreaOnFixed.InitializeOnceAtStartup();
+            LeftHandDetectionScaleOnFixed = new HidAccessPropertyRangedInt() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x50, PropertyId = 0x31, ValueTypeOnDevice = "int", DataLength = 1, IsReadOnly = false, NameOfProperty = "LeftHandDetectionScaleOnFixed", AvailableFirmwareVersion = new Version("1.1.8109"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_LeftHandDetectionScaleOnFixed_Description) }; LeftHandDetectionScaleOnFixed.InitializeOnceAtStartup();
+            IsToFixScreenMappedAreas = new HidAccessPropertyBoolean() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x80, PropertyId = 0x10, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToFixScreenMappedAreas", AvailableFirmwareVersion = new Version("1.1.8109"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToFixScreenMappedAreas_Description) };
+            RightHandScreenMappedAreaOnFixed = new HidAccessPropertyRatioRect() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x80, PropertyId = 0x20, ValueTypeOnDevice = "float", DataLength = 4, IsReadOnly = false, NameOfProperty = "RightHandScreenMappedAreaOnFixed", AvailableFirmwareVersion = new Version("1.1.8109"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_RightHandScreenMappedAreaOnFixed_Description) }; RightHandScreenMappedAreaOnFixed.InitializeOnceAtStartup();
+            LeftHandScreenMappedAreaOnFixed = new HidAccessPropertyRatioRect() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x80, PropertyId = 0x30, ValueTypeOnDevice = "float", DataLength = 4, IsReadOnly = false, NameOfProperty = "LeftHandScreenMappedAreaOnFixed", AvailableFirmwareVersion = new Version("1.1.8109"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_LeftHandScreenMappedAreaOnFixed_Description) }; LeftHandScreenMappedAreaOnFixed.InitializeOnceAtStartup();
             CursorSpeedAndPrecisionMode = new HidAccessPropertyOptional<CursorSpeedAndPrecisionModeDetail>() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0xD0, PropertyId = 0x00, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "CursorSpeedAndPrecisionMode", AvailableFirmwareVersion = new Version("1.0"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Description) }; CursorSpeedAndPrecisionMode.OptionalValue.Options = CursorSpeedAndPrecisionModeDetail.GetDefaultList(); CursorSpeedAndPrecisionMode.InitializeOnceAtStartup();
             FastMovingHandsGestureMode = new HidAccessPropertyOptional<FastMovingHandsGestureModeDetail>() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0xD0, PropertyId = 0x10, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "FastMovingHandsGestureMode", AvailableFirmwareVersion = new Version("1.1.8005"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Description) }; FastMovingHandsGestureMode.OptionalValue.Options = FastMovingHandsGestureModeDetail.GetDefaultList(); FastMovingHandsGestureMode.InitializeOnceAtStartup();
             ScreenMappedAreaResolutionSize = new HidAccessPropertySize() { ReportId = 0x0B, MessageId = 0x00, CategoryId = 0xE0, PropertyId = 0x10, ValueTypeOnDevice = "int", DataLength = 2, IsReadOnly = true, NameOfProperty = "ScreenMappedAreaResolutionSize", AvailableFirmwareVersion = new Version("1.0"), DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_ScreenMappedAreaResolutionSize_Description) };
@@ -159,6 +183,14 @@ namespace Egs
             HidAccessPropertyList.Add(CameraViewImageSourceRectInCapturedImage);
             HidAccessPropertyList.Add(IsToDrawBordersOnCameraViewImageByDevice);
             HidAccessPropertyList.Add(FaceSelectionMethodKind);
+            HidAccessPropertyList.Add(IsToFixHandDetectionRegions);
+            HidAccessPropertyList.Add(RightHandDetectionAreaOnFixed);
+            HidAccessPropertyList.Add(RightHandDetectionScaleOnFixed);
+            HidAccessPropertyList.Add(LeftHandDetectionAreaOnFixed);
+            HidAccessPropertyList.Add(LeftHandDetectionScaleOnFixed);
+            HidAccessPropertyList.Add(IsToFixScreenMappedAreas);
+            HidAccessPropertyList.Add(RightHandScreenMappedAreaOnFixed);
+            HidAccessPropertyList.Add(LeftHandScreenMappedAreaOnFixed);
             HidAccessPropertyList.Add(CursorSpeedAndPrecisionMode);
             HidAccessPropertyList.Add(FastMovingHandsGestureMode);
             HidAccessPropertyList.Add(ScreenMappedAreaResolutionSize);
@@ -189,6 +221,18 @@ namespace Egs
             CameraViewImageSourceBitmapSize.OptionalValue.SelectSingleItemByPredicate(e => e.Value == 1);
             IsToDrawBordersOnCameraViewImageByDevice.Value = false;
             FaceSelectionMethodKind.OptionalValue.SelectSingleItemByPredicate(e => e.Value == 0);
+            IsToFixHandDetectionRegions.Value = false;
+            RightHandDetectionAreaOnFixed.ValueAsString = "0.6, 0.3, 0.9, 0.9";
+            RightHandDetectionScaleOnFixed.RangedValue.Minimum = 4;
+            RightHandDetectionScaleOnFixed.RangedValue.Maximum = 25;
+            RightHandDetectionScaleOnFixed.RangedValue.Value = 15;
+            LeftHandDetectionAreaOnFixed.ValueAsString = "0.1, 0.3, 0.4, 0.9";
+            LeftHandDetectionScaleOnFixed.RangedValue.Minimum = 4;
+            LeftHandDetectionScaleOnFixed.RangedValue.Maximum = 25;
+            LeftHandDetectionScaleOnFixed.RangedValue.Value = 15;
+            IsToFixScreenMappedAreas.Value = false;
+            RightHandScreenMappedAreaOnFixed.ValueAsString = "0.65, 0.5, 0.85, 0.8";
+            LeftHandScreenMappedAreaOnFixed.ValueAsString = "0.15, 0.5, 0.35, 0.8";
             CursorSpeedAndPrecisionMode.OptionalValue.SelectSingleItemByPredicate(e => e.Value == 0);
             FastMovingHandsGestureMode.OptionalValue.SelectSingleItemByPredicate(e => e.Value == 0);
             ScreenMappedAreaResolutionSize.Width = 7540;

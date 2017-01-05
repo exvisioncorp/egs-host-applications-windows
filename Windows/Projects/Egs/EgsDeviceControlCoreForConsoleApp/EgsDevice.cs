@@ -10,7 +10,7 @@
     using System.Runtime.Serialization;
     using System.Runtime.InteropServices;
     using System.Collections.ObjectModel;
-    using Egs.EgsDeviceControlCoreForConsoleApp.Properties;
+    using Egs.EgsDeviceControlCore.Properties;
     using Egs.DotNetUtility;
     using Egs.PropertyTypes;
 
@@ -349,7 +349,7 @@
         {
             if (IsHidDeviceConnected == false)
             {
-                Debug.WriteLine(Resources.CommonStrings_PleaseConnectTheZkooCamera);
+                Console.WriteLine(Resources.CommonStrings_PleaseConnectTheZkooCamera);
                 return;
             }
             SetHidFeatureReport(HostToDeviceCommandFeatureReport.SaveSettingsToFlashCommandFeatureReport.ByteArrayData);
@@ -362,7 +362,7 @@
         {
             if (IsHidDeviceConnected == false)
             {
-                Debug.WriteLine(Resources.CommonStrings_PleaseConnectTheZkooCamera);
+                Console.WriteLine(Resources.CommonStrings_PleaseConnectTheZkooCamera);
                 return;
             }
             SetHidFeatureReport(HostToDeviceCommandFeatureReport.ResetDeviceCommandFeatureReport.ByteArrayData);

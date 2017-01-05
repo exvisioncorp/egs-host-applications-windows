@@ -6,7 +6,6 @@
     using System.Text;
     using System.Diagnostics;
     using System.ComponentModel;
-    using System.Windows;
     using System.Globalization;
     using Egs.EgsDeviceControlCore.Properties;
 

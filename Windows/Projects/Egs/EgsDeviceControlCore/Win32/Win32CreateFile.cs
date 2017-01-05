@@ -42,6 +42,7 @@ namespace Egs.Win32
             System = 0x00000004,
             Directory = 0x00000010,
             Archive = 0x00000020,
+            // NOTE: In MSDN and so on, it says "Reserved for future use.", but this flag is very important!!
             Device = 0x00000040,
             Normal = 0x00000080,
             Temporary = 0x00000100,
@@ -94,7 +95,6 @@ namespace Egs.Win32
             ref int numberOfBytesRead,
             ref System.Threading.NativeOverlapped overlappedBuffer
         );
-#endif
 
         // http://buiba.blogspot.jp/2009/06/using-winapi-createfile-readfile.html
         [DllImport("kernel32", SetLastError = true)]
@@ -103,6 +103,16 @@ namespace Egs.Win32
             byte[] buffer,
             int numberOfBytesToRead,
             ref int numberOfBytesRead,
+            IntPtr overlappedBuffer
+        );
+#endif
+
+        [DllImport("kernel32", SetLastError = true)]
+        extern internal static bool ReadFile(
+            SafeFileHandle hFile,
+            byte[] buffer,
+            int numberOfBytesToRead,
+            out int numberOfBytesRead,
             IntPtr overlappedBuffer
         );
 

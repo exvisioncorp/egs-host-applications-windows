@@ -57,8 +57,8 @@
             InitializePropertiesByDefaultValue();
 
             // TODO: MUSTDO: NOTE: keep the below lines, but certainly the firmware should be fixed!
-            CaptureImageSize.Size = new int[2] { 768, 480 };
-            CameraViewImageSourceRectInCapturedImage.Rect = new int[4] { 8, 0, 752, 470 };
+            CaptureImageSize.Size = new System.Drawing.Size(768, 480);
+            CameraViewImageSourceRectInCapturedImage.Rect = new System.Drawing.Rectangle(8, 0, 752, 470);
         }
 
         public void InitializeOnceAtStartup()

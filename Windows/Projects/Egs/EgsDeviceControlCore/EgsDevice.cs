@@ -122,7 +122,7 @@
         {
             get
             {
-                var ret = (Settings == null) ? 0 : Settings.TrackableHandsCount.Value;
+                var ret = (Settings == null) ? 0 : (int)Settings.TrackableHandsCount.Value;
                 return ret;
             }
         }
@@ -368,7 +368,7 @@
         {
             if (IsHidDeviceConnected == false)
             {
-                MessageBox.Show(Resources.CommonStrings_PleaseConnectTheZkooCamera);
+                Console.WriteLine(Resources.CommonStrings_PleaseConnectTheZkooCamera);
                 return;
             }
             SetHidFeatureReport(HostToDeviceCommandFeatureReport.SaveSettingsToFlashCommandFeatureReport.ByteArrayData);
@@ -381,7 +381,7 @@
         {
             if (IsHidDeviceConnected == false)
             {
-                MessageBox.Show(Resources.CommonStrings_PleaseConnectTheZkooCamera);
+                Console.WriteLine(Resources.CommonStrings_PleaseConnectTheZkooCamera);
                 return;
             }
             SetHidFeatureReport(HostToDeviceCommandFeatureReport.ResetDeviceCommandFeatureReport.ByteArrayData);
@@ -585,7 +585,7 @@
             }
             if (HidReportsUpdate != null)
             {
-                HidReportsUpdate.Stop();
+                HidReportsUpdate.OnDisable();
                 HidReportsUpdate = null;
             }
         }

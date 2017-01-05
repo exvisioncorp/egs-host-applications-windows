@@ -300,7 +300,7 @@ namespace Egs
 
             // Open the handle without read/write access to enable getting information about any HID, even system keyboards and mice.
             const int isGettingOnlyConnectionState = 0;
-            using (var tempHandle = NativeMethods.CreateFile(checkingDeviceDevicePath, isGettingOnlyConnectionState, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Overlapped, IntPtr.Zero))
+            using (var tempHandle = NativeMethods.CreateFile(checkingDeviceDevicePath, isGettingOnlyConnectionState, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Device, IntPtr.Zero))
             {
                 Debug.WriteLine(NativeMethods.GetResultOfApiCall("CreateFile") + Environment.NewLine + "  Returned handle: " + tempHandle.ToString());
 

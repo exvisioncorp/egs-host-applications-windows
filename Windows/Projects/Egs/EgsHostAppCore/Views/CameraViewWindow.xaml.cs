@@ -19,6 +19,7 @@
     using System.ComponentModel;
     using System.Diagnostics;
     using Egs.PropertyTypes;
+    using Egs.DotNetUtility;
     using Egs.DotNetUtility.Views;
 
     public partial class CameraViewWindow : Window
@@ -68,7 +69,7 @@
             windowsFormsCursorPositionMonitoringTimer.Tick += delegate
             {
                 if (isBeingResizedByMouse && Mouse.LeftButton == MouseButtonState.Released) { Resizing.DraggingRegion = AspectRatioKeepingWindowDraggingRegions.None; return; }
-                var scaledCursorPosition = CurrentDpi.ScaledCursorPosition;
+                var scaledCursorPosition = CurrentDpi.GetScaledPosition(System.Windows.Forms.Cursor.Position);
                 Resizing.ResizeWithKeepingContentAspectRatio(scaledCursorPosition.X, scaledCursorPosition.Y);
             };
             Resizing.IsResizingChanged += (sender, e) =>
@@ -121,7 +122,7 @@
             mouseLeftButtonDownPointToThis = getPositionToThis;
             cameraViewWindowModel.IsDragging = false;
             CurrentDpi = Egs.DotNetUtility.Dpi.DpiFromHdcForTheEntireScreen;
-            var scaledCursorPosition = CurrentDpi.ScaledCursorPosition;
+            var scaledCursorPosition = CurrentDpi.GetScaledPosition(System.Windows.Forms.Cursor.Position);
             Resizing.OnMouseDownOrTouchOnWindow(scaledCursorPosition.X, scaledCursorPosition.Y);
             isBeingResizedByMouse = true;
         }
@@ -194,19 +195,22 @@
 
             cameraViewWindowModel.WindowStateChanged += delegate
             {
-                if (WindowState == WindowState.Maximized)
+                this.Dispatcher.Invoke(() =>
                 {
-                    WindowState = WindowState.Normal;
-                    return;
-                }
-                if (cameraViewWindowModel.IsNormalOrElseMinimized)
-                {
-                    (FindResource("SetWindowStateToNormalWithOpacityIncreaseStoryboardKey") as Storyboard).Begin(this);
-                }
-                else
-                {
-                    (FindResource("SetWindowStateToMinimizedWithOpacityDecreaseStoryboardKey") as Storyboard).Begin(this);
-                }
+                    if (WindowState == WindowState.Maximized)
+                    {
+                        WindowState = WindowState.Normal;
+                        return;
+                    }
+                    if (cameraViewWindowModel.IsNormalOrElseMinimized)
+                    {
+                        (FindResource("SetWindowStateToNormalWithOpacityIncreaseStoryboardKey") as Storyboard).Begin(this);
+                    }
+                    else
+                    {
+                        (FindResource("SetWindowStateToMinimizedWithOpacityDecreaseStoryboardKey") as Storyboard).Begin(this);
+                    }
+                });
             };
 
             newCameraViewUserControlModel.Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapSizeOrPixelFormatChanged += (sender, e) =>

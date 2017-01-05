@@ -7,5 +7,6 @@ namespace Egs
 <#@ include file = "../../DotNetWpfUtility/Views/Converters.cs" #>
 <#@ include file = "../../DotNetWpfUtility/ApplicationUpdateModel.cs" #>
 <#@ include file = "../../DotNetWpfUtility/BitmapImageUtility.cs" #>
+<#@ include file = "../../DotNetWpfUtility/DpiExtensions.cs" #>
 <#@ include file = "../../DotNetWpfUtility/SimpleDelegateCommand.cs" #>
 }

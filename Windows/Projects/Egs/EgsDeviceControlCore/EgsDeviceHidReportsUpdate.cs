@@ -46,7 +46,9 @@
 
         void ReportMonitoringThread_DoWork(object sender, DoWorkEventArgs e)
         {
-            using (var readHandle = NativeMethods.CreateFile(DevicePath, FileAccess.Read, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Overlapped, IntPtr.Zero))
+            // If fileShare is not FileShare.ReadWrite, it causes errors in the other CreateFile().
+            // "NativeMethods.EFileAttributes.Overlapped" and "NativeMethods.EFileAttributes.Overlapped | NativeMethods.EFileAttributes.Device" does not work!!
+            using (var readHandle = NativeMethods.CreateFile(DevicePath, FileAccess.Read, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Device, IntPtr.Zero))
             {
                 IsInvalidHandle = readHandle.IsInvalid;
                 if (IsInvalidHandle)
@@ -55,15 +57,22 @@
                     throw new HidSimpleAccessException(HidSimpleAccessException.CreateFileFailedErrorMessage);
                 }
 
-                using (var deviceDataFileStream = new FileStream(readHandle, FileAccess.Read, reportAsByteArray.Length, true))
+                // "FileStream and FileStream.Read" works on Console Apps, but it may not work on Unity Apps.
+                //using (var deviceDataFileStream = new FileStream(readHandle.DangerousGetHandle(), FileAccess.Read, false, reportAsByteArray.Length, true))
+                // (In loop)
+                //deviceDataFileStream.Read(reportAsByteArray, 0, reportAsByteArray.Length);
+
+                int numberOfBytesRead = 0;
+                while (ReportMonitoringThread.CancellationPending == false)
                 {
-                    while (ReportMonitoringThread.CancellationPending == false)
+                    // I think that this method is synchronous.
+                    var hr = NativeMethods.ReadFile(readHandle, reportAsByteArray, reportAsByteArray.Length, out numberOfBytesRead, IntPtr.Zero);
+                    // So the next line is unnecessary.
+                    // System.Threading.Thread.Sleep(1);
+                    
+                    if (false && hr) { if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); } }
+                    if (numberOfBytesRead != 0)
                     {
-                        if (deviceDataFileStream.CanRead == false)
-                        {
-                            throw new HidSimpleAccessException("deviceDataFileStream.CanRead == false");
-                        }
-                        deviceDataFileStream.Read(reportAsByteArray, 0, reportAsByteArray.Length);
                         if ((HidReportIds)reportAsByteArray[0] == HidReportIds.EgsGesture)
                         {
                             owner.EgsGestureHidReport.UpdateByHidReportAsByteArray(reportAsByteArray);
@@ -94,7 +103,7 @@
             if (e.Cancelled) { HasStoppedReportMonitoringThread = true; }
         }
 
-        public void Stop()
+        public void OnDisable()
         {
             if (ReportMonitoringThread == null) { return; }
             ReportMonitoringThread.CancelAsync();

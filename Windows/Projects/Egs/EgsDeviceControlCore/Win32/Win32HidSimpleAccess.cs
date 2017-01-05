@@ -28,7 +28,7 @@
             if (outputReport == null) { throw new ArgumentNullException("outputReport"); }
             lock (lockForHidSimpleAccess)
             {
-                using (var handle = NativeMethods.CreateFile(devicePath, FileAccess.ReadWrite, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Overlapped, IntPtr.Zero))
+                using (var handle = NativeMethods.CreateFile(devicePath, FileAccess.ReadWrite, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Device, IntPtr.Zero))
                 {
                     if (handle.IsInvalid)
                     {
@@ -54,7 +54,7 @@
             if (featureReport == null) { throw new ArgumentNullException("featureReport"); }
             lock (lockForHidSimpleAccess)
             {
-                using (var handle = NativeMethods.CreateFile(devicePath, FileAccess.Write, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Overlapped, IntPtr.Zero))
+                using (var handle = NativeMethods.CreateFile(devicePath, FileAccess.Write, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Device, IntPtr.Zero))
                 {
                     if (handle.IsInvalid)
                     {
@@ -78,7 +78,7 @@
             if (featureReport == null) { throw new ArgumentNullException("featureReport"); }
             lock (lockForHidSimpleAccess)
             {
-                using (var handle = NativeMethods.CreateFile(devicePath, FileAccess.Read, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Overlapped, IntPtr.Zero))
+                using (var handle = NativeMethods.CreateFile(devicePath, FileAccess.Read, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Device, IntPtr.Zero))
                 {
                     if (handle.IsInvalid)
                     {

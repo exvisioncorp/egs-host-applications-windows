@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Text;
     using System.Diagnostics;
-    using System.Windows;
     using Egs.DotNetUtility;
     using Egs.PropertyTypes;
     using Egs.Win32;
@@ -103,13 +102,15 @@
             // NOTE: When DPI is or is not 100[%], it works well by using DPI in 100[%].
             // MUSTDO: But by this way, if "aspect ratio of screen resolution" is different from "aspect ratio of default (maximum?) screen resolution", the gesture cursor position is wrong in Windows 10.
             var dpi = Dpi.Default;
-            var scaledPrimaryScreenBounds = dpi.ScaledPrimaryScreenBounds;
+            var scaledPrimaryScreenBounds = Dpi.GetPrimaryScreenPhysicalPixelResolution();
             if (ApplicationCommonSettings.IsDebugging)
             {
                 Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "sizeByDesktopResolutionInPhysicalPixels: {0}, {1}", sizeByDesktopResolutionInPhysicalPixels.Width, sizeByDesktopResolutionInPhysicalPixels.Height));
                 Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Dpi: {0}, {1}", dpi.X, dpi.Y));
+#if false
                 Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "System.Windows.Forms.Screen.PrimaryScreen.Bounds: {0}", System.Windows.Forms.Screen.PrimaryScreen.Bounds.ToString()));
                 Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "System.Windows.Forms.Screen.PrimaryScreen.Bounds: {0}", System.Windows.Forms.Screen.PrimaryScreen.Bounds.ToString()));
+#endif
             }
 
             foreach (var hand in Hands)

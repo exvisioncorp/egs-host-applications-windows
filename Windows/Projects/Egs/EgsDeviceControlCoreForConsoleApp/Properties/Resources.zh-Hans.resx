@@ -707,6 +707,18 @@ before starting ZKOO application.</comment>
     <value>270: 垂直</value>
     <comment>270: Portrait</comment>
   </data>
+  <data name="EgsDeviceSettings_DeviceUsage_Description" xml:space="preserve">
+    <value>ZKOO用途选项</value>
+    <comment>Use ZKOO for</comment>
+  </data>
+  <data name="DeviceUsageDetail_Value0_Description" xml:space="preserve">
+    <value>手势摄像机</value>
+    <comment>Gesture Camera</comment>
+  </data>
+  <data name="DeviceUsageDetail_Value1_Description" xml:space="preserve">
+    <value>网络摄像机</value>
+    <comment>Web Camera</comment>
+  </data>
   <data name="EgsDeviceSettings_IsToDetectFaces_Description" xml:space="preserve">
     <value>识别人脸</value>
     <comment>Detect Faces</comment>
@@ -726,6 +738,18 @@ before starting ZKOO application.</comment>
   <data name="EgsDeviceSettings_IsToSendEgsGestureHidReport_Description" xml:space="preserve">
     <value>向应用程序发送触摸信息</value>
     <comment>Send Touch Information to Apps</comment>
+  </data>
+  <data name="EgsDeviceSettings_ModelSetId_Description" xml:space="preserve">
+    <value>模式设置码</value>
+    <comment>Model Set ID</comment>
+  </data>
+  <data name="ModelSetIdDetail_Value0_Description" xml:space="preserve">
+    <value>电视用五指模式</value>
+    <comment>Five Fingers for TV</comment>
+  </data>
+  <data name="ModelSetIdDetail_Value1_Description" xml:space="preserve">
+    <value>魔棍</value>
+    <comment>Wands?</comment>
   </data>
   <data name="EgsDeviceSettings_TrackableHandsCount_Description" xml:space="preserve">
     <value>可跟踪物体的数量</value>
@@ -831,6 +855,18 @@ before starting ZKOO application.</comment>
     <value>用设备描画相机视图图像的边框 </value>
     <comment>Draw Borders on Camera View Image By Device</comment>
   </data>
+  <data name="EgsDeviceSettings_IsToFixFaceDetectionRegion_Description" xml:space="preserve">
+    <value>固定人脸识别区域 </value>
+    <comment>Fix Face Detection Region</comment>
+  </data>
+  <data name="EgsDeviceSettings_FaceDetectionAreaOnFixed_Description" xml:space="preserve">
+    <value>人脸识别区域 (固定时)</value>
+    <comment>Face Detection Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_FaceDetectionScaleOnFixed_Description" xml:space="preserve">
+    <value>人脸识别对象尺寸 (固定时)</value>
+    <comment>Face Detection Scale (when fixed)</comment>
+  </data>
   <data name="EgsDeviceSettings_FaceSelectionMethodKind_Description" xml:space="preserve">
     <value>选择游戏玩家</value>
     <comment>How to Select a Player</comment>
@@ -846,6 +882,54 @@ before starting ZKOO application.</comment>
   <data name="FaceSelectionMethodKindDetail_Value2_Description" xml:space="preserve">
     <value>最中心：选择在相机视图最中心的人 </value>
     <comment>Most Center: Select the most center person in Camera View</comment>
+  </data>
+  <data name="EgsDeviceSettings_IsToFixHandDetectionRegions_Description" xml:space="preserve">
+    <value>固定手识别对象区域</value>
+    <comment>Fix Hand Detection Regions</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandDetectionAreaOnFixed_Description" xml:space="preserve">
+    <value>右手识别对象区域 (固定时)</value>
+    <comment>Right Hand Detection Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandDetectionScaleOnFixed_Description" xml:space="preserve">
+    <value>右手识别对象尺寸 (固定时)</value>
+    <comment>Right Hand Detection Scale (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandDetectionAreaOnFixed_Description" xml:space="preserve">
+    <value>左手识别对象区域 (固定时)</value>
+    <comment>Left Hand Detection Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandDetectionScaleOnFixed_Description" xml:space="preserve">
+    <value>左手识别对象尺寸 (固定时)</value>
+    <comment>Left Hand Detection Scale (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_HandDetectionParameters_Description" xml:space="preserve">
+    <value>手动识别参数</value>
+    <comment>Hand Detection Parameters</comment>
+  </data>
+  <data name="EgsDeviceSettings_IsToFixHandTrackingAreas_Description" xml:space="preserve">
+    <value>固定手追踪对象区域 </value>
+    <comment>Fix Hand Tracking Areas</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandTrackingAreaOnFixed_Description" xml:space="preserve">
+    <value>右手追踪对象区域 (固定时)</value>
+    <comment>Right Hand Tracking Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandTrackingAreaOnFixed_Description" xml:space="preserve">
+    <value>左手追踪对象区域 (固定时)</value>
+    <comment>Left Hand Tracking Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_IsToFixScreenMappedAreas_Description" xml:space="preserve">
+    <value>固定屏幕映射区域 </value>
+    <comment>Fix Screen Mapped Areas</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandScreenMappedAreaOnFixed_Description" xml:space="preserve">
+    <value>右手屏幕映射区域 (固定时)</value>
+    <comment>Right Hand Screen Mapped Area (when fixed)</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandScreenMappedAreaOnFixed_Description" xml:space="preserve">
+    <value>左手屏幕映射区域 (固定时)</value>
+    <comment>Left Hand Screen Mapped Area (when fixed)</comment>
   </data>
   <data name="EgsDeviceSettings_CursorSpeedAndPrecisionMode_Description" xml:space="preserve">
     <value>手势模式</value>
@@ -874,6 +958,30 @@ before starting ZKOO application.</comment>
   <data name="FastMovingHandsGestureModeDetail_Value1_Description" xml:space="preserve">
     <value>触摸</value>
     <comment>Touch</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandOuterRotation_Description" xml:space="preserve">
+    <value>右手顺时针旋转</value>
+    <comment>Right Hand Outer Rotation</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandInnerRotation_Description" xml:space="preserve">
+    <value>右手逆时针旋转</value>
+    <comment>Right Hand Inner Rotation</comment>
+  </data>
+  <data name="EgsDeviceSettings_RightHandCloseHand_Description" xml:space="preserve">
+    <value>右手弯曲四指</value>
+    <comment>Right Hand Close Hand</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandOuterRotation_Description" xml:space="preserve">
+    <value>左手逆时针旋转</value>
+    <comment>Left Hand Outer Rotation</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandInnerRotation_Description" xml:space="preserve">
+    <value>左手顺时针旋转</value>
+    <comment>Left Hand Inner Rotation</comment>
+  </data>
+  <data name="EgsDeviceSettings_LeftHandCloseHand_Description" xml:space="preserve">
+    <value>左手弯曲四指</value>
+    <comment>Left Hand Close Hand</comment>
   </data>
   <data name="EgsDeviceSettings_ScreenMappedAreaResolutionSize_Description" xml:space="preserve">
     <value>设备上的屏幕映射区域分辨率大小 </value>

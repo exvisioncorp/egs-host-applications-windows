@@ -157,7 +157,7 @@
             {
                 CursorViewModels[i].UpdateByEgsGestureHidReportHand(Device.EgsGestureHidReport.Hands[i]);
             }
-            // If Task is not used, delay in moving cursors accumulates.
+            // If Task is not used, delay in moving cursors can accumulate.
             System.Threading.Tasks.Task.Run(() =>
             {
                 if (isDrawingCursors) { return; }

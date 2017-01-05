@@ -7,7 +7,7 @@
     using System.Diagnostics;
     using System.ComponentModel;
     using System.Globalization;
-    using Egs.EgsDeviceControlCoreForConsoleApp.Properties;
+    using Egs.EgsDeviceControlCore.Properties;
 
     /// <summary>
     /// Exception thrown by some process (e.g. Firmware Update) in the application, to close the host application
