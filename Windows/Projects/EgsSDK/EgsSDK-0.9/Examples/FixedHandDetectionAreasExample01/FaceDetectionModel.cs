@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Diagnostics;
     using OpenCvSharp;
     using OpenCvSharp.Extensions;
@@ -37,8 +38,9 @@
 
         public bool IsToDetectFaces { get; set; }
         public Mat CameraViewImageMat { get; private set; }
+        public DlibSharp.Array2dUchar DlibArray2dUcharImage { get; private set; }
         public bool IsDetectingFaces { get; private set; }
-        CascadeClassifier haarCascade { get; set; }
+        DlibSharp.FrontalFaceDetector DlibHogSvm { get; set; }
         public IList<Rect> DetectedFaceRects { get; private set; }
         public Rect SelectedFaceRect { get; private set; }
         public bool IsFaceDetected { get { return (DetectedFaceRects != null) && (DetectedFaceRects.Count > 0); } }
@@ -77,7 +79,8 @@
 
         public FaceDetectionModel()
         {
-            haarCascade = new CascadeClassifier("DataFromOpenCv/haarcascade_frontalface_alt.xml");
+            DlibHogSvm = new DlibSharp.FrontalFaceDetector();
+            DlibArray2dUcharImage = new DlibSharp.Array2dUchar();
 
             // pixelOneSideLength: 0.0028[mm] (2x2 binning).
             BinnedPixelOneSideLength = 0.0028;
@@ -118,20 +121,23 @@
             Trace.Assert(bmp.Width > 0 && bmp.Height > 0);
             Debug.Assert(CameraViewImageWidth == bmp.Width);
             Debug.Assert(CameraViewImageHeight == bmp.Height);
+            Trace.Assert(DlibArray2dUcharImage != null);
+
             if (CameraViewImageMat != null)
             {
                 CameraViewImageMat.Dispose();
                 CameraViewImageMat = bmp.ToMat();
             }
+
+            DlibArray2dUcharImage.SetBitmap(bmp);
+            
             // Heavy tasks must run in the other thread.
             await System.Threading.Tasks.Task.Run(() =>
             {
                 if (IsToDetectFaces)
                 {
-                    using (var srcGray = CameraViewImageMat.CvtColor(ColorConversionCodes.BGR2GRAY))
-                    {
-                        DetectedFaceRects = haarCascade.DetectMultiScale(srcGray, 1.08, 2, HaarDetectionType.ScaleImage, new Size(25, 25));
-                    }
+                    DetectedFaceRects = DlibHogSvm.DetectFaces(DlibArray2dUcharImage, -0.5)
+                        .Select(e => new OpenCvSharp.Rect(e.X, e.Y, e.Width, e.Height)).ToList();
                     if (IsFaceDetected)
                     {
                         SelectOneFaceRect();
