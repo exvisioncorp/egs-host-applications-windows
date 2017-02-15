@@ -48,6 +48,9 @@
             // A lot of classes in "Egs" namespace have "InitializeOnceAtStartup..." methods.
             // Please call the initialization before they are used as arguments of some other objects, or before some event handlers are attached.
             DeviceSettings.InitializeOnceAtStartup();
+            DeviceSettings.IsToDetectFaces.Value = true;
+            DeviceSettings.IsToDetectHands.Value = true;
+           
             // You can use EgsDevice object directly, without EgsHostAppBaseComponents or EgsHostOnUserControl.
             Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
 
@@ -63,14 +66,7 @@
             CursorViews[1] = new CursorForm();
             CursorViews[0].InitializeOnceAtStartup(OnePersonBothHandsViewModel.RightHand, ImageInformationSet.CreateDefaultRightCursorImageInformationSetList());
             CursorViews[1].InitializeOnceAtStartup(OnePersonBothHandsViewModel.LeftHand, ImageInformationSet.CreateDefaultLeftCursorImageInformationSetList());
-
-            Device.EgsGestureHidReport.ReportUpdated += (sender, e) =>
-            {
-                OnePersonBothHandsViewModel.RightHand.UpdateByEgsGestureHidReportHand(Device.EgsGestureHidReport.Hands[0]);
-                OnePersonBothHandsViewModel.LeftHand.UpdateByEgsGestureHidReportHand(Device.EgsGestureHidReport.Hands[1]);
-                CursorViews[0].UpdatePosition();
-                CursorViews[1].UpdatePosition();
-            };
+            Device.EgsGestureHidReport.ReportUpdated += EgsGestureHidReport_ReportUpdated;
 
             // Sorry, specification is changed.  You need to make an object of CameraViewUserControlModel.
             CameraViewUserControlModel = new CameraViewUserControlModel();
@@ -117,14 +113,40 @@
             // But this event handler attach close cursors and device.
             CameraViewWindow.Closed += delegate
             {
+                Device.EgsGestureHidReport.ReportUpdated -= EgsGestureHidReport_ReportUpdated;
+
                 // When you get EgsDevice by EgsDevice.GetDefaultEgsDevice, you need to call EgsDevice.CloseDefaultEgsDevice(). 
-                foreach (var cursorView in CursorViews) { cursorView.Close(); }
+                DeviceSettings.IsToDetectFaces.Value = false;
+                DeviceSettings.IsToDetectHands.Value = false;
                 EgsDevice.CloseDefaultEgsDevice();
+
+                // And then, you need to close cursorViews.
+                foreach (var cursorView in CursorViews) { cursorView.Close(); }
             };
 
+            this.Exit += delegate
+            {
+                DuplicatedProcessStartBlocking.ReleaseMutex();
+            };
+        }
 
+        bool isDrawingCursors = false;
+        void EgsGestureHidReport_ReportUpdated(object sender, EventArgs e)
+        {
+            OnePersonBothHandsViewModel.RightHand.UpdateByEgsGestureHidReportHand(Device.EgsGestureHidReport.Hands[0]);
+            OnePersonBothHandsViewModel.LeftHand.UpdateByEgsGestureHidReportHand(Device.EgsGestureHidReport.Hands[1]);
 
-            this.Exit += delegate { DuplicatedProcessStartBlocking.ReleaseMutex(); };
+            // If Task is not used, delay in moving cursors can accumulate.
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                if (isDrawingCursors) { return; }
+                isDrawingCursors = true;
+                for (int i = 0; i < Device.TrackableHandsCount; i++)
+                {
+                    CursorViews[i].UpdatePosition();
+                }
+                isDrawingCursors = false;
+            });
         }
     }
 }

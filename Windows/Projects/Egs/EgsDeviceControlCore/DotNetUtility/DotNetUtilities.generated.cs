@@ -115,42 +115,22 @@ namespace DotNetUtility
             return ret;
         }
 
-        public System.Drawing.Point ScaledCursorPosition
+        public System.Drawing.Point GetScaledPosition(System.Drawing.Point position)
         {
-            get
-            {
-                var winFormsCursorPosition = System.Windows.Forms.Cursor.Position;
-                var ret = new System.Drawing.Point((int)(winFormsCursorPosition.X * Default.X / X), (int)(winFormsCursorPosition.Y * Default.Y / Y));
-                return ret;
-            }
+            var ret = new System.Drawing.Point(
+                (int)(position.X * Dpi.Default.X / X),
+                (int)(position.Y * Dpi.Default.Y / Y));
+            return ret;
         }
 
-        public System.Drawing.Rectangle ScaledPrimaryScreenBounds
+        public System.Drawing.Rectangle GetScaledRectangle(System.Drawing.Rectangle rectangle)
         {
-            get
-            {
-                var winFormsScreenPrimaryScreenBounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
-                var ret = new System.Drawing.Rectangle(
-                    (int)(winFormsScreenPrimaryScreenBounds.X * Default.X / X),
-                    (int)(winFormsScreenPrimaryScreenBounds.Y * Default.Y / Y),
-                    (int)(winFormsScreenPrimaryScreenBounds.Width * Default.X / X),
-                    (int)(winFormsScreenPrimaryScreenBounds.Height * Default.Y / Y));
-                return ret;
-            }
-        }
-
-        public System.Drawing.Rectangle ScaledPrimaryScreenWorkindArea
-        {
-            get
-            {
-                var winFormsScreenPrimaryScreenWorkingArea = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea;
-                var ret = new System.Drawing.Rectangle(
-                    (int)(winFormsScreenPrimaryScreenWorkingArea.X * Default.X / X),
-                    (int)(winFormsScreenPrimaryScreenWorkingArea.Y * Default.Y / Y),
-                    (int)(winFormsScreenPrimaryScreenWorkingArea.Width * Default.X / X),
-                    (int)(winFormsScreenPrimaryScreenWorkingArea.Height * Default.Y / Y));
-                return ret;
-            }
+            var ret = new System.Drawing.Rectangle(
+                (int)(rectangle.X * Dpi.Default.X / X),
+                (int)(rectangle.Y * Dpi.Default.Y / Y),
+                (int)(rectangle.Width * Dpi.Default.X / X),
+                (int)(rectangle.Height * Dpi.Default.Y / Y));
+            return ret;
         }
     }
 }
@@ -535,7 +515,7 @@ namespace DotNetUtility
             }
             catch (Exception ex)
             {
-                if (CanRaiseDebbugerBreak) { Debugger.Break(); System.Windows.Forms.MessageBox.Show(ex.Message); }
+                if (CanRaiseDebbugerBreak) { Debugger.Break(); Console.WriteLine(ex.Message); }
                 return false;
             }
         }
@@ -927,7 +907,7 @@ namespace DotNetUtility
             }
             catch (Exception ex)
             {
-                if (CanRaiseDebbugerBreak) { Debugger.Break(); System.Windows.Forms.MessageBox.Show(ex.Message); }
+                if (CanRaiseDebbugerBreak) { Debugger.Break(); Console.WriteLine(ex.Message); }
                 return false;
             }
         }

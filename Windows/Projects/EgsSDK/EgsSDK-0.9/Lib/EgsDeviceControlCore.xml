@@ -443,17 +443,6 @@
             Refer to https://msdn.microsoft.com/ja-jp/library/cc411206.aspx
             </summary>
         </member>
-        <member name="F:Egs.Win32.NativeMethods.RID.HEADER">
-            <summary> Get header information. </summary>
-        </member>
-        <member name="F:Egs.Win32.NativeMethods.RID.INPUT">
-            <summary> Get raw pData. </summary>
-        </member>
-        <member name="F:Egs.Win32.NativeMethods.RawMouseButtonFlagsAndData.usButtonData">
-            <summary>
-            If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed device that specifies the wheel delta.
-            </summary>
-        </member>
         <member name="T:Egs.EgsDevice">
             <summary>
             The instance of EgsDevice class receives information from EGS device and reconstruct current state of the device.  Main roles are 
@@ -1910,7 +1899,7 @@
             EgsSourceCodeGeneration.exe runs in a build event, and it converts the excel sheets and generates the multi-lingual "Resource.resx" files.
             </summary>
         </member>
-        <member name="P:Egs.PropertyTypes.HidAccessPropertyRatioRect.ValuesAsString">
+        <member name="P:Egs.PropertyTypes.HidAccessPropertyRatioRect.ValueAsString">
             <summary>
             "Left, Top, Right, Bottom"
             </summary>

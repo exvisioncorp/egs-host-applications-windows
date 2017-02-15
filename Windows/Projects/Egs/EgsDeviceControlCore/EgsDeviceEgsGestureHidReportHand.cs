@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using System.Windows;
     using System.Diagnostics;
     using Egs.PropertyTypes;
     using Egs.DotNetUtility;

@@ -1,4 +1,5 @@
-﻿namespace Egs
+﻿#if USE_OLD_HID
+namespace Egs
 {
     using System;
     using System.Drawing;
@@ -170,3 +171,4 @@
         ~EgsDeviceHidReportsUpdateByWin32RawInput() { Dispose(); }
     }
 }
+#endif

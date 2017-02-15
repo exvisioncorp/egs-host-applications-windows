@@ -12,7 +12,6 @@
     using Egs;
     using Egs.DotNetUtility;
     using Egs.PropertyTypes;
-    using Egs.Views;
 
     /// <summary>
     /// State of touch, or kind of tap (Unknown, Touching, Tap, LongTap)

@@ -37,9 +37,6 @@
             ~CursorImageWindowsFormsBitmap() { Dispose(); }
         }
 
-        // TODO: MUSTDO: If you set this to true, various problems happens.  I doubt that it is caused by set "TOPMOST" every time.  I set this to false for now.
-        const bool isToUsePictureBox = false;
-
         internal CursorViewModel refToCursorViewModel { get; private set; }
 
         /// <summary>
@@ -99,17 +96,7 @@
                 throw;
             }
 
-            if (isToUsePictureBox)
-            {
-                currentPictureBox = new PictureBox() { Dock = DockStyle.Fill };
-                this.Controls.Add(currentPictureBox);
-                this.AllowTransparency = true;
-                this.TransparencyKey = Color.FromArgb(240, 240, 240); ;
-            }
-            else
-            {
-                setWindowPosition = new Win32SetWindowPosition(this.Handle);
-            }
+            setWindowPosition = new Win32SetWindowPosition(this.Handle);
 
             refToCursorViewModel.IsVisibleChanged += refToCursorViewModel_IsVisibleChanged;
             refToCursorViewModel.StateUpdated += refToCursorViewModel_StateUpdated;
@@ -124,14 +111,7 @@
             if (false) { Console.WriteLine("IsVisible Changed: " + refToCursorViewModel.IsVisible); }
             if (refToCursorViewModel.IsVisible)
             {
-                if (isToUsePictureBox)
-                {
-                    this.TopMost = true;
-                }
-                else
-                {
-                    setWindowPosition.BringToTop();
-                }
+                setWindowPosition.BringToTop();
                 hasToRedrawCursor = true;
             }
             else
@@ -156,23 +136,26 @@
             [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.LinkDemand, Flags = System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]
             get
             {
-                if (isToUsePictureBox)
-                {
-                    return base.CreateParams;
-                }
-                else
-                {
-                    CreateParams cp = base.CreateParams;
-                    const int WS_EX_LAYERED = 0x80000;
-                    const int WS_EX_NOACTIVATE = 0x08000000;
-                    const int WS_EX_TOOLWINDOW = 0x00000080;
-                    const int WS_EX_TRANSPARENT = 0x00000020;
-                    const int WS_EX_TOPMOST = 0x00000008;
-                    cp.ExStyle |= WS_EX_NOACTIVATE | WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TRANSPARENT | WS_EX_TOPMOST;
-                    return cp;
-                }
+                CreateParams cp = base.CreateParams;
+                const int WS_EX_LAYERED = 0x80000;
+                const int WS_EX_NOACTIVATE = 0x08000000;
+                const int WS_EX_TOOLWINDOW = 0x00000080;
+                const int WS_EX_TRANSPARENT = 0x00000020;
+                const int WS_EX_TOPMOST = 0x00000008;
+                cp.ExStyle |= WS_EX_NOACTIVATE | WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TRANSPARENT | WS_EX_TOPMOST;
+                return cp;
             }
         }
+
+
+        int imageSetIndex = -1;
+        int cursorImageIndex = -1;
+        bool isVisible = false;
+#if false
+        int imageSetIndexPrevious = -1;
+        int cursorImageIndexPrevious = -1;
+        bool isVisiblePrevious = false;
+#endif
 
         /// <summary>
         /// By calling this method, the Gesture Cursor position will be updated.  Typically, this method is called after updating CursorViewModel object in "EgsDevice.EgsGestureHidReport.ReportUpdated" event's event handler.
@@ -184,43 +167,47 @@
             // TODO: MUSTDO: Performance stress test, when the app runs on lower spec PC.
             if (false && ApplicationCommonSettings.IsDebuggingInternal) { System.Threading.Thread.Sleep(3); }
 
-            int cursorImageIndex = refToCursorViewModel.CurrentImageIndex;
 
-            if ((refToCursorViewModel.IsVisible == false) || (cursorImageIndex < 0))
+#if false
+            imageSetIndexPrevious = imageSetIndex;
+            cursorImageIndexPrevious = cursorImageIndex;
+            isVisiblePrevious = isVisible;
+#endif
+            imageSetIndex = refToCursorViewModel.CurrentCursorImageSetIndex;
+            cursorImageIndex = refToCursorViewModel.CurrentImageIndex;
+            isVisible = refToCursorViewModel.IsVisible;
+
+#if false
+            bool isToChangeBitmap = (imageSetIndexPrevious != imageSetIndex)
+                || (cursorImageIndexPrevious != cursorImageIndex)
+                || (isVisiblePrevious != isVisible);
+            if (isToChangeBitmap == false) { Debug.WriteLine("isToChangeBitmap == false"); }
+#endif
+
+
+            if ((refToCursorViewModel.IsVisible == false) || (refToCursorViewModel.CurrentImageIndex < 0))
             {
                 // MUSTDO: FIX: this code is called too many times when left hand operation in mouse mode.
                 //Debug.WriteLine("refToCursorViewModel.IsVisible: " + refToCursorViewModel.IsVisible);
                 //Debug.WriteLine("cursorImageIndex: " + cursorImageIndex);
-                if (true)
-                {
-                    this.BeginInvoke(new Action(() => { this.Visible = false; }));
-                }
-                else
-                {
-                    // MUSTDO: FIX: In tutorial, cross thread exception occurs.
-                    this.Visible = false;
-                }
+                this.BeginInvoke(new Action(() => { this.Visible = false; }));
                 return;
             }
 
             ActualWindowLeft = (int)(refToCursorViewModel.PositionX - this.Width / 2.0);
             ActualWindowTop = (int)(refToCursorViewModel.PositionY - this.Height / 2.0);
 
-            var imageSetIndex = refToCursorViewModel.CurrentCursorImageSetIndex;
-
-            if (isToUsePictureBox)
+#if false
+            if (isToChangeBitmap)
+#endif
             {
-                currentPictureBox.Image = imagesDict[CursorImageInformationSetList[imageSetIndex].ImageInformationList[cursorImageIndex]].CursorBitmap;
-                this.TopMost = true;
-                this.Left = ActualWindowLeft;
-                this.Top = ActualWindowTop;
+                var bmp = imagesDict[CursorImageInformationSetList[refToCursorViewModel.CurrentCursorImageSetIndex].ImageInformationList[refToCursorViewModel.CurrentImageIndex]];
+                this.BeginInvoke(new Action(() =>
+                {
+                    Win32.NativeMethods.CallWin32UpdateLayeredWindow(this, bmp.CursorBitmap, bmp.CursorHBitmapForUiAccessTrue, 255, ActualWindowLeft, ActualWindowTop);
+                }));
             }
-            else
-            {
-                var bmp = imagesDict[CursorImageInformationSetList[imageSetIndex].ImageInformationList[cursorImageIndex]];
-                Win32.NativeMethods.CallWin32UpdateLayeredWindow(this, bmp.CursorBitmap, bmp.CursorHBitmapForUiAccessTrue, 255, ActualWindowLeft, ActualWindowTop);
-                setWindowPosition.SetWindowPosition(ActualWindowLeft, ActualWindowTop);
-            }
+            setWindowPosition.SetWindowPosition(ActualWindowLeft, ActualWindowTop);
             hasToRedrawCursor = false;
         }
     }

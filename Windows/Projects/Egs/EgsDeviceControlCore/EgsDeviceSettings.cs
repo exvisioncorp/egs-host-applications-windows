@@ -4,14 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using System.Windows.Forms;
     using System.Diagnostics;
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Collections.ObjectModel;
     using Egs.DotNetUtility;
     using Egs.PropertyTypes;
-    using Egs.Views;
 
     internal class HidAccessPropertyUpdatedEventArgs : EventArgs
     {

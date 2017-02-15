@@ -1,0 +1,13 @@
+﻿<Window x:Class="FixedHandDetectionAreasExample01.FixedHandDetectionAreasExample01MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d"
+        xmlns:deviceControl="clr-namespace:Egs;assembly=EgsDeviceControlCore" xmlns:local="clr-namespace:Egs"
+        xmlns:localViews="clr-namespace:Egs.Views" WindowStyle="None" ShowInTaskbar="True" Topmost="False"
+        BorderThickness="0" Margin="0" Width="768" Height="480" ResizeMode="CanResizeWithGrip">
+    <Window.Background>Transparent</Window.Background>
+    <Window.AllowsTransparency>True</Window.AllowsTransparency>
+    <Window.Opacity>0.5</Window.Opacity>
+    <Image x:FieldModifier="public" x:Name="CameraViewImage" Stretch="Uniform" />
+</Window>

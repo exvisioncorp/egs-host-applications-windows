@@ -3,7 +3,6 @@
     using System;
     using System.Runtime.Serialization;
     using System.ComponentModel;
-    using System.Windows.Forms;
     using Egs;
     using Egs.DotNetUtility;
     using Egs.PropertyTypes;

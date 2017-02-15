@@ -8,7 +8,6 @@
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Runtime.InteropServices;
-    using System.Windows;
     using System.Globalization;
     using Egs;
     using Egs.EgsDeviceControlCore.Properties;

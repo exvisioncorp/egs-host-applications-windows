@@ -8,7 +8,6 @@
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Collections.ObjectModel;
-    using System.Windows;
     using System.Globalization;
     using Egs.EgsDeviceControlCore.Properties;
     using Egs.DotNetUtility;
@@ -109,6 +108,7 @@
         }
     }
 
+#if false
     public partial class DeviceUsageDetail : HidAccessPropertyOptionalTypeParameterBase
     {
         public static List<DeviceUsageDetail> GetDefaultList()
@@ -129,6 +129,7 @@
             return ret;
         }
     }
+#endif
 
     public partial class CaptureBinningDetail : HidAccessPropertyOptionalTypeParameterBase
     {

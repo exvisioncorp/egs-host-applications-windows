@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Text;
     using System.Diagnostics;
-    using System.Windows;
     using Egs.PropertyTypes;
 
     public class EgsDeviceEgsGestureHidReportFace

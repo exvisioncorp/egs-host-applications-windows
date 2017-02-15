@@ -162,6 +162,12 @@
             MediaElementUserControl
             </summary>
         </member>
+        <member name="M:Egs.Views.MediaElementUserControl.UnloadVideoData">
+            <summary>
+            Even if you just change the Source URI, the movie will not be changed.  In such case, you need to call this method.
+            When you call this method before you replay the same video, MediaElement become black for a while, so you should not call this method.
+            </summary>
+        </member>
         <member name="M:Egs.Views.MediaElementUserControl.InitializeComponent">
             <summary>
             InitializeComponent

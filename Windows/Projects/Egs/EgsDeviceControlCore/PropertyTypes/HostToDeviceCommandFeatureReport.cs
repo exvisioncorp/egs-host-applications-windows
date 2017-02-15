@@ -8,7 +8,6 @@
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Collections.ObjectModel;
-    using System.Windows;
     using Egs.DotNetUtility;
 
     internal class HostToDeviceCommandFeatureReport

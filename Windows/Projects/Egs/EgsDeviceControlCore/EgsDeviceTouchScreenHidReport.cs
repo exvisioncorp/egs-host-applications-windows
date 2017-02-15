@@ -55,8 +55,9 @@
 
         internal void UpdateByHidReportAsByteArray(byte[] hidReport)
         {
-            // obsolete
+#if USE_OLD_HID
             if (false) { UpdateByHidReportAsByteArray_v00(hidReport); }
+#endif
             UpdateByHidReportAsByteArray_v01(hidReport);
             OnReportUpdated(EventArgs.Empty);
         }
@@ -89,6 +90,7 @@
             ScanTime = BitConverter.ToInt32(hidReport, 14);
         }
 
+#if USE_OLD_HID
         void UpdateByHidReportAsByteArray_v00(byte[] hidReport)
         {
             Trace.Assert(hidReport[0] == (byte)HidReportIds.TouchScreen);
@@ -171,5 +173,7 @@
             Contacts[1].Reset();
             OnReportUpdated(EventArgs.Empty);
         }
+#endif 
+
     }
 }

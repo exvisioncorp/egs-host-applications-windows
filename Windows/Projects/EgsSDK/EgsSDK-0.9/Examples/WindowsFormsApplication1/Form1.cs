@@ -56,37 +56,28 @@
 #endif
 
             Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
-            CursorViewModels = new CursorViewModel[Device.TrackableHandsCountMaximum];
-            CursorViewModels[0] = new CursorViewModel();
-            CursorViewModels[1] = new CursorViewModel();
 
 
             // CursorForm objects observe CursorViewModel objects in the OnePersonBothHandsViewModel object, and draw the "Gesture Cursor" on desktop.
-            CursorViews = new CursorForm[Device.TrackableHandsCountMaximum];
-            CursorViews[0] = new CursorForm();
-            CursorViews[1] = new CursorForm();
-
-            var imageSetListRight = new List<ImageInformationSet>();
-            var imageSetListLeft = new List<ImageInformationSet>();
-            imageSetListRight.Add(new ImageInformationSet() { ImageSetIndex = 0, FolderPath = "Resources\\", SampleImageFileRelativePath = "Resources\\Sample.Png" });
-            imageSetListRight[0].AddImage((int)CursorImageIndexLabels.OpenHand, "Right_OpenHand.png");
-            imageSetListRight[0].AddImage((int)CursorImageIndexLabels.CloseHand, "Right_CloseHand.png");
-            imageSetListLeft.Add(new ImageInformationSet() { ImageSetIndex = 0, FolderPath = "Resources\\", SampleImageFileRelativePath = "Resources\\Sample.Png" });
-            imageSetListLeft[0].AddImage((int)CursorImageIndexLabels.OpenHand, "Left_OpenHand.png");
-            imageSetListLeft[0].AddImage((int)CursorImageIndexLabels.CloseHand, "Left_CloseHand.png");
-
-            CursorViews[0].InitializeOnceAtStartup(CursorViewModels[0], imageSetListRight);
-            CursorViews[1].InitializeOnceAtStartup(CursorViewModels[1], imageSetListLeft);
-
-            // OnePersonBothHandsViewModel objects observe EgsDevice.EgsGestureHidReport and re-construct state of Scene and Device in it.
-            Device.EgsGestureHidReport.ReportUpdated += (sender, e) =>
             {
-                for (int i = 0; i < Device.TrackableHandsCount; i++)
-                {
-                    CursorViewModels[i].UpdateByEgsGestureHidReportHand(Device.EgsGestureHidReport.Hands[i]);
-                    CursorViews[i].UpdatePosition();
-                }
-            };
+                CursorViewModels = new CursorViewModel[Device.TrackableHandsCountMaximum];
+                CursorViewModels[0] = new CursorViewModel();
+                CursorViewModels[1] = new CursorViewModel();
+                CursorViews = new CursorForm[Device.TrackableHandsCountMaximum];
+                CursorViews[0] = new CursorForm();
+                CursorViews[1] = new CursorForm();
+                var imageSetListRight = new List<ImageInformationSet>();
+                var imageSetListLeft = new List<ImageInformationSet>();
+                imageSetListRight.Add(new ImageInformationSet() { ImageSetIndex = 0, FolderPath = "Resources\\", SampleImageFileRelativePath = "Resources\\Sample.png" });
+                imageSetListRight[0].AddImage((int)CursorImageIndexLabels.OpenHand, "Right_OpenHand.png");
+                imageSetListRight[0].AddImage((int)CursorImageIndexLabels.CloseHand, "Right_CloseHand.png");
+                imageSetListLeft.Add(new ImageInformationSet() { ImageSetIndex = 0, FolderPath = "Resources\\", SampleImageFileRelativePath = "Resources\\Sample.png" });
+                imageSetListLeft[0].AddImage((int)CursorImageIndexLabels.OpenHand, "Left_OpenHand.png");
+                imageSetListLeft[0].AddImage((int)CursorImageIndexLabels.CloseHand, "Left_CloseHand.png");
+                CursorViews[0].InitializeOnceAtStartup(CursorViewModels[0], imageSetListRight);
+                CursorViews[1].InitializeOnceAtStartup(CursorViewModels[1], imageSetListLeft);
+                Device.EgsGestureHidReport.ReportUpdated += EgsGestureHidReport_ReportUpdated;
+            }
 
             // You can make your original camera view.
             Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged += delegate
@@ -129,15 +120,38 @@
 
             this.FormClosed += (sender, e) =>
             {
+                // If you do not detach this event handler, exceptions can happen.
+                Device.EgsGestureHidReport.ReportUpdated -= EgsGestureHidReport_ReportUpdated;
+
                 // When the application quits, please stop face detection and hand detection.
                 DeviceSettings.IsToDetectFaces.Value = false;
                 DeviceSettings.IsToDetectHands.Value = false;
                 DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+                EgsDevice.CloseDefaultEgsDevice();
 
                 CameraViewImagePictureBox.Dispose();
                 foreach (var cursorView in CursorViews) { cursorView.Close(); }
-                EgsDevice.CloseDefaultEgsDevice();
             };
+        }
+
+        bool isDrawingCursors = false;
+        void EgsGestureHidReport_ReportUpdated(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Device.TrackableHandsCount; i++)
+            {
+                CursorViewModels[i].UpdateByEgsGestureHidReportHand(Device.EgsGestureHidReport.Hands[i]);
+            }
+            // If Task is not used, delay in moving cursors can accumulate.
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                if (isDrawingCursors) { return; }
+                isDrawingCursors = true;
+                for (int i = 0; i < Device.TrackableHandsCount; i++)
+                {
+                    CursorViews[i].UpdatePosition();
+                }
+                isDrawingCursors = false;
+            });
         }
     }
 }

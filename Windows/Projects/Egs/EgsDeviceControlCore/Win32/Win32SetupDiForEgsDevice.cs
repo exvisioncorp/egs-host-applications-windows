@@ -74,7 +74,6 @@ namespace Egs
     using System.IO;
     using System.Diagnostics;
     using System.Runtime.InteropServices;
-    using System.Windows.Forms;
     using Microsoft.Win32.SafeHandles;
     using Egs.Win32;
 
@@ -102,8 +101,8 @@ namespace Egs
         internal static readonly string HidEgsGestureInterfaceTag = "mi_03";
 
         // col: collection.  USB technical term.  Maybe this collection is not "a collection which contains same kind elements" but "a correction which has various information".
-        internal static readonly string HidTouchScreenInteraface_VendorSpecificCollectionTag = "col01";
-        internal static readonly string HidTouchScreenInteraface_MultiTouchCollectionTag = "col02";
+        internal static readonly string HidTouchScreenInterface_VendorSpecificCollectionTag = "col01";
+        internal static readonly string HidTouchScreenInterface_MultiTouchCollectionTag = "col02";
         internal static readonly string HidEgsGestureInterface_VendorSpecificCollectionTag = "col01";
         internal static readonly string HidEgsGestureInterface_SingleTouchCollectionTag = "col02";
         internal static readonly string HidEgsGestureInterface_KeyboardCollectionTag = "col03";
@@ -301,7 +300,7 @@ namespace Egs
 
             // Open the handle without read/write access to enable getting information about any HID, even system keyboards and mice.
             const int isGettingOnlyConnectionState = 0;
-            using (var tempHandle = NativeMethods.CreateFile(checkingDeviceDevicePath, isGettingOnlyConnectionState, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Overlapped, IntPtr.Zero))
+            using (var tempHandle = NativeMethods.CreateFile(checkingDeviceDevicePath, isGettingOnlyConnectionState, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, NativeMethods.EFileAttributes.Device, IntPtr.Zero))
             {
                 Debug.WriteLine(NativeMethods.GetResultOfApiCall("CreateFile") + Environment.NewLine + "  Returned handle: " + tempHandle.ToString());
 
@@ -320,6 +319,7 @@ namespace Egs
                     return false;
                 }
 
+#if false
                 if (false)
                 {
                     Debug.WriteLine("[HIDD_ATTRIBUTES structure filled without error.]");
@@ -329,6 +329,7 @@ namespace Egs
                     Debug.WriteLine("        Version Number: " + Convert.ToString(DeviceAttributes.VersionNumber, 16));
                     Debug.WriteLine("");
                 }
+#endif
 
                 //  Find out if the device matches the one we're looking for.
                 if (DeviceAttributes.VendorID == VendorId)
@@ -388,12 +389,15 @@ namespace Egs
                 Debugger.Break();
                 Debug.WriteLine("SetupDi.MatchedConnectedHidDeviceFirstDeviceDevicePathList.Count != SetupDi.MatchedConnectedCameraDeviceDevicePathList.Count");
             }
+
+#if false
             // TODO: MUSTDO: Should check the relation between multiple camera devices and multiple HID devices
             if (false && MatchedConnectedHidDeviceFirstDeviceDevicePathList.Count >= 2)
             {
                 Debugger.Break();
-                MessageBox.Show("Sorry, but you can connect only one Exvision Gesture Camera into a PC currently.");
+                Debug.WriteLine("Sorry, but you can connect only one Exvision Gesture Camera into a PC currently.");
             }
+#endif
 
             Debug.WriteLine("Called: Win32HidSimpleAccess.UpdateDevicePath()");
             HidDevicePathList = FindHidDevicePathList().Distinct().ToList();

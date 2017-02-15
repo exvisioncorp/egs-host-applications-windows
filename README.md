@@ -20,6 +20,7 @@ In this OSS version, assemblies are not strictly signed.  Thus, Gesture Cursors 
 ## Requirement
 Windows 7 or above.
 .NET 3.5 and .NET 4.5.2 are required.  Our official installer (<http://zkoocamera.com/setup/>) helps with their installation.
+When you use this SDK, please check "prefer 32-bit" in your EXE projects.
 
 ## Usage
 Open Windows/EgsHostAppsOnWindows.sln (<https://github.com/exvisioncorp/egs-host-applications-windows/blob/master/Windows/EgsHostAppsOnWindows.sln>) and build it.
@@ -34,6 +35,7 @@ The MIT License (<https://github.com/exvisioncorp/egs-host-applications-windows/
 * AForge.NET (<http://www.aforgenet.com/framework/license.html>)
  **[NOTE]** Exvision Corporation bought and uses "none LGPL version of the AForge.NET", and the library's licenser allows us to redistribute them as "LGPL version".  The dll files are the same binaries as those you can download from NuGet etc.  When you use this EgsSDK, please be aware of LGPL components inside.  You need to obtain a license of "none LGPL version of the AForge.NET" for development of each none LGPL product that use EgsSDK.
 * JSON.NET (MIT) (<https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md>)
+* OpenCvSharp (3-clause BSD) (<https://github.com/shimat/opencvsharp/blob/master/LICENSE.txt>)
 * NAudio, NVorbis, NAudio.Vorbis (Ms-PL) (<https://github.com/naudio/NAudio/blob/master/license.txt>)
 * "USB COMPLETE" by Jan Axelson's Lakeview Research (<http://janaxelson.com/hidpage.htm>)
 * Some UI code in ZkooTutorial (CPOL) (<http://www.codeproject.com/info/cpol10.aspx>)

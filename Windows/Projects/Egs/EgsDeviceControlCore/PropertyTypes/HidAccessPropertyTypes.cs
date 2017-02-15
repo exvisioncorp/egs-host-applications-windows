@@ -779,34 +779,81 @@
     [DataContract]
     public class HidAccessPropertyRatioRect : HidAccessPropertyBase
     {
-        [DataMember]
-        public RatioRect Value { get; private set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        RatioRect _Value;
 
+        void UpdateWidthBytes()
+        {
+            var widthRatio = _Value.XRange.To - _Value.XRange.From;
+            var widthBytes = BitConverter.GetBytes(widthRatio);
+            widthBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 8);
+        }
+        void UpdateLeftBytes()
+        {
+            var leftBytes = BitConverter.GetBytes(_Value.XRange.From);
+            leftBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 0);
+            UpdateWidthBytes();
+        }
         public float Left
         {
-            get { return (float)Value.XRange.From; }
-            set { Value.XRange.From = value; OnPropertyChanged("Left"); }
+            get { return (float)_Value.XRange.From; }
+            set { _Value.XRange.From = value; UpdateLeftBytes(); OnValueUpdated(); OnPropertyChanged("Left"); }
         }
         public float Right
         {
-            get { return (float)Value.XRange.To; }
-            set { Value.XRange.To = value; OnPropertyChanged("Right"); }
+            get { return (float)_Value.XRange.To; }
+            set { _Value.XRange.To = value; UpdateWidthBytes(); OnValueUpdated(); OnPropertyChanged("Right"); }
+        }
+        void UpdateHeightBytes()
+        {
+            var heightRatio = _Value.YRange.To - _Value.YRange.From;
+            var heightBytes = BitConverter.GetBytes(heightRatio);
+            heightBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 12);
+        }
+        void UpdateTopBytes()
+        {
+            var topBytes = BitConverter.GetBytes(_Value.YRange.From);
+            topBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 4);
+            UpdateHeightBytes();
         }
         public float Top
         {
-            get { return (float)Value.YRange.From; }
-            set { Value.YRange.From = value; OnPropertyChanged("Top"); }
+            get { return (float)_Value.YRange.From; }
+            set { _Value.YRange.From = value; UpdateTopBytes(); OnValueUpdated(); OnPropertyChanged("Top"); }
         }
         public float Bottom
         {
-            get { return (float)Value.YRange.To; }
-            set { Value.YRange.To = value; OnPropertyChanged("Bottom"); }
+            get { return (float)_Value.YRange.To; }
+            set { _Value.YRange.To = value; UpdateHeightBytes(); OnValueUpdated(); OnPropertyChanged("Bottom"); }
+        }
+
+        [DataMember]
+        public RatioRect Value
+        {
+            get { return _Value; }
+            set
+            {
+                _Value.XRange.From = value.XRange.From;
+                _Value.YRange.From = value.YRange.From;
+                _Value.XRange.To = value.XRange.To;
+                _Value.YRange.To = value.YRange.To;
+                UpdateLeftBytes();
+                UpdateTopBytes();
+                // need not to call UpdateWidthBytes and UpdateHeightBytes
+                OnValueUpdated();
+                OnPropertyChanged("Left");
+                OnPropertyChanged("Right");
+                OnPropertyChanged("Top");
+                OnPropertyChanged("Bottom");
+                OnPropertyChanged("Value");
+                OnPropertyChanged("ValuesAsString");
+            }
         }
 
         /// <summary>
         /// "Left, Top, Right, Bottom"
         /// </summary>
-        public string ValuesAsString
+        public string ValueAsString
         {
             get { return string.Format(CultureInfo.InvariantCulture, "{0}, {1}, {2}, {3}", Left, Top, Right, Bottom); }
             set
@@ -815,77 +862,34 @@
                 string[] values = value.Split(',');
                 Debug.Assert(values.Length == 4);
                 if (values.Length != 4) { throw new ArgumentException("values.Length != 4"); }
-                float left = float.Parse(values[0], System.Globalization.CultureInfo.InvariantCulture);
-                float top = float.Parse(values[1], System.Globalization.CultureInfo.InvariantCulture);
-                float right = float.Parse(values[2], System.Globalization.CultureInfo.InvariantCulture);
-                float bottom = float.Parse(values[3], System.Globalization.CultureInfo.InvariantCulture);
-                Left = left;
-                Top = top;
-                Right = right;
-                Bottom = bottom;
+                _Value.XRange.From = float.Parse(values[0], System.Globalization.CultureInfo.InvariantCulture);
+                _Value.YRange.From = float.Parse(values[1], System.Globalization.CultureInfo.InvariantCulture);
+                _Value.XRange.To = float.Parse(values[2], System.Globalization.CultureInfo.InvariantCulture);
+                _Value.YRange.To = float.Parse(values[3], System.Globalization.CultureInfo.InvariantCulture);
+                UpdateLeftBytes();
+                UpdateTopBytes();
+                // need not to call UpdateWidthBytes and UpdateHeightBytes
+                OnValueUpdated();
+                OnPropertyChanged("Left");
+                OnPropertyChanged("Right");
+                OnPropertyChanged("Top");
+                OnPropertyChanged("Bottom");
+                OnPropertyChanged("Value");
                 OnPropertyChanged("ValuesAsString");
             }
         }
 
         public HidAccessPropertyRatioRect()
         {
-            Value = new RatioRect();
-        }
-
-        void UpdateWidthBytes()
-        {
-            var widthRatio = Value.XRange.To - Value.XRange.From;
-            var widthBytes = BitConverter.GetBytes(widthRatio);
-            widthBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 8);
-        }
-        protected virtual void OnValueXRangeFromChanged(EventArgs e)
-        {
-            var leftBytes = BitConverter.GetBytes(Value.XRange.From);
-            leftBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 0);
-            UpdateWidthBytes();
+            _Value = new RatioRect();
+            UpdateLeftBytes();
+            UpdateTopBytes();
+            // need not to call UpdateWidthBytes and UpdateHeightBytes
             OnValueUpdated();
-            OnPropertyChanged("Left");
-        }
-        protected virtual void OnValueXRangeToChanged(EventArgs e)
-        {
-            UpdateWidthBytes();
-            OnValueUpdated();
-            OnPropertyChanged("Right");
-        }
-
-        void UpdateHeightBytes()
-        {
-            var heightRatio = Value.YRange.To - Value.YRange.From;
-            var heightBytes = BitConverter.GetBytes(heightRatio);
-            heightBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 12);
-        }
-        protected virtual void OnValueYRangeFromChanged(EventArgs e)
-        {
-            var topBytes = BitConverter.GetBytes(Value.YRange.From);
-            topBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 4);
-            UpdateHeightBytes();
-            OnValueUpdated();
-            OnPropertyChanged("Top");
-        }
-
-
-        protected virtual void OnValueYRangeToChanged(EventArgs e)
-        {
-            UpdateHeightBytes();
-            OnValueUpdated();
-            OnPropertyChanged("Bottom");
         }
 
         public void InitializeOnceAtStartup()
         {
-            Value.XRange.FromChanged += (sender, e) => { OnValueXRangeFromChanged(e); };
-            Value.YRange.FromChanged += (sender, e) => { OnValueYRangeFromChanged(e); };
-            Value.XRange.ToChanged += (sender, e) => { OnValueXRangeToChanged(e); };
-            Value.YRange.ToChanged += (sender, e) => { OnValueYRangeToChanged(e); };
-            OnValueXRangeFromChanged(EventArgs.Empty);
-            OnValueYRangeFromChanged(EventArgs.Empty);
-            OnValueXRangeToChanged(EventArgs.Empty);
-            OnValueYRangeToChanged(EventArgs.Empty);
         }
     }
 }

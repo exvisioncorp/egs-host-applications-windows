@@ -42,6 +42,7 @@ namespace Egs.Win32
             System = 0x00000004,
             Directory = 0x00000010,
             Archive = 0x00000020,
+            // NOTE: In MSDN and so on, it says "Reserved for future use.", but this flag is very important!!
             Device = 0x00000040,
             Normal = 0x00000080,
             Temporary = 0x00000100,
@@ -74,6 +75,47 @@ namespace Egs.Win32
             [MarshalAs(UnmanagedType.U4)] FileMode creationDisposition,
             [MarshalAs(UnmanagedType.U4)] EFileAttributes flags,
             IntPtr template);
+
+#if false
+        [DllImport("kernel32", SetLastError = true)]
+        extern internal static bool ReadFile(
+            IntPtr hFile,
+            byte[] buffer,
+            int numberOfBytesToRead,
+            ref int numberOfBytesRead,
+            ref int overlappedBuffer
+        );
+
+        // http://www.pinvoke.net/default.aspx/kernel32.readfile
+        [DllImport("kernel32", SetLastError = true)]
+        extern internal static SafeFileHandle ReadFile(
+            SafeFileHandle hFile,
+            byte[] buffer,
+            int numberOfBytesToRead,
+            ref int numberOfBytesRead,
+            ref System.Threading.NativeOverlapped overlappedBuffer
+        );
+
+        // http://buiba.blogspot.jp/2009/06/using-winapi-createfile-readfile.html
+        [DllImport("kernel32", SetLastError = true)]
+        extern internal static bool ReadFile(
+            SafeFileHandle hFile,
+            byte[] buffer,
+            int numberOfBytesToRead,
+            ref int numberOfBytesRead,
+            IntPtr overlappedBuffer
+        );
+#endif
+
+        [DllImport("kernel32", SetLastError = true)]
+        extern internal static bool ReadFile(
+            SafeFileHandle hFile,
+            byte[] buffer,
+            int numberOfBytesToRead,
+            out int numberOfBytesRead,
+            IntPtr overlappedBuffer
+        );
+
 
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
