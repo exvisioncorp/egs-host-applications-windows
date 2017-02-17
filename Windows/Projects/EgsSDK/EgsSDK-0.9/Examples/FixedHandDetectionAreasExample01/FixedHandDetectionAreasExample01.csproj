@@ -39,9 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DlibSharp">
-      <HintPath>.\DlibSharp.dll</HintPath>
-    </Reference>
     <Reference Include="OpenCvSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\packages\OpenCvSharp3-AnyCPU.3.2.0.20170126\lib\net40\OpenCvSharp.dll</HintPath>
       <Private>True</Private>
@@ -123,15 +120,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\FaceDetectionByDlibForWindows\Projects\DlibSharp\DlibSharp.csproj">
+      <Project>{bf03d6a2-f237-4cba-b64c-a05b1939f99d}</Project>
+      <Name>DlibSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Egs\EgsDeviceControlCore\EgsDeviceControlCore.csproj">
       <Project>{48e1b19e-4922-42f6-a98c-a3f6f66d6704}</Project>
       <Name>EgsDeviceControlCore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dll\x86\DlibExtern.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\Left_CloseHand.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

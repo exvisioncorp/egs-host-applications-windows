@@ -55,6 +55,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EgsDeviceControlCoreForCons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixedHandDetectionAreasExample01", "Projects\EgsSDK\EgsSDK-0.9\Examples\FixedHandDetectionAreasExample01\FixedHandDetectionAreasExample01.csproj", "{ADC01950-48A3-4AB6-BF36-117CD524D539}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FaceDetectionByDlibForWindows", "FaceDetectionByDlibForWindows", "{95B381A6-9071-4954-AF56-EFF33D702A23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{1F628372-AF93-4B3C-8E5A-9FB04F1CBF2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DlibSharp", "..\FaceDetectionByDlibForWindows\Projects\DlibSharp\DlibSharp.csproj", "{BF03D6A2-F237-4CBA-B64C-A05B1939F99D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +127,10 @@ Global
 		{ADC01950-48A3-4AB6-BF36-117CD524D539}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADC01950-48A3-4AB6-BF36-117CD524D539}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADC01950-48A3-4AB6-BF36-117CD524D539}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF03D6A2-F237-4CBA-B64C-A05B1939F99D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF03D6A2-F237-4CBA-B64C-A05B1939F99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF03D6A2-F237-4CBA-B64C-A05B1939F99D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF03D6A2-F237-4CBA-B64C-A05B1939F99D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,5 +156,7 @@ Global
 		{22FE8061-B3EC-4519-90BB-822162EBC251} = {FFD1CAEA-333A-48D9-9727-CA8245278084}
 		{27912159-98C9-4496-9F91-04295045BB01} = {01EA5DF0-122F-4131-86EC-8320D7400F09}
 		{ADC01950-48A3-4AB6-BF36-117CD524D539} = {FFD1CAEA-333A-48D9-9727-CA8245278084}
+		{1F628372-AF93-4B3C-8E5A-9FB04F1CBF2F} = {95B381A6-9071-4954-AF56-EFF33D702A23}
+		{BF03D6A2-F237-4CBA-B64C-A05B1939F99D} = {1F628372-AF93-4B3C-8E5A-9FB04F1CBF2F}
 	EndGlobalSection
 EndGlobal

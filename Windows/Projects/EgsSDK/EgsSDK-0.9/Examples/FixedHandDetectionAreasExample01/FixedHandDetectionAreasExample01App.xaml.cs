@@ -40,6 +40,7 @@
             DeviceSettings.IsToDetectFaces.Value = false;
             DeviceSettings.IsToDetectHands.Value = true;
             DeviceSettings.IsToFixHandDetectionRegions.Value = true;
+            DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2;
 
             Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
 
@@ -67,6 +68,9 @@
 
             {
                 FaceDetection = new FaceDetectionModel();
+                var cameraViewImageSize = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem;
+                FaceDetection.CameraViewImageWidth = cameraViewImageSize.Width;
+                FaceDetection.CameraViewImageHeight = cameraViewImageSize.Height;
                 FaceDetection.IsToShowResultImage = true;
 
                 // TODO: check the minimum value.  200[ms]?
@@ -116,6 +120,7 @@
                 DeviceSettings.IsToDetectFaces.Value = false;
                 DeviceSettings.IsToDetectHands.Value = false;
                 DeviceSettings.IsToFixHandDetectionRegions.Value = false;
+                DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 0;
                 // Call this method before CursorView.Close().
                 EgsDevice.CloseDefaultEgsDevice();
 
