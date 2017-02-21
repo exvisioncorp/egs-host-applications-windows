@@ -81,7 +81,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="CameraViewModel.cs" />
-    <Compile Include="FaceDetectionModel.cs" />
     <Compile Include="FixedHandDetectionAreasExample01App.xaml.cs">
       <DependentUpon>FixedHandDetectionAreasExample01App.xaml</DependentUpon>
       <SubType>Code</SubType>

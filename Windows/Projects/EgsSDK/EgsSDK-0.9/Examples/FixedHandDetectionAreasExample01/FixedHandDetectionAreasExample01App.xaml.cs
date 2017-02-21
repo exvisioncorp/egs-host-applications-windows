@@ -22,6 +22,8 @@
         public CameraViewModel CameraViewBackgroundWindowModel { get; private set; }
         public FixedHandDetectionAreasExample01MainWindow CameraViewBackgroundWindow { get; private set; }
         public FaceDetectionModel FaceDetection { get; private set; }
+        double FaceDetectionIntervalMilliseconds { get; set; }
+        Stopwatch FaceDetectionStopwatch { get; set; }
 
         public FixedHandDetectionAreasExample01App()
             : base()
@@ -68,53 +70,24 @@
 
             {
                 FaceDetection = new FaceDetectionModel();
+                // TODO: check the minimum value.  200[ms]?
+                FaceDetectionIntervalMilliseconds = 200;
                 var cameraViewImageSize = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem;
                 FaceDetection.CameraViewImageWidth = cameraViewImageSize.Width;
                 FaceDetection.CameraViewImageHeight = cameraViewImageSize.Height;
-                FaceDetection.IsToShowResultImage = true;
 
-                // TODO: check the minimum value.  200[ms]?
-                var FaceDetectionIntervalMilliseconds = 200;
-                var FaceDetectionStopwatch = Stopwatch.StartNew();
-                Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged += delegate
-                {
-                    if (FaceDetectionStopwatch.ElapsedMilliseconds < FaceDetectionIntervalMilliseconds) { return; }
-                    FaceDetectionStopwatch.Stop();
-                    var isTrackingMoreThanOneHand = CursorViewModels[0].IsTracking || CursorViewModels[1].IsTracking;
-                    FaceDetection.IsToDetectFaces = isTrackingMoreThanOneHand == false;
-                    FaceDetection.UpdateAsync(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
-                    FaceDetectionStopwatch.Restart();
-                };
-                FaceDetection.FaceDetectionCompleted += delegate
-                {
-                    var imageWidth = FaceDetection.CameraViewImageWidth;
-                    var imageHeight = FaceDetection.CameraViewImageHeight;
-                    var right = FaceDetection.RightHandDetectionArea;
-                    var left = FaceDetection.LeftHandDetectionArea;
-                    Debug.WriteLine("FaceDetection.HandDetectionScaleForEgsDevice: " + FaceDetection.HandDetectionScaleForEgsDevice);
-
-                    var RightHandDetectionAreaRatioRect = new Egs.DotNetUtility.RatioRect();
-                    var LeftHandDetectionAreaRatioRect = new Egs.DotNetUtility.RatioRect();
-                    RightHandDetectionAreaRatioRect.XRange.From = (float)(right.X / imageWidth);
-                    RightHandDetectionAreaRatioRect.XRange.To = (float)((right.X + right.Width) / imageWidth);
-                    RightHandDetectionAreaRatioRect.YRange.From = (float)(right.Y / imageHeight);
-                    RightHandDetectionAreaRatioRect.YRange.To = (float)((right.Y + right.Height) / imageHeight);
-                    LeftHandDetectionAreaRatioRect.XRange.From = (float)(left.X / imageWidth);
-                    LeftHandDetectionAreaRatioRect.XRange.To = (float)((left.X + left.Width) / imageWidth);
-                    LeftHandDetectionAreaRatioRect.YRange.From = (float)(left.Y / imageHeight);
-                    LeftHandDetectionAreaRatioRect.YRange.To = (float)((left.Y + left.Height) / imageHeight);
-                    DeviceSettings.RightHandDetectionAreaOnFixed.Value = RightHandDetectionAreaRatioRect;
-                    DeviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = FaceDetection.HandDetectionScaleForEgsDevice;
-                    DeviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
-                    DeviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = FaceDetection.HandDetectionScaleForEgsDevice;
-                };
+                FaceDetectionStopwatch = Stopwatch.StartNew();
+                Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged += CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged;
+                FaceDetection.FaceDetectionCompleted += FaceDetection_FaceDetectionCompleted;
             }
 
 
             this.Exit += delegate
             {
                 // By detaching this event handler, Exception does not happen.
+                FaceDetection.FaceDetectionCompleted -= FaceDetection_FaceDetectionCompleted;
                 Device.EgsGestureHidReport.ReportUpdated -= EgsGestureHidReport_ReportUpdated;
+                Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged -= CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged;
 
                 DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
                 DeviceSettings.IsToDetectFaces.Value = false;
@@ -153,6 +126,41 @@
                 base.MainWindow = CameraViewBackgroundWindow;
                 CameraViewBackgroundWindow.Show();
             }
+        }
+
+        void CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged(object sender, EventArgs e)
+        {
+            if (FaceDetectionStopwatch.ElapsedMilliseconds < FaceDetectionIntervalMilliseconds) { return; }
+            FaceDetectionStopwatch.Stop();
+            var isTrackingMoreThanOneHand = CursorViewModels[0].IsTracking || CursorViewModels[1].IsTracking;
+            FaceDetection.IsToDetectFaces = isTrackingMoreThanOneHand == false;
+            FaceDetection.SetBitmap(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
+            if (FaceDetection.IsToDetectFaces) { FaceDetection.Update(); }
+            FaceDetectionStopwatch.Restart();
+        }
+
+        void FaceDetection_FaceDetectionCompleted(object sender, EventArgs e)
+        {
+            var imageWidth = FaceDetection.CameraViewImageWidth;
+            var imageHeight = FaceDetection.CameraViewImageHeight;
+            var right = FaceDetection.RightHandDetectionArea;
+            var left = FaceDetection.LeftHandDetectionArea;
+            Debug.WriteLine("FaceDetection.HandDetectionScaleForEgsDevice: " + FaceDetection.HandDetectionScaleForEgsDevice);
+
+            var RightHandDetectionAreaRatioRect = new Egs.DotNetUtility.RatioRect();
+            var LeftHandDetectionAreaRatioRect = new Egs.DotNetUtility.RatioRect();
+            RightHandDetectionAreaRatioRect.XRange.From = (float)(right.X / imageWidth);
+            RightHandDetectionAreaRatioRect.XRange.To = (float)((right.X + right.Width) / imageWidth);
+            RightHandDetectionAreaRatioRect.YRange.From = (float)(right.Y / imageHeight);
+            RightHandDetectionAreaRatioRect.YRange.To = (float)((right.Y + right.Height) / imageHeight);
+            LeftHandDetectionAreaRatioRect.XRange.From = (float)(left.X / imageWidth);
+            LeftHandDetectionAreaRatioRect.XRange.To = (float)((left.X + left.Width) / imageWidth);
+            LeftHandDetectionAreaRatioRect.YRange.From = (float)(left.Y / imageHeight);
+            LeftHandDetectionAreaRatioRect.YRange.To = (float)((left.Y + left.Height) / imageHeight);
+            DeviceSettings.RightHandDetectionAreaOnFixed.Value = RightHandDetectionAreaRatioRect;
+            DeviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = FaceDetection.HandDetectionScaleForEgsDevice;
+            DeviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
+            DeviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = FaceDetection.HandDetectionScaleForEgsDevice;
         }
 
         bool isDrawingCursors = false;
