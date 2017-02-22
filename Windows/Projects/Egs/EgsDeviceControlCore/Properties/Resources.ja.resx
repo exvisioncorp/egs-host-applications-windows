@@ -455,6 +455,22 @@ before starting ZKOO application.</comment>
     <value>デバイスで描画する (低負荷)</value>
     <comment>by Device (for Lower Spec PC)</comment>
   </data>
+  <data name="FaceDetectionIsProcessedByDetail_Type_Description" xml:space="preserve">
+    <value>顔検出を行うデバイス</value>
+    <comment>Device to Detect Faces</comment>
+  </data>
+  <data name="FaceDetectionIsProcessedByDetail_ByHostApplication_Description" xml:space="preserve">
+    <value>ホストアプリケーション (高精度)</value>
+    <comment>by Host Application (Higher Accuracy)</comment>
+  </data>
+  <data name="FaceDetectionIsProcessedByDetail_ByDevice_Description" xml:space="preserve">
+    <value>デバイス</value>
+    <comment>by Device</comment>
+  </data>
+  <data name="EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage" xml:space="preserve">
+    <value>(長い距離ほど計算負荷が高くなります)</value>
+    <comment>(Longer Distance Needs More CPU Usage)</comment>
+  </data>
   <data name="CultureInfoAndDescriptionDetail_Type_Description" xml:space="preserve">
     <value>言語</value>
     <comment>Language</comment>

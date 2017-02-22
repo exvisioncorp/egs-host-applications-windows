@@ -455,6 +455,22 @@ before starting ZKOO application.</comment>
     <value>by Device (for Lower Spec PC)</value>
     <comment>by Device (for Lower Spec PC)</comment>
   </data>
+  <data name="FaceDetectionIsProcessedByDetail_Type_Description" xml:space="preserve">
+    <value>Device to Detect Faces</value>
+    <comment>Device to Detect Faces</comment>
+  </data>
+  <data name="FaceDetectionIsProcessedByDetail_ByHostApplication_Description" xml:space="preserve">
+    <value>by Host Application (Higher Accuracy)</value>
+    <comment>by Host Application (Higher Accuracy)</comment>
+  </data>
+  <data name="FaceDetectionIsProcessedByDetail_ByDevice_Description" xml:space="preserve">
+    <value>by Device</value>
+    <comment>by Device</comment>
+  </data>
+  <data name="EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage" xml:space="preserve">
+    <value>(Longer Distance Needs More CPU Usage)</value>
+    <comment>(Longer Distance Needs More CPU Usage)</comment>
+  </data>
   <data name="CultureInfoAndDescriptionDetail_Type_Description" xml:space="preserve">
     <value>Language</value>
     <comment>Language</comment>

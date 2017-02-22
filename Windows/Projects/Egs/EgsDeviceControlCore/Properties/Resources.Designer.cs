@@ -1152,6 +1152,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   (Longer Distance Needs More CPU Usage) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage {
+            get {
+                return ResourceManager.GetString("EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   The application will retry sending image file again. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string EgsDeviceFirmwareUpdateModel_AppWillRetrySendingImageAgain {
@@ -1733,6 +1742,33 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDeviceSettings_UsbProtocolRevision_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_UsbProtocolRevision_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   by Device に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FaceDetectionIsProcessedByDetail_ByDevice_Description {
+            get {
+                return ResourceManager.GetString("FaceDetectionIsProcessedByDetail_ByDevice_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   by Host Application (Higher Accuracy) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FaceDetectionIsProcessedByDetail_ByHostApplication_Description {
+            get {
+                return ResourceManager.GetString("FaceDetectionIsProcessedByDetail_ByHostApplication_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Device to Detect Faces に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FaceDetectionIsProcessedByDetail_Type_Description {
+            get {
+                return ResourceManager.GetString("FaceDetectionIsProcessedByDetail_Type_Description", resourceCulture);
             }
         }
         
