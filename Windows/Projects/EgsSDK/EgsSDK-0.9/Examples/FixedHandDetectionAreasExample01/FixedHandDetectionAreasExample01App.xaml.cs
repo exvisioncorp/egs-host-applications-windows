@@ -22,8 +22,6 @@
         public CameraViewModel CameraViewBackgroundWindowModel { get; private set; }
         public FixedHandDetectionAreasExample01MainWindow CameraViewBackgroundWindow { get; private set; }
         public FaceDetectionModel FaceDetection { get; private set; }
-        double FaceDetectionIntervalMilliseconds { get; set; }
-        Stopwatch FaceDetectionStopwatch { get; set; }
 
         public FixedHandDetectionAreasExample01App()
             : base()
@@ -70,15 +68,17 @@
 
             {
                 FaceDetection = new FaceDetectionModel();
+
                 // TODO: check the minimum value.  200[ms]?
-                FaceDetectionIntervalMilliseconds = 200;
                 var cameraViewImageSize = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem;
                 FaceDetection.CameraViewImageWidth = cameraViewImageSize.Width;
                 FaceDetection.CameraViewImageHeight = cameraViewImageSize.Height;
 
-                FaceDetectionStopwatch = Stopwatch.StartNew();
                 Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged += CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged;
                 FaceDetection.FaceDetectionCompleted += FaceDetection_FaceDetectionCompleted;
+
+                FaceDetection.StartBackgroundWorker();
+                FaceDetection.IsToRepeatFaceDetection = true;
             }
 
 
@@ -130,13 +130,12 @@
 
         void CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged(object sender, EventArgs e)
         {
-            if (FaceDetectionStopwatch.ElapsedMilliseconds < FaceDetectionIntervalMilliseconds) { return; }
-            FaceDetectionStopwatch.Stop();
-            var isTrackingMoreThanOneHand = CursorViewModels[0].IsTracking || CursorViewModels[1].IsTracking;
-            FaceDetection.IsToDetectFaces = isTrackingMoreThanOneHand == false;
-            FaceDetection.SetBitmap(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
-            if (FaceDetection.IsToDetectFaces) { FaceDetection.Update(); }
-            FaceDetectionStopwatch.Restart();
+            var isTrackingNoHand = (CursorViewModels[0].IsTracking == false) && (CursorViewModels[1].IsTracking == false);
+            FaceDetection.IsToRepeatFaceDetection = isTrackingNoHand;
+            if (isTrackingNoHand)
+            {
+                FaceDetection.SetBitmap(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
+            }
         }
 
         void FaceDetection_FaceDetectionCompleted(object sender, EventArgs e)

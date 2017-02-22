@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Diagnostics;
 
-    public class FaceDetectionModel
+    public class FaceDetectionModel : IDisposable
     {
         public double SensorImageBinnedPixelOneSideLength { get; set; }
         /// <summary>The focal length near its optical axis</summary>
@@ -25,6 +25,14 @@
         public double RealFaceZMaximum { get; set; }
         public double RealShoulderBreadth { get; set; }
         public double RealPalmBreadth { get; set; }
+
+        public double RealDetectionAreaCenterXOffset { get; set; }
+        public double RealDetectionAreaCenterYOffset { get; set; }
+        public double RealDetectionAreaCenterZOffset { get; set; }
+
+        public double RealDetectionAreaWidth { get; set; }
+        public double RealDetectionAreaHeight { get; set; }
+
 
         // NOTE: DetectorImageDetectableFaceWidthMinimum is decided by detector's specification.  In some case, dectector can find smaller faces by enlarging input image.
 
@@ -52,23 +60,20 @@
             }
         }
 
-        public double RealDetectionAreaCenterXOffset { get; set; }
-        public double RealDetectionAreaCenterYOffset { get; set; }
-        public double RealDetectionAreaCenterZOffset { get; set; }
 
-        public double RealDetectionAreaWidth { get; set; }
-        public double RealDetectionAreaHeight { get; set; }
+        public bool IsToRepeatFaceDetection { get; set; }
+        public int IntervalMilliseconds { get; set; }
+        Stopwatch IntervalStopwatch { get; set; }
+        System.ComponentModel.BackgroundWorker Worker { get; set; }
+        bool IsWorkerReallyBusy { get; set; }
+        bool IsSettingImageToDetector { get; set; }
+        bool IsDetectingFaces { get; set; }
 
-        public bool IsToDetectFaces { get; set; }
 
         DlibSharp.Array2dUchar DlibArray2dUcharImage { get; set; }
         DlibSharp.FrontalFaceDetector DlibHogSvm { get; set; }
-        System.ComponentModel.BackgroundWorker Worker { get; set; }
-        System.Drawing.Bitmap InputBitmap { get; set; }
-
-        public bool IsDetectingFaces { get; private set; }
         public IList<System.Drawing.Rectangle> DetectedFaceRects { get; private set; }
-        public System.Drawing.Rectangle SelectedFaceRect { get; private set; }
+        public Nullable<System.Drawing.Rectangle> SelectedFaceRect { get; private set; }
         public bool IsFaceDetected { get { return (DetectedFaceRects != null) && (DetectedFaceRects.Count > 0); } }
         public System.Drawing.Rectangle RightHandDetectionArea { get; private set; }
         public System.Drawing.Rectangle LeftHandDetectionArea { get; private set; }
@@ -82,10 +87,6 @@
 
         public FaceDetectionModel()
         {
-            DlibHogSvm = new DlibSharp.FrontalFaceDetector();
-            DlibArray2dUcharImage = new DlibSharp.Array2dUchar();
-            Worker = new System.ComponentModel.BackgroundWorker();
-
             // pixelOneSideLength: 0.0028[mm] (2x2 binning).
             SensorImageBinnedPixelOneSideLength = 0.0028;
             // (Wide lens for development in Exvision)
@@ -97,71 +98,135 @@
             CameraViewImageWidth = 384.0;
             CameraViewImageHeight = 240.0;
 
+
             // +X:Right  +Y:Bottom  +Z:Back (camera to user)
             // Parameters input by user
             RealFaceBreadth = 159.0;     // (140,200) Avg: M:162 F:156
             RealFaceZMaximum = 3000.0;   // 3[m].  10 feet UI
             RealShoulderBreadth = 379.0; // (310,440) Avg: M:397 F:361
             RealPalmBreadth = 78.0;      // ( 65, 95) Avg: M: 82 F: 74
-
-            DetectorImageDetectableFaceWidthMinimum = 40;
-            Debug.WriteLine("DetectorImageScale_DividedBy_CameraViewImageScale: " + DetectorImageScale_DividedBy_CameraViewImageScale);
-
             RealDetectionAreaCenterXOffset = (RealShoulderBreadth / 2) * 1.2;
             RealDetectionAreaCenterYOffset = RealFaceBreadth * 0.7;
             RealDetectionAreaCenterZOffset = -RealShoulderBreadth / 2.1;
             RealDetectionAreaWidth = RealPalmBreadth * 4;
             RealDetectionAreaHeight = RealPalmBreadth * 4;
 
-            IsToDetectFaces = true;
+
+            DetectorImageDetectableFaceWidthMinimum = 40;
+            Debug.WriteLine("DetectorImageScale_DividedBy_CameraViewImageScale: " + DetectorImageScale_DividedBy_CameraViewImageScale);
+
+            IsToRepeatFaceDetection = false;
+            IntervalMilliseconds = 200;
+            IntervalStopwatch = new Stopwatch();
+            Worker = new System.ComponentModel.BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+            Worker.DoWork += Worker_DoWork;
+            Worker.ProgressChanged += Worker_ProgressChanged;
+            IsWorkerReallyBusy = false;
+            IsSettingImageToDetector = false;
             IsDetectingFaces = false;
+
+            DlibHogSvm = new DlibSharp.FrontalFaceDetector();
+            DlibArray2dUcharImage = new DlibSharp.Array2dUchar();
+        }
+
+        public void StartBackgroundWorker()
+        {
+            Worker.RunWorkerAsync();
+        }
+
+        public void StopBackgroundWorker(int maximumWatingTimeInMilliseconds)
+        {
+            IsToRepeatFaceDetection = false;
+            Worker.CancelAsync();
+            var waitingWorkerElapsed = Stopwatch.StartNew();
+            while (IsWorkerReallyBusy && waitingWorkerElapsed.ElapsedMilliseconds < maximumWatingTimeInMilliseconds)
+            {
+                System.Threading.Thread.Sleep(maximumWatingTimeInMilliseconds / 10);
+            }
+        }
+
+        void Worker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            IsWorkerReallyBusy = true;
+            IntervalStopwatch = Stopwatch.StartNew();
+            while (Worker.CancellationPending == false)
+            {
+                System.Threading.Thread.Sleep(IntervalMilliseconds / 10);
+                if (IntervalStopwatch.ElapsedMilliseconds < IntervalMilliseconds) { continue; }
+                if (IsToRepeatFaceDetection == false) { continue; }
+                IntervalStopwatch.Reset();
+                IntervalStopwatch.Start();
+
+                if (DetectFaces() == false) { continue; }
+                SelectOneFaceRect();
+
+                if (IsFaceDetected)
+                {
+                    UpdateHandDetectionAreas(SelectedFaceRect.Value);
+                    Worker.ReportProgress(100);
+                }
+            }
+            IsWorkerReallyBusy = false;
+        }
+
+        void Worker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            OnFaceDetectionCompleted(EventArgs.Empty);
         }
 
         public void SetBitmap(System.Drawing.Bitmap bmp)
         {
-            InputBitmap = (System.Drawing.Bitmap)bmp.Clone();
-        }
-
-        public void Update()
-        {
+            if (IsSettingImageToDetector) { return; }
             if (IsDetectingFaces) { return; }
 
-            IsDetectingFaces = true;
-            Trace.Assert(InputBitmap != null);
             // Access to Bitmap must be in the same thread.
-            Trace.Assert(InputBitmap.Width > 0 && InputBitmap.Height > 0);
-            Debug.Assert(CameraViewImageWidth == InputBitmap.Width);
-            Debug.Assert(CameraViewImageHeight == InputBitmap.Height);
-            Trace.Assert(DlibArray2dUcharImage != null);
+            Debug.Assert(bmp != null);
+            Debug.Assert(bmp.Size.IsEmpty == false);
+            Debug.Assert(CameraViewImageWidth == bmp.Width);
+            Debug.Assert(CameraViewImageHeight == bmp.Height);
 
-            DlibArray2dUcharImage.SetBitmap(InputBitmap);
+            IsSettingImageToDetector = true;
+            using (var clonedBmp = (System.Drawing.Bitmap)bmp.Clone())
+            {
+                DlibArray2dUcharImage.SetBitmap(clonedBmp);
+                var scale = DetectorImageScale_DividedBy_CameraViewImageScale;
+                var detectorImageWidth = (int)(CameraViewImageWidth * scale);
+                var detectorImageHeight = (int)(CameraViewImageHeight * scale);
+                Debug.WriteLine("DetectorImageWidth: " + detectorImageWidth);
+                Debug.WriteLine("DetectorImageHeight: " + detectorImageHeight);
+                DlibArray2dUcharImage.ResizeImage(detectorImageWidth, detectorImageHeight);
+            }
+            IsSettingImageToDetector = false;
+        }
+
+        public bool DetectFaces()
+        {
+            if (IsDetectingFaces) { return false; }
+            if (DlibArray2dUcharImage.Width <= 0) { return false; }
+            if (DlibArray2dUcharImage.Height <= 0) { return false; }
+
+            IsDetectingFaces = true;
+            DetectedFaceRects = new List<System.Drawing.Rectangle>();
 
             var scale = DetectorImageScale_DividedBy_CameraViewImageScale;
-            var detectorImageWidth = (int)(CameraViewImageWidth * scale);
-            var detectorImageHeight = (int)(CameraViewImageHeight * scale);
-            Debug.WriteLine("DetectorImageWidth: " + detectorImageWidth);
-            Debug.WriteLine("DetectorImageHeight: " + detectorImageHeight);
-            DlibArray2dUcharImage.ResizeImage(detectorImageWidth, detectorImageHeight);
-
             DetectedFaceRects = DlibHogSvm.DetectFaces(DlibArray2dUcharImage, -0.5)
                 .Select(e => new System.Drawing.Rectangle((int)(e.X / scale), (int)(e.Y / scale), (int)(e.Width / scale), (int)(e.Height / scale)))
                 .ToList();
 
-            // Heavy tasks must run in the other thread.
-            if (IsFaceDetected)
-            {
-                SelectOneFaceRect();
-                UpdateHandDetectionAreas(SelectedFaceRect);
-                OnFaceDetectionCompleted(EventArgs.Empty);
-            }
             IsDetectingFaces = false;
+            return true;
         }
 
-        void SelectOneFaceRect()
+        public void SelectOneFaceRect()
         {
+            if (DetectedFaceRects == null || DetectedFaceRects.Count == 0)
+            {
+                SelectedFaceRect = null;
+                return;
+            }
             SelectedFaceRect = DetectedFaceRects[0];
             Func<System.Drawing.Rectangle, double> predictor = e => e.Width + e.Height;
-            var faceSizeMax = predictor(SelectedFaceRect);
+            var faceSizeMax = predictor(SelectedFaceRect.Value);
             for (int i = 1; i < DetectedFaceRects.Count; i++)
             {
                 var size = predictor(DetectedFaceRects[i]);
@@ -173,7 +238,7 @@
             }
         }
 
-        void UpdateHandDetectionAreas(System.Drawing.Rectangle imageFaceRect)
+        public void UpdateHandDetectionAreas(System.Drawing.Rectangle imageFaceRect)
         {
             // (PixelOneSideLength * ImageFaceWidth) : CalibratedFocalLength = RealFaceWidth : RealFaceCenterZ
             double RealFaceCenterZ = (CameraViewImageCalibratedFocalLength * RealFaceBreadth) / (SensorImageBinnedPixelOneSideLength * imageFaceRect.Width);
@@ -218,5 +283,29 @@
             // when SensorImagePalmBreadth is about 30, scale factor is 8.
             HandDetectionScaleForEgsDevice = (int)((8.0 / 30.0) * SensorImagePalmBreadth);
         }
+
+        #region IDisposable
+        private bool disposed = false;
+        public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed) { return; }
+            if (disposing)
+            {
+                // dispose managed objects, and dispose objects that implement IDisposable
+                if (Worker != null)
+                {
+                    StopBackgroundWorker(2000);
+                    Worker.Dispose();
+                    Worker = null;
+                }
+                if (DlibArray2dUcharImage != null) { DlibArray2dUcharImage.Dispose(); DlibArray2dUcharImage = null; }
+                if (DlibHogSvm != null) { DlibHogSvm.Dispose(); DlibHogSvm = null; }
+            }
+            // release any unmanaged objects and set the object references to null
+            disposed = true;
+        }
+        ~FaceDetectionModel() { Dispose(false); }
+        #endregion
     }
 }

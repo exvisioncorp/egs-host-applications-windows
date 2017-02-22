@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>a03b7f78</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -30,7 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -119,10 +119,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\FaceDetectionByDlibForWindows\Projects\DlibSharp\DlibSharp.csproj">
-      <Project>{bf03d6a2-f237-4cba-b64c-a05b1939f99d}</Project>
-      <Name>DlibSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Egs\EgsDeviceControlCore\EgsDeviceControlCore.csproj">
       <Project>{48e1b19e-4922-42f6-a98c-a3f6f66d6704}</Project>
       <Name>EgsDeviceControlCore</Name>
