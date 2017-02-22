@@ -76,9 +76,6 @@
 
                 Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged += CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged;
                 FaceDetection.FaceDetectionCompleted += FaceDetection_FaceDetectionCompleted;
-
-                FaceDetection.StartBackgroundWorker();
-                FaceDetection.IsToRepeatFaceDetection = true;
             }
 
 
@@ -131,10 +128,9 @@
         void CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged(object sender, EventArgs e)
         {
             var isTrackingNoHand = (CursorViewModels[0].IsTracking == false) && (CursorViewModels[1].IsTracking == false);
-            FaceDetection.IsToRepeatFaceDetection = isTrackingNoHand;
             if (isTrackingNoHand)
             {
-                FaceDetection.SetBitmap(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
+                FaceDetection.DetectFace(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
             }
         }
 

@@ -61,14 +61,10 @@
         }
 
 
-        public bool IsToRepeatFaceDetection { get; set; }
         public int IntervalMilliseconds { get; set; }
         Stopwatch IntervalStopwatch { get; set; }
-        System.ComponentModel.BackgroundWorker Worker { get; set; }
-        bool IsWorkerReallyBusy { get; set; }
-        bool IsSettingImageToDetector { get; set; }
         bool IsDetectingFaces { get; set; }
-
+        System.ComponentModel.BackgroundWorker Worker { get; set; }
 
         DlibSharp.Array2dUchar DlibArray2dUcharImage { get; set; }
         DlibSharp.FrontalFaceDetector DlibHogSvm { get; set; }
@@ -112,109 +108,69 @@
             RealDetectionAreaHeight = RealPalmBreadth * 4;
 
 
-            DetectorImageDetectableFaceWidthMinimum = 40;
+            DetectorImageDetectableFaceWidthMinimum = 73;
             Debug.WriteLine("DetectorImageScale_DividedBy_CameraViewImageScale: " + DetectorImageScale_DividedBy_CameraViewImageScale);
 
-            IsToRepeatFaceDetection = false;
             IntervalMilliseconds = 200;
-            IntervalStopwatch = new Stopwatch();
-            Worker = new System.ComponentModel.BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
-            Worker.DoWork += Worker_DoWork;
-            Worker.ProgressChanged += Worker_ProgressChanged;
-            IsWorkerReallyBusy = false;
-            IsSettingImageToDetector = false;
-            IsDetectingFaces = false;
+            IntervalStopwatch = Stopwatch.StartNew();
 
             DlibHogSvm = new DlibSharp.FrontalFaceDetector();
             DlibArray2dUcharImage = new DlibSharp.Array2dUchar();
-        }
 
-        public void StartBackgroundWorker()
-        {
-            Worker.RunWorkerAsync();
-        }
-
-        public void StopBackgroundWorker(int maximumWatingTimeInMilliseconds)
-        {
-            IsToRepeatFaceDetection = false;
-            Worker.CancelAsync();
-            var waitingWorkerElapsed = Stopwatch.StartNew();
-            while (IsWorkerReallyBusy && waitingWorkerElapsed.ElapsedMilliseconds < maximumWatingTimeInMilliseconds)
+            Worker = new System.ComponentModel.BackgroundWorker();
+            Worker.DoWork += delegate
             {
-                System.Threading.Thread.Sleep(maximumWatingTimeInMilliseconds / 10);
-            }
-        }
-
-        void Worker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            IsWorkerReallyBusy = true;
-            IntervalStopwatch = Stopwatch.StartNew();
-            while (Worker.CancellationPending == false)
-            {
-                System.Threading.Thread.Sleep(IntervalMilliseconds / 10);
-                if (IntervalStopwatch.ElapsedMilliseconds < IntervalMilliseconds) { continue; }
-                if (IsToRepeatFaceDetection == false) { continue; }
-                IntervalStopwatch.Reset();
-                IntervalStopwatch.Start();
-
-                if (DetectFaces() == false) { continue; }
-                SelectOneFaceRect();
-
-                if (IsFaceDetected)
+                try
                 {
-                    UpdateHandDetectionAreas(SelectedFaceRect.Value);
-                    Worker.ReportProgress(100);
+                    if (IntervalStopwatch.ElapsedMilliseconds < IntervalMilliseconds) { return; }
+                    IntervalStopwatch.Reset();
+                    IntervalStopwatch.Start();
+
+                    var scale = DetectorImageScale_DividedBy_CameraViewImageScale;
+                    var detectorImageWidth = (int)(CameraViewImageWidth * scale);
+                    var detectorImageHeight = (int)(CameraViewImageHeight * scale);
+                    Debug.WriteLine("DetectorImageWidth: " + detectorImageWidth);
+                    Debug.WriteLine("DetectorImageHeight: " + detectorImageHeight);
+                    DlibArray2dUcharImage.ResizeImage(detectorImageWidth, detectorImageHeight);
+                    DetectedFaceRects = new List<System.Drawing.Rectangle>();
+                    DetectedFaceRects = DlibHogSvm.DetectFaces(DlibArray2dUcharImage, -0.5)
+                        .Select(e => new System.Drawing.Rectangle((int)(e.X / scale), (int)(e.Y / scale), (int)(e.Width / scale), (int)(e.Height / scale)))
+                        .ToList();
+
+                    SelectOneFaceRect();
+
+                    if (IsFaceDetected)
+                    {
+                        UpdateHandDetectionAreas(SelectedFaceRect.Value);
+                    }
+
+                    OnFaceDetectionCompleted(EventArgs.Empty);
                 }
-            }
-            IsWorkerReallyBusy = false;
+                catch (Exception ex)
+                {
+#if DEBUG
+                    System.Windows.Forms.MessageBox.Show(ex.Message);
+#endif
+                    Console.WriteLine(ex.Message);
+                }
+            };
+            Worker.RunWorkerCompleted += delegate { IsDetectingFaces = false; };
         }
 
-        void Worker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        public void DetectFace(System.Drawing.Bitmap cameraViewImageBitmap)
         {
-            OnFaceDetectionCompleted(EventArgs.Empty);
-        }
-
-        public void SetBitmap(System.Drawing.Bitmap bmp)
-        {
-            if (IsSettingImageToDetector) { return; }
             if (IsDetectingFaces) { return; }
-
+            IsDetectingFaces = true;
             // Access to Bitmap must be in the same thread.
-            Debug.Assert(bmp != null);
-            Debug.Assert(bmp.Size.IsEmpty == false);
-            Debug.Assert(CameraViewImageWidth == bmp.Width);
-            Debug.Assert(CameraViewImageHeight == bmp.Height);
-
-            IsSettingImageToDetector = true;
-            using (var clonedBmp = (System.Drawing.Bitmap)bmp.Clone())
+            Debug.Assert(cameraViewImageBitmap != null);
+            Debug.Assert(cameraViewImageBitmap.Size.IsEmpty == false);
+            Debug.Assert(CameraViewImageWidth == cameraViewImageBitmap.Width);
+            Debug.Assert(CameraViewImageHeight == cameraViewImageBitmap.Height);
+            using (var clonedBmp = (System.Drawing.Bitmap)cameraViewImageBitmap.Clone())
             {
                 DlibArray2dUcharImage.SetBitmap(clonedBmp);
-                var scale = DetectorImageScale_DividedBy_CameraViewImageScale;
-                var detectorImageWidth = (int)(CameraViewImageWidth * scale);
-                var detectorImageHeight = (int)(CameraViewImageHeight * scale);
-                Debug.WriteLine("DetectorImageWidth: " + detectorImageWidth);
-                Debug.WriteLine("DetectorImageHeight: " + detectorImageHeight);
-                DlibArray2dUcharImage.ResizeImage(detectorImageWidth, detectorImageHeight);
             }
-            IsSettingImageToDetector = false;
-        }
-
-        public bool DetectFaces()
-        {
-            if (IsDetectingFaces) { return false; }
-            if (DlibArray2dUcharImage.Width <= 0) { return false; }
-            if (DlibArray2dUcharImage.Height <= 0) { return false; }
-
-            IsDetectingFaces = true;
-            DetectedFaceRects = new List<System.Drawing.Rectangle>();
-
-            var scale = DetectorImageScale_DividedBy_CameraViewImageScale;
-            DetectedFaceRects = DlibHogSvm.DetectFaces(DlibArray2dUcharImage, -0.5)
-                .Select(e => new System.Drawing.Rectangle((int)(e.X / scale), (int)(e.Y / scale), (int)(e.Width / scale), (int)(e.Height / scale)))
-                .ToList();
-
-            IsDetectingFaces = false;
-            return true;
+            Worker.RunWorkerAsync();
         }
 
         public void SelectOneFaceRect()
@@ -293,12 +249,6 @@
             if (disposing)
             {
                 // dispose managed objects, and dispose objects that implement IDisposable
-                if (Worker != null)
-                {
-                    StopBackgroundWorker(2000);
-                    Worker.Dispose();
-                    Worker = null;
-                }
                 if (DlibArray2dUcharImage != null) { DlibArray2dUcharImage.Dispose(); DlibArray2dUcharImage = null; }
                 if (DlibHogSvm != null) { DlibHogSvm.Dispose(); DlibHogSvm = null; }
             }
