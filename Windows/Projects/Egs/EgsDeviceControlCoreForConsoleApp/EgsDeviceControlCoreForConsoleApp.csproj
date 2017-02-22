@@ -84,12 +84,6 @@
     <Compile Include="..\EgsDeviceControlCore\EgsDeviceEnumTypes.cs">
       <Link>EgsDeviceEnumTypes.cs</Link>
     </Compile>
-    <Compile Include="..\EgsDeviceControlCore\EgsDeviceFaceDetectionOnHost.cs">
-      <Link>EgsDeviceFaceDetectionOnHost.cs</Link>
-    </Compile>
-    <Compile Include="..\EgsDeviceControlCore\EgsDeviceFaceDetectionOnHost_FaceSelection.cs">
-      <Link>EgsDeviceFaceDetectionOnHost_FaceSelection.cs</Link>
-    </Compile>
     <Compile Include="..\EgsDeviceControlCore\EgsDeviceHidReportsUpdate.cs">
       <Link>EgsDeviceHidReportsUpdate.cs</Link>
     </Compile>

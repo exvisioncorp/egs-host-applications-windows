@@ -241,6 +241,20 @@
             if (disposing)
             {
                 // dispose managed objects, and dispose objects that implement IDisposable
+                IntervalStopwatch.Reset();
+                IntervalStopwatch.Start();
+                while (IsDetectingFaces)
+                {
+                    System.Threading.Thread.Sleep(50);
+                    if (IntervalStopwatch.ElapsedMilliseconds > 2000)
+                    {
+#if DEBUG
+                        Debugger.Break();
+#endif
+                        Console.WriteLine("FaceDetection BackgroundWorkder did not completed.");
+                        break;
+                    }
+                }
                 if (DlibArray2dUcharImage != null) { DlibArray2dUcharImage.Dispose(); DlibArray2dUcharImage = null; }
                 if (DlibHogSvm != null) { DlibHogSvm.Dispose(); DlibHogSvm = null; }
             }
