@@ -44,6 +44,9 @@
     <Reference Include="AForge.Video.DirectShow">
       <HintPath>.\AForge.Video.DirectShow.dll</HintPath>
     </Reference>
+    <Reference Include="DlibSharp">
+      <HintPath>.\DlibSharp.dll</HintPath>
+    </Reference>
     <Reference Include="EgsDeviceControlCore">
       <HintPath>.\EgsDeviceControlCore.dll</HintPath>
     </Reference>
@@ -61,6 +64,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dll\x86\DlibExtern.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dll\x86\msvcp140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dll\x86\vcruntime140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ja\EgsDeviceControlCore.resources.dll" />
     <Content Include="Resources\CameraViewWindowIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -111,6 +123,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\PlayButton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\PleaseConnectTheDevice.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\PleaseDisconnectTheDevice.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\SettingsWindowIcon.png">

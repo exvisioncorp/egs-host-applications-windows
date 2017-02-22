@@ -771,6 +771,20 @@
             Suggestion from the device about whether the touch contact was an intended or accidental touch. Your device should reject accidental touches as thoroughly as it can and report that information by using the confidence usage. The operating system uses confidence to help improve accidental touch rejection.
             </summary>
         </member>
+        <member name="M:Egs.EgsDeviceFaceDetectionOnHost.UpdateEgsDeviceSettingsHandDetectionAreas(System.Drawing.Rectangle)">
+            <summary>
+            You can set "Hand Detection Areas" by setting "cameraViewImageFaceRect" detected by your method.
+            </summary>
+            <param name="cameraViewImageFaceRect"></param>
+        </member>
+        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.CalibratedFocalLength">
+            <summary>The focal length near its optical axis [mm]</summary>
+        </member>
+        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.CameraViewImageScale_DividedBy_SensorImageScale">
+            <summary>
+            return CameraViewImageHeight / SensorImageHeight  (Based on EGS device specification currently.)
+            </summary>
+        </member>
         <member name="T:Egs.EgsDeviceControlCore.Properties.Resources">
             <summary>
               ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
@@ -1388,6 +1402,11 @@
               Temperature [F] に類似しているローカライズされた文字列を検索します。
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage">
+            <summary>
+              (Longer Distance Needs More CPU Usage) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_AppWillRetrySendingImageAgain">
             <summary>
               The application will retry sending image file again. に類似しているローカライズされた文字列を検索します。
@@ -1711,6 +1730,21 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_UsbProtocolRevision_Description">
             <summary>
               USB Communication Protocol Revision に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceDetectionIsProcessedByDetail_ByDevice_Description">
+            <summary>
+              by Device に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceDetectionIsProcessedByDetail_ByHostApplication_Description">
+            <summary>
+              by Host Application (Higher Accuracy) に類似しているローカライズされた文字列を検索します。
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceDetectionIsProcessedByDetail_Type_Description">
+            <summary>
+              Device to Detect Faces に類似しているローカライズされた文字列を検索します。
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceSelectionMethodKindDetail_Value0_Description">
