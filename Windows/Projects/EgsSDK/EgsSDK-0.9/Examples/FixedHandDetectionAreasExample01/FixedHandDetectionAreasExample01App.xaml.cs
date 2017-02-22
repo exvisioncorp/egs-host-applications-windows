@@ -43,8 +43,8 @@
             DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2;
 
             Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
-            // NOTE: important
-            Device.IsToDetectFacesOnHost = true;
+            // Currently, set it to true.  I'm going to implement the other face detection method to this sample.
+            Device.IsToUseDefaultFaceDetection = true;
 
             {
                 CursorViewModels = new CursorViewModel[Device.TrackableHandsCountMaximum];

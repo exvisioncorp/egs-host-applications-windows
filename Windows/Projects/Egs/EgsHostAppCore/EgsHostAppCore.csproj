@@ -84,7 +84,7 @@
     </Compile>
     <Compile Include="DotNetUtility\SliderOnDragCompleted.cs" />
     <Compile Include="DotNetUtility\SystemDrawingExtension.cs" />
-    <Compile Include="EgsHostEnumTypes.cs" />
+    <Compile Include="PropertyTypes\EgsHostEnumTypes.cs" />
     <Compile Include="EgsDeviceFirmwareUpdateImageFileModel.cs" />
     <Compile Include="EgsDeviceFirmwareUpdateModel.cs" />
     <Compile Include="EgsHostOnUserControl.cs" />

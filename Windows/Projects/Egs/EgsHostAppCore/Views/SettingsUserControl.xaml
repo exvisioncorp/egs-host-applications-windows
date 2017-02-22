@@ -208,8 +208,39 @@
                     </DockPanel>
                 </GroupBox>
 
-                <GroupBox
-                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceSelectionMethodKind_Description}">
+                <GroupBox x:Name="AdvancedSettings_FaceDetectionModeGroupBox"
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionIsProcessedByDetail_Type_Description}">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel DataContext="{Binding FaceDetectionIsProcessedBy}"
+                                Orientation="Vertical">
+                            <RadioButton x:Name="FaceDetectionIsProcessedByValue1RadioButton"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionIsProcessedByDetail_ByDevice_Description}"
+                                    Margin="10,5" VerticalAlignment="Center"
+                                    IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=1}" />
+                            <RadioButton x:Name="FaceDetectionIsProcessedByValue0RadioButton"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionIsProcessedByDetail_ByHostApplication_Description}"
+                                    Margin="10,5" VerticalAlignment="Center"
+                                    IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=0}" />
+                        </StackPanel>
+                        <DockPanel DataContext="{Binding FaceDetectionOnHost_RealFaceZMaximum}"
+                                IsEnabled="{Binding ElementName=FaceDetectionIsProcessedByValue0RadioButton, Path=IsChecked}">
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Margin="50,0,5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=FaceDetectionOnHost_RealFaceZMaximum_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="FaceDetectionOnHost_RealFaceZMaximum_Slider"
+                                    Value="{Binding Value, Mode=TwoWay}" Minimum="1.0" Maximum="4.0"
+                                    VerticalAlignment="Center" TickFrequency="0.1" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox x:Name="EgsDeviceSettings_FaceSelectionMethodKind_GroupBox"
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceSelectionMethodKind_Description}"
+                        IsEnabled="{Binding ElementName=FaceDetectionIsProcessedByValue1RadioButton, Path=IsChecked}">
                     <ListBox DataContext="{Binding DeviceSettings.FaceSelectionMethodKind}"
                             Style="{StaticResource listBoxWithRadioButton}"
                             ItemsSource="{Binding OptionalValue.Options}"

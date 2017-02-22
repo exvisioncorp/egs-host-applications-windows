@@ -183,6 +183,9 @@
 
             RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized);
             RefToHostApp.CameraViewBordersAndPointersAreDrawnBy.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewBordersAndPointersAreDrawnByKind.HostApplication);
+            // TODO: MUSTDO: Test
+            //RefToHostApp.FaceDetectionIsProcessedBy.SelectSingleItemByPredicate(e => e.EnumValue == FaceDetectionIsProcessedByKind.Device);
+
             RefToHostApp.DeviceSettings.IsToSendTouchScreenHidReport.Value = true;
             // In Windows 10, users cannot often tap by sending Hovering State
             if (false) { RefToHostApp.DeviceSettings.IsToSendHoveringStateOnTouchScreenHidReport.Value = true; }

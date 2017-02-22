@@ -328,6 +328,8 @@
             _IsSendingTouchScreenHidReport = false;
             _IsSendingHoveringStateOnTouchScreenHidReport = false;
             _IsSendingEgsGestureHidReport = false;
+            _IsToUseDefaultFaceDetection = true;
+
             WaitTimeInMillisecondsBeforeSetFeatureReport = 2;
             WaitTimeInMillisecondsBeforeGetFeatureReport = 10;
 

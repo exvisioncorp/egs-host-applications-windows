@@ -147,19 +147,19 @@
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        bool _IsToDetectFacesOnHost;
-        public event EventHandler IsToDetectFacesOnHostChanged;
-        protected virtual void OnIsToDetectFacesOnHostChanged(EventArgs e)
+        bool _IsToUseDefaultFaceDetection;
+        public event EventHandler IsToUseDefaultFaceDetectionChanged;
+        protected virtual void OnIsToUseDefaultFaceDetectionChanged(EventArgs e)
         {
-            var t = IsToDetectFacesOnHostChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToDetectFacesOnHost");
+            var t = IsToUseDefaultFaceDetectionChanged; if (t != null) { t(this, e); }
+            OnPropertyChanged("IsToUseDefaultFaceDetection");
         }
-        public bool IsToDetectFacesOnHost
+        public bool IsToUseDefaultFaceDetection
         {
-            get { return _IsToDetectFacesOnHost; }
+            get { return _IsToUseDefaultFaceDetection; }
             set
             {
-                _IsToDetectFacesOnHost = value; OnIsToDetectFacesOnHostChanged(EventArgs.Empty);
+                _IsToUseDefaultFaceDetection = value; OnIsToUseDefaultFaceDetectionChanged(EventArgs.Empty);
             }
         }
 

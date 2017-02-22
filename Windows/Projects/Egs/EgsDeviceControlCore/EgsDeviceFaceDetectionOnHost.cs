@@ -156,7 +156,7 @@
 
         void Device_CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged(object sender, EventArgs e)
         {
-            if (Device.IsToDetectFacesOnHost && ApplicationCommonSettings.IsDebugging)
+            if (false && Device.IsToUseDefaultFaceDetection && ApplicationCommonSettings.IsDebugging)
             {
                 // Draw the latest result before return;
                 if (SelectedFaceRect.HasValue)
@@ -173,10 +173,13 @@
             SetCameraViewImageBitmapIntervalStopwatch.Reset();
             SetCameraViewImageBitmapIntervalStopwatch.Start();
 
-            var isToDetectFaceOnHost = Device.IsToDetectFacesOnHost;
-            isToDetectFaceOnHost = isToDetectFaceOnHost && Device.Settings.IsToDetectFaces.Value == false;
-            isToDetectFaceOnHost = isToDetectFaceOnHost && (Device.EgsGestureHidReport.Hands[0].IsTracking == false);
-            isToDetectFaceOnHost = isToDetectFaceOnHost && (Device.EgsGestureHidReport.Hands[1].IsTracking == false);
+            var isToDetectFaceOnHost =
+                (Device.IsToUseDefaultFaceDetection == true)
+                && (Device.Settings.IsToDetectFaces.Value == false)
+                && (Device.Settings.IsToDetectHands.Value == true)
+                && (Device.Settings.IsToFixHandDetectionRegions.Value == true)
+                && (Device.EgsGestureHidReport.Hands[0].IsTracking == false)
+                && (Device.EgsGestureHidReport.Hands[1].IsTracking == false);
             if (isToDetectFaceOnHost)
             {
                 DetectFaceRunWorkerAsync(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
@@ -231,14 +234,24 @@
                 return;
             }
 
-            // Not completed.
+
+            // TODO: MUSTDO: implement
             // Implemented in EgsDeviceFaceDetectionOnHost_FaceSelection.cs
             SelectOneFaceRect();
+            var list = this.DetectedFaceRects.ToList();
+            for (int i = 0; i < Device.EgsGestureHidReport.Faces.Count; i++)
+            {
+                if (i >= list.Count) { continue; }
+                Device.EgsGestureHidReport.Faces[i] = new EgsDeviceEgsGestureHidReportFace() { IsDetected = true, Area = list[i], IsSelected = false, Score = 0 };
+            }
+            if (Device.EgsGestureHidReport.Faces.Count > 0) { Device.EgsGestureHidReport.Faces[0].IsSelected = true; }
+
 
             UpdateEgsDeviceSettingsHandDetectionAreas(SelectedFaceRect.Value);
 
             // TODO: MUSTDO: Think the order of the next 2 line.
             OnFaceDetectionCompleted(EventArgs.Empty);
+
             IsDetectingFaces = false;
         }
 

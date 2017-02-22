@@ -41,6 +41,29 @@
         }
     }
 
+    public class FaceDetectionIsProcessedByDetail : EgsHostOptionalPropertyDetailBase
+    {
+        public FaceDetectionIsProcessedByKind EnumValue { get; internal set; }
+
+        public static List<FaceDetectionIsProcessedByDetail> GetDefaultList()
+        {
+            var ret = new List<FaceDetectionIsProcessedByDetail>();
+            ret.Add(new FaceDetectionIsProcessedByDetail()
+            {
+                EnumValue = FaceDetectionIsProcessedByKind.HostApplication,
+                DescriptionKey = Name.Of(() => Resources.FaceDetectionIsProcessedByDetail_ByHostApplication_Description)
+            });
+            ret.Add(new FaceDetectionIsProcessedByDetail()
+            {
+                EnumValue = FaceDetectionIsProcessedByKind.Device,
+                DescriptionKey = Name.Of(() => Resources.FaceDetectionIsProcessedByDetail_ByDevice_Description)
+            });
+            return ret;
+        }
+    }
+
+
+
     public class CultureInfoAndDescriptionDetail : EgsHostOptionalPropertyDetailBase
     {
         public string CultureInfoString { get; internal set; }

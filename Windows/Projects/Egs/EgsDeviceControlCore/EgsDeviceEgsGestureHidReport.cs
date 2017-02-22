@@ -194,7 +194,11 @@
                         foreach (var hand in Hands) { hand.Reset(); }
                         TrackingHandsCount = 0;
                     }
-                    UpdateOnDetectingFaces(hidReport);
+                    // TODO: MUSTDO: When application detects faces on host, report from device is wrong.
+                    if (Device.Settings != null && Device.Settings.IsToDetectFaces.Value)
+                    {
+                        UpdateOnDetectingFaces(hidReport);
+                    }
                     break;
                 case EgsGestureHidReportMessageIds.DetectingOrTrackingHands:
                     UpdateOnDetectingOrTrackingHands(hidReport);
