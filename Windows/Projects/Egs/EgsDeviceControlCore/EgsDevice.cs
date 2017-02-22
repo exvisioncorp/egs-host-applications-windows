@@ -137,6 +137,8 @@
         /// </summary>
         public EgsDeviceCameraViewImageSourceBitmapCapture CameraViewImageSourceBitmapCapture { get; private set; }
 
+        public EgsDeviceFaceDetectionOnHost FaceDetectionOnHost { get; private set; }
+
         internal EgsDeviceHidReportsUpdate HidReportsUpdate { get; private set; }
 
         /// <summary>
@@ -332,6 +334,8 @@
             CreateProperties();
 
             CameraViewImageSourceBitmapCapture = new EgsDeviceCameraViewImageSourceBitmapCapture();
+            FaceDetectionOnHost = new EgsDeviceFaceDetectionOnHost();
+
             if (IsToUseWin32CreateFile) { HidReportsUpdate = new EgsDeviceHidReportsUpdate(); }
             TouchScreenHidReport = new EgsDeviceTouchScreenHidReport();
             EgsGestureHidReport = new EgsDeviceEgsGestureHidReport();
@@ -343,6 +347,8 @@
         internal void InitializeOnceAtStartup()
         {
             CameraViewImageSourceBitmapCapture.InitializeOnceAtStartup(this);
+            FaceDetectionOnHost.InitializeOnceAtStartup(this);
+
             if (HidReportsUpdate != null) { HidReportsUpdate.InitializeOnceAtStartup(this); }
             TouchScreenHidReport.InitializeOnceAtStartup(this);
             EgsGestureHidReport.InitializeOnceAtStartup(this);
@@ -573,6 +579,8 @@
 
         internal void Close()
         {
+            if (FaceDetectionOnHost != null) { FaceDetectionOnHost.Dispose(); FaceDetectionOnHost = null; }
+
             // NOTE: Stop gesture recognition, if the host application is not running.
             if (Settings != null)
             {

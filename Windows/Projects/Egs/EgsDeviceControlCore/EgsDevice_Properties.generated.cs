@@ -147,6 +147,23 @@
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        bool _IsToDetectFacesOnHost;
+        public event EventHandler IsToDetectFacesOnHostChanged;
+        protected virtual void OnIsToDetectFacesOnHostChanged(EventArgs e)
+        {
+            var t = IsToDetectFacesOnHostChanged; if (t != null) { t(this, e); }
+            OnPropertyChanged("IsToDetectFacesOnHost");
+        }
+        public bool IsToDetectFacesOnHost
+        {
+            get { return _IsToDetectFacesOnHost; }
+            set
+            {
+                _IsToDetectFacesOnHost = value; OnIsToDetectFacesOnHostChanged(EventArgs.Empty);
+            }
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         bool _IsToMonitorTemperature;
         public event EventHandler IsToMonitorTemperatureChanged;
         protected virtual void OnIsToMonitorTemperatureChanged(EventArgs e)
