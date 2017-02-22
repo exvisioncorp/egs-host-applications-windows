@@ -21,7 +21,7 @@
         public IList<CursorForm> CursorViews { get; private set; }
         public CameraViewModel CameraViewBackgroundWindowModel { get; private set; }
         public FixedHandDetectionAreasExample01MainWindow CameraViewBackgroundWindow { get; private set; }
-        public EgsHostFaceDetectionModel FaceDetection { get; private set; }
+        public EgsDeviceFaceDetectionOnHost FaceDetection { get; private set; }
 
         public FixedHandDetectionAreasExample01App()
             : base()
@@ -68,7 +68,7 @@
 
 
             {
-                FaceDetection = new EgsHostFaceDetectionModel();
+                FaceDetection = new EgsDeviceFaceDetectionOnHost();
 
                 // TODO: check the minimum value.  200[ms]?
                 var cameraViewImageSize = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem;
