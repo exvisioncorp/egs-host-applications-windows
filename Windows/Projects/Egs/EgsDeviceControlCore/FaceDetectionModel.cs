@@ -7,19 +7,22 @@
 
     public class FaceDetectionModel : IDisposable
     {
+        /// <summary>The focal length near its optical axis [mm]</summary>
+        public double CalibratedFocalLength { get; set; }
         public double SensorImageBinnedPixelOneSideLength { get; set; }
-        /// <summary>The focal length near its optical axis</summary>
-        public double SensorImageCalibratedFocalLength { get; set; }
 
         // NOTE: EGS devices return various information on the coordinate of their sensor image.
+        //       But captured image size is different from sensor image size.
 
         public double SensorImageWidth { get; set; }
         public double SensorImageHeight { get; set; }
         public double CameraViewImageWidth { get; set; }
         public double CameraViewImageHeight { get; set; }
 
+        /// <summary>
+        /// return CameraViewImageHeight / SensorImageHeight  (Based on EGS device specification currently.)
+        /// </summary>
         public double CameraViewImageScale_DividedBy_SensorImageScale { get { Trace.Assert(SensorImageHeight > 0); return CameraViewImageHeight / SensorImageHeight; } }
-        public double CameraViewImageCalibratedFocalLength { get { return SensorImageCalibratedFocalLength * CameraViewImageScale_DividedBy_SensorImageScale; } }
 
         public double RealFaceBreadth { get; set; }
         public double RealFaceZMaximum { get; set; }
@@ -41,21 +44,21 @@
         {
             get
             {
-                // (SensorImageBinnedPixelOneSideLength * SensorImageFaceWidth) : SensorImageCalibratedFocalLength == RealFaceBreadth : RealFaceZMaximum
-                // SensorImageFaceWidth = (SensorImageCalibratedFocalLength * RealFaceBreadth) / (SensorImageBinnedPixelOneSideLength * RealFaceZMaximum);
+                // (SensorImageBinnedPixelOneSideLength * SensorImageFaceWidth) : CalibratedFocalLength == RealFaceBreadth : RealFaceZMaximum
+                // SensorImageFaceWidth = (CalibratedFocalLength * RealFaceBreadth) / (SensorImageBinnedPixelOneSideLength * RealFaceZMaximum);
 
                 // (DetectorImageBinnedPixelOneSideLength * DetectorImageDetectableFaceWidthMinimum) == (SensorImageBinnedPixelOneSideLength * SensorImageFaceWidth)
                 // DetectorImageBinnedPixelOneSideLength == (SensorImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_SensorImageScale) / DetectorImageScale_DividedBy_CameraViewImageScale
 
                 // ((SensorImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_SensorImageScale) / DetectorImageScale_DividedBy_CameraViewImageScale)
-                //                                        * DetectorImageDetectableFaceWidthMinimum  == (SensorImageBinnedPixelOneSideLength * ((SensorImageCalibratedFocalLength * RealFaceBreadth) / (SensorImageBinnedPixelOneSideLength * RealFaceZMaximum)))
+                //                                        * DetectorImageDetectableFaceWidthMinimum  == (SensorImageBinnedPixelOneSideLength * ((CalibratedFocalLength * RealFaceBreadth) / (SensorImageBinnedPixelOneSideLength * RealFaceZMaximum)))
                 // ((SensorImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_SensorImageScale) / DetectorImageScale_DividedBy_CameraViewImageScale) * DetectorImageDetectableFaceWidthMinimum
-                //                                                                                   == SensorImageCalibratedFocalLength * RealFaceBreadth / RealFaceZMaximum
+                //                                                                                   == CalibratedFocalLength * RealFaceBreadth / RealFaceZMaximum
                 // ((SensorImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_SensorImageScale) * RealFaceZMaximum                                 ) * DetectorImageDetectableFaceWidthMinimum
-                //                                                                                   == SensorImageCalibratedFocalLength * RealFaceBreadth * DetectorImageScale_DividedBy_CameraViewImageScale
+                //                                                                                   == CalibratedFocalLength * RealFaceBreadth * DetectorImageScale_DividedBy_CameraViewImageScale
 
-                // DetectorImageScale_DividedBy_CameraViewImageScale = ((SensorImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_SensorImageScale) * RealFaceZMaximum) * DetectorImageDetectableFaceWidthMinimum / (SensorImageCalibratedFocalLength * RealFaceBreadth);
-                var ret = (SensorImageBinnedPixelOneSideLength * RealFaceZMaximum * DetectorImageDetectableFaceWidthMinimum) / (CameraViewImageScale_DividedBy_SensorImageScale * SensorImageCalibratedFocalLength * RealFaceBreadth);
+                // DetectorImageScale_DividedBy_CameraViewImageScale = ((SensorImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_SensorImageScale) * RealFaceZMaximum) * DetectorImageDetectableFaceWidthMinimum / (CalibratedFocalLength * RealFaceBreadth);
+                var ret = (SensorImageBinnedPixelOneSideLength * RealFaceZMaximum * DetectorImageDetectableFaceWidthMinimum) / (CameraViewImageScale_DividedBy_SensorImageScale * CalibratedFocalLength * RealFaceBreadth);
                 return ret;
             }
         }
@@ -69,10 +72,11 @@
         DlibSharp.Array2dUchar DlibArray2dUcharImage { get; set; }
         DlibSharp.FrontalFaceDetector DlibHogSvm { get; set; }
         public IList<System.Drawing.Rectangle> DetectedFaceRects { get; private set; }
-        public Nullable<System.Drawing.Rectangle> SelectedFaceRect { get; private set; }
+
         public bool IsFaceDetected { get { return (DetectedFaceRects != null) && (DetectedFaceRects.Count > 0); } }
-        public System.Drawing.Rectangle RightHandDetectionArea { get; private set; }
-        public System.Drawing.Rectangle LeftHandDetectionArea { get; private set; }
+
+        public System.Drawing.Rectangle SensorImageRightHandDetectionArea { get; private set; }
+        public System.Drawing.Rectangle SensorImageLeftHandDetectionArea { get; private set; }
         public int HandDetectionScaleForEgsDevice { get; private set; }
 
         public event EventHandler FaceDetectionCompleted;
@@ -83,12 +87,16 @@
 
         public FaceDetectionModel()
         {
+            // (Kickstarter Version)
+            CalibratedFocalLength = 2.92;
+#if DEBUG
+            // (Wider lens for development in Exvision)
+            CalibratedFocalLength = 2.39;
+#endif
+
             // pixelOneSideLength: 0.0028[mm] (2x2 binning).
             SensorImageBinnedPixelOneSideLength = 0.0028;
-            // (Wide lens for development in Exvision)
-            //CalibratedFocalLengthOnSensorImage = 2.39;
-            // (Kickstarter Version)
-            SensorImageCalibratedFocalLength = 2.92;
+
             SensorImageWidth = 768.0;
             SensorImageHeight = 480.0;
             CameraViewImageWidth = 384.0;
@@ -132,32 +140,24 @@
                     Debug.WriteLine("DetectorImageWidth: " + detectorImageWidth);
                     Debug.WriteLine("DetectorImageHeight: " + detectorImageHeight);
                     DlibArray2dUcharImage.ResizeImage(detectorImageWidth, detectorImageHeight);
-                    DetectedFaceRects = new List<System.Drawing.Rectangle>();
                     DetectedFaceRects = DlibHogSvm.DetectFaces(DlibArray2dUcharImage, -0.5)
                         .Select(e => new System.Drawing.Rectangle((int)(e.X / scale), (int)(e.Y / scale), (int)(e.Width / scale), (int)(e.Height / scale)))
                         .ToList();
-
-                    SelectOneFaceRect();
-
-                    if (IsFaceDetected)
-                    {
-                        UpdateHandDetectionAreas(SelectedFaceRect.Value);
-                    }
 
                     OnFaceDetectionCompleted(EventArgs.Empty);
                 }
                 catch (Exception ex)
                 {
 #if DEBUG
-                    System.Windows.Forms.MessageBox.Show(ex.Message);
+                    Debugger.Break();
 #endif
                     Console.WriteLine(ex.Message);
                 }
             };
-            Worker.RunWorkerCompleted += delegate { IsDetectingFaces = false; };
+            Worker.RunWorkerCompleted += (sender, e) => { IsDetectingFaces = false; };
         }
 
-        public void DetectFace(System.Drawing.Bitmap cameraViewImageBitmap)
+        public void DetectFaceRunWorkerAsync(System.Drawing.Bitmap cameraViewImageBitmap)
         {
             if (IsDetectingFaces) { return; }
             IsDetectingFaces = true;
@@ -173,39 +173,23 @@
             Worker.RunWorkerAsync();
         }
 
-        public void SelectOneFaceRect()
+        public void UpdateSensorImageHandDetectionAreas(System.Drawing.Rectangle cameraViewImageFaceRect)
         {
-            if (DetectedFaceRects == null || DetectedFaceRects.Count == 0)
-            {
-                SelectedFaceRect = null;
-                return;
-            }
-            SelectedFaceRect = DetectedFaceRects[0];
-            Func<System.Drawing.Rectangle, double> predictor = e => e.Width + e.Height;
-            var faceSizeMax = predictor(SelectedFaceRect.Value);
-            for (int i = 1; i < DetectedFaceRects.Count; i++)
-            {
-                var size = predictor(DetectedFaceRects[i]);
-                if (size > faceSizeMax)
-                {
-                    faceSizeMax = size;
-                    SelectedFaceRect = DetectedFaceRects[i];
-                }
-            }
-        }
+            Trace.Assert(CameraViewImageScale_DividedBy_SensorImageScale > 0);
+            Trace.Assert(cameraViewImageFaceRect.Width > 0);
 
-        public void UpdateHandDetectionAreas(System.Drawing.Rectangle imageFaceRect)
-        {
-            // (PixelOneSideLength * ImageFaceWidth) : CalibratedFocalLength = RealFaceWidth : RealFaceCenterZ
-            double RealFaceCenterZ = (CameraViewImageCalibratedFocalLength * RealFaceBreadth) / (SensorImageBinnedPixelOneSideLength * imageFaceRect.Width);
+            double CameraViewImagePixelOneSideLengthOnSensor = SensorImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_SensorImageScale;
+
+            // (CameraViewImagePixelOneSideLengthOnSensor * cameraViewImageFaceRect.Width) : CalibratedFocalLength = RealFaceBreadth : RealFaceCenterZ
+            double RealFaceBreadthOnSensor = CameraViewImagePixelOneSideLengthOnSensor * cameraViewImageFaceRect.Width;
+            double RealFaceCenterZ = CalibratedFocalLength * (RealFaceBreadth / RealFaceBreadthOnSensor);
+
             // Positive == Right
-            double ImageFaceCenterX = imageFaceRect.X + imageFaceRect.Width / 2.0 - CameraViewImageWidth / 2.0;
+            double NormalizedCameraViewImageFaceCenterX = cameraViewImageFaceRect.X + cameraViewImageFaceRect.Width / 2.0 - CameraViewImageWidth / 2.0;
+            double RealFaceCenterX = (CameraViewImagePixelOneSideLengthOnSensor * NormalizedCameraViewImageFaceCenterX) * (RealFaceCenterZ / CalibratedFocalLength);
             // Positive == Bottom
-            double ImageFaceCenterY = imageFaceRect.Y + imageFaceRect.Height / 2.0 - CameraViewImageHeight / 2.0;
-            // (PixelOneSideLength * ImageFaceCenterXY) : CalibratedFocalLength = RealFaceCenterXY : RealFaceCenterZ
-            // RealFaceCenterXY = ((PixelOneSideLength * RealFaceCenterZ) / CalibratedFocalLength) * ImageFaceCenterXY
-            double RealFaceCenterX = ((SensorImageBinnedPixelOneSideLength * RealFaceCenterZ) / CameraViewImageCalibratedFocalLength) * ImageFaceCenterX;
-            double RealFaceCenterY = ((SensorImageBinnedPixelOneSideLength * RealFaceCenterZ) / CameraViewImageCalibratedFocalLength) * ImageFaceCenterY;
+            double NormalizedCameraViewImageFaceCenterY = cameraViewImageFaceRect.Y + cameraViewImageFaceRect.Height / 2.0 - CameraViewImageHeight / 2.0;
+            double RealFaceCenterY = (CameraViewImagePixelOneSideLengthOnSensor * NormalizedCameraViewImageFaceCenterY) * (RealFaceCenterZ / CalibratedFocalLength);
 
             double RealRightDetectionAreaCenterX = RealFaceCenterX + RealDetectionAreaCenterXOffset;
             double RealRightDetectionAreaCenterY = RealFaceCenterY + RealDetectionAreaCenterYOffset;
@@ -215,29 +199,37 @@
             double RealLeftDetectionAreaCenterY = RealFaceCenterY + RealDetectionAreaCenterYOffset;
             double RealLeftDetectionAreaLeft = RealLeftDetectionAreaCenterX - RealDetectionAreaWidth / 2.0;
             double RealLeftDetectionAreaTop = RealLeftDetectionAreaCenterY - RealDetectionAreaHeight / 2.0;
+
+            // (SensorImageBinnedPixelOneSideLength * SensorImageXY) : CalibratedFocalLength = RealXY : RealZ
+            // SensorImageXY = (CalibratedFocalLength / (SensorImageBinnedPixelOneSideLength * RealZ)) * RealXY
+
             // You can define different Z values to right and left.  (for example 2 players play)
             double RealDetectionAreaCenterZ = RealFaceCenterZ + RealDetectionAreaCenterZOffset;
+            double ScaleRealToSensorImagePixels = CalibratedFocalLength / (SensorImageBinnedPixelOneSideLength * RealDetectionAreaCenterZ);
 
-            double ScaleRealToImage = (CameraViewImageCalibratedFocalLength / (SensorImageBinnedPixelOneSideLength * RealDetectionAreaCenterZ));
+            double SensorImageRightDetectionAreaX = ScaleRealToSensorImagePixels * RealRightDetectionAreaLeft + SensorImageWidth / 2.0;
+            double SensorImageRightDetectionAreaY = ScaleRealToSensorImagePixels * RealRightDetectionAreaTop + SensorImageHeight / 2.0;
+            double SensorImageRightDetectionAreaWidth = ScaleRealToSensorImagePixels * RealDetectionAreaWidth;
+            double SensorImageRightDetectionAreaHeight = ScaleRealToSensorImagePixels * RealDetectionAreaHeight;
+            double SensorImageLeftDetectionAreaX = ScaleRealToSensorImagePixels * RealLeftDetectionAreaLeft + SensorImageWidth / 2.0;
+            double SensorImageLeftDetectionAreaY = ScaleRealToSensorImagePixels * RealLeftDetectionAreaTop + SensorImageHeight / 2.0;
+            double SensorImageLeftDetectionAreaWidth = ScaleRealToSensorImagePixels * RealDetectionAreaWidth;
+            double SensorImageLeftDetectionAreaHeight = ScaleRealToSensorImagePixels * RealDetectionAreaHeight;
 
-            // (PixelOneSideLength * ImageXY) : CalibratedFocalLength = RealXY : RealZ
-            // ImageXY = (CalibratedFocalLength / (PixelOneSideLength * RealZ)) * RealXY
-            double ImageRightDetectionAreaX = ScaleRealToImage * RealRightDetectionAreaLeft + CameraViewImageWidth / 2.0;
-            double ImageRightDetectionAreaY = ScaleRealToImage * RealRightDetectionAreaTop + CameraViewImageHeight / 2.0;
-            double ImageRightDetectionAreaWidth = ScaleRealToImage * RealDetectionAreaWidth;
-            double ImageRightDetectionAreaHeight = ScaleRealToImage * RealDetectionAreaHeight;
-            double ImageLeftDetectionAreaX = ScaleRealToImage * RealLeftDetectionAreaLeft + CameraViewImageWidth / 2.0;
-            double ImageLeftDetectionAreaY = ScaleRealToImage * RealLeftDetectionAreaTop + CameraViewImageHeight / 2.0;
-            double ImageLeftDetectionAreaWidth = ScaleRealToImage * RealDetectionAreaWidth;
-            double ImageLeftDetectionAreaHeight = ScaleRealToImage * RealDetectionAreaHeight;
+            SensorImageRightHandDetectionArea = new System.Drawing.Rectangle(
+                (int)SensorImageRightDetectionAreaX,
+                (int)SensorImageRightDetectionAreaY,
+                (int)SensorImageRightDetectionAreaWidth,
+                (int)SensorImageRightDetectionAreaHeight);
+            SensorImageLeftHandDetectionArea = new System.Drawing.Rectangle(
+                (int)SensorImageLeftDetectionAreaX,
+                (int)SensorImageLeftDetectionAreaY,
+                (int)SensorImageLeftDetectionAreaWidth,
+                (int)SensorImageLeftDetectionAreaHeight);
 
-            RightHandDetectionArea = new System.Drawing.Rectangle((int)ImageRightDetectionAreaX, (int)ImageRightDetectionAreaY, (int)ImageRightDetectionAreaWidth, (int)ImageRightDetectionAreaHeight);
-            LeftHandDetectionArea = new System.Drawing.Rectangle((int)ImageLeftDetectionAreaX, (int)ImageLeftDetectionAreaY, (int)ImageLeftDetectionAreaWidth, (int)ImageLeftDetectionAreaHeight);
-
-            double CameraViewImagePalmBreadth = ScaleRealToImage * RealPalmBreadth;
-            double SensorImagePalmBreadth = CameraViewImagePalmBreadth / CameraViewImageScale_DividedBy_SensorImageScale;
-            // when SensorImagePalmBreadth is about 30, scale factor is 8.
-            HandDetectionScaleForEgsDevice = (int)((8.0 / 30.0) * SensorImagePalmBreadth);
+            double SensorImagePalmImageWidth = ScaleRealToSensorImagePixels * RealPalmBreadth;
+            // When SensorImagePalmBreadth is about 30, HandDetectionScaleForEgsDevice is 8.
+            HandDetectionScaleForEgsDevice = (int)((8.0 / 30.0) * SensorImagePalmImageWidth);
         }
 
         #region IDisposable

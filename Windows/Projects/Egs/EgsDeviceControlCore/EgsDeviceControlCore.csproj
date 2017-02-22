@@ -122,6 +122,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="FaceSelectionModel.cs" />
     <Compile Include="FaceDetectionModel.cs" />
     <Compile Include="IHidReportForCursorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

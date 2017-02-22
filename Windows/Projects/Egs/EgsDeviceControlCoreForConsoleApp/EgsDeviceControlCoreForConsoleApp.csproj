@@ -96,6 +96,12 @@
     <Compile Include="..\EgsDeviceControlCore\EgsDevice_Properties.generated.cs">
       <Link>EgsDevice_Properties.generated.cs</Link>
     </Compile>
+    <Compile Include="..\EgsDeviceControlCore\FaceDetectionModel.cs">
+      <Link>FaceDetectionModel.cs</Link>
+    </Compile>
+    <Compile Include="..\EgsDeviceControlCore\FaceSelectionModel.cs">
+      <Link>FaceSelectionModel.cs</Link>
+    </Compile>
     <Compile Include="..\EgsDeviceControlCore\IHidReportForCursorViewModel.cs">
       <Link>IHidReportForCursorViewModel.cs</Link>
     </Compile>
@@ -168,6 +174,12 @@
       <LastGenOutput>Resources.zh-Hans.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\FaceDetectionByDlibForWindows\Projects\DlibSharp\DlibSharp.csproj">
+      <Project>{bf03d6a2-f237-4cba-b64c-a05b1939f99d}</Project>
+      <Name>DlibSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
