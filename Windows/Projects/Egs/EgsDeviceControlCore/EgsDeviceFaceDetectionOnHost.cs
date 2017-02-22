@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Diagnostics;
 
-    public class FaceDetectionModel : IDisposable
+    public partial class EgsDeviceFaceDetectionOnHost : IDisposable
     {
         /// <summary>The focal length near its optical axis [mm]</summary>
         public double CalibratedFocalLength { get; set; }
@@ -85,7 +85,7 @@
             var t = FaceDetectionCompleted; if (t != null) { t(this, e); }
         }
 
-        public FaceDetectionModel()
+        public EgsDeviceFaceDetectionOnHost()
         {
             // (Kickstarter Version)
             CalibratedFocalLength = 2.92;
@@ -247,7 +247,7 @@
             // release any unmanaged objects and set the object references to null
             disposed = true;
         }
-        ~FaceDetectionModel() { Dispose(false); }
+        ~EgsDeviceFaceDetectionOnHost() { Dispose(false); }
         #endregion
     }
 }

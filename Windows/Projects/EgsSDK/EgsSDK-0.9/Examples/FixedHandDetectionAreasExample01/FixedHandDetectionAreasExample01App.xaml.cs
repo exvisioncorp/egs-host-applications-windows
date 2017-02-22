@@ -21,8 +21,7 @@
         public IList<CursorForm> CursorViews { get; private set; }
         public CameraViewModel CameraViewBackgroundWindowModel { get; private set; }
         public FixedHandDetectionAreasExample01MainWindow CameraViewBackgroundWindow { get; private set; }
-        public FaceDetectionModel FaceDetection { get; private set; }
-        public FaceSelectionModel FaceSelection { get; private set; }
+        public EgsHostFaceDetectionModel FaceDetection { get; private set; }
 
         public FixedHandDetectionAreasExample01App()
             : base()
@@ -69,8 +68,7 @@
 
 
             {
-                FaceDetection = new FaceDetectionModel();
-                FaceSelection = new FaceSelectionModel(FaceDetection);
+                FaceDetection = new EgsHostFaceDetectionModel();
 
                 // TODO: check the minimum value.  200[ms]?
                 var cameraViewImageSize = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem;
@@ -135,22 +133,22 @@
             {
                 FaceDetection.DetectFaceRunWorkerAsync(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
             }
-            if (FaceSelection.SelectedFaceRect.HasValue)
+            if (FaceDetection.SelectedFaceRect.HasValue)
             {
                 using (var g = System.Drawing.Graphics.FromImage(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap))
                 {
                     var pen = new System.Drawing.Pen(System.Drawing.Brushes.Green, 5);
-                    g.DrawRectangle(pen, FaceSelection.SelectedFaceRect.Value);
+                    g.DrawRectangle(pen, FaceDetection.SelectedFaceRect.Value);
                 }
             }
         }
 
         void FaceDetection_FaceDetectionCompleted(object sender, EventArgs e)
         {
-            FaceSelection.SelectOneFaceRect();
+            FaceDetection.SelectOneFaceRect();
             if (FaceDetection.IsFaceDetected)
             {
-                FaceDetection.UpdateSensorImageHandDetectionAreas(FaceSelection.SelectedFaceRect.Value);
+                FaceDetection.UpdateSensorImageHandDetectionAreas(FaceDetection.SelectedFaceRect.Value);
             }
 
             var imageWidth = FaceDetection.SensorImageWidth;

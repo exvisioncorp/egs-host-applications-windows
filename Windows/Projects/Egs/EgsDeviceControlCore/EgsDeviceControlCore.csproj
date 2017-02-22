@@ -122,8 +122,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="FaceSelectionModel.cs" />
-    <Compile Include="FaceDetectionModel.cs" />
+    <Compile Include="EgsDeviceFaceDetectionOnHost_FaceSelection.cs" />
+    <Compile Include="EgsDeviceFaceDetectionOnHost.cs" />
     <Compile Include="IHidReportForCursorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
