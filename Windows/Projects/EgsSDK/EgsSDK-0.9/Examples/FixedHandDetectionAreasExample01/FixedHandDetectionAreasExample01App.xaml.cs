@@ -12,6 +12,8 @@
     using Egs;
     using Egs.Views;
     using Egs.DotNetUtility;
+    using OpenCvSharp;
+    using OpenCvSharp.Extensions;
 
     public partial class FixedHandDetectionAreasExample01App : Application
     {
@@ -21,6 +23,9 @@
         public IList<CursorForm> CursorViews { get; private set; }
         public CameraViewModel CameraViewBackgroundWindowModel { get; private set; }
         public FixedHandDetectionAreasExample01MainWindow CameraViewBackgroundWindow { get; private set; }
+
+        public EgsDeviceFaceDetectionOnHost HandDetectionAreaDecision { get; private set; }
+        public FaceDetectionExampleModel FaceDetectionExample { get; private set; }
 
         public FixedHandDetectionAreasExample01App()
             : base()
@@ -34,18 +39,13 @@
 
             DeviceSettings = new EgsDeviceSettings();
             DeviceSettings.InitializeOnceAtStartup();
-
             DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
             DeviceSettings.IsToDetectFaces.Value = false;
             DeviceSettings.IsToDetectHands.Value = true;
             DeviceSettings.IsToFixHandDetectionRegions.Value = true;
             // 0: 320*240  1:384*240  2:640*480
             DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2;
-
             Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
-            // Currently, set it to true.  I'm going to implement the other face detection method to this sample.
-            Device.IsToUseDefaultFaceDetection = true;
-
             {
                 CursorViewModels = new CursorViewModel[Device.TrackableHandsCountMaximum];
                 CursorViewModels[0] = new CursorViewModel();
@@ -64,28 +64,6 @@
                 CursorViews[0].InitializeOnceAtStartup(CursorViewModels[0], imageSetListRight);
                 CursorViews[1].InitializeOnceAtStartup(CursorViewModels[1], imageSetListLeft);
                 Device.EgsGestureHidReport.ReportUpdated += EgsGestureHidReport_ReportUpdated;
-            }
-
-
-            this.Exit += delegate
-            {
-                // Exception happens if you do not detach these event handlers.
-                Device.EgsGestureHidReport.ReportUpdated -= EgsGestureHidReport_ReportUpdated;
-
-                DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
-                DeviceSettings.IsToDetectFaces.Value = false;
-                DeviceSettings.IsToDetectHands.Value = false;
-                DeviceSettings.IsToFixHandDetectionRegions.Value = false;
-                DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
-                // Call this method before CursorView.Close().
-                EgsDevice.CloseDefaultEgsDevice();
-
-                foreach (var cursorView in CursorViews) { cursorView.Close(); }
-                DuplicatedProcessStartBlocking.ReleaseMutex();
-            };
-
-
-            {
                 CameraViewBackgroundWindowModel = new CameraViewModel();
                 CameraViewBackgroundWindow = new FixedHandDetectionAreasExample01MainWindow();
                 CameraViewBackgroundWindowModel.InitializeOnceAtStartup(Device);
@@ -109,6 +87,8 @@
                 base.MainWindow = CameraViewBackgroundWindow;
                 CameraViewBackgroundWindow.Show();
             }
+
+            InitializeFaceDetection();
         }
 
         bool isDrawingCursors = false;
@@ -129,6 +109,66 @@
                 }
                 isDrawingCursors = false;
             });
+        }
+
+
+        public void InitializeFaceDetection()
+        {
+            // NOTE: important
+            Device.IsToUseDefaultFaceDetection = false;
+
+            HandDetectionAreaDecision = new EgsDeviceFaceDetectionOnHost();
+            var cameraViewImageSize = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem;
+            HandDetectionAreaDecision.CameraViewImageWidth = cameraViewImageSize.Width;
+            HandDetectionAreaDecision.CameraViewImageHeight = cameraViewImageSize.Height;
+
+            FaceDetectionExample = new FaceDetectionExampleModel();
+            FaceDetectionExample.FaceDetectionCompleted += FaceDetection_FaceDetectionCompleted;
+
+            Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged += CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged;
+
+
+            this.Exit += delegate
+            {
+                // Exception happens if you do not detach these event handlers.
+                Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged -= CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged;
+                FaceDetectionExample.FaceDetectionCompleted -= FaceDetection_FaceDetectionCompleted;
+                Device.EgsGestureHidReport.ReportUpdated -= EgsGestureHidReport_ReportUpdated;
+
+                HandDetectionAreaDecision.Dispose();
+
+                DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+                DeviceSettings.IsToDetectFaces.Value = false;
+                DeviceSettings.IsToDetectHands.Value = false;
+                DeviceSettings.IsToFixHandDetectionRegions.Value = false;
+                DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
+                // Call this method before CursorView.Close().
+                EgsDevice.CloseDefaultEgsDevice();
+
+                foreach (var cursorView in CursorViews) { cursorView.Close(); }
+                DuplicatedProcessStartBlocking.ReleaseMutex();
+            };
+        }
+
+        void CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged(object sender, EventArgs e)
+        {
+            var isToDetectFaceOnHost = DeviceSettings.IsToDetectFaces.Value == false;
+            isToDetectFaceOnHost = isToDetectFaceOnHost && (Device.EgsGestureHidReport.Hands[0].IsTracking == false);
+            isToDetectFaceOnHost = isToDetectFaceOnHost && (Device.EgsGestureHidReport.Hands[1].IsTracking == false);
+            if (isToDetectFaceOnHost)
+            {
+                FaceDetectionExample.DetectFaceAsync(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
+            }
+        }
+
+        void FaceDetection_FaceDetectionCompleted(object sender, EventArgs e)
+        {
+            FaceDetectionExample.SelectOneFaceRect();
+            if (FaceDetectionExample.SelectedFaceRect.HasValue)
+            {
+                HandDetectionAreaDecision.UpdateEgsDeviceSettingsHandDetectionAreas(FaceDetectionExample.SelectedFaceRect.Value, DeviceSettings);
+                FaceDetectionExample.ShowResultImage(HandDetectionAreaDecision.CameraViewImageRightHandDetectionArea, HandDetectionAreaDecision.CameraViewImageLeftHandDetectionArea);
+            }
         }
     }
 }

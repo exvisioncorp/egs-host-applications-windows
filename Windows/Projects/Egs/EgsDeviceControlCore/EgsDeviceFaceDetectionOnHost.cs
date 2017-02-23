@@ -84,6 +84,8 @@
 
         public bool IsFaceDetected { get { return (DetectedFaceRects != null) && (DetectedFaceRects.Count > 0); } }
 
+        public System.Drawing.Rectangle CameraViewImageRightHandDetectionArea { get; private set; }
+        public System.Drawing.Rectangle CameraViewImageLeftHandDetectionArea { get; private set; }
         public System.Drawing.Rectangle SensorImageRightHandDetectionArea { get; private set; }
         public System.Drawing.Rectangle SensorImageLeftHandDetectionArea { get; private set; }
         public int HandDetectionScaleForEgsDevice { get; private set; }
@@ -247,7 +249,7 @@
             if (Device.EgsGestureHidReport.Faces.Count > 0) { Device.EgsGestureHidReport.Faces[0].IsSelected = true; }
 
 
-            UpdateEgsDeviceSettingsHandDetectionAreas(SelectedFaceRect.Value);
+            UpdateEgsDeviceSettingsHandDetectionAreas(SelectedFaceRect.Value, Device.Settings);
 
             // TODO: MUSTDO: Think the order of the next 2 line.
             OnFaceDetectionCompleted(EventArgs.Empty);
@@ -259,7 +261,7 @@
         /// You can set "Hand Detection Areas" by setting "cameraViewImageFaceRect" detected by your method.
         /// </summary>
         /// <param name="cameraViewImageFaceRect"></param>
-        public void UpdateEgsDeviceSettingsHandDetectionAreas(System.Drawing.Rectangle cameraViewImageFaceRect)
+        public void UpdateEgsDeviceSettingsHandDetectionAreas(System.Drawing.Rectangle cameraViewImageFaceRect, EgsDeviceSettings deviceSettings)
         {
             Trace.Assert(CameraViewImageScale_DividedBy_SensorImageScale > 0);
             Trace.Assert(cameraViewImageFaceRect.Width > 0);
@@ -291,8 +293,30 @@
 
             // You can define different Z values to right and left.  (for example 2 players play)
             double RealDetectionAreaCenterZ = RealFaceCenterZ + RealDetectionAreaCenterZOffset;
-            double ScaleRealToSensorImagePixels = CalibratedFocalLength / (SensorImageBinnedPixelOneSideLength * RealDetectionAreaCenterZ);
 
+            {
+                double ScaleRealToCameraViewImagePixels = CalibratedFocalLength / (CameraViewImagePixelOneSideLengthOnSensor * RealDetectionAreaCenterZ);
+                double CameraViewImageRightDetectionAreaX = ScaleRealToCameraViewImagePixels * RealRightDetectionAreaLeft + CameraViewImageWidth / 2.0;
+                double CameraViewImageRightDetectionAreaY = ScaleRealToCameraViewImagePixels * RealRightDetectionAreaTop + CameraViewImageHeight / 2.0;
+                double CameraViewImageRightDetectionAreaWidth = ScaleRealToCameraViewImagePixels * RealDetectionAreaWidth;
+                double CameraViewImageRightDetectionAreaHeight = ScaleRealToCameraViewImagePixels * RealDetectionAreaHeight;
+                double CameraViewImageLeftDetectionAreaX = ScaleRealToCameraViewImagePixels * RealLeftDetectionAreaLeft + CameraViewImageWidth / 2.0;
+                double CameraViewImageLeftDetectionAreaY = ScaleRealToCameraViewImagePixels * RealLeftDetectionAreaTop + CameraViewImageHeight / 2.0;
+                double CameraViewImageLeftDetectionAreaWidth = ScaleRealToCameraViewImagePixels * RealDetectionAreaWidth;
+                double CameraViewImageLeftDetectionAreaHeight = ScaleRealToCameraViewImagePixels * RealDetectionAreaHeight;
+                CameraViewImageRightHandDetectionArea = new System.Drawing.Rectangle(
+                    (int)CameraViewImageRightDetectionAreaX,
+                    (int)CameraViewImageRightDetectionAreaY,
+                    (int)CameraViewImageRightDetectionAreaWidth,
+                    (int)CameraViewImageRightDetectionAreaHeight);
+                CameraViewImageLeftHandDetectionArea = new System.Drawing.Rectangle(
+                    (int)CameraViewImageLeftDetectionAreaX,
+                    (int)CameraViewImageLeftDetectionAreaY,
+                    (int)CameraViewImageLeftDetectionAreaWidth,
+                    (int)CameraViewImageLeftDetectionAreaHeight);
+            }
+
+            double ScaleRealToSensorImagePixels = CalibratedFocalLength / (SensorImageBinnedPixelOneSideLength * RealDetectionAreaCenterZ);
             double SensorImageRightDetectionAreaX = ScaleRealToSensorImagePixels * RealRightDetectionAreaLeft + SensorImageWidth / 2.0;
             double SensorImageRightDetectionAreaY = ScaleRealToSensorImagePixels * RealRightDetectionAreaTop + SensorImageHeight / 2.0;
             double SensorImageRightDetectionAreaWidth = ScaleRealToSensorImagePixels * RealDetectionAreaWidth;
@@ -301,7 +325,6 @@
             double SensorImageLeftDetectionAreaY = ScaleRealToSensorImagePixels * RealLeftDetectionAreaTop + SensorImageHeight / 2.0;
             double SensorImageLeftDetectionAreaWidth = ScaleRealToSensorImagePixels * RealDetectionAreaWidth;
             double SensorImageLeftDetectionAreaHeight = ScaleRealToSensorImagePixels * RealDetectionAreaHeight;
-
             SensorImageRightHandDetectionArea = new System.Drawing.Rectangle(
                 (int)SensorImageRightDetectionAreaX,
                 (int)SensorImageRightDetectionAreaY,
@@ -329,10 +352,10 @@
             LeftHandDetectionAreaRatioRect.YRange.From = (float)(SensorImageLeftHandDetectionArea.Y / SensorImageHeight);
             LeftHandDetectionAreaRatioRect.YRange.To = (float)((SensorImageLeftHandDetectionArea.Y + SensorImageLeftHandDetectionArea.Height) / SensorImageHeight);
 
-            Device.Settings.RightHandDetectionAreaOnFixed.Value = RightHandDetectionAreaRatioRect;
-            Device.Settings.RightHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
-            Device.Settings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
-            Device.Settings.LeftHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
+            deviceSettings.RightHandDetectionAreaOnFixed.Value = RightHandDetectionAreaRatioRect;
+            deviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
+            deviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
+            deviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
         }
 
         #region IDisposable
@@ -346,7 +369,11 @@
             if (disposing)
             {
                 // dispose managed objects, and dispose objects that implement IDisposable
-                Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged -= Device_CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged;
+                if (Device != null)
+                {
+                    // When InitializeOnceAtStartup is not called.
+                    Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged -= Device_CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged;
+                }
                 SetCameraViewImageBitmapIntervalStopwatch.Reset();
                 SetCameraViewImageBitmapIntervalStopwatch.Start();
                 while (IsDetectingFaces)
