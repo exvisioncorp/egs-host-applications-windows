@@ -339,6 +339,18 @@ before starting ZKOO application.</comment>
     <value>Log</value>
     <comment>Log</comment>
   </data>
+  <data name="CommonStrings_DetectionSensitivity" xml:space="preserve">
+    <value>Detection Threshold</value>
+    <comment>Detection Threshold</comment>
+  </data>
+  <data name="CommonStrings_DecreaseFalseNegativeRate" xml:space="preserve">
+    <value>High Sensitivity</value>
+    <comment>High Sensitivity</comment>
+  </data>
+  <data name="CommonStrings_DecreaseFalsePositiveRate" xml:space="preserve">
+    <value>High Specificity</value>
+    <comment>High Specificity</comment>
+  </data>
   <data name="EgsDevice_DeviceStatusDetailString_Description" xml:space="preserve">
     <value>Device Status</value>
     <comment>Device Status</comment>

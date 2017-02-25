@@ -67,7 +67,6 @@ namespace Egs
         public HidAccessPropertyByte TrackableHandsCount { get; private set; }
         [DataMember]
         public HidAccessPropertyOptional<CaptureBinningDetail> CaptureBinning { get; private set; }
-        [DataMember]
         public HidAccessPropertySize CaptureImageSize { get; private set; }
         [DataMember]
         public HidAccessPropertyOptional<CaptureFpsDetail> CaptureFps { get; private set; }
@@ -75,13 +74,9 @@ namespace Egs
         public HidAccessPropertyOptional<CaptureExposureModeDetail> CaptureExposureMode { get; private set; }
         [DataMember]
         public HidAccessPropertySingleArray CaptureManualExposureParameters { get; private set; }
-        [DataMember]
         public HidAccessPropertySingle LensEquivalentFocalLengthInMillimeters { get; private set; }
-        [DataMember]
         public HidAccessPropertySingle SensorOnePixelSideLengthInMillimeters { get; private set; }
-        [DataMember]
         public HidAccessPropertySingle LensFNumber { get; private set; }
-        [DataMember]
         public HidAccessPropertySingle SensorExposureTimeInMilliseconds { get; private set; }
         [DataMember]
         public HidAccessPropertyOptional<CameraViewImageSourceBitmapSizeDetail> CameraViewImageSourceBitmapSize { get; private set; }
@@ -110,7 +105,6 @@ namespace Egs
         public HidAccessPropertyOptional<CursorSpeedAndPrecisionModeDetail> CursorSpeedAndPrecisionMode { get; private set; }
         [DataMember]
         public HidAccessPropertyOptional<FastMovingHandsGestureModeDetail> FastMovingHandsGestureMode { get; private set; }
-        [DataMember]
         public HidAccessPropertySize ScreenMappedAreaResolutionSize { get; private set; }
         public HidAccessPropertySize TouchTargetScreenSize { get; private set; }
         [DataMember]

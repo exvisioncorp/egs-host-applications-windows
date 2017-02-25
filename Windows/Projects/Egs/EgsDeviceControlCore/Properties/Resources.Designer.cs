@@ -557,6 +557,33 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   High Sensitivity に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string CommonStrings_DecreaseFalseNegativeRate {
+            get {
+                return ResourceManager.GetString("CommonStrings_DecreaseFalseNegativeRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   High Specificity に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string CommonStrings_DecreaseFalsePositiveRate {
+            get {
+                return ResourceManager.GetString("CommonStrings_DecreaseFalsePositiveRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Detection Threshold に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string CommonStrings_DetectionSensitivity {
+            get {
+                return ResourceManager.GetString("CommonStrings_DetectionSensitivity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Downloading に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string CommonStrings_Downloading {

@@ -339,6 +339,18 @@ before starting ZKOO application.</comment>
     <value>记录</value>
     <comment>Log</comment>
   </data>
+  <data name="CommonStrings_DetectionSensitivity" xml:space="preserve">
+    <value>检测阈值</value>
+    <comment>Detection Threshold</comment>
+  </data>
+  <data name="CommonStrings_DecreaseFalseNegativeRate" xml:space="preserve">
+    <value>高灵敏度</value>
+    <comment>High Sensitivity</comment>
+  </data>
+  <data name="CommonStrings_DecreaseFalsePositiveRate" xml:space="preserve">
+    <value>高特异性</value>
+    <comment>High Specificity</comment>
+  </data>
   <data name="EgsDevice_DeviceStatusDetailString_Description" xml:space="preserve">
     <value>设备的状态</value>
     <comment>Device Status</comment>
@@ -468,7 +480,7 @@ before starting ZKOO application.</comment>
     <comment>by Device</comment>
   </data>
   <data name="EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage" xml:space="preserve">
-    <value>(Longer Distance Needs More CPU Usage)</value>
+    <value>(更长的距离需要更多的CPU使用)</value>
     <comment>(Longer Distance Needs More CPU Usage)</comment>
   </data>
   <data name="CultureInfoAndDescriptionDetail_Type_Description" xml:space="preserve">

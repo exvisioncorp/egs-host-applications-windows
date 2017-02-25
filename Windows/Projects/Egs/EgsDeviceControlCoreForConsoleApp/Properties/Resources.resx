@@ -339,6 +339,18 @@ before starting ZKOO application.</comment>
     <value>Log</value>
     <comment>Log</comment>
   </data>
+  <data name="CommonStrings_DetectionSensitivity" xml:space="preserve">
+    <value>Detection Threshold</value>
+    <comment>Detection Threshold</comment>
+  </data>
+  <data name="CommonStrings_DecreaseFalseNegativeRate" xml:space="preserve">
+    <value>High Sensitivity</value>
+    <comment>High Sensitivity</comment>
+  </data>
+  <data name="CommonStrings_DecreaseFalsePositiveRate" xml:space="preserve">
+    <value>High Specificity</value>
+    <comment>High Specificity</comment>
+  </data>
   <data name="EgsDevice_DeviceStatusDetailString_Description" xml:space="preserve">
     <value>Device Status</value>
     <comment>Device Status</comment>
@@ -454,6 +466,22 @@ before starting ZKOO application.</comment>
   <data name="CameraViewBordersAndPointersAreDrawnByDetail_ByDevice_Description" xml:space="preserve">
     <value>by Device (for Lower Spec PC)</value>
     <comment>by Device (for Lower Spec PC)</comment>
+  </data>
+  <data name="FaceDetectionIsProcessedByDetail_Type_Description" xml:space="preserve">
+    <value>Device to Detect Faces</value>
+    <comment>Device to Detect Faces</comment>
+  </data>
+  <data name="FaceDetectionIsProcessedByDetail_ByHostApplication_Description" xml:space="preserve">
+    <value>by Host Application (Higher Accuracy)</value>
+    <comment>by Host Application (Higher Accuracy)</comment>
+  </data>
+  <data name="FaceDetectionIsProcessedByDetail_ByDevice_Description" xml:space="preserve">
+    <value>by Device</value>
+    <comment>by Device</comment>
+  </data>
+  <data name="EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage" xml:space="preserve">
+    <value>(Longer Distance Needs More CPU Usage)</value>
+    <comment>(Longer Distance Needs More CPU Usage)</comment>
   </data>
   <data name="CultureInfoAndDescriptionDetail_Type_Description" xml:space="preserve">
     <value>Language</value>
