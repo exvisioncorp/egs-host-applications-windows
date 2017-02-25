@@ -43,28 +43,47 @@
             var t = HidAccessPropertyUpdated; if (t != null) { t(this, e); }
         }
 
-        internal EgsDevice refToCurrentConnectedEgsDevice { get; set; }
+        internal EgsDevice CurrentConnectedEgsDevice { get; set; }
 
 
         public EgsDeviceSettings()
         {
             CreateProperties();
+
+            // After 960x540 device is connected, this size will be updated.
+            CaptureImageSize.Size = new System.Drawing.Size(768, 480);
+
+            // NOTE: If device receives too big area, the device restricts the value to Rect (0,0,1,1). 
+            if (false)
+            {
+                RightHandDetectionAreaOnFixed.Value.XRange.Minimum = 0.05f;
+                RightHandDetectionAreaOnFixed.Value.XRange.Maximum = 0.85f;
+                RightHandDetectionAreaOnFixed.Value.YRange.Minimum = 0.05f;
+                RightHandDetectionAreaOnFixed.Value.YRange.Maximum = 0.95f;
+                LeftHandDetectionAreaOnFixed.Value.XRange.Minimum = 0.15f;
+                LeftHandDetectionAreaOnFixed.Value.XRange.Maximum = 0.95f;
+                LeftHandDetectionAreaOnFixed.Value.YRange.Minimum = 0.05f;
+                LeftHandDetectionAreaOnFixed.Value.YRange.Maximum = 0.95f;
+            }
+
+            CreatePropertiesAdditional();
+
             Reset();
         }
 
         public void Reset()
         {
             InitializePropertiesByDefaultValue();
+            InitializePropertiesByDefaultValueAdditional();
 
-            // TODO: MUSTDO: NOTE: keep the below lines, but certainly the firmware should be fixed!
-            CaptureImageSize.Size = new System.Drawing.Size(768, 480);
-            CameraViewImageSourceRectInCapturedImage.Rect = new System.Drawing.Rectangle(8, 0, 752, 470);
+            OnImageSizeRelatedPropertiesUpdated();
         }
 
         public void InitializeOnceAtStartup()
         {
             AddPropertiesToHidAccessPropertyList();
             AttachInternalEventHandlers();
+            AttachInternalEventHandlersAdditional();
         }
 
         internal void AttachInternalEventHandlers()
@@ -73,7 +92,7 @@
             {
                 item.ValueUpdated += delegate
                 {
-                    if (refToCurrentConnectedEgsDevice == null) { return; }
+                    if (CurrentConnectedEgsDevice == null) { return; }
                     HidAccessPropertyUpdatedEventArgs e = new HidAccessPropertyUpdatedEventArgs(item);
                     OnHidAccessPropertyUpdated(e);
                 };
@@ -96,9 +115,9 @@
                         Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "TouchInterfaceKind: {0}", TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue));
                         break;
                 }
-                if (refToCurrentConnectedEgsDevice != null)
+                if (CurrentConnectedEgsDevice != null)
                 {
-                    refToCurrentConnectedEgsDevice.ResetHidReportObjects();
+                    CurrentConnectedEgsDevice.ResetHidReportObjects();
                 }
             };
 
@@ -120,9 +139,9 @@
                         Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "TouchInterfaceKind: {0}", TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue));
                         break;
                 }
-                if (refToCurrentConnectedEgsDevice != null)
+                if (CurrentConnectedEgsDevice != null)
                 {
-                    refToCurrentConnectedEgsDevice.ResetHidReportObjects();
+                    CurrentConnectedEgsDevice.ResetHidReportObjects();
                 }
             };
 
@@ -136,31 +155,56 @@
 
         internal void OnImageSizeRelatedPropertiesUpdated()
         {
-            // NOTE: It gets the value from Device, but the initial value should be correct.  Some problems can be caused by DataBindings.
-            var cameraViewImageSize = CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem;
+            // NOTE: It gets the value from device, but the initial value should be correct.  Some problems can be caused by DataBindings.
             var msg = "";
             msg += "CaptureImageSize: " + CaptureImageSize.Size.ToString() + Environment.NewLine;
             msg += "CameraViewImageSourceBitmapSize: " + CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.ToString() + Environment.NewLine;
             msg += "CameraViewImageSourceRectInCapturedImage: " + CameraViewImageSourceRectInCapturedImage.Rect.ToString() + Environment.NewLine;
             Debug.WriteLine(msg);
 
-            if (refToCurrentConnectedEgsDevice != null && refToCurrentConnectedEgsDevice.EgsGestureHidReport != null)
+            if (CurrentConnectedEgsDevice != null && CurrentConnectedEgsDevice.EgsGestureHidReport != null)
             {
-                refToCurrentConnectedEgsDevice.EgsGestureHidReport.UpdateImageSizeRelatedProperties();
+                CurrentConnectedEgsDevice.EgsGestureHidReport.UpdateImageSizeRelatedProperties();
             }
 
-            // TODO: MUSTDO: Device does not return the correct value now!!  Debut the firmware.  So, do not return here.
+            // TODO: MUSTDO: Debug the firmware.  So, do not return here.
             //return;
-            Debug.WriteLine("In some PCs, the host application cannot get the correct CameraViewImageSourceRectInCapturedImage from device.");
-            if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(384, 240) && CameraViewImageSourceRectInCapturedImage.Rect != new System.Drawing.Rectangle(8, 0, 752, 470))
+            Debug.WriteLine("\"On some PCs\", the host application cannot get the correct CameraViewImageSourceRectInCapturedImage from device for a while, after it changes CameraViewImageSize.");
+
+            // NOTE: If you update the value directly, infinite loop occurs.
+            var correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle();
+            if (CaptureImageSize.Size == new System.Drawing.Size(768, 480))
             {
-                // 384 * 240
-                CameraViewImageSourceRectInCapturedImage.Rect = new System.Drawing.Rectangle(8, 0, 752, 470);
+                if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(384, 240)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(8, 0, 752, 470); }
+                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(320, 240)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(71, 0, 625, 470); }
+                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(640, 480)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(71, 0, 625, 470); }
+                else
+                {
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    throw new NotImplementedException();
+                }
             }
-            else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size != new System.Drawing.Size(384, 240) && CameraViewImageSourceRectInCapturedImage.Rect != new System.Drawing.Rectangle(71, 0, 625, 470))
+            else if (CaptureImageSize.Size == new System.Drawing.Size(960, 540))
             {
-                // 640 * 480, 320 * 240
-                CameraViewImageSourceRectInCapturedImage.Rect = new System.Drawing.Rectangle(71, 0, 625, 470);
+                if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(384, 240)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(56, 0, 848, 530); }
+                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(320, 240)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(126, 0, 707, 530); }
+                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(640, 480)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(126, 0, 707, 530); }
+                else
+                {
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    throw new NotImplementedException();
+                }
+
+            }
+            else
+            {
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                throw new NotImplementedException();
+            }
+
+            if (CameraViewImageSourceRectInCapturedImage.Rect != correctCameraViewImageSourceRectInCapturedImageRect)
+            {
+                CameraViewImageSourceRectInCapturedImage.Rect = correctCameraViewImageSourceRectInCapturedImageRect;
             }
         }
     }

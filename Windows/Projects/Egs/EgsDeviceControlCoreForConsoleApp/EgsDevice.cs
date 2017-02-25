@@ -93,10 +93,10 @@
             if (_Settings != null)
             {
                 _Settings.HidAccessPropertyUpdated -= EgsDeviceSettings_HidAccessPropertyUpdated;
-                _Settings.refToCurrentConnectedEgsDevice = null;
+                _Settings.CurrentConnectedEgsDevice = null;
                 _Settings = null;
             }
-            value.refToCurrentConnectedEgsDevice = this;
+            value.CurrentConnectedEgsDevice = this;
             value.HidAccessPropertyUpdated += EgsDeviceSettings_HidAccessPropertyUpdated;
             _Settings = value;
 
@@ -308,6 +308,7 @@
             _IsSendingTouchScreenHidReport = false;
             _IsSendingHoveringStateOnTouchScreenHidReport = false;
             _IsSendingEgsGestureHidReport = false;
+
             WaitTimeInMillisecondsBeforeSetFeatureReport = 2;
             WaitTimeInMillisecondsBeforeGetFeatureReport = 10;
 
@@ -329,7 +330,6 @@
             AddPropertiesToHidAccessPropertyList();
             InitializePropertiesByDefaultValue();
 
-            IsToMonitorTemperatureChanged += delegate { IsMonitoringTemperature = IsToMonitorTemperature && IsHidDeviceConnected; };
             TemperatureInCelsius.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => TemperatureInCelsiusString)); };
             TemperatureInFahrenheit.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => TemperatureInFahrenheitString)); };
         }

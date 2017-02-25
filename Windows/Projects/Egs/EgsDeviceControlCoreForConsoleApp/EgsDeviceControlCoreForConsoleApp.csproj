@@ -87,6 +87,9 @@
     <Compile Include="..\EgsDeviceControlCore\EgsDeviceHidReportsUpdate.cs">
       <Link>EgsDeviceHidReportsUpdate.cs</Link>
     </Compile>
+    <Compile Include="..\EgsDeviceControlCore\EgsDeviceSettings.cs">
+      <Link>EgsDeviceSettings.cs</Link>
+    </Compile>
     <Compile Include="..\EgsDeviceControlCore\EgsDeviceTouchScreenHidReport.cs">
       <Link>EgsDeviceTouchScreenHidReport.cs</Link>
     </Compile>
@@ -101,6 +104,9 @@
     </Compile>
     <Compile Include="..\EgsDeviceControlCore\PropertyTypes\DeviceOptionalValueTypeParameterDetails.cs">
       <Link>PropertyTypes\DeviceOptionalValueTypeParameterDetails.cs</Link>
+    </Compile>
+    <Compile Include="..\EgsDeviceControlCore\PropertyTypes\EgsHostOptionalPropertyDetailTypes.cs">
+      <Link>PropertyTypes\EgsHostOptionalPropertyDetailTypes.cs</Link>
     </Compile>
     <Compile Include="..\EgsDeviceControlCore\PropertyTypes\HidAccessPropertyPrimitiveTypeIds.generated.cs">
       <Link>PropertyTypes\HidAccessPropertyPrimitiveTypeIds.generated.cs</Link>
@@ -128,8 +134,12 @@
     </Compile>
     <Compile Include="EgsDevice.cs" />
     <Compile Include="EgsDeviceHidAccessProperties.generated.cs" />
-    <Compile Include="EgsDeviceSettings.cs" />
     <Compile Include="EgsDeviceSettings_DependentProperties.cs" />
+    <Compile Include="EgsDeviceSettings_Properties.generated.cs">
+      <DependentUpon>EgsDeviceSettings_Properties.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="EgsDevicesManager.cs" />
     <Compile Include="EgsDevice_DependentProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -174,6 +184,12 @@
       <Project>{bf03d6a2-f237-4cba-b64c-a05b1939f99d}</Project>
       <Name>DlibSharp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EgsDeviceSettings_Properties.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EgsDeviceSettings_Properties.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

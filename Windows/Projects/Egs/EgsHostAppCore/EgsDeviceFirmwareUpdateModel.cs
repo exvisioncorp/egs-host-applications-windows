@@ -364,7 +364,7 @@
         public void StartAsync()
         {
             Trace.Assert(ProgressReport.IsBusy == false);
-            Device.IsToMonitorTemperature = false;
+            Device.Settings.IsToMonitorTemperature = false;
             Device.IsUpdatingFirmware = true;
             IsBusy = true;
             IsCanceled = false;

@@ -14,14 +14,26 @@
 
     public partial class EgsDeviceSettings
     {
+        void CreatePropertiesAdditional()
+        {
+        }
+        void InitializePropertiesByDefaultValueAdditional()
+        {
+        }
+        void AttachInternalEventHandlersAdditional()
+        {
+        }
+
         void SetEventHandlersAboutDependentProperties()
         {
-            CaptureImageSize.ValueUpdated += delegate { OnPropertyChanged("CameraSpecificationValue"); };
-            CaptureFps.ValueUpdated += delegate { OnPropertyChanged("CameraSpecificationValue"); };
-            LensEquivalentFocalLengthInMillimeters.ValueUpdated += delegate { OnPropertyChanged("CameraSpecificationValue"); };
-            SensorOnePixelSideLengthInMillimeters.ValueUpdated += delegate { OnPropertyChanged("CameraSpecificationValue"); };
-            LensFNumber.ValueUpdated += delegate { OnPropertyChanged("CameraSpecificationValue"); };
-            SensorExposureTimeInMilliseconds.ValueUpdated += delegate { OnPropertyChanged("CameraSpecificationValue"); };
+            CaptureImageSize.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
+            CaptureFps.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
+            LensEquivalentFocalLengthInMillimeters.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
+            SensorOnePixelSideLengthInMillimeters.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
+            LensFNumber.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
+            SensorExposureTimeInMilliseconds.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
+
+            IsToMonitorTemperatureChanged += delegate { CurrentConnectedEgsDevice.IsMonitoringTemperature = IsToMonitorTemperature && CurrentConnectedEgsDevice.IsHidDeviceConnected; };
         }
 
         public string CameraSpecificationValue

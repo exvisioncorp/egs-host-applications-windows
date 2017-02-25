@@ -48,7 +48,6 @@
         internal int ActualWindowTop { get; private set; }
 
         Dictionary<ImageInformation, CursorImageWindowsFormsBitmap> imagesDict { get; set; }
-        PictureBox currentPictureBox { get; set; }
         bool hasToRedrawCursor { get; set; }
         Win32SetWindowPosition setWindowPosition { get; set; }
 

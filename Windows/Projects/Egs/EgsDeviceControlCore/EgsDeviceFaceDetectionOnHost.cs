@@ -112,10 +112,10 @@
             // pixelOneSideLength: 0.0028[mm] (2x2 binning).
             SensorImageBinnedPixelOneSideLength = 0.0028;
 
-            SensorImageWidth = 768.0;
-            SensorImageHeight = 480.0;
-            CameraViewImageWidth = 384.0;
-            CameraViewImageHeight = 240.0;
+            SensorImageWidth = 960;
+            SensorImageHeight = 540;
+            CameraViewImageWidth = 384;
+            CameraViewImageHeight = 240;
 
 
             // +X:Right  +Y:Bottom  +Z:Back (camera to user)
@@ -158,7 +158,7 @@
 
         void Device_CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged(object sender, EventArgs e)
         {
-            if (false && Device.IsToUseDefaultFaceDetection && ApplicationCommonSettings.IsDebugging)
+            if (false && Device.Settings.IsToUseDefaultFaceDetection && ApplicationCommonSettings.IsDebugging)
             {
                 // Draw the latest result before return;
                 if (SelectedFaceRect.HasValue)
@@ -175,14 +175,14 @@
             SetCameraViewImageBitmapIntervalStopwatch.Reset();
             SetCameraViewImageBitmapIntervalStopwatch.Start();
 
-            var isToDetectFaceOnHost =
-                (Device.IsToUseDefaultFaceDetection == true)
+            var isToDetectFacesOnHost =
+                (Device.Settings.IsToUseDefaultFaceDetection == true)
                 && (Device.Settings.IsToDetectFaces.Value == false)
                 && (Device.Settings.IsToDetectHands.Value == true)
                 && (Device.Settings.IsToFixHandDetectionRegions.Value == true)
                 && (Device.EgsGestureHidReport.Hands[0].IsTracking == false)
                 && (Device.EgsGestureHidReport.Hands[1].IsTracking == false);
-            if (isToDetectFaceOnHost)
+            if (isToDetectFacesOnHost)
             {
                 DetectFaceRunWorkerAsync(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
             }
@@ -265,6 +265,9 @@
         {
             Trace.Assert(CameraViewImageScale_DividedBy_SensorImageScale > 0);
             Trace.Assert(cameraViewImageFaceRect.Width > 0);
+
+            SensorImageWidth = deviceSettings.CaptureImageSize.Width;
+            SensorImageHeight = deviceSettings.CaptureImageSize.Height;
 
             double CameraViewImagePixelOneSideLengthOnSensor = SensorImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_SensorImageScale;
 

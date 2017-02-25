@@ -12,14 +12,6 @@
     using Egs.EgsDeviceControlCore.Properties;
     using Egs.DotNetUtility;
 
-    public class EgsHostOptionalPropertyDetailBase
-    {
-        // NOTE: Do not implement IPropertyChanged here.  Use only for Optional<T>.  All strings are written in Resources.  Before I used "[DataMember]", but it is obsoleted.
-        public string DescriptionKey { get; internal set; }
-        public string Description { get { return string.IsNullOrEmpty(DescriptionKey) ? "" : Resources.ResourceManager.GetString(DescriptionKey, Resources.Culture); } }
-        public override string ToString() { return Description; }
-    }
-
     public class CameraViewBordersAndPointersAreDrawnByDetail : EgsHostOptionalPropertyDetailBase
     {
         public CameraViewBordersAndPointersAreDrawnByKind EnumValue { get; internal set; }
@@ -40,29 +32,6 @@
             return ret;
         }
     }
-
-    public class FaceDetectionIsProcessedByDetail : EgsHostOptionalPropertyDetailBase
-    {
-        public FaceDetectionIsProcessedByKind EnumValue { get; internal set; }
-
-        public static List<FaceDetectionIsProcessedByDetail> GetDefaultList()
-        {
-            var ret = new List<FaceDetectionIsProcessedByDetail>();
-            ret.Add(new FaceDetectionIsProcessedByDetail()
-            {
-                EnumValue = FaceDetectionIsProcessedByKind.HostApplication,
-                DescriptionKey = Name.Of(() => Resources.FaceDetectionIsProcessedByDetail_ByHostApplication_Description)
-            });
-            ret.Add(new FaceDetectionIsProcessedByDetail()
-            {
-                EnumValue = FaceDetectionIsProcessedByKind.Device,
-                DescriptionKey = Name.Of(() => Resources.FaceDetectionIsProcessedByDetail_ByDevice_Description)
-            });
-            return ret;
-        }
-    }
-
-
 
     public class CultureInfoAndDescriptionDetail : EgsHostOptionalPropertyDetailBase
     {

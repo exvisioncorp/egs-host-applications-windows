@@ -11,12 +11,6 @@ namespace Egs.PropertyTypes
         HostApplication,
         Device
     }
-
-    public enum FaceDetectionIsProcessedByKind
-    {
-        HostApplication,
-        Device,
-    }
 }
 
 // NOTE: Properties used only in host.

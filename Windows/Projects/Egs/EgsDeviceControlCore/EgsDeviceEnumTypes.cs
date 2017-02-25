@@ -4,6 +4,35 @@ using System.Text;
 
 namespace Egs
 {
+    public enum EgsGestureHidReportTargetObjectCategories : byte
+    {
+        FiveFingersHandForTv = 0,
+        Unknown = 63,
+        Count = 64,
+    }
+
+    internal enum HidReportIds : byte
+    {
+        /// <summary>0x01</summary>
+        TouchScreen = 0x01,
+        /// <summary>0x02</summary>
+        Keyboard = 0x02,
+        /// <summary>0x03</summary>
+        Mouse = 0x03,
+        /// <summary>0x04</summary>
+        Gamepad = 0x04,
+        /// <summary>0x05</summary>
+        Joystick = 0x05,
+        /// <summary>0x0A</summary>
+        EgsGesture = 0x0A,
+        /// <summary>0x0B</summary>
+        EgsDeviceSettings = 0x0B,
+        /// <summary>0x0C.  (EgsDeviceQualityAssurance is also 0x0C.)</summary>
+        EgsDeviceFirmwareUpdate = 0x0C,
+        /// <summary>0x0C.  (EgsDeviceFirmwareUpdate is also 0x0C.)</summary>
+        EgsDeviceQualityAssurance = 0x0C,
+    }
+
     public enum EgsGestureHidReportRecognitionState : byte
     {
         /// <summary>0x00</summary>
@@ -50,37 +79,5 @@ namespace Egs
         Unknown = 0,
         MovesCloserToCamera = 1,
         MovesFurtherFromCamera = 2,
-    }
-}
-
-namespace Egs.PropertyTypes
-{
-    internal enum HidReportIds : byte
-    {
-        /// <summary>0x01</summary>
-        TouchScreen = 0x01,
-        /// <summary>0x02</summary>
-        Keyboard = 0x02,
-        /// <summary>0x03</summary>
-        Mouse = 0x03,
-        /// <summary>0x04</summary>
-        Gamepad = 0x04,
-        /// <summary>0x05</summary>
-        Joystick = 0x05,
-        /// <summary>0x0A</summary>
-        EgsGesture = 0x0A,
-        /// <summary>0x0B</summary>
-        EgsDeviceSettings = 0x0B,
-        /// <summary>0x0C.  (EgsDeviceQualityAssurance is also 0x0C.)</summary>
-        EgsDeviceFirmwareUpdate = 0x0C,
-        /// <summary>0x0C.  (EgsDeviceFirmwareUpdate is also 0x0C.)</summary>
-        EgsDeviceQualityAssurance = 0x0C,
-    }
-
-    public enum EgsGestureHidReportTargetObjectCategories : byte
-    {
-        FiveFingersHandForTv = 0,
-        Unknown = 63,
-        Count = 64,
     }
 }

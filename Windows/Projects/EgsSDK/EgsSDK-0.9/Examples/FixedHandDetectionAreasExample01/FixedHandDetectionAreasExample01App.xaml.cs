@@ -115,7 +115,7 @@
         public void InitializeFaceDetection()
         {
             // NOTE: important
-            Device.IsToUseDefaultFaceDetection = false;
+            Device.Settings.IsToUseDefaultFaceDetection = false;
 
             HandDetectionAreaDecision = new EgsDeviceFaceDetectionOnHost();
             var cameraViewImageSize = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem;
@@ -152,10 +152,10 @@
 
         void CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged(object sender, EventArgs e)
         {
-            var isToDetectFaceOnHost = DeviceSettings.IsToDetectFaces.Value == false;
-            isToDetectFaceOnHost = isToDetectFaceOnHost && (Device.EgsGestureHidReport.Hands[0].IsTracking == false);
-            isToDetectFaceOnHost = isToDetectFaceOnHost && (Device.EgsGestureHidReport.Hands[1].IsTracking == false);
-            if (isToDetectFaceOnHost)
+            var isToDetectFacesOnHost = DeviceSettings.IsToDetectFaces.Value == false;
+            isToDetectFacesOnHost = isToDetectFacesOnHost && (Device.EgsGestureHidReport.Hands[0].IsTracking == false);
+            isToDetectFacesOnHost = isToDetectFacesOnHost && (Device.EgsGestureHidReport.Hands[1].IsTracking == false);
+            if (isToDetectFacesOnHost)
             {
                 FaceDetectionExample.DetectFaceAsync(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
             }

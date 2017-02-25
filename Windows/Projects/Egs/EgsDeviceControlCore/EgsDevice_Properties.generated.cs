@@ -21,7 +21,7 @@
         public int IndexInHidDevicePathList
         {
             get { return _IndexInHidDevicePathList; }
-            private set
+            internal set
             {
                 _IndexInHidDevicePathList = value; OnIndexInHidDevicePathListChanged(EventArgs.Empty);
             }
@@ -38,7 +38,7 @@
         public bool IsConnected
         {
             get { return _IsConnected; }
-            private set
+            internal set
             {
                 _IsConnected = value; OnIsConnectedChanged(EventArgs.Empty);
             }
@@ -72,7 +72,7 @@
         public bool IsDetectingFaces
         {
             get { return _IsDetectingFaces; }
-            private set
+            internal set
             {
                 _IsDetectingFaces = value; OnIsDetectingFacesChanged(EventArgs.Empty);
             }
@@ -89,7 +89,7 @@
         public bool IsDetectingHands
         {
             get { return _IsDetectingHands; }
-            private set
+            internal set
             {
                 _IsDetectingHands = value; OnIsDetectingHandsChanged(EventArgs.Empty);
             }
@@ -106,7 +106,7 @@
         public bool IsSendingTouchScreenHidReport
         {
             get { return _IsSendingTouchScreenHidReport; }
-            private set
+            internal set
             {
                 _IsSendingTouchScreenHidReport = value; OnIsSendingTouchScreenHidReportChanged(EventArgs.Empty);
             }
@@ -123,7 +123,7 @@
         public bool IsSendingHoveringStateOnTouchScreenHidReport
         {
             get { return _IsSendingHoveringStateOnTouchScreenHidReport; }
-            private set
+            internal set
             {
                 _IsSendingHoveringStateOnTouchScreenHidReport = value; OnIsSendingHoveringStateOnTouchScreenHidReportChanged(EventArgs.Empty);
             }
@@ -140,43 +140,9 @@
         public bool IsSendingEgsGestureHidReport
         {
             get { return _IsSendingEgsGestureHidReport; }
-            private set
+            internal set
             {
                 _IsSendingEgsGestureHidReport = value; OnIsSendingEgsGestureHidReportChanged(EventArgs.Empty);
-            }
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool _IsToUseDefaultFaceDetection;
-        public event EventHandler IsToUseDefaultFaceDetectionChanged;
-        protected virtual void OnIsToUseDefaultFaceDetectionChanged(EventArgs e)
-        {
-            var t = IsToUseDefaultFaceDetectionChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToUseDefaultFaceDetection");
-        }
-        public bool IsToUseDefaultFaceDetection
-        {
-            get { return _IsToUseDefaultFaceDetection; }
-            set
-            {
-                _IsToUseDefaultFaceDetection = value; OnIsToUseDefaultFaceDetectionChanged(EventArgs.Empty);
-            }
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool _IsToMonitorTemperature;
-        public event EventHandler IsToMonitorTemperatureChanged;
-        protected virtual void OnIsToMonitorTemperatureChanged(EventArgs e)
-        {
-            var t = IsToMonitorTemperatureChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToMonitorTemperature");
-        }
-        public bool IsToMonitorTemperature
-        {
-            get { return _IsToMonitorTemperature; }
-            set
-            {
-                _IsToMonitorTemperature = value; OnIsToMonitorTemperatureChanged(EventArgs.Empty);
             }
         }
 
@@ -191,7 +157,7 @@
         public bool IsMonitoringTemperature
         {
             get { return _IsMonitoringTemperature; }
-            private set
+            internal set
             {
                 _IsMonitoringTemperature = value; OnIsMonitoringTemperatureChanged(EventArgs.Empty);
             }

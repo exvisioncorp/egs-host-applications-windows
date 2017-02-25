@@ -37,10 +37,6 @@
         public OptionalValue<CursorDrawingTimingMethodDetail> CursorDrawingTimingMethod { get; private set; }
         [DataMember]
         public OptionalValue<CameraViewBordersAndPointersAreDrawnByDetail> CameraViewBordersAndPointersAreDrawnBy { get; private set; }
-        [DataMember]
-        public OptionalValue<FaceDetectionIsProcessedByDetail> FaceDetectionIsProcessedBy { get; private set; }
-        [DataMember]
-        public RangedDouble FaceDetectionOnHost_RealFaceZMaximum { get; private set; }
         #endregion
 
         [DataMember]
@@ -82,8 +78,6 @@
             MouseCursorPositionUpdatedByGestureCursorMethod = new OptionalValue<MouseCursorPositionUpdatedByGestureCursorMethodDetail>();
             CursorDrawingTimingMethod = new OptionalValue<CursorDrawingTimingMethodDetail>();
             CameraViewBordersAndPointersAreDrawnBy = new OptionalValue<CameraViewBordersAndPointersAreDrawnByDetail>();
-            FaceDetectionIsProcessedBy = new OptionalValue<FaceDetectionIsProcessedByDetail>();
-            FaceDetectionOnHost_RealFaceZMaximum = new RangedDouble(3.0, 1.0, 4.0, 0.1, 0.5, 0.1);
 
             DeviceSettings = new EgsDeviceSettings();
             CameraViewUserControlModel = new CameraViewUserControlModel();
@@ -98,13 +92,11 @@
             MouseCursorPositionUpdatedByGestureCursorMethod.Options = MouseCursorPositionUpdatedByGestureCursorMethodDetail.GetDefaultList();
             CursorDrawingTimingMethod.Options = CursorDrawingTimingMethodDetail.GetDefaultList();
             CameraViewBordersAndPointersAreDrawnBy.Options = CameraViewBordersAndPointersAreDrawnByDetail.GetDefaultList();
-            FaceDetectionIsProcessedBy.Options = FaceDetectionIsProcessedByDetail.GetDefaultList();
 
             //CultureInfoAndDescription.SelectSingleItemByPredicate(e => e.CultureInfoString == ApplicationCommonSettings.DefaultCultureInfoName);
             MouseCursorPositionUpdatedByGestureCursorMethod.SelectedIndex = 0;
             CursorDrawingTimingMethod.SelectedIndex = 0;
             CameraViewBordersAndPointersAreDrawnBy.SelectedIndex = 0;
-            FaceDetectionIsProcessedBy.SelectedIndex = 0;
             WaitTimeTillMouseCursorHideOnMouseMode = TimeSpan.FromSeconds(10);
 
             ResetSettingsCommand = new SimpleDelegateCommand();
@@ -204,30 +196,6 @@
                 }
             };
 
-            FaceDetectionIsProcessedBy.SelectedItemChanged += delegate
-            {
-                switch (FaceDetectionIsProcessedBy.SelectedItem.EnumValue)
-                {
-                    case FaceDetectionIsProcessedByKind.HostApplication:
-                        if (DeviceSettings != null)
-                        {
-                            DeviceSettings.IsToDetectFaces.Value = false;
-                            DeviceSettings.IsToFixHandDetectionRegions.Value = true;
-                        }
-                        break;
-                    case FaceDetectionIsProcessedByKind.Device:
-                        if (DeviceSettings != null)
-                        {
-                            DeviceSettings.IsToDetectFaces.Value = true;
-                            DeviceSettings.IsToFixHandDetectionRegions.Value = false;
-                        }
-                        break;
-                    default:
-                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                        throw new NotImplementedException();
-                }
-            };
-
             CultureInfoAndDescription.SelectedItemChanged += delegate
             {
                 BindableResources.Current.ChangeCulture(CultureInfoAndDescription.SelectedItem.CultureInfoString);
@@ -262,7 +230,6 @@
             // TODO: Very old memo says "Do not change!", should check the reason and test it again.
             //CultureInfoAndDescription.SelectedIndex = 0;
             CameraViewBordersAndPointersAreDrawnBy.SelectedIndex = 0;
-            FaceDetectionIsProcessedBy.SelectedIndex = 0;
             MouseCursorPositionUpdatedByGestureCursorMethod.SelectedIndex = 0;
             CursorDrawingTimingMethod.SelectedIndex = 0;
             OnePersonBothHandsViewModel.CursorImageSetInformationOptionalValue.SelectedIndex = 0;

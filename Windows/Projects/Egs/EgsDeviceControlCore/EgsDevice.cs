@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using System.Windows.Forms;
     using System.Diagnostics;
     using System.ComponentModel;
     using System.Globalization;
@@ -101,10 +100,10 @@
             if (_Settings != null)
             {
                 _Settings.HidAccessPropertyUpdated -= EgsDeviceSettings_HidAccessPropertyUpdated;
-                _Settings.refToCurrentConnectedEgsDevice = null;
+                _Settings.CurrentConnectedEgsDevice = null;
                 _Settings = null;
             }
-            value.refToCurrentConnectedEgsDevice = this;
+            value.CurrentConnectedEgsDevice = this;
             value.HidAccessPropertyUpdated += EgsDeviceSettings_HidAccessPropertyUpdated;
             _Settings = value;
 
@@ -328,29 +327,25 @@
             _IsSendingTouchScreenHidReport = false;
             _IsSendingHoveringStateOnTouchScreenHidReport = false;
             _IsSendingEgsGestureHidReport = false;
-            _IsToUseDefaultFaceDetection = true;
 
             WaitTimeInMillisecondsBeforeSetFeatureReport = 2;
             WaitTimeInMillisecondsBeforeGetFeatureReport = 10;
 
             CreateProperties();
 
-            CameraViewImageSourceBitmapCapture = new EgsDeviceCameraViewImageSourceBitmapCapture();
-            FaceDetectionOnHost = new EgsDeviceFaceDetectionOnHost();
-
             if (IsToUseWin32CreateFile) { HidReportsUpdate = new EgsDeviceHidReportsUpdate(); }
             TouchScreenHidReport = new EgsDeviceTouchScreenHidReport();
             EgsGestureHidReport = new EgsDeviceEgsGestureHidReport();
 
             IsHidDeviceConnectedChanged += UpdateIsHidDeviceConnectedRelatedProperties;
+
+            CameraViewImageSourceBitmapCapture = new EgsDeviceCameraViewImageSourceBitmapCapture();
+            FaceDetectionOnHost = new EgsDeviceFaceDetectionOnHost();
             CameraViewImageSourceBitmapCapture.IsCameraDeviceConnectedChanged += UpdateIsConnected;
         }
 
         internal void InitializeOnceAtStartup()
         {
-            CameraViewImageSourceBitmapCapture.InitializeOnceAtStartup(this);
-            FaceDetectionOnHost.InitializeOnceAtStartup(this);
-
             if (HidReportsUpdate != null) { HidReportsUpdate.InitializeOnceAtStartup(this); }
             TouchScreenHidReport.InitializeOnceAtStartup(this);
             EgsGestureHidReport.InitializeOnceAtStartup(this);
@@ -358,12 +353,13 @@
             AddPropertiesToHidAccessPropertyList();
             InitializePropertiesByDefaultValue();
 
-            // static event
-            Microsoft.Win32.SystemEvents.DisplaySettingsChanged += EgsGestureHidReport.OnDisplaySettingsChanged;
-
-            IsToMonitorTemperatureChanged += delegate { IsMonitoringTemperature = IsToMonitorTemperature && IsHidDeviceConnected; };
             TemperatureInCelsius.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => TemperatureInCelsiusString)); };
             TemperatureInFahrenheit.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => TemperatureInFahrenheitString)); };
+
+            CameraViewImageSourceBitmapCapture.InitializeOnceAtStartup(this);
+            FaceDetectionOnHost.InitializeOnceAtStartup(this);
+            // static event
+            Microsoft.Win32.SystemEvents.DisplaySettingsChanged += EgsGestureHidReport.OnDisplaySettingsChanged;
         }
 
         public event EventHandler HidReportObjectsReset;

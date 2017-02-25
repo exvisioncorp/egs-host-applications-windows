@@ -117,6 +117,11 @@
     <Compile Include="EgsDeviceTouchScreenHidReport.cs" />
     <Compile Include="EgsDeviceTouchScreenHidReportContact.cs" />
     <Compile Include="EgsDevice_DependentProperties.cs" />
+    <Compile Include="EgsDeviceSettings_Properties.generated.cs">
+      <DependentUpon>EgsDeviceSettings_Properties.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="EgsDevice_Properties.generated.cs">
       <DependentUpon>EgsDevice_Properties.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -142,6 +147,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="PropertyTypes\DeviceOptionalValueTypeParameterDetails.cs" />
+    <Compile Include="PropertyTypes\EgsHostOptionalPropertyDetailTypes.cs" />
     <Compile Include="PropertyTypes\HidAccessPropertyPrimitiveTypeIds.generated.cs" />
     <Compile Include="PropertyTypes\HidAccessPropertyTypes.cs" />
     <Compile Include="PropertyTypes\HostToDeviceCommandFeatureReport.cs" />
@@ -213,6 +219,10 @@
     <None Include="EgsDeviceCameraViewImageSourceBitmapCapture_Properties.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EgsDeviceCameraViewImageSourceBitmapCapture_Properties.generated.cs</LastGenOutput>
+    </None>
+    <None Include="EgsDeviceSettings_Properties.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EgsDeviceSettings_Properties.generated.cs</LastGenOutput>
     </None>
     <Content Include="version.txt">
       <DependentUpon>version.tt</DependentUpon>

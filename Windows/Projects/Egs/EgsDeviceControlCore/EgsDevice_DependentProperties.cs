@@ -140,7 +140,7 @@
             IsSendingHoveringStateOnTouchScreenHidReport = Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value && IsHidDeviceConnected;
             IsSendingEgsGestureHidReport = Settings.IsToSendEgsGestureHidReport.Value && IsHidDeviceConnected;
 
-            IsMonitoringTemperature = IsToMonitorTemperature && IsHidDeviceConnected;
+            IsMonitoringTemperature = Settings.IsToMonitorTemperature && IsHidDeviceConnected;
 
             // MUSTDO: FIX.  The next line can cause cross thread exceptions.
             if (IsHidDeviceConnected == false) { ResetHidReportObjects(); }

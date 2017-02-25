@@ -144,15 +144,6 @@
             {
                 var ret = new CameraViewUserControlModel();
                 var device = EgsDevice.CreateEgsDeviceForXamlDesign();
-                if (device.Settings.CaptureImageSize.Width == 0 || device.Settings.CaptureImageSize.Height == 0)
-                {
-                    // NOTE: Currently the host app can get the value from device.
-                    device.Settings.CaptureImageSize.Width = 768;
-                    device.Settings.CaptureImageSize.Height = 480;
-                    //device.Settings.CaptureImageSize.Width = 960;
-                    //device.Settings.CaptureImageSize.Height = 540;
-                }
-                device.Settings.CameraViewImageSourceRectInCapturedImage.Rect = new System.Drawing.Rectangle(0, 0, 768, 480);
                 device.Settings.OnImageSizeRelatedPropertiesUpdated();
 
                 ret.InitializeOnceAtStartup(device);

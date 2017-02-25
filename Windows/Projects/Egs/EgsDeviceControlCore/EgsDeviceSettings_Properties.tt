@@ -1,0 +1,16 @@
+﻿<#
+var namespaceName = "Egs";
+var classDescription = "public partial class EgsDeviceSettings";
+
+var propertyElementsList = new List<PropertyInfoForT4Template>()
+{
+	// NOTE: EgsDevicesManager has a timer, and its Tick event handler get the actual temperatures.
+    new PropertyInfoForT4Template("[DataMember]", "public", "bool", "IsToMonitorTemperature", "", false),
+
+    new PropertyInfoForT4Template("[DataMember]", "public", "bool", "IsToUseDefaultFaceDetection", "", false),
+    new PropertyInfoForT4Template("[DataMember]", "public", "OptionalValue<FaceDetectionIsProcessedByDetail>", "FaceDetectionIsProcessedBy", "private", false),
+    new PropertyInfoForT4Template("[DataMember]", "public", "RangedDouble", "FaceDetectionOnHost_RealFaceZMaximum", "private", false),
+    new PropertyInfoForT4Template("[DataMember]", "public", "RangedDouble", "FaceDetectionOnHost_Threshold", "private", false),
+};
+#>
+<#@ include file=".\DotNetUtility\PartialClass_Properties.t4" #>
