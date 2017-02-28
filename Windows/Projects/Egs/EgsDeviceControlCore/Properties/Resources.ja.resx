@@ -473,7 +473,7 @@ before starting ZKOO application.</comment>
   </data>
   <data name="EgsDeviceFaceDetectionOnHost_MaxPlayableDistanceInMeter_Description" xml:space="preserve">
     <value>最大検出可能距離[m]</value>
-    <comment>Max Playable Distance [m]</comment>
+    <comment>Max Detectable Distance [m]</comment>
   </data>
   <data name="CultureInfoAndDescriptionDetail_Type_Description" xml:space="preserve">
     <value>言語</value>

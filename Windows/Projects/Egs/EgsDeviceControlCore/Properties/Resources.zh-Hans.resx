@@ -472,8 +472,8 @@ before starting ZKOO application.</comment>
     <comment>(Longer Distance Needs More CPU Usage)</comment>
   </data>
   <data name="EgsDeviceFaceDetectionOnHost_MaxPlayableDistanceInMeter_Description" xml:space="preserve">
-    <value>Max Playable Distance [m]</value>
-    <comment>Max Playable Distance [m]</comment>
+    <value>Max Detectable Distance [m]</value>
+    <comment>Max Detectable Distance [m]</comment>
   </data>
   <data name="CultureInfoAndDescriptionDetail_Type_Description" xml:space="preserve">
     <value>语言</value>

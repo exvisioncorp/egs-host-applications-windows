@@ -184,20 +184,24 @@
                     Reset();
                     break;
                 case EgsGestureHidReportMessageIds.DetectingFaces:
-                    // NOTE: In Kickstarter 1st released version, when MessageId is DetectingFaces, the app needed to reset this object by Timer.
-                    if (MessageId != previousMessageId)
+                    if (Device.Settings != null
+                        && Device.Settings.FaceDetectionMethod.Value == FaceDetectionMethodKind.DefaultProcessOnEgsDevice)
                     {
-                        if (false) { Debug.WriteLine("DetectingFaces && MessageId has changed."); }
-                        foreach (var face in Faces) { face.Reset(); }
-                        DetectedFacesCount = 0;
-                        SelectedFaceIndex = -1;
-                        foreach (var hand in Hands) { hand.Reset(); }
-                        TrackingHandsCount = 0;
-                    }
-                    // TODO: MUSTDO: When application detects faces on host, report from device is wrong.
-                    if (Device.Settings != null && Device.Settings.IsToDetectFaces.Value)
-                    {
-                        UpdateOnDetectingFaces(hidReport);
+                        // NOTE: In Kickstarter 1st released version, when MessageId is DetectingFaces, the app needed to reset this object by Timer.
+                        if (MessageId != previousMessageId)
+                        {
+                            if (false) { Debug.WriteLine("DetectingFaces && MessageId has changed."); }
+                            foreach (var face in Faces) { face.Reset(); }
+                            DetectedFacesCount = 0;
+                            SelectedFaceIndex = -1;
+                            foreach (var hand in Hands) { hand.Reset(); }
+                            TrackingHandsCount = 0;
+                        }
+                        // TODO: MUSTDO: When application detects faces on host, report from device is wrong.
+                        if (Device.IsDetectingFaces)
+                        {
+                            UpdateOnDetectingFaces(hidReport);
+                        }
                     }
                     break;
                 case EgsGestureHidReportMessageIds.DetectingOrTrackingHands:

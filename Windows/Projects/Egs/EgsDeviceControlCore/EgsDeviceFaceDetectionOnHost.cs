@@ -251,14 +251,15 @@
             // TODO: MUSTDO: implement
             // Implemented in EgsDeviceFaceDetectionOnHost_FaceSelection.cs
             SelectOneFaceRect();
-            var list = this.DetectedFaceRectsInCameraViewImage.ToList();
-            for (int i = 0; i < Device.EgsGestureHidReport.Faces.Count; i++)
-            {
-                if (i >= list.Count) { continue; }
-                Device.EgsGestureHidReport.Faces[i] = new EgsDeviceEgsGestureHidReportFace() { IsDetected = true, Area = list[i], IsSelected = false, Score = 0 };
-            }
-            if (Device.EgsGestureHidReport.Faces.Count > 0) { Device.EgsGestureHidReport.Faces[0].IsSelected = true; }
 
+            for (int i = 0; (i < Device.EgsGestureHidReport.Faces.Count) && (i < DetectedFaceRectsInCameraViewImage.Count); i++)
+            {
+                var item = DetectedFaceRectsInCameraViewImage[i];
+                Device.EgsGestureHidReport.Faces[i].IsDetected = true;
+                Device.EgsGestureHidReport.Faces[i].Area = item;
+                Device.EgsGestureHidReport.Faces[i].IsSelected = (item == SelectedFaceRect);
+                Device.EgsGestureHidReport.Faces[i].Score = 0;
+            }
 
             UpdateEgsDeviceSettingsHandDetectionAreas(SelectedFaceRect.Value, Device.Settings);
 
