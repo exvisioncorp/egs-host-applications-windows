@@ -158,7 +158,12 @@
                     var msg = (NarrationInformation)prop.GetValue(messages);
                     var filePath = CurrentResources.SoundFilesFolderPath + msg.OggAudioFileName;
                     var hr = audioPlayer.StartAsync(filePath);
-                    if (hr == false) { hasAllFiles = false; }
+                    if (hr == false)
+                    {
+                        // TODO: MUSTDO: Find the reason that it cannot open audio files only in DEBUB mode.
+                        hasAllFiles = false;
+                        break;
+                    }
                 }
                 audioPlayer.Stop();
             }

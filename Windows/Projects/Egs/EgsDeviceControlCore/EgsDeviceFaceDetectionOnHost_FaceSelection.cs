@@ -11,21 +11,51 @@
 
         public void SelectOneFaceRect()
         {
-            if (DetectedFaceRects == null || DetectedFaceRects.Count == 0)
+            if (DetectedFaceRectsInCameraViewImage == null || DetectedFaceRectsInCameraViewImage.Count == 0)
             {
                 SelectedFaceRect = null;
                 return;
             }
-            SelectedFaceRect = DetectedFaceRects[0];
-            Func<System.Drawing.Rectangle, double> predictor = e => e.Width + e.Height;
-            var faceSizeMax = predictor(SelectedFaceRect.Value);
-            for (int i = 1; i < DetectedFaceRects.Count; i++)
+            SelectMostCenter();
+        }
+
+        void SelectMostCenter()
+        {
+            Func<System.Drawing.Rectangle, double> predictor = e =>
             {
-                var size = predictor(DetectedFaceRects[i]);
+                var faceCenterX = e.Left + e.Width / 2;
+                var cameraViewImageCenterX = CameraViewImageWidth / 2;
+                return Math.Abs(faceCenterX - cameraViewImageCenterX);
+            };
+
+            SelectedFaceRect = DetectedFaceRectsInCameraViewImage[0];
+            var distanceMinimum = predictor(SelectedFaceRect.Value);
+
+            for (int i = 1; i < DetectedFaceRectsInCameraViewImage.Count; i++)
+            {
+                var distance = predictor(DetectedFaceRectsInCameraViewImage[i]);
+                if (distance < distanceMinimum)
+                {
+                    distanceMinimum = distance;
+                    SelectedFaceRect = DetectedFaceRectsInCameraViewImage[i];
+                }
+            }
+        }
+
+        void SelectBiggest()
+        {
+            Func<System.Drawing.Rectangle, double> predictor = e => e.Width + e.Height;
+
+            SelectedFaceRect = DetectedFaceRectsInCameraViewImage[0];
+            var faceSizeMax = predictor(SelectedFaceRect.Value);
+
+            for (int i = 1; i < DetectedFaceRectsInCameraViewImage.Count; i++)
+            {
+                var size = predictor(DetectedFaceRectsInCameraViewImage[i]);
                 if (size > faceSizeMax)
                 {
                     faceSizeMax = size;
-                    SelectedFaceRect = DetectedFaceRects[i];
+                    SelectedFaceRect = DetectedFaceRectsInCameraViewImage[i];
                 }
             }
         }

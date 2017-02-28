@@ -17,9 +17,13 @@
         void CreatePropertiesAdditional()
         {
         }
+
         void InitializePropertiesByDefaultValueAdditional()
         {
+
+
         }
+
         void AttachInternalEventHandlersAdditional()
         {
             CaptureImageSize.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
@@ -34,16 +38,44 @@
                 if (CurrentConnectedEgsDevice == null) { if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); } return; }
                 CurrentConnectedEgsDevice.IsMonitoringTemperature = IsToMonitorTemperature.Value && CurrentConnectedEgsDevice.IsHidDeviceConnected;
             };
-            FaceDetectionMethod.ValueUpdated += delegate
+            FaceDetectionMethod.ValueUpdated += delegate { OnFaceDetectionOnOffRelatedPropertiesUpdated(); };
+            IsToDetectFaces.ValueUpdated += delegate { OnFaceDetectionOnOffRelatedPropertiesUpdated(); };
+
+            CaptureBinning.ValueUpdated += delegate { OnPixelOneSideLengthRelatedPropertiesUpdated(); };
+        }
+
+        void OnPixelOneSideLengthRelatedPropertiesUpdated()
+        {
+            if (CaptureBinning.ValueOfSelectedItem <= 0)
             {
-                if (CurrentConnectedEgsDevice == null) { if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); } return; }
-                CurrentConnectedEgsDevice.UpdateFaceDetectionRelatedProperties();
-            };
-            IsToDetectFaces.ValueUpdated += delegate
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                throw new NotImplementedException();
+            }
+
+            // TODO: get the actual binned pixel size from devices.
+            var newSensorOnePixelSideLengthInMillimeters = 0.0014f * CaptureBinning.ValueOfSelectedItem;
+            if (SensorOnePixelSideLengthInMillimeters.Value != newSensorOnePixelSideLengthInMillimeters)
             {
-                if (CurrentConnectedEgsDevice == null) { if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); } return; }
-                CurrentConnectedEgsDevice.UpdateFaceDetectionRelatedProperties();
-            };
+                SensorOnePixelSideLengthInMillimeters.Value = newSensorOnePixelSideLengthInMillimeters;
+                OnPropertyChanged(Name.Of(() => CameraSpecificationValue));
+            }
+
+            if (CurrentConnectedEgsDevice == null)
+            {
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                return;
+            }
+
+        }
+
+        void OnFaceDetectionOnOffRelatedPropertiesUpdated()
+        {
+            if (CurrentConnectedEgsDevice == null)
+            {
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                return;
+            }
+            CurrentConnectedEgsDevice.UpdateFaceDetectionRelatedProperties();
         }
 
         public string CameraSpecificationValue

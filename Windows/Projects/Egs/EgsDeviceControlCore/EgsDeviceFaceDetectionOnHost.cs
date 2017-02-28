@@ -86,9 +86,9 @@
 
         DlibSharp.Array2dUchar DlibArray2dUcharImage { get; set; }
         DlibSharp.FrontalFaceDetector DlibHogSvm { get; set; }
-        public IList<System.Drawing.Rectangle> DetectedFaceRects { get; private set; }
+        public IList<System.Drawing.Rectangle> DetectedFaceRectsInCameraViewImage { get; private set; }
 
-        public bool IsFaceDetected { get { return (DetectedFaceRects != null) && (DetectedFaceRects.Count > 0); } }
+        public bool IsFaceDetected { get { return (DetectedFaceRectsInCameraViewImage != null) && (DetectedFaceRectsInCameraViewImage.Count > 0); } }
 
         public System.Drawing.Rectangle CameraViewImageRightHandDetectionArea { get; private set; }
         public System.Drawing.Rectangle CameraViewImageLeftHandDetectionArea { get; private set; }
@@ -227,7 +227,7 @@
                 Debug.WriteLine("DetectorImageWidth: " + detectorImageWidth);
                 Debug.WriteLine("DetectorImageHeight: " + detectorImageHeight);
                 DlibArray2dUcharImage.ResizeImage(detectorImageWidth, detectorImageHeight);
-                DetectedFaceRects = DlibHogSvm.DetectFaces(DlibArray2dUcharImage, DlibHogSvmThreshold)
+                DetectedFaceRectsInCameraViewImage = DlibHogSvm.DetectFaces(DlibArray2dUcharImage, DlibHogSvmThreshold)
                     .Select(e => new System.Drawing.Rectangle((int)(e.X / scale), (int)(e.Y / scale), (int)(e.Width / scale), (int)(e.Height / scale)))
                     .ToList();
             }
@@ -251,7 +251,7 @@
             // TODO: MUSTDO: implement
             // Implemented in EgsDeviceFaceDetectionOnHost_FaceSelection.cs
             SelectOneFaceRect();
-            var list = this.DetectedFaceRects.ToList();
+            var list = this.DetectedFaceRectsInCameraViewImage.ToList();
             for (int i = 0; i < Device.EgsGestureHidReport.Faces.Count; i++)
             {
                 if (i >= list.Count) { continue; }

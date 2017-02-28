@@ -40,6 +40,32 @@
             };
             FaceDetectionMethod.ValueUpdated += delegate { OnFaceDetectionOnOffRelatedPropertiesUpdated(); };
             IsToDetectFaces.ValueUpdated += delegate { OnFaceDetectionOnOffRelatedPropertiesUpdated(); };
+
+            CaptureBinning.ValueUpdated += delegate { OnPixelOneSideLengthRelatedPropertiesUpdated(); };
+        }
+
+        void OnPixelOneSideLengthRelatedPropertiesUpdated()
+        {
+            if (CaptureBinning.ValueOfSelectedItem <= 0)
+            {
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                throw new NotImplementedException();
+            }
+
+            // TODO: get the actual binned pixel size from devices.
+            var newSensorOnePixelSideLengthInMillimeters = 0.0014f * CaptureBinning.ValueOfSelectedItem;
+            if (SensorOnePixelSideLengthInMillimeters.Value != newSensorOnePixelSideLengthInMillimeters)
+            {
+                SensorOnePixelSideLengthInMillimeters.Value = newSensorOnePixelSideLengthInMillimeters;
+                OnPropertyChanged(Name.Of(() => CameraSpecificationValue));
+            }
+
+            if (CurrentConnectedEgsDevice == null)
+            {
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                return;
+            }
+            CurrentConnectedEgsDevice.FaceDetectionOnHost.SensorImageBinnedPixelOneSideLength = SensorOnePixelSideLengthInMillimeters.Value;
         }
 
         void OnFaceDetectionOnOffRelatedPropertiesUpdated()
