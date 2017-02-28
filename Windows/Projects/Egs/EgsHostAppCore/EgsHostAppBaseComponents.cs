@@ -35,6 +35,7 @@
             }
         }
 
+        [DataMember]
         public CameraViewWindowModel CameraViewWindowModel { get; private set; }
         public CameraViewWindow CameraViewWindow { get; private set; }
         public SettingsWindow SettingsWindow { get; private set; }

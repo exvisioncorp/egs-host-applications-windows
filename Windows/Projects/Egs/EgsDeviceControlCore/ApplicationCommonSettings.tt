@@ -48,7 +48,7 @@ namespace Egs
             // but now the app interprets only "emulation by mouse", so it does not draw anything when ZKOO sends any reports.
 #if DEBUG
             IsDebugging = true;
-            IsDebuggingInternal = true;
+            IsDebuggingInternal = IsInternalRelease;
             IsToEmulateReportByActualMouseRawInputToDebugViews = false;
 #else
             IsDebugging = false;

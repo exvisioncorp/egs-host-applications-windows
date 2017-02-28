@@ -29,6 +29,7 @@
     /// (2) Initialize it by (EgsDevice device)
     /// (3) Send it to CameraViewUserControl.InitializeOnceAtStartup() as an argument
     /// </summary>
+    [DataContract]
     public partial class CameraViewUserControlModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

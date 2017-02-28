@@ -184,7 +184,11 @@
 
             RefToHostApp = hostApp;
 
-            CheckIfAllSoundFilesExistOrNot();
+
+            // TODO: MUSTDO: fix the bug, now it does not work.
+            if (ApplicationCommonSettings.IsDebuggingInternal) { CheckIfAllSoundFilesExistOrNot(); }
+
+
 
             RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized);
             RefToHostApp.CameraViewBordersAndPointersAreDrawnBy.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewBordersAndPointersAreDrawnByKind.HostApplication);

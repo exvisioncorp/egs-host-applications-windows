@@ -26,6 +26,7 @@
     /// (2) Initialize it by (EgsDevice device)
     /// (3) Send it to CameraViewWindow.InitializeOnceAtStartup() as an argument
     /// </summary>
+    [DataContract]
     public partial class CameraViewWindowModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

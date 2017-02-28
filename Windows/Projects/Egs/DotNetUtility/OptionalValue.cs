@@ -86,6 +86,9 @@
             var result = Options.Single(predicate);
             if (result == null) { return false; }
             SelectedIndex = Options.IndexOf(result);
+#if DEBUG
+            if (SelectedItem != result) { System.Diagnostics.Debugger.Break(); }
+#endif
             return true;
         }
     }

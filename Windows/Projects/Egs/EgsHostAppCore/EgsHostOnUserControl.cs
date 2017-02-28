@@ -51,12 +51,14 @@
         public CameraViewUserControlModel CameraViewUserControlModel { get; private set; }
         [DataMember]
         public OnePersonBothHandsViewModel OnePersonBothHandsViewModel { get; private set; }
+        [DataMember]
         public long DrawingCursorsMinimumIntervalInMilliseconds { get; set; }
+        [DataMember]
+        public TimeSpan WaitTimeTillMouseCursorHideOnMouseMode { get; set; }
+
         Stopwatch drawingCursorsStopwatch { get; set; }
         public IList<CursorForm> CursorViews { get; protected set; }
         internal TimerPrecisionLogger PrecisionLogger { get; private set; }
-
-        public TimeSpan WaitTimeTillMouseCursorHideOnMouseMode { get; set; }
 
         // NOTE: These commands are sent to device.  So they can be put in "EgsDeviceControlCore".  But the namespace of ICommand is System.Windows.Input of WPF, so they are written here.
         public SimpleDelegateCommand ResetSettingsCommand { get; private set; }
