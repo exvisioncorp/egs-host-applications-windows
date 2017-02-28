@@ -5,6 +5,7 @@
     using System.Linq;
     using System.ComponentModel;
     using System.Diagnostics;
+    using DotNetUtility;
 
     public partial class EgsDeviceFaceDetectionOnHost : IDisposable, INotifyPropertyChanged
     {
@@ -32,18 +33,17 @@
         /// </summary>
         public double CameraViewImageScale_DividedBy_SensorImageScale { get { Trace.Assert(SensorImageHeight > 0); return CameraViewImageHeight / SensorImageHeight; } }
 
-        public double RealFaceBreadth { get; set; }
-        public double RealFaceZMaximum { get; set; }
-        public double RealShoulderBreadth { get; set; }
-        public double RealPalmBreadth { get; set; }
+        public RangedDouble RealFaceBreadth { get; private set; }
+        public RangedDouble MaxPlayableDistanceInMeter { get; private set; }
+        public double RealFaceZMaximum { get { return MaxPlayableDistanceInMeter * 1000.0; } }
+        public RangedDouble RealShoulderBreadth { get; private set; }
+        public RangedDouble RealPalmBreadth { get; private set; }
+        public RangedDouble RealDetectionAreaWidth { get; private set; }
+        public RangedDouble RealDetectionAreaHeight { get; private set; }
 
         public double RealDetectionAreaCenterXOffset { get; set; }
         public double RealDetectionAreaCenterYOffset { get; set; }
         public double RealDetectionAreaCenterZOffset { get; set; }
-
-        public double RealDetectionAreaWidth { get; set; }
-        public double RealDetectionAreaHeight { get; set; }
-
 
         // NOTE: DetectorImageDetectableFaceWidthMinimum is decided by detector's specification.  In some case, dectector can find smaller faces by enlarging input image.
 
@@ -72,11 +72,17 @@
         }
 
 
-        public int SetCameraViewImageBitmapIntervalMilliseconds { get; set; }
+        public RangedInt SetCameraViewImageBitmapIntervalMilliseconds { get; private set; }
+        /// <summary>
+        /// -3 => High Sensitivity.  +3 => High Specificity
+        /// </summary>
+        public RangedInt SensitivityAndSpecificity { get; private set; }
+        public double DlibHogSvmThreshold { get { return (SensitivityAndSpecificity - 4.0) / 10.0; } }
+
         Stopwatch SetCameraViewImageBitmapIntervalStopwatch { get; set; }
         System.ComponentModel.BackgroundWorker Worker { get; set; }
 
-        bool IsDetectingFaces { get; set; }
+        bool IsDetecting { get; set; }
 
         DlibSharp.Array2dUchar DlibArray2dUcharImage { get; set; }
         DlibSharp.FrontalFaceDetector DlibHogSvm { get; set; }
@@ -120,21 +126,27 @@
 
             // +X:Right  +Y:Bottom  +Z:Back (camera to user)
             // Parameters input by user
-            RealFaceBreadth = 159.0;     // (140,200) Avg: M:162 F:156
-            RealFaceZMaximum = 3000.0;   // 3[m].  10 feet UI
-            RealShoulderBreadth = 379.0; // (310,440) Avg: M:397 F:361
-            RealPalmBreadth = 78.0;      // ( 65, 95) Avg: M: 82 F: 74
+            // (140,200) Avg: M:162 F:156
+            RealFaceBreadth = new RangedDouble(159, 140, 200, 1, 5, 1);
+            // 3[m].  10 feet UI
+            MaxPlayableDistanceInMeter = new RangedDouble(3.0, 1.0, 5.0, 0.1, 0.5, 0.1);
+            // (310,440) Avg: M:397 F:361
+            RealShoulderBreadth = new RangedDouble(379, 310, 440, 1, 10, 1);
+            // ( 65, 95) Avg: M: 82 F: 74
+            RealPalmBreadth = new RangedDouble(78, 65, 95, 1, 3, 1);
+            RealDetectionAreaWidth = new RangedDouble(RealPalmBreadth * 4, 100, 500, 10, 50, 10);
+            RealDetectionAreaHeight = new RangedDouble(RealPalmBreadth * 4, 100, 500, 10, 50, 10);
+
             RealDetectionAreaCenterXOffset = (RealShoulderBreadth / 2) * 1.2;
             RealDetectionAreaCenterYOffset = RealFaceBreadth * 0.7;
             RealDetectionAreaCenterZOffset = -RealShoulderBreadth / 2.1;
-            RealDetectionAreaWidth = RealPalmBreadth * 4;
-            RealDetectionAreaHeight = RealPalmBreadth * 4;
 
+            SensitivityAndSpecificity = new RangedInt(0, -3, 3, 1, 1, 1);
 
             DetectorImageDetectableFaceWidthMinimum = 73;
             Debug.WriteLine("DetectorImageScale_DividedBy_CameraViewImageScale: " + DetectorImageScale_DividedBy_CameraViewImageScale);
 
-            SetCameraViewImageBitmapIntervalMilliseconds = 200;
+            SetCameraViewImageBitmapIntervalMilliseconds = new RangedInt(200, 0, 2000, 10, 100, 10);
             SetCameraViewImageBitmapIntervalStopwatch = Stopwatch.StartNew();
 
             Worker = new System.ComponentModel.BackgroundWorker();
@@ -158,7 +170,7 @@
 
         void Device_CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged(object sender, EventArgs e)
         {
-            if (false && Device.Settings.IsToUseDefaultFaceDetection && ApplicationCommonSettings.IsDebugging)
+            if (false && Device.Settings.FaceDetectionMethod.Value == PropertyTypes.FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication && ApplicationCommonSettings.IsDebugging)
             {
                 // Draw the latest result before return;
                 if (SelectedFaceRect.HasValue)
@@ -176,10 +188,9 @@
             SetCameraViewImageBitmapIntervalStopwatch.Start();
 
             var isToDetectFacesOnHost =
-                (Device.Settings.IsToUseDefaultFaceDetection == true)
-                && (Device.Settings.IsToDetectFaces.Value == false)
+                (Device.Settings.FaceDetectionMethod.Value == PropertyTypes.FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication)
+                && (Device.IsDetectingFaces == true)
                 && (Device.Settings.IsToDetectHands.Value == true)
-                && (Device.Settings.IsToFixHandDetectionRegions.Value == true)
                 && (Device.EgsGestureHidReport.Hands[0].IsTracking == false)
                 && (Device.EgsGestureHidReport.Hands[1].IsTracking == false);
             if (isToDetectFacesOnHost)
@@ -190,9 +201,9 @@
 
         public void DetectFaceRunWorkerAsync(System.Drawing.Bitmap cameraViewImageBitmap)
         {
-            if (IsDetectingFaces) { return; }
+            if (IsDetecting) { return; }
 
-            IsDetectingFaces = true;
+            IsDetecting = true;
 
             // Access to Bitmap must be in the same thread.
             Debug.Assert(cameraViewImageBitmap != null);
@@ -216,7 +227,7 @@
                 Debug.WriteLine("DetectorImageWidth: " + detectorImageWidth);
                 Debug.WriteLine("DetectorImageHeight: " + detectorImageHeight);
                 DlibArray2dUcharImage.ResizeImage(detectorImageWidth, detectorImageHeight);
-                DetectedFaceRects = DlibHogSvm.DetectFaces(DlibArray2dUcharImage, -0.5)
+                DetectedFaceRects = DlibHogSvm.DetectFaces(DlibArray2dUcharImage, DlibHogSvmThreshold)
                     .Select(e => new System.Drawing.Rectangle((int)(e.X / scale), (int)(e.Y / scale), (int)(e.Width / scale), (int)(e.Height / scale)))
                     .ToList();
             }
@@ -232,7 +243,7 @@
             if (IsFaceDetected == false || isDisposing)
             {
                 // NOTE: must set IsDetectinfFaces to false, before return.
-                IsDetectingFaces = false;
+                IsDetecting = false;
                 return;
             }
 
@@ -254,7 +265,7 @@
             // TODO: MUSTDO: Think the order of the next 2 line.
             OnFaceDetectionCompleted(EventArgs.Empty);
 
-            IsDetectingFaces = false;
+            IsDetecting = false;
         }
 
         /// <summary>
@@ -379,7 +390,7 @@
                 }
                 SetCameraViewImageBitmapIntervalStopwatch.Reset();
                 SetCameraViewImageBitmapIntervalStopwatch.Start();
-                while (IsDetectingFaces)
+                while (IsDetecting)
                 {
                     System.Threading.Thread.Sleep(50);
                     if (SetCameraViewImageBitmapIntervalStopwatch.ElapsedMilliseconds > 2000)

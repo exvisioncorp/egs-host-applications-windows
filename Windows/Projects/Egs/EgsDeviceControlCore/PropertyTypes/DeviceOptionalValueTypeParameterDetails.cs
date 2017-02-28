@@ -12,13 +12,15 @@
     using Egs.EgsDeviceControlCore.Properties;
     using Egs.DotNetUtility;
 
-    public class HidAccessPropertyOptionalTypeParameterBase
+
+    public class HidAccessPropertyOptionalTypeParameterBase : ValueWithDescriptionBase
     {
         // NOTE: Do not add implementation of IPropertyChanged to this class.  Use this only for Optional<T>.
-        public byte Value { get; protected set; }
-        public string DescriptionKey { get; protected set; }
-        public virtual string Description { get { return Resources.ResourceManager.GetString(DescriptionKey, Resources.Culture); } }
-        public override string ToString() { return Description; }
+        public byte Value
+        {
+            get;
+            protected set;
+        }
     }
 
     public class HidAccessPropertyOptionalTypeParameterSize : HidAccessPropertyOptionalTypeParameterBase
@@ -182,6 +184,13 @@
             ret.Add(new CameraViewImageSourceBitmapSizeDetail() { Value = 2, Width = 640, Height = 480 });
             return ret;
         }
+    }
+
+    public enum FaceDetectionMethodKind
+    {
+        DefaultProcessOnEgsDevice,
+        DefaultProcessOnEgsHostApplication,
+        SdkUserProcess,
     }
 
     public partial class FaceSelectionMethodKindDetail : HidAccessPropertyOptionalTypeParameterBase

@@ -12,7 +12,7 @@
     using Egs.EgsDeviceControlCore.Properties;
     using Egs.DotNetUtility;
 
-    public class CameraViewBordersAndPointersAreDrawnByDetail : EgsHostOptionalPropertyDetailBase
+    public class CameraViewBordersAndPointersAreDrawnByDetail : ValueWithDescriptionBase
     {
         public CameraViewBordersAndPointersAreDrawnByKind EnumValue { get; internal set; }
 
@@ -33,7 +33,7 @@
         }
     }
 
-    public class CultureInfoAndDescriptionDetail : EgsHostOptionalPropertyDetailBase
+    public class CultureInfoAndDescriptionDetail : ValueWithDescriptionBase
     {
         public string CultureInfoString { get; internal set; }
 
@@ -64,7 +64,7 @@
         }
     }
 
-    public class MouseCursorPositionUpdatedByGestureCursorMethodDetail : EgsHostOptionalPropertyDetailBase
+    public class MouseCursorPositionUpdatedByGestureCursorMethodDetail : ValueWithDescriptionBase
     {
         public MouseCursorPositionUpdatedByGestureCursorMethods EnumValue { get; set; }
         public static List<MouseCursorPositionUpdatedByGestureCursorMethodDetail> GetDefaultList()
@@ -94,7 +94,7 @@
         }
     }
 
-    public class CursorDrawingTimingMethodDetail : EgsHostOptionalPropertyDetailBase
+    public class CursorDrawingTimingMethodDetail : ValueWithDescriptionBase
     {
         public CursorDrawingTimingMethods EnumValue { get; set; }
         public static List<CursorDrawingTimingMethodDetail> GetDefaultList()
@@ -119,7 +119,7 @@
         }
     }
 
-    public class CameraViewWindowStateHostApplicationsControlMethodDetail : EgsHostOptionalPropertyDetailBase
+    public class CameraViewWindowStateHostApplicationsControlMethodDetail : ValueWithDescriptionBase
     {
         public CameraViewWindowStateHostApplicationsControlMethods EnumValue { get; internal set; }
 
@@ -145,7 +145,7 @@
         }
     }
 
-    public class CameraViewWindowStateUsersControlMethodDetail : EgsHostOptionalPropertyDetailBase
+    public class CameraViewWindowStateUsersControlMethodDetail : ValueWithDescriptionBase
     {
         public CameraViewWindowStateUsersControlMethods EnumValue { get; internal set; }
 

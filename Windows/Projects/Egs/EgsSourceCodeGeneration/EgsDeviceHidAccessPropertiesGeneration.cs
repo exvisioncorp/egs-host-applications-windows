@@ -63,7 +63,10 @@
                         item.CategoryId = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.CategoryId));
                         item.PropertyId = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.PropertyId));
                         item.ValueTypeOnDevice = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.ValueTypeOnDevice));
-                        item.DataLength = int.Parse(row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.DataLength)));
+                        int tempDataLength = 0;
+                        var hr = int.TryParse(row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.DataLength)), out tempDataLength);
+                        System.Diagnostics.Debug.Assert(hr);
+                        item.DataLength = tempDataLength;
                         item.IsDataMember = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.IsDataMember)) == "true";
                         item.AccessModifierInFuture = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.AccessModifierInFuture));
                         item.IsReadOnly = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.IsReadOnly)) == "true";
@@ -76,7 +79,7 @@
                         {
                             var daoiol = new DescriptionAndOptionsInOneLanguage();
                             daoiol.PropertyDescription = row.GetCellString(headerCellString_ColumnIndex_Dict, "Description_" + culture);
-                            if (item.IsOptional)
+                            if (item.IsHidAccessPropertyOptional || item.IsEnumValueWithDescription)
                             {
                                 var optionsString = row.GetCellString(headerCellString_ColumnIndex_Dict, "Options_" + culture);
                                 var optionStringArray = optionsString.Split('\n');
@@ -120,6 +123,7 @@
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debugger.Break();
                 Console.WriteLine(ex.Message);
                 return false;
             }
@@ -128,25 +132,39 @@
         public string OneClassCodeString(IEnumerable<EgsDeviceHidAccessPropertyOneRecord> propertyInformationList)
         {
             var ret = "";
-            var ownerClassColumn = propertyInformationList.Select(e => e.OwnerClass);
-            var distinct = ownerClassColumn.Distinct();
-            var single = distinct.Single();
-            ret += @"
+
+            try
+            {
+                var ownerClassColumn = propertyInformationList.Select(e => e.OwnerClass).ToList();
+                var distinct = ownerClassColumn.Distinct();
+                var single = distinct.Single();
+                ret += @"
     public partial class " + single + @"
     {
 ";
+            }
+            catch { System.Diagnostics.Debugger.Break(); throw; }
+
             // property definitions
-            foreach (var item in propertyInformationList) { ret += item.GetCodeOfPropertyDefinition(); }
+            foreach (var item in propertyInformationList)
+            {
+                try { ret += item.GetCodeOfPropertyDefinition(); }
+                catch { System.Diagnostics.Debugger.Break(); throw; }
+            }
 
             // creating property object
             ret +=
-@"
+        @"
         void CreateProperties()
         {
 ";
-            foreach (var item in propertyInformationList) { ret += item.GetCodeOfCreatingPropertyObject(); }
+            foreach (var item in propertyInformationList)
+            {
+                try { ret += item.GetCodeOfCreatingPropertyObject(); }
+                catch { System.Diagnostics.Debugger.Break(); throw; }
+            }
             ret +=
-@"        }
+        @"        }
 ";
             // add properties to DevicePropertyList
             ret += @"
@@ -154,9 +172,13 @@
         {
             HidAccessPropertyList = new List<HidAccessPropertyBase>();
 ";
-            foreach (var item in propertyInformationList) { ret += item.GetCodeOfAddingPropertiesToPropertyList(); }
+            foreach (var item in propertyInformationList)
+            {
+                try { ret += item.GetCodeOfAddingPropertiesToPropertyList(); }
+                catch { System.Diagnostics.Debugger.Break(); throw; }
+            }
             ret +=
-@"        }
+        @"        }
 ";
 
             // initialize by default value
@@ -164,14 +186,18 @@
         internal void InitializePropertiesByDefaultValue()
         {
 ";
-            foreach (var item in propertyInformationList) { ret += item.GetCodeOfInitializationByDefaultValue(); }
+            foreach (var item in propertyInformationList)
+            {
+                try { ret += item.GetCodeOfInitializationByDefaultValue(); }
+                catch { System.Diagnostics.Debugger.Break(); throw; }
+            }
             ret +=
-@"        }
+        @"        }
 ";
 
             // end of class definition
             ret +=
-@"    }
+        @"    }
 ";
             return ret;
         }
@@ -190,7 +216,20 @@
                     if (ApplicationCommonSettings.IsInternalRelease == false)
                     {
                         EgsDeviceProperties = EgsDevicePropertiesAll.Where(e => new Version(e.AvailableFirmwareVersion) <= firmwareVersion);
-                        EgsDeviceSettingsProperties = EgsDeviceSettingsPropertiesAll.Where(e => new Version(e.AvailableFirmwareVersion) <= firmwareVersion);
+                        EgsDeviceSettingsProperties = EgsDeviceSettingsPropertiesAll.Where(e =>
+                        {
+                            try
+                            {
+                                var version = new Version(e.AvailableFirmwareVersion);
+                                return version <= firmwareVersion;
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debugger.Break();
+                                Console.WriteLine(ex.Message);
+                                throw;
+                            }
+                        });
                     }
                     else
                     {
@@ -200,15 +239,11 @@
                     var EgsHostSettingsProperties = InputRecordList.Where(e => e.OwnerClass == "EgsHostSettings");
 
                     var code =
-@"namespace Egs
+        @"namespace Egs
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Linq;
     using System.Runtime.Serialization;
-    using System.Windows;
     using Egs.EgsDeviceControlCore.Properties;
     using Egs.DotNetUtility;
     using Egs.PropertyTypes;
@@ -217,7 +252,7 @@
                     code += OneClassCodeString(EgsDeviceSettingsProperties);
                     if (false) { code += OneClassCodeString(EgsHostSettingsProperties); }
                     code +=
-@"}
+        @"}
 ";
                     writer.Write(code);
                 }
@@ -226,6 +261,7 @@
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debugger.Break();
                 Console.WriteLine(ex.Message);
                 return false;
             }

@@ -99,7 +99,7 @@
                 CursorViewModels[i].UpdateByEgsGestureHidReportHand(Device.EgsGestureHidReport.Hands[i]);
             }
             // If Task is not used, delay in moving cursors can accumulate.
-            System.Threading.Tasks.Task.Run(() =>
+            Task.Run(() =>
             {
                 if (isDrawingCursors) { return; }
                 isDrawingCursors = true;
@@ -115,7 +115,7 @@
         public void InitializeFaceDetection()
         {
             // NOTE: important
-            Device.Settings.IsToUseDefaultFaceDetection = false;
+            Device.Settings.FaceDetectionMethod.Value = Egs.PropertyTypes.FaceDetectionMethodKind.SdkUserProcess;
 
             HandDetectionAreaDecision = new EgsDeviceFaceDetectionOnHost();
             var cameraViewImageSize = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem;

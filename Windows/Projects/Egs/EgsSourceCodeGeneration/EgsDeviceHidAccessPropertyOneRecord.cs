@@ -43,9 +43,13 @@
         {
             get { return OwnerClass + "_" + ValueNameOnHost + "_Description"; }
         }
-        public bool IsOptional
+        public bool IsHidAccessPropertyOptional
         {
             get { return ValueTypeOnHost == "HidAccessPropertyOptional"; }
+        }
+        public bool IsEnumValueWithDescription
+        {
+            get { return ValueTypeOnHost.Contains("EnumValueWithDescription"); }
         }
         public string DetailTypeName
         {
@@ -53,7 +57,7 @@
         }
         public string ModifiedValueTypeOnHost
         {
-            get { return IsOptional ? ("HidAccessPropertyOptional<" + DetailTypeName + ">") : ValueTypeOnHost; }
+            get { return IsHidAccessPropertyOptional ? ("HidAccessPropertyOptional<" + DetailTypeName + ">") : ValueTypeOnHost; }
         }
 
 
@@ -62,15 +66,8 @@
             var ret = "        ";
             ret += IsDataMember ? "[DataMember]" + Environment.NewLine + "        " : "";
             ret += AccessModifierInLatestSdkForWindows + " " + ModifiedValueTypeOnHost + " " + ValueNameOnHost + " { get; ";
-            if (false)
-            {
-                ret += (AccessModifierInLatestSdkForWindows != "internal") ? "internal " : "";
-                ret += "set; }";
-            }
-            else
-            {
-                ret += "private set; }";
-            }
+            ret += (AccessModifierInLatestSdkForWindows != "private") ? "private " : "";
+            ret += "set; }";
             ret += Environment.NewLine;
             return ret;
         }
@@ -83,18 +80,25 @@
         public string GetCodeOfCreatingPropertyObject()
         {
             var ret = string.Format(System.Globalization.CultureInfo.InvariantCulture, "            {0} = new {1}() {{ ", ValueNameOnHost, ModifiedValueTypeOnHost);
-            ret += string.IsNullOrEmpty(ReportId) ? "" : "ReportId = " + ReportId;
-            ret += string.IsNullOrEmpty(MessageId) ? "" : ", MessageId = " + MessageId;
-            ret += string.IsNullOrEmpty(CategoryId) ? "" : ", CategoryId = " + CategoryId;
-            ret += string.IsNullOrEmpty(PropertyId) ? "" : ", PropertyId = " + PropertyId;
-            ret += string.IsNullOrEmpty(ValueTypeOnDevice) ? "" : ", ValueTypeOnDevice = \"" + ValueTypeOnDevice + "\"";
-            ret += ", DataLength = " + DataLength;
-            ret += ", IsReadOnly = " + (IsReadOnly ? "true" : "false");
-            ret += ", NameOfProperty = \"" + ValueNameOnHost + "\"";
-            ret += ", AvailableFirmwareVersion = new Version(\"" + AvailableFirmwareVersion + "\")";
-            ret += ", DescriptionKey = Name.Of(() => Resources." + DescriptionKey + ")";
+            if (ModifiedValueTypeOnHost.Contains("HidAccessProperty")
+                || ModifiedValueTypeOnHost.Contains("ValueWithDescription"))
+            {
+                ret += "DescriptionKey = Name.Of(() => Resources." + DescriptionKey + ")";
+            }
+            if (ModifiedValueTypeOnHost.Contains("HidAccessProperty"))
+            {
+                ret += string.IsNullOrEmpty(ReportId) ? "" : ", ReportId = " + ReportId;
+                ret += string.IsNullOrEmpty(MessageId) ? "" : ", MessageId = " + MessageId;
+                ret += string.IsNullOrEmpty(CategoryId) ? "" : ", CategoryId = " + CategoryId;
+                ret += string.IsNullOrEmpty(PropertyId) ? "" : ", PropertyId = " + PropertyId;
+                ret += string.IsNullOrEmpty(ValueTypeOnDevice) ? "" : ", ValueTypeOnDevice = \"" + ValueTypeOnDevice + "\"";
+                ret += ", DataLength = " + DataLength;
+                ret += ", IsReadOnly = " + (IsReadOnly ? "true" : "false");
+                ret += ", NameOfProperty = \"" + ValueNameOnHost + "\"";
+                ret += ", AvailableFirmwareVersion = new Version(\"" + AvailableFirmwareVersion + "\")";
+            }
             ret += " };";
-            if (IsOptional)
+            if (IsHidAccessPropertyOptional)
             {
                 ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}.OptionalValue.Options = {1}.GetDefaultList();", ValueNameOnHost, DetailTypeName);
             }
@@ -108,14 +112,19 @@
 
         public string GetCodeOfAddingPropertiesToPropertyList()
         {
-            return "            HidAccessPropertyList.Add(" + ValueNameOnHost + ");" + Environment.NewLine;
+            var ret = "";
+            if (ModifiedValueTypeOnHost.Contains("HidAccessProperty"))
+            {
+                ret += "            HidAccessPropertyList.Add(" + ValueNameOnHost + ");" + Environment.NewLine;
+            }
+            return ret;
         }
 
         public string GetCodeOfInitializationByDefaultValue()
         {
-            if (string.IsNullOrEmpty(PropertyInitializationOnWindows)) { return ""; }
             var ret = "";
-            if (IsOptional)
+            if (string.IsNullOrEmpty(PropertyInitializationOnWindows)) { return ret; }
+            if (IsHidAccessPropertyOptional)
             {
                 ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, "            {0}.OptionalValue.SelectSingleItemByPredicate(e => e.{1});", ValueNameOnHost, PropertyInitializationOnWindows) + Environment.NewLine;
             }

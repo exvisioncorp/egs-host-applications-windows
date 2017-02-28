@@ -392,6 +392,7 @@
                     }
                     break;
                 default:
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                     throw new NotImplementedException();
             }
         }

@@ -339,7 +339,7 @@ before starting ZKOO application.</comment>
     <value>ログ</value>
     <comment>Log</comment>
   </data>
-  <data name="CommonStrings_DetectionSensitivity" xml:space="preserve">
+  <data name="CommonStrings_DetectionThreshold" xml:space="preserve">
     <value>検出しきい値</value>
     <comment>Detection Threshold</comment>
   </data>
@@ -467,21 +467,13 @@ before starting ZKOO application.</comment>
     <value>デバイスで描画する (低負荷)</value>
     <comment>by Device (for Lower Spec PC)</comment>
   </data>
-  <data name="FaceDetectionIsProcessedByDetail_Type_Description" xml:space="preserve">
-    <value>顔検出を行うデバイス</value>
-    <comment>Device to Detect Faces</comment>
-  </data>
-  <data name="FaceDetectionIsProcessedByDetail_ByHostApplication_Description" xml:space="preserve">
-    <value>ホストアプリケーション (高精度)</value>
-    <comment>by Host Application (Higher Accuracy)</comment>
-  </data>
-  <data name="FaceDetectionIsProcessedByDetail_ByDevice_Description" xml:space="preserve">
-    <value>デバイス</value>
-    <comment>by Device</comment>
-  </data>
   <data name="EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage" xml:space="preserve">
     <value>(長い距離ほど計算負荷が高くなります)</value>
     <comment>(Longer Distance Needs More CPU Usage)</comment>
+  </data>
+  <data name="EgsDeviceFaceDetectionOnHost_MaxPlayableDistanceInMeter_Description" xml:space="preserve">
+    <value>最大検出可能距離[m]</value>
+    <comment>Max Playable Distance [m]</comment>
   </data>
   <data name="CultureInfoAndDescriptionDetail_Type_Description" xml:space="preserve">
     <value>言語</value>
@@ -667,6 +659,10 @@ before starting ZKOO application.</comment>
     <value>ファームウェアバージョン</value>
     <comment>Firmware Version</comment>
   </data>
+  <data name="EgsDeviceSettings_IsToMonitorTemperature_Description" xml:space="preserve">
+    <value>温度を測定する</value>
+    <comment>Measure Temperature</comment>
+  </data>
   <data name="EgsDevice_TemperatureInCelsius_Description" xml:space="preserve">
     <value>温度 [C]</value>
     <comment>Temperature [C]</comment>
@@ -750,6 +746,26 @@ before starting ZKOO application.</comment>
   <data name="EgsDeviceSettings_IsToDetectFaces_Description" xml:space="preserve">
     <value>顔を検出する</value>
     <comment>Detect Faces</comment>
+  </data>
+  <data name="EgsDeviceSettings_FaceDetectionMethod_Description" xml:space="preserve">
+    <value>顔検出の方法</value>
+    <comment>Face Detection Method</comment>
+  </data>
+  <data name="FaceDetectionMethodDetail_Value0_Description" xml:space="preserve">
+    <value>ZKOOデバイス</value>
+    <comment>ZKOO Device</comment>
+  </data>
+  <data name="FaceDetectionMethodDetail_Value1_Description" xml:space="preserve">
+    <value>ホストアプリケーション (高精度)</value>
+    <comment>Host Application (Higher Accuracy)</comment>
+  </data>
+  <data name="FaceDetectionMethodDetail_Value2_Description" xml:space="preserve">
+    <value>SDKユーザーによるカスタムソリューション</value>
+    <comment>Custom Solution by SDK Users</comment>
+  </data>
+  <data name="EgsDeviceSettings_IsToDetectFacesOnDevice_Description" xml:space="preserve">
+    <value>ZKOOデバイスで顔を検出する</value>
+    <comment>Detect Faces on Device</comment>
   </data>
   <data name="EgsDeviceSettings_IsToDetectHands_Description" xml:space="preserve">
     <value>手を検出する</value>

@@ -577,9 +577,9 @@ namespace Egs.EgsDeviceControlCore.Properties {
         /// <summary>
         ///   Detection Threshold に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string CommonStrings_DetectionSensitivity {
+        public static string CommonStrings_DetectionThreshold {
             get {
-                return ResourceManager.GetString("CommonStrings_DetectionSensitivity", resourceCulture);
+                return ResourceManager.GetString("CommonStrings_DetectionThreshold", resourceCulture);
             }
         }
         
@@ -1188,6 +1188,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Max Playable Distance [m] に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string EgsDeviceFaceDetectionOnHost_MaxPlayableDistanceInMeter_Description {
+            get {
+                return ResourceManager.GetString("EgsDeviceFaceDetectionOnHost_MaxPlayableDistanceInMeter_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   The application will retry sending image file again. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string EgsDeviceFirmwareUpdateModel_AppWillRetrySendingImageAgain {
@@ -1404,6 +1413,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Face Detection Method に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string EgsDeviceSettings_FaceDetectionMethod_Description {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_FaceDetectionMethod_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Face Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string EgsDeviceSettings_FaceDetectionScaleOnFixed_Description {
@@ -1458,6 +1476,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Detect Faces on Device に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string EgsDeviceSettings_IsToDetectFacesOnDevice_Description {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_IsToDetectFacesOnDevice_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Detect Hands に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string EgsDeviceSettings_IsToDetectHands_Description {
@@ -1508,6 +1535,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDeviceSettings_IsToFixScreenMappedAreas_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_IsToFixScreenMappedAreas_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Measure Temperature に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string EgsDeviceSettings_IsToMonitorTemperature_Description {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_IsToMonitorTemperature_Description", resourceCulture);
             }
         }
         
@@ -1773,29 +1809,29 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   by Device に類似しているローカライズされた文字列を検索します。
+        ///   ZKOO Device に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string FaceDetectionIsProcessedByDetail_ByDevice_Description {
+        public static string FaceDetectionMethodDetail_Value0_Description {
             get {
-                return ResourceManager.GetString("FaceDetectionIsProcessedByDetail_ByDevice_Description", resourceCulture);
+                return ResourceManager.GetString("FaceDetectionMethodDetail_Value0_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   by Host Application (Higher Accuracy) に類似しているローカライズされた文字列を検索します。
+        ///   Host Application (Higher Accuracy) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string FaceDetectionIsProcessedByDetail_ByHostApplication_Description {
+        public static string FaceDetectionMethodDetail_Value1_Description {
             get {
-                return ResourceManager.GetString("FaceDetectionIsProcessedByDetail_ByHostApplication_Description", resourceCulture);
+                return ResourceManager.GetString("FaceDetectionMethodDetail_Value1_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Device to Detect Faces に類似しているローカライズされた文字列を検索します。
+        ///   Custom Solution by SDK Users に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string FaceDetectionIsProcessedByDetail_Type_Description {
+        public static string FaceDetectionMethodDetail_Value2_Description {
             get {
-                return ResourceManager.GetString("FaceDetectionIsProcessedByDetail_Type_Description", resourceCulture);
+                return ResourceManager.GetString("FaceDetectionMethodDetail_Value2_Description", resourceCulture);
             }
         }
         

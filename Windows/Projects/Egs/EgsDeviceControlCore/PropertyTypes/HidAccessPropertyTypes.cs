@@ -17,7 +17,7 @@
     /// The classes derived from this class have information to set settings and get state of the device.
     /// </summary>
     [DataContract]
-    public abstract class HidAccessPropertyBase : INotifyPropertyChanged
+    public abstract class HidAccessPropertyBase : ValueWithDescriptionBase
     {
         internal static Dictionary<string, HidAccessPropertyPrimitiveTypeIds> TypeAbbreviationName_EnumValue_Dict { get; private set; }
         internal static Dictionary<Type, string> Type_TypeAbbreviationName_Dict { get; private set; }
@@ -48,51 +48,11 @@
             Type_TypeAbbreviationName_Dict[typeof(System.Single)] = TypeNameStringFloat;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            var t = PropertyChanged;
-            if (t != null) { t(this, new PropertyChangedEventArgs(propertyName)); }
-        }
-
         internal const int ByteArrayDataLength = 64;
         internal const int TypeIdOffsetInByteArrayData = 4;
         internal const int DataLengthOffsetInByteArrayData = 8;
         internal const int SendingDataOffsetInDataOffsetInByteArrayData = 12;
         internal const int OneValueOffsetInByteArrayData = 16;
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        string _Description;
-        /// <summary>
-        /// The key to Resource.ResourceManager.GetString.
-        /// </summary>
-        public string DescriptionKey { get; set; }
-        /// <summary>
-        /// In this base class, Resources.ResourceManager.GetString(DescriptionKey, Resources.Culture) is returned.  The list of key and value is described in some excel sheets.  
-        /// EgsSourceCodeGeneration.exe runs in a build event, and it converts the excel sheets and generates the multi-lingual "Resource.resx" files.
-        /// </summary>
-        public virtual string Description
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_Description) == false) { return _Description; }
-                return string.IsNullOrEmpty(DescriptionKey) ? "" : Resources.ResourceManager.GetString(DescriptionKey, Resources.Culture);
-            }
-            private set { _Description = value; OnPropertyChanged("Description"); }
-        }
-        public override string ToString() { return Description; }
-
-        internal delegate void HidAccessPropertyBaseValueChangedEventHandler(HidAccessPropertyBase sender, EventArgs e);
-        internal event HidAccessPropertyBaseValueChangedEventHandler ValueUpdated;
-        protected virtual void OnValueUpdated()
-        {
-            var t = ValueUpdated; if (t != null) { t(this, EventArgs.Empty); }
-            OnPropertyChanged("Value");
-        }
-        internal virtual void RaiseValueUpdatedOnGetHidFeatureReport()
-        {
-            OnValueUpdated();
-        }
 
         // NOTE: About from ReportId to SendingDataOffsetInData, initial values (when this object is constructed) are used.  When users access get property of the value data, ByteArrayData is always converted and returned.
         internal byte[] ByteArrayData { get; set; }
@@ -156,9 +116,16 @@
             get { return _SendingDataOffsetInData; }
             set { var bytes = BitConverter.GetBytes(value); bytes.CopyTo(ByteArrayData, SendingDataOffsetInDataOffsetInByteArrayData); _SendingDataOffsetInData = value; }
         }
+
         internal bool IsReadOnly { get; set; }
         internal string NameOfProperty { get; set; }
         public Version AvailableFirmwareVersion { get; internal set; }
+
+        internal virtual void RaiseValueUpdatedOnGetHidFeatureReport()
+        {
+            OnValueUpdated();
+        }
+
         internal HidAccessPropertyBase()
         {
             ByteArrayData = new byte[ByteArrayDataLength];
@@ -373,9 +340,8 @@
     [DataContract]
     public class HidAccessPropertyPoint : HidAccessPropertyBase
     {
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt XRange { get; private set; }
-        [DataMember]
         public int X
         {
             get
@@ -392,9 +358,8 @@
                 OnPropertyChanged("X");
             }
         }
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt YRange { get; private set; }
-        [DataMember]
         public int Y
         {
             get
@@ -412,7 +377,8 @@
             }
         }
 
-        public System.Drawing.Point Point
+        [DataMember(Order = 100)]
+        public System.Drawing.Point Value
         {
             get { return new System.Drawing.Point(X, Y); }
             internal set
@@ -441,9 +407,8 @@
     [DataContract]
     public class HidAccessPropertySize : HidAccessPropertyBase
     {
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt WidthRange { get; private set; }
-        [DataMember]
         public int Width
         {
             get
@@ -460,9 +425,8 @@
                 OnPropertyChanged("Width");
             }
         }
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt HeightRange { get; private set; }
-        [DataMember]
         public int Height
         {
             get
@@ -480,7 +444,8 @@
             }
         }
 
-        public System.Drawing.Size Size
+        [DataMember(Order = 100)]
+        public System.Drawing.Size Value
         {
             get { return new System.Drawing.Size(Width, Height); }
             internal set
@@ -509,9 +474,8 @@
     [DataContract]
     public class HidAccessPropertyRect : HidAccessPropertyBase
     {
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt XRange { get; private set; }
-        [DataMember]
         public int X
         {
             get
@@ -528,9 +492,8 @@
                 OnPropertyChanged("X");
             }
         }
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt YRange { get; private set; }
-        [DataMember]
         public int Y
         {
             get
@@ -547,9 +510,8 @@
                 OnPropertyChanged("Y");
             }
         }
-        [DataMember]
+        [DataMember(Order = 20)]
         public RangedInt WidthRange { get; private set; }
-        [DataMember]
         public int Width
         {
             get
@@ -566,9 +528,8 @@
                 OnPropertyChanged("Width");
             }
         }
-        [DataMember]
+        [DataMember(Order = 20)]
         public RangedInt HeightRange { get; private set; }
-        [DataMember]
         public int Height
         {
             get
@@ -586,7 +547,8 @@
             }
         }
 
-        public System.Drawing.Rectangle Rect
+        [DataMember(Order = 100)]
+        public System.Drawing.Rectangle Value
         {
             get { return new System.Drawing.Rectangle(X, Y, Width, Height); }
             internal set

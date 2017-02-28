@@ -16,47 +16,15 @@
     {
         void CreatePropertiesAdditional()
         {
-            _IsToUseDefaultFaceDetection = true;
-            FaceDetectionIsProcessedBy = new OptionalValue<FaceDetectionIsProcessedByDetail>();
-            FaceDetectionOnHost_RealFaceZMaximum = new RangedDouble(3.0, 1.0, 4.0, 0.1, 0.5, 0.1);
-            FaceDetectionOnHost_Threshold = new RangedDouble(-0.4, -0.6, 0.0, 0.05, 0.1, 0.1);
-
-            FaceDetectionIsProcessedBy.Options = FaceDetectionIsProcessedByDetail.GetDefaultList();
         }
 
         void InitializePropertiesByDefaultValueAdditional()
         {
-            FaceDetectionOnHost_RealFaceZMaximum.Value = 3.0;
-            FaceDetectionOnHost_Threshold.Value = -0.4;
-            FaceDetectionIsProcessedBy.SelectSingleItemByPredicate(e => e.EnumValue == FaceDetectionIsProcessedByKind.HostApplication);
+            TouchTargetScreenSize.Width = (int)System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+            TouchTargetScreenSize.Height = (int)System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
         }
 
         void AttachInternalEventHandlersAdditional()
-        {
-            FaceDetectionIsProcessedBy.SelectedItemChanged += delegate
-            {
-                switch (FaceDetectionIsProcessedBy.SelectedItem.EnumValue)
-                {
-                    case FaceDetectionIsProcessedByKind.Stopped:
-                        IsToDetectFaces.Value = false;
-                        break;
-                    case FaceDetectionIsProcessedByKind.HostApplication:
-                        IsToDetectFaces.Value = false;
-                        IsToFixHandDetectionRegions.Value = true;
-                        break;
-                    case FaceDetectionIsProcessedByKind.Device:
-                        IsToDetectFaces.Value = false;
-                        IsToFixHandDetectionRegions.Value = false;
-                        IsToDetectFaces.Value = true;
-                        break;
-                    default:
-                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                        throw new NotImplementedException();
-                }
-            };
-        }
-
-        void SetEventHandlersAboutDependentProperties()
         {
             CaptureImageSize.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
             CaptureFps.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
@@ -65,7 +33,23 @@
             LensFNumber.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
             SensorExposureTimeInMilliseconds.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
 
-            IsToMonitorTemperatureChanged += delegate { CurrentConnectedEgsDevice.IsMonitoringTemperature = IsToMonitorTemperature && CurrentConnectedEgsDevice.IsHidDeviceConnected; };
+            IsToMonitorTemperature.ValueUpdated += delegate
+            {
+                if (CurrentConnectedEgsDevice == null) { if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); } return; }
+                CurrentConnectedEgsDevice.IsMonitoringTemperature = IsToMonitorTemperature.Value && CurrentConnectedEgsDevice.IsHidDeviceConnected;
+            };
+            FaceDetectionMethod.ValueUpdated += delegate { OnFaceDetectionOnOffRelatedPropertiesUpdated(); };
+            IsToDetectFaces.ValueUpdated += delegate { OnFaceDetectionOnOffRelatedPropertiesUpdated(); };
+        }
+
+        void OnFaceDetectionOnOffRelatedPropertiesUpdated()
+        {
+            if (CurrentConnectedEgsDevice == null)
+            {
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                return;
+            }
+            CurrentConnectedEgsDevice.UpdateFaceDetectionRelatedProperties();
         }
 
         public string CameraSpecificationValue
@@ -84,7 +68,7 @@
 
         internal HidAccessPropertyRect GetCameraViewWindowRectByDefaultValue()
         {
-            // System.Window.Rect is struct, so it is difficult to use it in Binding.
+            // System.Window.Rectangle is struct, so it is difficult to use it in Binding.
             if (CameraViewImageSourceBitmapSize == null) { Debugger.Break(); throw new EgsDeviceOperationException("CameraViewImageSourceBitmapSize == null"); }
             if (TouchTargetScreenSize == null) { Debugger.Break(); throw new EgsDeviceOperationException("TouchTargetScreenSize == null"); }
 

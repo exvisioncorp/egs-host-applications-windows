@@ -1404,6 +1404,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Face Detection Method に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string EgsDeviceSettings_FaceDetectionMethod_Description {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_FaceDetectionMethod_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Face Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string EgsDeviceSettings_FaceDetectionScaleOnFixed_Description {
@@ -1458,6 +1467,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Detect Faces on Device に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string EgsDeviceSettings_IsToDetectFacesOnDevice_Description {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_IsToDetectFacesOnDevice_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Detect Hands に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string EgsDeviceSettings_IsToDetectHands_Description {
@@ -1508,6 +1526,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDeviceSettings_IsToFixScreenMappedAreas_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_IsToFixScreenMappedAreas_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Measure Temperature に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string EgsDeviceSettings_IsToMonitorTemperature_Description {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_IsToMonitorTemperature_Description", resourceCulture);
             }
         }
         
@@ -1769,33 +1796,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDeviceSettings_UsbProtocolRevision_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_UsbProtocolRevision_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   by Device に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string FaceDetectionIsProcessedByDetail_ByDevice_Description {
-            get {
-                return ResourceManager.GetString("FaceDetectionIsProcessedByDetail_ByDevice_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   by Host Application (Higher Accuracy) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string FaceDetectionIsProcessedByDetail_ByHostApplication_Description {
-            get {
-                return ResourceManager.GetString("FaceDetectionIsProcessedByDetail_ByHostApplication_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Device to Detect Faces に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string FaceDetectionIsProcessedByDetail_Type_Description {
-            get {
-                return ResourceManager.GetString("FaceDetectionIsProcessedByDetail_Type_Description", resourceCulture);
             }
         }
         

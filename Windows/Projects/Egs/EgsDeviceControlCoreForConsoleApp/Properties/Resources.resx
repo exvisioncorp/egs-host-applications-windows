@@ -467,18 +467,6 @@ before starting ZKOO application.</comment>
     <value>by Device (for Lower Spec PC)</value>
     <comment>by Device (for Lower Spec PC)</comment>
   </data>
-  <data name="FaceDetectionIsProcessedByDetail_Type_Description" xml:space="preserve">
-    <value>Device to Detect Faces</value>
-    <comment>Device to Detect Faces</comment>
-  </data>
-  <data name="FaceDetectionIsProcessedByDetail_ByHostApplication_Description" xml:space="preserve">
-    <value>by Host Application (Higher Accuracy)</value>
-    <comment>by Host Application (Higher Accuracy)</comment>
-  </data>
-  <data name="FaceDetectionIsProcessedByDetail_ByDevice_Description" xml:space="preserve">
-    <value>by Device</value>
-    <comment>by Device</comment>
-  </data>
   <data name="EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage" xml:space="preserve">
     <value>(Longer Distance Needs More CPU Usage)</value>
     <comment>(Longer Distance Needs More CPU Usage)</comment>
@@ -667,6 +655,10 @@ before starting ZKOO application.</comment>
     <value>Firmware Version</value>
     <comment>Firmware Version</comment>
   </data>
+  <data name="EgsDeviceSettings_IsToMonitorTemperature_Description" xml:space="preserve">
+    <value>Measure Temperature</value>
+    <comment>Measure Temperature</comment>
+  </data>
   <data name="EgsDevice_TemperatureInCelsius_Description" xml:space="preserve">
     <value>Temperature [C]</value>
     <comment>Temperature [C]</comment>
@@ -750,6 +742,14 @@ before starting ZKOO application.</comment>
   <data name="EgsDeviceSettings_IsToDetectFaces_Description" xml:space="preserve">
     <value>Detect Faces</value>
     <comment>Detect Faces</comment>
+  </data>
+  <data name="EgsDeviceSettings_FaceDetectionMethod_Description" xml:space="preserve">
+    <value>Face Detection Method</value>
+    <comment>Face Detection Method</comment>
+  </data>
+  <data name="EgsDeviceSettings_IsToDetectFacesOnDevice_Description" xml:space="preserve">
+    <value>Detect Faces on Device</value>
+    <comment>Detect Faces on Device</comment>
   </data>
   <data name="EgsDeviceSettings_IsToDetectHands_Description" xml:space="preserve">
     <value>Detect Hands</value>

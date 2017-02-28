@@ -202,6 +202,7 @@
                         MessageText = Resources.EgsDeviceFirmwareUpdateModel_DoNotDisconnectTheDevice;
                         break;
                     default:
+                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                         throw new NotImplementedException();
                 }
                 OnPropertyChanged("ExpectedUserAction");
@@ -364,7 +365,7 @@
         public void StartAsync()
         {
             Trace.Assert(ProgressReport.IsBusy == false);
-            Device.Settings.IsToMonitorTemperature = false;
+            Device.Settings.IsToMonitorTemperature.Value = false;
             Device.IsUpdatingFirmware = true;
             IsBusy = true;
             IsCanceled = false;

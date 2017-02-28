@@ -34,13 +34,15 @@
         {
             if (IsDetectingFaces) { return; }
             IsDetectingFaces = true;
-            Trace.Assert(bmp != null);
+
             // Access to Bitmap must be in the same thread.
+            Trace.Assert(bmp != null);
             Trace.Assert(bmp.Width > 0 && bmp.Height > 0);
             if (cameraViewImageMat != null) { cameraViewImageMat.Dispose(); }
             cameraViewImageMat = bmp.ToMat();
+
             // Heavy tasks must run in the other thread.
-            await System.Threading.Tasks.Task.Run(() =>
+            await Task.Run(() =>
             {
                 using (var srcGray = cameraViewImageMat.CvtColor(ColorConversionCodes.BGR2GRAY))
                 {
