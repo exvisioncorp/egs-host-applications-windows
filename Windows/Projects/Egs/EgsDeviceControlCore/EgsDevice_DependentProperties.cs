@@ -136,6 +136,7 @@
                 IsDetectingFaces = false;
                 return;
             }
+            // TODO: MUSTDO: update and test!
             switch (Settings.FaceDetectionMethod.Value)
             {
                 case FaceDetectionMethodKind.DefaultProcessOnEgsDevice:
@@ -150,6 +151,8 @@
                             if (Settings.IsToFixHandDetectionRegions.Value != false) { Settings.IsToFixHandDetectionRegions.Value = false; }
                             if (Settings.IsToDetectFacesOnDevice.Value != Settings.IsToDetectFaces.Value) { Settings.IsToDetectFacesOnDevice.Value = Settings.IsToDetectFaces.Value; }
                         }
+                        // TODO: MUSTDO: add Settings.IsToDetectHandsOnDevice
+                        if (Settings.IsToDetectHands.Value != true) { Settings.IsToDetectHands.Value = true; }
                         var newIsDetectingFaces = Settings.IsToDetectFacesOnDevice.Value && IsHidDeviceConnected;
                         if (IsDetectingFaces != newIsDetectingFaces) { IsDetectingFaces = newIsDetectingFaces; }
                     }
