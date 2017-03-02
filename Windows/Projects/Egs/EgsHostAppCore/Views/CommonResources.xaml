@@ -443,6 +443,27 @@
         </Canvas>
     </Viewbox>
 
+    <Viewbox x:Shared="False" x:Key="DetectedFaceAreaPathsOnCanvas" Stretch="Fill">
+        <Canvas Width="98.99" Height="98.989" Opacity="0.7">
+            <Path
+                    Data="F1M98.171,85.854C98.171,92.486,92.759,97.912,86.145,97.912L13.856,97.912C7.242,97.912,1.83,92.486,1.83,85.854L1.83,14.146C1.83,7.514,7.242,2.088,13.856,2.088L86.145,2.088C92.759,2.088,98.171,7.514,98.171,14.146z M96.059,0.505L3.942,0.505C2.052,0.505,0.505,2.056,0.505,3.95L0.505,96.05C0.505,97.944,2.052,99.494,3.942,99.494L96.059,99.494C97.949,99.494,99.495,97.944,99.495,96.05L99.495,3.95C99.495,2.056,97.949,0.505,96.059,0.505"
+                    Fill="Azure" Height="99.999" Canvas.Left="-0.505" Stroke="Azure" StrokeThickness="1.01"
+                    Canvas.Top="-0.506" Width="100" />
+            <Path Data="M0,0.758L12.026,0.758" Height="1.515" Canvas.Left="85.932" StrokeStartLineCap="Round"
+                    StrokeEndLineCap="Round" Stroke="Azure" StrokeThickness="1.515" StrokeLineJoin="Round"
+                    Canvas.Top="48.363" Width="12.026" />
+            <Path Data="M0,0.758L12.026,0.758" Height="1.515" Canvas.Left="1.031" StrokeStartLineCap="Round"
+                    StrokeEndLineCap="Round" Stroke="Azure" StrokeThickness="1.515" StrokeLineJoin="Round"
+                    Canvas.Top="48.363" Width="12.026" />
+            <Path Data="M0.757,0L0.757,12.057" Height="12.057" Canvas.Left="46.492" StrokeStartLineCap="Round"
+                    StrokeEndLineCap="Round" Stroke="Azure" StrokeThickness="1.515" StrokeLineJoin="Round"
+                    Canvas.Top="85.901" Width="1.515" />
+            <Path Data="M0.757,0L0.757,12.057" Height="12.057" Canvas.Left="46.492" StrokeStartLineCap="Round"
+                    StrokeEndLineCap="Round" Stroke="Azure" StrokeThickness="1.515" StrokeLineJoin="Round"
+                    Canvas.Top="1.03" Width="1.515" />
+        </Canvas>
+    </Viewbox>
+
     <Viewbox x:Shared="False" x:Key="SelectedFaceAreaPathsOnCanvas" Stretch="Fill">
         <Canvas Width="98.99" Height="98.989" Opacity="0.7">
             <Path

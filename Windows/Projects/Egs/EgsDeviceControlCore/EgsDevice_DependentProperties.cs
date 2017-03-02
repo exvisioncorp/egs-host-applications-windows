@@ -151,8 +151,11 @@
                             if (Settings.IsToFixHandDetectionRegions.Value != false) { Settings.IsToFixHandDetectionRegions.Value = false; }
                             if (Settings.IsToDetectFacesOnDevice.Value != Settings.IsToDetectFaces.Value) { Settings.IsToDetectFacesOnDevice.Value = Settings.IsToDetectFaces.Value; }
                         }
-                        // TODO: MUSTDO: add Settings.IsToDetectHandsOnDevice
+
+                        // TODO: MUSTDO: update and test!
                         if (Settings.IsToDetectHands.Value != true) { Settings.IsToDetectHands.Value = true; }
+                        Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
+
                         var newIsDetectingFaces = Settings.IsToDetectFacesOnDevice.Value && IsHidDeviceConnected;
                         if (IsDetectingFaces != newIsDetectingFaces) { IsDetectingFaces = newIsDetectingFaces; }
                     }
@@ -163,6 +166,8 @@
                         if (Settings.IsToFixHandDetectionRegions.Value != true) { Settings.IsToFixHandDetectionRegions.Value = true; }
                         var newIsDetectingFaces = Settings.IsToDetectFaces.Value && IsConnected;
                         if (IsDetectingFaces != newIsDetectingFaces) { IsDetectingFaces = newIsDetectingFaces; }
+
+                        Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2;
                     }
                     break;
                 case FaceDetectionMethodKind.SdkUserProcess:

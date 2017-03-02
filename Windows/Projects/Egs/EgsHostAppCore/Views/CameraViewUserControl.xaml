@@ -82,7 +82,7 @@
                             <TranslateTransform x:Name="Face1Location" X="{Binding Face1.Area.X}"
                                     Y="{Binding Face1.Area.Y}" />
                         </Grid.RenderTransform>
-                        <ContentControl x:Name="Face1Size" Content="{StaticResource SelectedFaceAreaPathsOnCanvas}"
+                        <ContentControl x:Name="Face1Size" Content="{StaticResource DetectedFaceAreaPathsOnCanvas}"
                                 Width="{Binding Face1.Area.Width}" Height="{Binding Face1.Area.Height}" />
                     </Grid>
                     <Grid x:Name="Face2Grid"
@@ -92,7 +92,7 @@
                             <TranslateTransform x:Name="Face2Location" X="{Binding Face2.Area.X}"
                                     Y="{Binding Face2.Area.Y}" />
                         </Grid.RenderTransform>
-                        <ContentControl x:Name="Face2Size" Content="{StaticResource SelectedFaceAreaPathsOnCanvas}"
+                        <ContentControl x:Name="Face2Size" Content="{StaticResource DetectedFaceAreaPathsOnCanvas}"
                                 Width="{Binding Face2.Area.Width}" Height="{Binding Face2.Area.Height}" />
                     </Grid>
                     <Grid x:Name="Face3Grid"
@@ -102,7 +102,7 @@
                             <TranslateTransform x:Name="Face3Location" X="{Binding Face3.Area.X}"
                                     Y="{Binding Face3.Area.Y}" />
                         </Grid.RenderTransform>
-                        <ContentControl x:Name="Face3Size" Content="{StaticResource SelectedFaceAreaPathsOnCanvas}"
+                        <ContentControl x:Name="Face3Size" Content="{StaticResource DetectedFaceAreaPathsOnCanvas}"
                                 Width="{Binding Face3.Area.Width}" Height="{Binding Face3.Area.Height}" />
                     </Grid>
                     <Grid x:Name="Face4Grid"
@@ -112,7 +112,7 @@
                             <TranslateTransform x:Name="Face4Location" X="{Binding Face4.Area.X}"
                                     Y="{Binding Face4.Area.Y}" />
                         </Grid.RenderTransform>
-                        <ContentControl x:Name="Face4Size" Content="{StaticResource SelectedFaceAreaPathsOnCanvas}"
+                        <ContentControl x:Name="Face4Size" Content="{StaticResource DetectedFaceAreaPathsOnCanvas}"
                                 Width="{Binding Face4.Area.Width}" Height="{Binding Face4.Area.Height}" />
                     </Grid>
 

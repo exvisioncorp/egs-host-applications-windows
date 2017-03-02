@@ -45,11 +45,11 @@
                 if ((bool)e.NewValue == true)
                 {
                     // TODO: Maybe it is OK.  I forgot why it uses Dispatcher.
-                    this.Dispatcher.Invoke(new Action(() =>
+                    this.Dispatcher.Invoke(() =>
                     {
                         this.WindowState = WindowState.Normal;
                         this.Activate();
-                    }));
+                    });
                 }
             };
 
