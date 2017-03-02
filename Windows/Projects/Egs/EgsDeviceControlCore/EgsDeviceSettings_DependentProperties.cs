@@ -69,7 +69,7 @@
                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                 return;
             }
-            CurrentConnectedEgsDevice.FaceDetectionOnHost.SensorImageBinnedPixelOneSideLength = SensorOnePixelSideLengthInMillimeters.Value;
+            CurrentConnectedEgsDevice.FaceDetectionOnHost.CaptureImageBinnedPixelOneSideLength = SensorOnePixelSideLengthInMillimeters.Value;
         }
 
         void OnFaceDetectionOnOffRelatedPropertiesUpdated()

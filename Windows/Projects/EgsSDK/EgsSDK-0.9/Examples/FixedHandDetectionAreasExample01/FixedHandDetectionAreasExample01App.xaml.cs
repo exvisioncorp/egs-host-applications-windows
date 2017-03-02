@@ -118,9 +118,6 @@
             Device.Settings.FaceDetectionMethod.Value = Egs.PropertyTypes.FaceDetectionMethodKind.SdkUserProcess;
 
             HandDetectionAreaDecision = new EgsDeviceFaceDetectionOnHost();
-            var cameraViewImageSize = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem;
-            HandDetectionAreaDecision.CameraViewImageWidth = cameraViewImageSize.Width;
-            HandDetectionAreaDecision.CameraViewImageHeight = cameraViewImageSize.Height;
 
             FaceDetectionExample = new FaceDetectionExampleModel();
             FaceDetectionExample.FaceDetectionCompleted += FaceDetection_FaceDetectionCompleted;
@@ -166,7 +163,11 @@
             FaceDetectionExample.SelectOneFaceRect();
             if (FaceDetectionExample.SelectedFaceRect.HasValue)
             {
-                HandDetectionAreaDecision.UpdateEgsDeviceSettingsHandDetectionAreas(FaceDetectionExample.SelectedFaceRect.Value, DeviceSettings);
+                HandDetectionAreaDecision.CaptureImageWidth = DeviceSettings.CaptureImageSize.Width;
+                HandDetectionAreaDecision.CaptureImageHeight = DeviceSettings.CaptureImageSize.Height;
+                HandDetectionAreaDecision.CameraViewImageWidth = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Width;
+                HandDetectionAreaDecision.CameraViewImageHeight = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Height;
+                HandDetectionAreaDecision.UpdateEgsDeviceSettingsHandDetectionAreas(FaceDetectionExample.SelectedFaceRect);
                 FaceDetectionExample.ShowResultImage(HandDetectionAreaDecision.CameraViewImageRightHandDetectionArea, HandDetectionAreaDecision.CameraViewImageLeftHandDetectionArea);
             }
         }

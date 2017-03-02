@@ -42,7 +42,6 @@
         [DataMember]
         public EgsDevice Device { get; private set; }
 
-        [DataMember]
         public EgsDeviceSettings DeviceSettings { get; private set; }
 
 
@@ -141,19 +140,14 @@
 
             InitializeCursorModelsAndCursorViews();
 
-            Device.IsHidDeviceConnectedChanged += delegate
-            {
-                SaveSettingsToFlashCommand.CanPerform = Device.IsHidDeviceConnected;
-                ResetDeviceCommand.CanPerform = Device.IsHidDeviceConnected;
-            };
+            Device.IsHidDeviceConnectedChanged += Device_IsHidDeviceConnectedChanged;
+
             // NOTE: The next 2 lines are necessary.
             SaveSettingsToFlashCommand.CanPerform = Device.IsHidDeviceConnected;
             ResetDeviceCommand.CanPerform = Device.IsHidDeviceConnected;
 
-            Device.EgsGestureHidReport.ReportUpdated += delegate
-            {
-                OnDeviceEgsGestureHidReportReportUpdated();
-            };
+            Device.EgsGestureHidReport.ReportUpdated += Device_EgsGestureHidReport_ReportUpdated;
+
 #if false
             // NOTE: Even if it is Mouse mode, the application should draw not the OS protocol (TouchScreenHidRpoert) but the vendor-specific protocol (EgsGestureHidReport)!
             Device.TouchScreenHidReport.ReportUpdated += delegate
@@ -162,15 +156,7 @@
             };
 #endif
 
-            Device.HidReportObjectsReset += delegate
-            {
-                OnDeviceEgsGestureHidReportReportUpdated();
-                // NOTE: Some people can use OS protocol, so I enable the next line.
-                OnDeviceTouchScreenHidReportReportUpdated();
-                // NOTE: The next 2 lines are necessary.  When a device is disconnected, they clear Borders and Pointers and so on in the Camera View.
-                CameraViewUserControlModel.Reset();
-                RaiseMultipleObjectsPropertyChanged();
-            };
+            Device.HidReportObjectsReset += Device_HidReportObjectsReset;
 
             CursorDrawingTimingMethod.SelectedItemChanged += delegate { OnCursorDrawingTimingMethod_SelectedItemChanged(); };
 
@@ -204,6 +190,25 @@
             };
         }
 
+        void Device_IsHidDeviceConnectedChanged(object sender, EventArgs e)
+        {
+            SaveSettingsToFlashCommand.CanPerform = Device.IsHidDeviceConnected;
+            ResetDeviceCommand.CanPerform = Device.IsHidDeviceConnected;
+        }
+        void Device_EgsGestureHidReport_ReportUpdated(object sender, EventArgs e)
+        {
+            OnDeviceEgsGestureHidReportReportUpdated();
+        }
+        void Device_HidReportObjectsReset(object sender, EventArgs e)
+        {
+            OnDeviceEgsGestureHidReportReportUpdated();
+            // NOTE: Some people can use OS protocol, so I enable the next line.
+            OnDeviceTouchScreenHidReportReportUpdated();
+            // NOTE: The next 2 lines are necessary.  When a device is disconnected, they clear Borders and Pointers and so on in the Camera View.
+            CameraViewUserControlModel.Reset();
+            RaiseMultipleObjectsPropertyChanged();
+        }
+
         void OnCursorDrawingTimingMethod_SelectedItemChanged()
         {
             var value = CursorDrawingTimingMethod.SelectedItem.EnumValue;
@@ -228,7 +233,7 @@
         public virtual void Reset()
         {
             // TODO: This is very old memo and it says "Do it at first", but I forgot the reason.
-            DeviceSettings.Reset();
+            Device.ResetSettings();
             // TODO: Very old memo says "Do not change!", should check the reason and test it again.
             //CultureInfoAndDescription.SelectedIndex = 0;
             CameraViewBordersAndPointersAreDrawnBy.SelectedIndex = 0;
@@ -363,6 +368,9 @@
             if (disposing)
             {
                 if (hasOnDisposingCalled == false) { OnDisposing(EventArgs.Empty); hasOnDisposingCalled = true; }
+                Device.IsHidDeviceConnectedChanged -= Device_IsHidDeviceConnectedChanged;
+                Device.EgsGestureHidReport.ReportUpdated -= Device_EgsGestureHidReport_ReportUpdated;
+                Device.HidReportObjectsReset -= Device_HidReportObjectsReset;
                 EgsDevice.DefaultEgsDevicesManager.Dispose();
                 CloseCursorViews();
             }

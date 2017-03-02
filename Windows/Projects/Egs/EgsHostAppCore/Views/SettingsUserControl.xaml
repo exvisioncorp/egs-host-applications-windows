@@ -232,44 +232,55 @@
                                 </Style>
                             </GroupBox.Resources>
                             <StackPanel>
-                                <Label
-                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage}" />
-                                <DockPanel DataContext="{Binding Device.FaceDetectionOnHost.MaxPlayableDistanceInMeter}"
-                                        IsEnabled="{Binding ElementName=FaceDetectionMethod_Value1RadioButton, Path=IsChecked}">
-                                    <Label DockPanel.Dock="Left" Width="150" HorizontalContentAlignment="Right"
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceFaceDetectionOnHost_MaxPlayableDistanceInMeter_Description}" />
-                                    <TextBox DockPanel.Dock="Right"
-                                            Text="{Binding Value, ElementName=FaceDetectionOnHost_MaxPlayableDistanceInMeter_Slider, StringFormat={}{0:G2}}"
-                                            Width="50" TextAlignment="Center" VerticalContentAlignment="Center" />
-                                    <Label DockPanel.Dock="Left" HorizontalContentAlignment="Right"
-                                            Content="{Binding Minimum, Mode=TwoWay, StringFormat={}{0:G2}}" />
-                                    <Label DockPanel.Dock="Right" HorizontalContentAlignment="Left"
-                                            Content="{Binding Maximum, Mode=TwoWay, StringFormat={}{0:G2}}" />
-                                    <Slider x:Name="FaceDetectionOnHost_MaxPlayableDistanceInMeter_Slider"
-                                            Value="{Binding Value, Mode=TwoWay}"
-                                            Minimum="{Binding Minimum, Mode=TwoWay}"
-                                            Maximum="{Binding Maximum, Mode=TwoWay}"
-                                            TickFrequency="{Binding TickFrequency, Mode=TwoWay}"
-                                            VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
-                                </DockPanel>
-                                <DockPanel DataContext="{Binding Device.FaceDetectionOnHost.SensitivityAndSpecificity}"
-                                        IsEnabled="{Binding ElementName=FaceDetectionMethod_Value1RadioButton, Path=IsChecked}">
-                                    <Label DockPanel.Dock="Left" Width="150" HorizontalContentAlignment="Right"
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_DetectionThreshold}" />
-                                    <TextBox DockPanel.Dock="Right"
-                                            Text="{Binding Value, ElementName=FaceDetectionOnHost_SensitivityAndSpecificity_Slider, StringFormat={}{0:G2}}"
-                                            Width="50" TextAlignment="Center" VerticalContentAlignment="Center" />
-                                    <Label DockPanel.Dock="Left" HorizontalContentAlignment="Right"
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_DecreaseFalseNegativeRate}" />
-                                    <Label DockPanel.Dock="Right" HorizontalContentAlignment="Left"
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_DecreaseFalsePositiveRate}" />
-                                    <Slider x:Name="FaceDetectionOnHost_SensitivityAndSpecificity_Slider"
-                                            Value="{Binding Value, Mode=TwoWay}"
-                                            Minimum="{Binding Minimum, Mode=TwoWay}"
-                                            Maximum="{Binding Maximum, Mode=TwoWay}"
-                                            TickFrequency="{Binding TickFrequency, Mode=TwoWay}"
-                                            VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
-                                </DockPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.ColumnSpan="2"
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage}" />
+
+                                    <Label Grid.Row="1" HorizontalContentAlignment="Right" Margin="20,0,0,0"
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceFaceDetectionOnHost_MaxDetectableDistanceInMeter_Description}" />
+                                    <DockPanel Grid.Row="1" Grid.Column="1"
+                                            DataContext="{Binding Device.FaceDetectionOnHost.MaxDetectableDistanceInMeter}"
+                                            IsEnabled="{Binding ElementName=FaceDetectionMethod_Value1RadioButton, Path=IsChecked}">
+                                        <Label DockPanel.Dock="Left" MinWidth="30" HorizontalContentAlignment="Right"
+                                                Content="{Binding Minimum, Mode=TwoWay, StringFormat={}{0:G2}}" />
+                                        <Label DockPanel.Dock="Right" MinWidth="30" HorizontalContentAlignment="Left"
+                                                Content="{Binding Maximum, Mode=TwoWay, StringFormat={}{0:G2}}" />
+                                        <Slider x:Name="FaceDetectionOnHost_MaxDetectableDistanceInMeter_Slider"
+                                                Value="{Binding Value, Mode=TwoWay}"
+                                                Minimum="{Binding Minimum, Mode=TwoWay}"
+                                                Maximum="{Binding Maximum, Mode=TwoWay}"
+                                                TickFrequency="{Binding TickFrequency, Mode=TwoWay}"
+                                                VerticalAlignment="Center" IsSnapToTickEnabled="true"
+                                                TickPlacement="Both" />
+                                    </DockPanel>
+
+                                    <Label Grid.Row="2" HorizontalContentAlignment="Right" Margin="20,0,0,0"
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_SensitivityAndSpecificity}" />
+                                    <DockPanel Grid.Row="2" Grid.Column="1"
+                                            DataContext="{Binding Device.FaceDetectionOnHost.SensitivityAndSpecificity}"
+                                            IsEnabled="{Binding ElementName=FaceDetectionMethod_Value1RadioButton, Path=IsChecked}">
+                                        <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_DecreaseFalseNegativeRate}" />
+                                        <Label DockPanel.Dock="Right" MinWidth="100" HorizontalContentAlignment="Left"
+                                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_DecreaseFalsePositiveRate}" />
+                                        <Slider x:Name="FaceDetectionOnHost_SensitivityAndSpecificity_Slider"
+                                                Value="{Binding Value, Mode=TwoWay}"
+                                                Minimum="{Binding Minimum, Mode=TwoWay}"
+                                                Maximum="{Binding Maximum, Mode=TwoWay}"
+                                                TickFrequency="{Binding TickFrequency, Mode=TwoWay}"
+                                                VerticalAlignment="Center" IsSnapToTickEnabled="true"
+                                                TickPlacement="Both" />
+                                    </DockPanel>
+                                </Grid>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>

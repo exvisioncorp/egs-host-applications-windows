@@ -86,9 +86,11 @@
         /// <summary>
         /// The current settings of this device.
         /// </summary>
+        [DataMember]
         public EgsDeviceSettings Settings
         {
             get { return _Settings; }
+            private set { SetSettings(value); }
         }
 
         /// <summary>
@@ -136,6 +138,7 @@
         /// </summary>
         public EgsDeviceCameraViewImageSourceBitmapCapture CameraViewImageSourceBitmapCapture { get; private set; }
 
+        [DataMember]
         public EgsDeviceFaceDetectionOnHost FaceDetectionOnHost { get; private set; }
 
         internal EgsDeviceHidReportsUpdate HidReportsUpdate { get; private set; }
@@ -406,6 +409,13 @@
             TouchScreenHidReport.Reset();
             EgsGestureHidReport.Reset();
             OnHidReportObjectsReset(EventArgs.Empty);
+        }
+
+        public void ResetSettings()
+        {
+            Settings.Reset();
+            FaceDetectionOnHost.Reset();
+            ResetHidReportObjects();
         }
 
         /// <summary>
