@@ -92,6 +92,7 @@
         DlibSharp.FrontalFaceDetector DlibHogSvm { get; set; }
         public IList<System.Drawing.Rectangle> DetectedFaceRectsInCameraViewImage { get; private set; }
         public bool IsFaceDetected { get { return (DetectedFaceRectsInCameraViewImage != null) && (DetectedFaceRectsInCameraViewImage.Count > 0); } }
+        public Nullable<System.Drawing.Rectangle> SelectedFaceRect { get; private set; }
 
         public double DetectorImageScale_DividedBy_CameraViewImageScale
         {
@@ -352,24 +353,25 @@
             if (IsFaceDetected == false && Device != null)
             {
                 Device.ResetHidReportObjects();
+                SelectedFaceRect = null;
             }
             else
             {
-                for (int i = 0; i < Device.EgsGestureHidReport.Faces.Count; i++)
-                {
-                    if (i < DetectedFaceRectsInCameraViewImage.Count)
-                    {
-                        var item = DetectedFaceRectsInCameraViewImage[i];
-                        Device.EgsGestureHidReport.Faces[i].IsDetected = true;
-                        Device.EgsGestureHidReport.Faces[i].Area = item;
-                        Device.EgsGestureHidReport.Faces[i].IsSelected = (item == SelectedFaceRect);
-                        Device.EgsGestureHidReport.Faces[i].Score = 0;
-                    }
-                }
+                DetectedFaceRectsInCameraViewImage = DetectedFaceRectsInCameraViewImage.OrderBy(e => DistanceFromCameraViewImageCenter(e)).ToList();
+                SelectedFaceRect = DetectedFaceRectsInCameraViewImage.First();
             }
 
-            // Implemented in EgsDeviceFaceDetectionOnHost_FaceSelection.cs
-            UpdateSelectedFaceRect();
+            for (int i = 0; i < Device.EgsGestureHidReport.Faces.Count; i++)
+            {
+                if (i < DetectedFaceRectsInCameraViewImage.Count)
+                {
+                    var item = DetectedFaceRectsInCameraViewImage[i];
+                    Device.EgsGestureHidReport.Faces[i].IsDetected = true;
+                    Device.EgsGestureHidReport.Faces[i].Area = item;
+                    Device.EgsGestureHidReport.Faces[i].IsSelected = (item == SelectedFaceRect);
+                    Device.EgsGestureHidReport.Faces[i].Score = 0;
+                }
+            }
 
             UpdateEgsDeviceSettingsHandDetectionAreas(SelectedFaceRect);
             UpdateDeviceSettings(Device.Settings);
@@ -509,13 +511,13 @@
             }
             else
             {
-                if (deviceSettings.IsToDetectHands.Value != true) { deviceSettings.IsToDetectHands.Value = true; }
-
                 // It has to set Value property atomically.
                 deviceSettings.RightHandDetectionAreaOnFixed.Value = RightHandDetectionAreaRatioRect;
                 deviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
                 deviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
                 deviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
+
+                if (deviceSettings.IsToDetectHands.Value != true) { deviceSettings.IsToDetectHands.Value = true; }
             }
         }
 
