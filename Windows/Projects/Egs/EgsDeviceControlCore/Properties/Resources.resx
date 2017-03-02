@@ -339,17 +339,17 @@ before starting ZKOO application.</comment>
     <value>Log</value>
     <comment>Log</comment>
   </data>
-  <data name="CommonStrings_DetectionThreshold" xml:space="preserve">
-    <value>Detection Threshold</value>
-    <comment>Detection Threshold</comment>
+  <data name="CommonStrings_SensitivityAndSpecificity" xml:space="preserve">
+    <value>Sensitivity and Specificity</value>
+    <comment>Sensitivity and Specificity</comment>
   </data>
   <data name="CommonStrings_DecreaseFalseNegativeRate" xml:space="preserve">
-    <value>High Sensitivity</value>
-    <comment>High Sensitivity</comment>
+    <value>Easy Detection</value>
+    <comment>Easy Detection</comment>
   </data>
   <data name="CommonStrings_DecreaseFalsePositiveRate" xml:space="preserve">
-    <value>High Specificity</value>
-    <comment>High Specificity</comment>
+    <value>Strict Detection</value>
+    <comment>Strict Detection</comment>
   </data>
   <data name="EgsDevice_DeviceStatusDetailString_Description" xml:space="preserve">
     <value>Device Status</value>
@@ -471,7 +471,7 @@ before starting ZKOO application.</comment>
     <value>(Longer Distance Needs More CPU Usage)</value>
     <comment>(Longer Distance Needs More CPU Usage)</comment>
   </data>
-  <data name="EgsDeviceFaceDetectionOnHost_MaxPlayableDistanceInMeter_Description" xml:space="preserve">
+  <data name="EgsDeviceFaceDetectionOnHost_MaxDetectableDistanceInMeter_Description" xml:space="preserve">
     <value>Max Detectable Distance [m]</value>
     <comment>Max Detectable Distance [m]</comment>
   </data>

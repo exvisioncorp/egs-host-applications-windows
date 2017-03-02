@@ -339,17 +339,17 @@ before starting ZKOO application.</comment>
     <value>记录</value>
     <comment>Log</comment>
   </data>
-  <data name="CommonStrings_DetectionThreshold" xml:space="preserve">
-    <value>检测阈值</value>
-    <comment>Detection Threshold</comment>
+  <data name="CommonStrings_SensitivityAndSpecificity" xml:space="preserve">
+    <value>灵敏度和特异度</value>
+    <comment>Sensitivity and Specificity</comment>
   </data>
   <data name="CommonStrings_DecreaseFalseNegativeRate" xml:space="preserve">
-    <value>高灵敏度</value>
-    <comment>High Sensitivity</comment>
+    <value>高灵敏度(易检测)</value>
+    <comment>Easy Detection</comment>
   </data>
   <data name="CommonStrings_DecreaseFalsePositiveRate" xml:space="preserve">
-    <value>高特异性</value>
-    <comment>High Specificity</comment>
+    <value>高特异度(注重检测精度)</value>
+    <comment>Strict Detection</comment>
   </data>
   <data name="EgsDevice_DeviceStatusDetailString_Description" xml:space="preserve">
     <value>设备的状态</value>
@@ -468,11 +468,11 @@ before starting ZKOO application.</comment>
     <comment>by Device (for Lower Spec PC)</comment>
   </data>
   <data name="EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage" xml:space="preserve">
-    <value>(更长的距离需要更多的CPU使用)</value>
+    <value>(更长的距离需要使用更多的CPU)</value>
     <comment>(Longer Distance Needs More CPU Usage)</comment>
   </data>
-  <data name="EgsDeviceFaceDetectionOnHost_MaxPlayableDistanceInMeter_Description" xml:space="preserve">
-    <value>Max Detectable Distance [m]</value>
+  <data name="EgsDeviceFaceDetectionOnHost_MaxDetectableDistanceInMeter_Description" xml:space="preserve">
+    <value>最大可检测距离 [米]</value>
     <comment>Max Detectable Distance [m]</comment>
   </data>
   <data name="CultureInfoAndDescriptionDetail_Type_Description" xml:space="preserve">
@@ -660,7 +660,7 @@ before starting ZKOO application.</comment>
     <comment>Firmware Version</comment>
   </data>
   <data name="EgsDeviceSettings_IsToMonitorTemperature_Description" xml:space="preserve">
-    <value>Measure Temperature</value>
+    <value>测量温度</value>
     <comment>Measure Temperature</comment>
   </data>
   <data name="EgsDevice_TemperatureInCelsius_Description" xml:space="preserve">
@@ -676,11 +676,11 @@ before starting ZKOO application.</comment>
     <comment>Power Mode</comment>
   </data>
   <data name="PowerModeDetail_Value0_Description" xml:space="preserve">
-    <value>活性</value>
+    <value>激活</value>
     <comment>Active</comment>
   </data>
   <data name="PowerModeDetail_Value1_Description" xml:space="preserve">
-    <value>站在</value>
+    <value>待机</value>
     <comment>StandingBy</comment>
   </data>
   <data name="EgsDeviceSettings_HostMachineOperatingSystem_Description" xml:space="preserve">
@@ -736,11 +736,11 @@ before starting ZKOO application.</comment>
     <comment>Use ZKOO for</comment>
   </data>
   <data name="DeviceUsageDetail_Value0_Description" xml:space="preserve">
-    <value>手势摄像机</value>
+    <value>手势摄像头</value>
     <comment>Gesture Camera</comment>
   </data>
   <data name="DeviceUsageDetail_Value1_Description" xml:space="preserve">
-    <value>网络摄像机</value>
+    <value>网络摄像头</value>
     <comment>Web Camera</comment>
   </data>
   <data name="EgsDeviceSettings_IsToDetectFaces_Description" xml:space="preserve">
@@ -748,23 +748,23 @@ before starting ZKOO application.</comment>
     <comment>Detect Faces</comment>
   </data>
   <data name="EgsDeviceSettings_FaceDetectionMethod_Description" xml:space="preserve">
-    <value>Face Detection Method</value>
+    <value>人脸识别方法</value>
     <comment>Face Detection Method</comment>
   </data>
   <data name="FaceDetectionMethodDetail_Value0_Description" xml:space="preserve">
-    <value>ZKOO Device</value>
+    <value>ZKOO 设备</value>
     <comment>ZKOO Device</comment>
   </data>
   <data name="FaceDetectionMethodDetail_Value1_Description" xml:space="preserve">
-    <value>Host Application (Higher Accuracy)</value>
+    <value>主应用程序 (更高精度)</value>
     <comment>Host Application (Higher Accuracy)</comment>
   </data>
   <data name="FaceDetectionMethodDetail_Value2_Description" xml:space="preserve">
-    <value>Custom Solution by SDK Users</value>
+    <value>SDK用户自定义解决方案</value>
     <comment>Custom Solution by SDK Users</comment>
   </data>
   <data name="EgsDeviceSettings_IsToDetectFacesOnDevice_Description" xml:space="preserve">
-    <value>Detect Faces on Device</value>
+    <value>由设备识别人脸</value>
     <comment>Detect Faces on Device</comment>
   </data>
   <data name="EgsDeviceSettings_IsToDetectHands_Description" xml:space="preserve">
@@ -952,15 +952,15 @@ before starting ZKOO application.</comment>
     <comment>Hand Detection Parameters</comment>
   </data>
   <data name="EgsDeviceSettings_IsToFixHandTrackingAreas_Description" xml:space="preserve">
-    <value>固定手追踪对象区域 </value>
+    <value>固定手跟踪对象区域 </value>
     <comment>Fix Hand Tracking Areas</comment>
   </data>
   <data name="EgsDeviceSettings_RightHandTrackingAreaOnFixed_Description" xml:space="preserve">
-    <value>右手追踪对象区域 (固定时)</value>
+    <value>右手跟踪对象区域 (固定时)</value>
     <comment>Right Hand Tracking Area (when fixed)</comment>
   </data>
   <data name="EgsDeviceSettings_LeftHandTrackingAreaOnFixed_Description" xml:space="preserve">
-    <value>左手追踪对象区域 (固定时)</value>
+    <value>左手跟踪对象区域 (固定时)</value>
     <comment>Left Hand Tracking Area (when fixed)</comment>
   </data>
   <data name="EgsDeviceSettings_IsToFixScreenMappedAreas_Description" xml:space="preserve">

@@ -339,17 +339,17 @@ before starting ZKOO application.</comment>
     <value>ログ</value>
     <comment>Log</comment>
   </data>
-  <data name="CommonStrings_DetectionThreshold" xml:space="preserve">
-    <value>検出しきい値</value>
-    <comment>Detection Threshold</comment>
+  <data name="CommonStrings_SensitivityAndSpecificity" xml:space="preserve">
+    <value>感度と特異度</value>
+    <comment>Sensitivity and Specificity</comment>
   </data>
   <data name="CommonStrings_DecreaseFalseNegativeRate" xml:space="preserve">
     <value>未検出を減らす</value>
-    <comment>High Sensitivity</comment>
+    <comment>Easy Detection</comment>
   </data>
   <data name="CommonStrings_DecreaseFalsePositiveRate" xml:space="preserve">
     <value>誤検出を減らす</value>
-    <comment>High Specificity</comment>
+    <comment>Strict Detection</comment>
   </data>
   <data name="EgsDevice_DeviceStatusDetailString_Description" xml:space="preserve">
     <value>デバイスの状態</value>
@@ -468,11 +468,11 @@ before starting ZKOO application.</comment>
     <comment>by Device (for Lower Spec PC)</comment>
   </data>
   <data name="EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage" xml:space="preserve">
-    <value>(長い距離ほど計算負荷が高くなります)</value>
+    <value>(長い距離ほどCPU負荷が高くなります)</value>
     <comment>(Longer Distance Needs More CPU Usage)</comment>
   </data>
-  <data name="EgsDeviceFaceDetectionOnHost_MaxPlayableDistanceInMeter_Description" xml:space="preserve">
-    <value>最大検出可能距離[m]</value>
+  <data name="EgsDeviceFaceDetectionOnHost_MaxDetectableDistanceInMeter_Description" xml:space="preserve">
+    <value>最大検出距離 [m]</value>
     <comment>Max Detectable Distance [m]</comment>
   </data>
   <data name="CultureInfoAndDescriptionDetail_Type_Description" xml:space="preserve">
@@ -764,7 +764,7 @@ before starting ZKOO application.</comment>
     <comment>Custom Solution by SDK Users</comment>
   </data>
   <data name="EgsDeviceSettings_IsToDetectFacesOnDevice_Description" xml:space="preserve">
-    <value>ZKOOデバイスで顔を検出する</value>
+    <value>デバイスで顔を検出する</value>
     <comment>Detect Faces on Device</comment>
   </data>
   <data name="EgsDeviceSettings_IsToDetectHands_Description" xml:space="preserve">
