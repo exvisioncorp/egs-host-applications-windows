@@ -166,7 +166,7 @@
             if (Settings == null) { Debugger.Break(); throw new EgsDeviceOperationException("Settings == null"); }
 
             UpdateFaceDetectionRelatedProperties();
-            IsDetectingHands = Settings.IsToDetectHands.Value && IsHidDeviceConnected;
+            IsDetectingHands = Settings.IsToDetectHandsOnDevice.Value && IsHidDeviceConnected;
             IsSendingTouchScreenHidReport = Settings.IsToSendTouchScreenHidReport.Value && IsHidDeviceConnected;
             IsSendingHoveringStateOnTouchScreenHidReport = Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value && IsHidDeviceConnected;
             IsSendingEgsGestureHidReport = Settings.IsToSendEgsGestureHidReport.Value && IsHidDeviceConnected;
@@ -199,7 +199,7 @@
         {
             var settings = (EgsDeviceSettings)sender;
             if (e.UpdatedProperty == settings.IsToDetectFacesOnDevice) { UpdateFaceDetectionRelatedProperties(); }
-            else if (e.UpdatedProperty == settings.IsToDetectHands) { IsDetectingHands = Settings.IsToDetectHands.Value && IsHidDeviceConnected; }
+            else if (e.UpdatedProperty == settings.IsToDetectHandsOnDevice) { IsDetectingHands = Settings.IsToDetectHandsOnDevice.Value && IsHidDeviceConnected; }
             else if (e.UpdatedProperty == settings.IsToSendTouchScreenHidReport) { IsSendingTouchScreenHidReport = Settings.IsToSendTouchScreenHidReport.Value && IsHidDeviceConnected; }
             else if (e.UpdatedProperty == settings.IsToSendHoveringStateOnTouchScreenHidReport) { IsSendingHoveringStateOnTouchScreenHidReport = Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value && IsHidDeviceConnected; }
             else if (e.UpdatedProperty == settings.IsToSendEgsGestureHidReport) { IsSendingEgsGestureHidReport = Settings.IsToSendEgsGestureHidReport.Value && IsHidDeviceConnected; }

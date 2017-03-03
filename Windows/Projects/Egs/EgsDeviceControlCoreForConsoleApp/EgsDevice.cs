@@ -525,7 +525,7 @@
                 // NOTE: Just in case, I leave the code to get the value again.
                 GetReadonlyHidAccessPropertyByGetHidFeatureReport(Settings.CaptureImageSize);
                 System.Threading.Thread.Sleep(100);
-                GetReadonlyHidAccessPropertyByGetHidFeatureReport(Settings.CameraViewImageSourceRectInCapturedImage);
+                GetReadonlyHidAccessPropertyByGetHidFeatureReport(Settings.CameraViewImageSourceRectInCaptureImage);
             }
         }
 

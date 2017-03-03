@@ -147,7 +147,7 @@
 
             CaptureImageSize.ValueUpdated += delegate { OnImageSizeRelatedPropertiesUpdated(); };
             CameraViewImageSourceBitmapSize.ValueUpdated += delegate { OnImageSizeRelatedPropertiesUpdated(); };
-            CameraViewImageSourceRectInCapturedImage.ValueUpdated += delegate { OnImageSizeRelatedPropertiesUpdated(); };
+            CameraViewImageSourceRectInCaptureImage.ValueUpdated += delegate { OnImageSizeRelatedPropertiesUpdated(); };
             OnImageSizeRelatedPropertiesUpdated();
         }
 
@@ -157,7 +157,7 @@
             var msg = "";
             msg += "CaptureImageSize: " + CaptureImageSize.Value.ToString() + Environment.NewLine;
             msg += "CameraViewImageSourceBitmapSize: " + CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.ToString() + Environment.NewLine;
-            msg += "CameraViewImageSourceRectInCapturedImage: " + CameraViewImageSourceRectInCapturedImage.Value.ToString() + Environment.NewLine;
+            msg += "CameraViewImageSourceRectInCaptureImage: " + CameraViewImageSourceRectInCaptureImage.Value.ToString() + Environment.NewLine;
             Debug.WriteLine(msg);
 
             if (CurrentConnectedEgsDevice != null && CurrentConnectedEgsDevice.EgsGestureHidReport != null)
@@ -167,15 +167,15 @@
 
             // TODO: MUSTDO: Debug the firmware.  So, do not return here.
             //return;
-            Debug.WriteLine("\"On some PCs\", the host application cannot get the correct CameraViewImageSourceRectInCapturedImage from device for a while, after it changes CameraViewImageSourceBitmapSize.");
+            Debug.WriteLine("\"On some PCs\", the host application cannot get the correct CameraViewImageSourceRectInCaptureImage from device for a while, after it changes CameraViewImageSourceBitmapSize.");
 
             // NOTE: If you update the value directly, infinite loop occurs.
-            var correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle();
+            var correctCameraViewImageSourceRectInCaptureImage = new System.Drawing.Rectangle();
             if (CaptureImageSize.Value == new System.Drawing.Size(768, 480))
             {
-                if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(384, 240)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(8, 0, 752, 470); }
-                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(320, 240)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(71, 0, 625, 470); }
-                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(640, 480)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(71, 0, 625, 470); }
+                if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(384, 240)) { correctCameraViewImageSourceRectInCaptureImage = new System.Drawing.Rectangle(8, 0, 752, 470); }
+                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(320, 240)) { correctCameraViewImageSourceRectInCaptureImage = new System.Drawing.Rectangle(71, 0, 625, 470); }
+                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(640, 480)) { correctCameraViewImageSourceRectInCaptureImage = new System.Drawing.Rectangle(71, 0, 625, 470); }
                 else
                 {
                     if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
@@ -184,9 +184,9 @@
             }
             else if (CaptureImageSize.Value == new System.Drawing.Size(960, 540))
             {
-                if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(384, 240)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(56, 0, 848, 530); }
-                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(320, 240)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(126, 0, 707, 530); }
-                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(640, 480)) { correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle(126, 0, 707, 530); }
+                if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(384, 240)) { correctCameraViewImageSourceRectInCaptureImage = new System.Drawing.Rectangle(56, 0, 848, 530); }
+                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(320, 240)) { correctCameraViewImageSourceRectInCaptureImage = new System.Drawing.Rectangle(126, 0, 707, 530); }
+                else if (CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size == new System.Drawing.Size(640, 480)) { correctCameraViewImageSourceRectInCaptureImage = new System.Drawing.Rectangle(126, 0, 707, 530); }
                 else
                 {
                     if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
@@ -200,9 +200,9 @@
                 throw new NotImplementedException();
             }
 
-            if (CameraViewImageSourceRectInCapturedImage.Value != correctCameraViewImageSourceRectInCapturedImageRect)
+            if (CameraViewImageSourceRectInCaptureImage.Value != correctCameraViewImageSourceRectInCaptureImage)
             {
-                CameraViewImageSourceRectInCapturedImage.Value = correctCameraViewImageSourceRectInCapturedImageRect;
+                CameraViewImageSourceRectInCaptureImage.Value = correctCameraViewImageSourceRectInCaptureImage;
             }
         }
     }

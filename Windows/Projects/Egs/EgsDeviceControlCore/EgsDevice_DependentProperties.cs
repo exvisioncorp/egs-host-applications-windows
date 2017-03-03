@@ -129,7 +129,7 @@
             }
         }
 
-        internal void UpdateFaceDetectionRelatedProperties()
+        internal void UpdatePropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDevice()
         {
             if (Settings == null)
             {
@@ -141,6 +141,8 @@
             {
                 case FaceDetectionMethodKind.DefaultProcessOnEgsDevice:
                     {
+                        // NOTE: Work around of firmware bug?
+                        if (Settings.IsToDetectHandsOnDevice.Value != false) { Settings.IsToDetectHandsOnDevice.Value = false; }
                         if (IsDetectingFaces)
                         {
                             if (Settings.IsToDetectFacesOnDevice.Value != Settings.IsToDetectFaces.Value) { Settings.IsToDetectFacesOnDevice.Value = Settings.IsToDetectFaces.Value; }
@@ -151,9 +153,7 @@
                             if (Settings.IsToFixHandDetectionRegions.Value != false) { Settings.IsToFixHandDetectionRegions.Value = false; }
                             if (Settings.IsToDetectFacesOnDevice.Value != Settings.IsToDetectFaces.Value) { Settings.IsToDetectFacesOnDevice.Value = Settings.IsToDetectFaces.Value; }
                         }
-
-                        // TODO: MUSTDO: update and test!
-                        if (Settings.IsToDetectHands.Value != true) { Settings.IsToDetectHands.Value = true; }
+                        if (Settings.IsToDetectHandsOnDevice.Value != Settings.IsToDetectHands) { Settings.IsToDetectHandsOnDevice.Value = true; }
                         Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
 
                         var newIsDetectingFaces = Settings.IsToDetectFacesOnDevice.Value && IsHidDeviceConnected;
@@ -166,6 +166,7 @@
                         if (Settings.IsToFixHandDetectionRegions.Value != true) { Settings.IsToFixHandDetectionRegions.Value = true; }
                         var newIsDetectingFaces = Settings.IsToDetectFaces.Value && IsConnected;
                         if (IsDetectingFaces != newIsDetectingFaces) { IsDetectingFaces = newIsDetectingFaces; }
+                        if (Settings.IsToDetectHandsOnDevice.Value != Settings.IsToDetectHands) { Settings.IsToDetectHandsOnDevice.Value = Settings.IsToDetectHands; }
 
                         Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2;
                     }
@@ -176,6 +177,7 @@
                         if (Settings.IsToFixHandDetectionRegions.Value != true) { Settings.IsToFixHandDetectionRegions.Value = true; }
                         var newIsDetectingFaces = Settings.IsToDetectFaces.Value;
                         if (IsDetectingFaces != newIsDetectingFaces) { IsDetectingFaces = newIsDetectingFaces; }
+                        if (Settings.IsToDetectHandsOnDevice.Value != Settings.IsToDetectHands) { Settings.IsToDetectHandsOnDevice.Value = true; }
                     }
                     break;
                 default:
@@ -189,8 +191,8 @@
             // NOTE: Does it need to allow accesses from EgsDeviceFirmwareUpdateModel?
             if (Settings == null) { Debugger.Break(); throw new EgsDeviceOperationException("Settings == null"); }
 
-            UpdateFaceDetectionRelatedProperties();
-            IsDetectingHands = Settings.IsToDetectHands.Value && IsHidDeviceConnected;
+            UpdatePropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDevice();
+            IsDetectingHands = Settings.IsToDetectHandsOnDevice.Value && IsHidDeviceConnected;
             IsSendingTouchScreenHidReport = Settings.IsToSendTouchScreenHidReport.Value && IsHidDeviceConnected;
             IsSendingHoveringStateOnTouchScreenHidReport = Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value && IsHidDeviceConnected;
             IsSendingEgsGestureHidReport = Settings.IsToSendEgsGestureHidReport.Value && IsHidDeviceConnected;
@@ -222,8 +224,8 @@
         void EgsDeviceSettings_HidAccessPropertyUpdated(object sender, HidAccessPropertyUpdatedEventArgs e)
         {
             var settings = (EgsDeviceSettings)sender;
-            if (e.UpdatedProperty == settings.IsToDetectFacesOnDevice) { UpdateFaceDetectionRelatedProperties(); }
-            else if (e.UpdatedProperty == settings.IsToDetectHands) { IsDetectingHands = Settings.IsToDetectHands.Value && IsHidDeviceConnected; }
+            if (e.UpdatedProperty == settings.IsToDetectFacesOnDevice) { UpdatePropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDevice(); }
+            else if (e.UpdatedProperty == settings.IsToDetectHandsOnDevice) { IsDetectingHands = Settings.IsToDetectHandsOnDevice.Value && IsHidDeviceConnected; }
             else if (e.UpdatedProperty == settings.IsToSendTouchScreenHidReport) { IsSendingTouchScreenHidReport = Settings.IsToSendTouchScreenHidReport.Value && IsHidDeviceConnected; }
             else if (e.UpdatedProperty == settings.IsToSendHoveringStateOnTouchScreenHidReport) { IsSendingHoveringStateOnTouchScreenHidReport = Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value && IsHidDeviceConnected; }
             else if (e.UpdatedProperty == settings.IsToSendEgsGestureHidReport) { IsSendingEgsGestureHidReport = Settings.IsToSendEgsGestureHidReport.Value && IsHidDeviceConnected; }

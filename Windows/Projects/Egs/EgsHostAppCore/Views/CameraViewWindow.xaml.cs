@@ -218,10 +218,10 @@
             {
                 try
                 {
-                    // TODO: MUSTDO: check
                     var size = newCameraViewUserControlModel.Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapSize;
                     Resizing.ContentAspectRatio = (double)size.Width / (double)size.Height;
-                    //return;
+                    // TODO: MUSTDO: the next return is necessary, currently.
+                    return;
                     var centerX = (Resizing.Left + Resizing.Right) / 2;
                     // NOTE: cannot use Application.Current.Dispatcher.Invoke
                     Resizing.Left = centerX - size.Width / 2;

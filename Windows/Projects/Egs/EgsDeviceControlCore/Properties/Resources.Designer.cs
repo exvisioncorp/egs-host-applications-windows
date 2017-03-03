@@ -1323,11 +1323,11 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Camera View Image Source Rect in Captured Image.
+        ///   Looks up a localized string similar to Camera View Image Source Rect in Capture Image.
         /// </summary>
-        public static string EgsDeviceSettings_CameraViewImageSourceRectInCapturedImage_Description {
+        public static string EgsDeviceSettings_CameraViewImageSourceRectInCaptureImage_Description {
             get {
-                return ResourceManager.GetString("EgsDeviceSettings_CameraViewImageSourceRectInCapturedImage_Description", resourceCulture);
+                return ResourceManager.GetString("EgsDeviceSettings_CameraViewImageSourceRectInCaptureImage_Description", resourceCulture);
             }
         }
         
@@ -1490,6 +1490,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDeviceSettings_IsToDetectHands_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_IsToDetectHands_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detect Hands on Device.
+        /// </summary>
+        public static string EgsDeviceSettings_IsToDetectHandsOnDevice_Description {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_IsToDetectHandsOnDevice_Description", resourceCulture);
             }
         }
         

@@ -566,7 +566,7 @@
                 // NOTE: Just in case, I leave the code to get the value again.
                 GetReadonlyHidAccessPropertyByGetHidFeatureReport(Settings.CaptureImageSize);
                 System.Threading.Thread.Sleep(100);
-                GetReadonlyHidAccessPropertyByGetHidFeatureReport(Settings.CameraViewImageSourceRectInCapturedImage);
+                GetReadonlyHidAccessPropertyByGetHidFeatureReport(Settings.CameraViewImageSourceRectInCaptureImage);
                 EgsGestureHidReport.UpdateImageSizeRelatedProperties();
             }
         }
@@ -592,9 +592,9 @@
             // NOTE: Stop gesture recognition, if the host application is not running.
             if (Settings != null)
             {
-                Settings.IsToDetectFaces.Value = false;
+                Settings.IsToDetectFacesOnDevice.Value = false;
                 // NOTE: If the firmware version is larger than 1.1, stopping hand detection changes the LED color from blue to red.
-                Settings.IsToDetectHands.Value = false;
+                Settings.IsToDetectHandsOnDevice.Value = false;
             }
             // static event
             Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= EgsGestureHidReport.OnDisplaySettingsChanged;

@@ -507,7 +507,7 @@
             if (HandDetectionScaleForEgsDevice == 0)
             {
                 // TODO: MUSTDO: This is work-around.  We have to fix firmware
-                if (deviceSettings.IsToDetectHands.Value != false) { deviceSettings.IsToDetectHands.Value = false; }
+                if (deviceSettings.IsToDetectHandsOnDevice.Value != false) { deviceSettings.IsToDetectHandsOnDevice.Value = false; }
             }
             else
             {
@@ -517,7 +517,7 @@
                 deviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
                 deviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
 
-                if (deviceSettings.IsToDetectHands.Value != true) { deviceSettings.IsToDetectHands.Value = true; }
+                if (deviceSettings.IsToDetectHandsOnDevice.Value != true) { deviceSettings.IsToDetectHandsOnDevice.Value = true; }
             }
         }
 

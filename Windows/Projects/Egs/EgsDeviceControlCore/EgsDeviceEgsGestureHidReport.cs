@@ -58,30 +58,30 @@
 
         internal double EgsDeviceScreenMappedAreaResolutionSizeWidth { get { return 7540.0; } }
         internal double EgsDeviceScreenMappedAreaResolutionSizeHeight { get { return 7540.0; } }
-        /// <summary>X_host = sx * (X_device - tx).  Translation Offset X of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        /// <summary>X_host = sx * (X_device - tx).  Translation Offset X of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         double tx { get; set; }
-        /// <summary>X_host = sx * (X_device - tx).  Scaling X of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        /// <summary>X_host = sx * (X_device - tx).  Scaling X of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         double sx { get; set; }
-        /// <summary>Y_host = sy * (Y_device - ty).  Translation Offset Y of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        /// <summary>Y_host = sy * (Y_device - ty).  Translation Offset Y of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         double ty { get; set; }
-        /// <summary>Y_host = sy * (Y_device - ty).  Scaling Y of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        /// <summary>Y_host = sy * (Y_device - ty).  Scaling Y of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         double sy { get; set; }
         internal void UpdateImageSizeRelatedProperties()
         {
-            if (Device != null && Device.Settings != null && Device.Settings.CameraViewImageSourceRectInCapturedImage != null && Device.Settings.CameraViewImageSourceBitmapSize != null)
+            if (Device != null && Device.Settings != null && Device.Settings.CameraViewImageSourceRectInCaptureImage != null && Device.Settings.CameraViewImageSourceBitmapSize != null)
             {
-                var cameraViewImageSourceRectInCapturedImageRect = Device.Settings.CameraViewImageSourceRectInCapturedImage.Value;
+                var cameraViewImageSourceRectInCaptureImage = Device.Settings.CameraViewImageSourceRectInCaptureImage.Value;
                 var cameraViewImageSourceBitmapSize = Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size;
                 // MUSTDO: This is tested by WinForm example code.  WPF code is not correct.
-                Debug.WriteLine("cameraViewImageSourceRectInCapturedImageRect: " + cameraViewImageSourceRectInCapturedImageRect + ", cameraViewImageSourceBitmapSize: " + cameraViewImageSourceBitmapSize);
-                tx = (double)cameraViewImageSourceRectInCapturedImageRect.X;
-                ty = (double)cameraViewImageSourceRectInCapturedImageRect.Y;
-                sx = (double)cameraViewImageSourceBitmapSize.Width / (double)cameraViewImageSourceRectInCapturedImageRect.Width;
-                sy = (double)cameraViewImageSourceBitmapSize.Height / (double)cameraViewImageSourceRectInCapturedImageRect.Height;
+                Debug.WriteLine("cameraViewImageSourceRectInCaptureImage: " + cameraViewImageSourceRectInCaptureImage + ", cameraViewImageSourceBitmapSize: " + cameraViewImageSourceBitmapSize);
+                tx = (double)cameraViewImageSourceRectInCaptureImage.X;
+                ty = (double)cameraViewImageSourceRectInCaptureImage.Y;
+                sx = (double)cameraViewImageSourceBitmapSize.Width / (double)cameraViewImageSourceRectInCaptureImage.Width;
+                sy = (double)cameraViewImageSourceBitmapSize.Height / (double)cameraViewImageSourceRectInCaptureImage.Height;
             }
             else
             {
-                Debug.WriteLine("cameraViewImageSourceBitmapSize or cameraViewImageSourceRectInCapturedImageRect is unavailable");
+                Debug.WriteLine("cameraViewImageSourceBitmapSize or cameraViewImageSourceRectInCaptureImage is unavailable");
                 tx = 0;
                 ty = 0;
                 sx = 1;

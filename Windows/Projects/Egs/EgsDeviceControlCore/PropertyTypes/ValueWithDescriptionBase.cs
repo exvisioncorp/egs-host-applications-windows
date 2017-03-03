@@ -75,6 +75,11 @@
             get { return _Value; }
             set { _Value = value; OnValueUpdated(); }
         }
+
+        public static implicit operator T(ValueWithDescription<T> self)
+        {
+            return self.Value;
+        }
     }
 
     [DataContract]
@@ -96,6 +101,11 @@
                     throw new ArgumentOutOfRangeException();
                 }
             }
+        }
+
+        public static implicit operator T(EnumValueWithDescription<T> self)
+        {
+            return self.Value;
         }
 
         public EnumValueWithDescription()

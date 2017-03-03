@@ -771,6 +771,10 @@ before starting ZKOO application.</comment>
     <value>手を検出する</value>
     <comment>Detect Hands</comment>
   </data>
+  <data name="EgsDeviceSettings_IsToDetectHandsOnDevice_Description" xml:space="preserve">
+    <value>デバイスで手を検出する</value>
+    <comment>Detect Hands on Device</comment>
+  </data>
   <data name="EgsDeviceSettings_IsToSendTouchScreenHidReport_Description" xml:space="preserve">
     <value>OS用のタッチ情報を送信する</value>
     <comment>Send Touch Information to OS</comment>
@@ -891,9 +895,9 @@ before starting ZKOO application.</comment>
     <value>640*480</value>
     <comment>640*480</comment>
   </data>
-  <data name="EgsDeviceSettings_CameraViewImageSourceRectInCapturedImage_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CameraViewImageSourceRectInCaptureImage_Description" xml:space="preserve">
     <value>キャプチャ画像中のカメラビュー画像のソース位置</value>
-    <comment>Camera View Image Source Rect in Captured Image</comment>
+    <comment>Camera View Image Source Rect in Capture Image</comment>
   </data>
   <data name="EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description" xml:space="preserve">
     <value>カメラビューのボーダー画像をデバイス上で描画する</value>

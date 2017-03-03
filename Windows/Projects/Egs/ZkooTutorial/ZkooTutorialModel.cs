@@ -225,7 +225,7 @@
         {
             RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized);
             RefToHostApp.Device.Settings.IsToDetectFaces.Value = true;
-            if (RefToHostApp.Device.FirmwareVersionAsVersion >= new Version(1, 1, 0, 0)) { RefToHostApp.Device.Settings.IsToDetectHands.Value = true; }
+            RefToHostApp.Device.Settings.IsToDetectHands.Value = true;
         }
 
         public void EnableUpdatingCameraViewImageAndShowWindow()
@@ -233,7 +233,7 @@
             RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods);
             RefToHostApp.CameraViewWindowModel.SetWindowStateToNormal();
             RefToHostApp.Device.Settings.IsToDetectFaces.Value = true;
-            if (RefToHostApp.Device.FirmwareVersionAsVersion >= new Version(1, 1, 0, 0)) { RefToHostApp.Device.Settings.IsToDetectHands.Value = true; }
+            RefToHostApp.Device.Settings.IsToDetectHands.Value = true;
         }
     }
 }

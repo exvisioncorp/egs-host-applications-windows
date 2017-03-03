@@ -771,6 +771,10 @@ before starting ZKOO application.</comment>
     <value>识别手</value>
     <comment>Detect Hands</comment>
   </data>
+  <data name="EgsDeviceSettings_IsToDetectHandsOnDevice_Description" xml:space="preserve">
+    <value>由设备识别手</value>
+    <comment>Detect Hands on Device</comment>
+  </data>
   <data name="EgsDeviceSettings_IsToSendTouchScreenHidReport_Description" xml:space="preserve">
     <value>向操作系统发送触摸信息</value>
     <comment>Send Touch Information to OS</comment>
@@ -891,9 +895,9 @@ before starting ZKOO application.</comment>
     <value>640*480</value>
     <comment>640*480</comment>
   </data>
-  <data name="EgsDeviceSettings_CameraViewImageSourceRectInCapturedImage_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CameraViewImageSourceRectInCaptureImage_Description" xml:space="preserve">
     <value>捕捉的图像中的相机视图图像源位置</value>
-    <comment>Camera View Image Source Rect in Captured Image</comment>
+    <comment>Camera View Image Source Rect in Capture Image</comment>
   </data>
   <data name="EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description" xml:space="preserve">
     <value>用设备描画相机视图图像的边框 </value>

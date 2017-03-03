@@ -42,8 +42,9 @@
                 if (CurrentConnectedEgsDevice == null) { if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); } return; }
                 CurrentConnectedEgsDevice.IsMonitoringTemperature = IsToMonitorTemperature.Value && CurrentConnectedEgsDevice.IsHidDeviceConnected;
             };
-            FaceDetectionMethod.ValueUpdated += delegate { OnFaceDetectionOnOffRelatedPropertiesUpdated(); };
-            IsToDetectFaces.ValueUpdated += delegate { OnFaceDetectionOnOffRelatedPropertiesUpdated(); };
+            FaceDetectionMethod.ValueUpdated += delegate { OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged(); };
+            IsToDetectFaces.ValueUpdated += delegate { OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged(); };
+            IsToDetectHands.ValueUpdated += delegate { OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged(); };
 
             CaptureBinning.ValueUpdated += delegate { OnPixelOneSideLengthRelatedPropertiesUpdated(); };
         }
@@ -72,14 +73,14 @@
             CurrentConnectedEgsDevice.FaceDetectionOnHost.CaptureImageBinnedPixelOneSideLength = SensorOnePixelSideLengthInMillimeters.Value;
         }
 
-        void OnFaceDetectionOnOffRelatedPropertiesUpdated()
+        void OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged()
         {
             if (CurrentConnectedEgsDevice == null)
             {
                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                 return;
             }
-            CurrentConnectedEgsDevice.UpdateFaceDetectionRelatedProperties();
+            CurrentConnectedEgsDevice.UpdatePropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDevice();
         }
 
         public string CameraSpecificationValue

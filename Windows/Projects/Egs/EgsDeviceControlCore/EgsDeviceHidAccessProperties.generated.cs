@@ -58,7 +58,8 @@ namespace Egs
         public EnumValueWithDescription<FaceDetectionMethodKind> FaceDetectionMethod { get; private set; }
         internal HidAccessPropertyBoolean IsToDetectFacesOnDevice { get; private set; }
         [DataMember]
-        public HidAccessPropertyBoolean IsToDetectHands { get; private set; }
+        public ValueWithDescription<bool> IsToDetectHands { get; private set; }
+        internal HidAccessPropertyBoolean IsToDetectHandsOnDevice { get; private set; }
         [DataMember]
         public HidAccessPropertyBoolean IsToSendTouchScreenHidReport { get; private set; }
         [DataMember]
@@ -81,7 +82,7 @@ namespace Egs
         public HidAccessPropertySingle SensorExposureTimeInMilliseconds { get; private set; }
         [DataMember]
         public HidAccessPropertyOptional<CameraViewImageSourceBitmapSizeDetail> CameraViewImageSourceBitmapSize { get; private set; }
-        public HidAccessPropertyRect CameraViewImageSourceRectInCapturedImage { get; private set; }
+        public HidAccessPropertyRect CameraViewImageSourceRectInCaptureImage { get; private set; }
         [DataMember]
         public HidAccessPropertyBoolean IsToDrawBordersOnCameraViewImageByDevice { get; private set; }
         [DataMember]
@@ -122,7 +123,8 @@ namespace Egs
             IsToDetectFaces = new ValueWithDescription<bool>() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToDetectFaces_Description) };
             FaceDetectionMethod = new EnumValueWithDescription<FaceDetectionMethodKind>() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_FaceDetectionMethod_Description) };
             IsToDetectFacesOnDevice = new HidAccessPropertyBoolean() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToDetectFacesOnDevice_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0xA0, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToDetectFacesOnDevice", AvailableFirmwareVersion = new Version("1.0") };
-            IsToDetectHands = new HidAccessPropertyBoolean() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToDetectHands_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0xA8, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToDetectHands", AvailableFirmwareVersion = new Version("1.1") };
+            IsToDetectHands = new ValueWithDescription<bool>() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToDetectHands_Description) };
+            IsToDetectHandsOnDevice = new HidAccessPropertyBoolean() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToDetectHandsOnDevice_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0xA8, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToDetectHandsOnDevice", AvailableFirmwareVersion = new Version("1.1") };
             IsToSendTouchScreenHidReport = new HidAccessPropertyBoolean() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToSendTouchScreenHidReport_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0xB0, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToSendTouchScreenHidReport", AvailableFirmwareVersion = new Version("1.0") };
             IsToSendHoveringStateOnTouchScreenHidReport = new HidAccessPropertyBoolean() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToSendHoveringStateOnTouchScreenHidReport_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0xB1, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToSendHoveringStateOnTouchScreenHidReport", AvailableFirmwareVersion = new Version("1.0") };
             IsToSendEgsGestureHidReport = new HidAccessPropertyBoolean() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToSendEgsGestureHidReport_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0xC0, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToSendEgsGestureHidReport", AvailableFirmwareVersion = new Version("1.0") };
@@ -137,7 +139,7 @@ namespace Egs
             LensFNumber = new HidAccessPropertySingle() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_LensFNumber_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x20, PropertyId = 0xA2, ValueTypeOnDevice = "float", DataLength = 1, IsReadOnly = true, NameOfProperty = "LensFNumber", AvailableFirmwareVersion = new Version("1.0") };
             SensorExposureTimeInMilliseconds = new HidAccessPropertySingle() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_SensorExposureTimeInMilliseconds_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x20, PropertyId = 0xA3, ValueTypeOnDevice = "float", DataLength = 1, IsReadOnly = true, NameOfProperty = "SensorExposureTimeInMilliseconds", AvailableFirmwareVersion = new Version("1.0") };
             CameraViewImageSourceBitmapSize = new HidAccessPropertyOptional<CameraViewImageSourceBitmapSizeDetail>() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x30, PropertyId = 0x00, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "CameraViewImageSourceBitmapSize", AvailableFirmwareVersion = new Version("1.0") }; CameraViewImageSourceBitmapSize.OptionalValue.Options = CameraViewImageSourceBitmapSizeDetail.GetDefaultList(); CameraViewImageSourceBitmapSize.InitializeOnceAtStartup();
-            CameraViewImageSourceRectInCapturedImage = new HidAccessPropertyRect() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_CameraViewImageSourceRectInCapturedImage_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x30, PropertyId = 0x01, ValueTypeOnDevice = "int", DataLength = 4, IsReadOnly = true, NameOfProperty = "CameraViewImageSourceRectInCapturedImage", AvailableFirmwareVersion = new Version("1.0") };
+            CameraViewImageSourceRectInCaptureImage = new HidAccessPropertyRect() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_CameraViewImageSourceRectInCaptureImage_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x30, PropertyId = 0x01, ValueTypeOnDevice = "int", DataLength = 4, IsReadOnly = true, NameOfProperty = "CameraViewImageSourceRectInCaptureImage", AvailableFirmwareVersion = new Version("1.0") };
             IsToDrawBordersOnCameraViewImageByDevice = new HidAccessPropertyBoolean() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x30, PropertyId = 0x02, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToDrawBordersOnCameraViewImageByDevice", AvailableFirmwareVersion = new Version("1.0") };
             FaceSelectionMethodKind = new HidAccessPropertyOptional<FaceSelectionMethodKindDetail>() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_FaceSelectionMethodKind_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x40, PropertyId = 0xA0, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "FaceSelectionMethodKind", AvailableFirmwareVersion = new Version("1.0") }; FaceSelectionMethodKind.OptionalValue.Options = FaceSelectionMethodKindDetail.GetDefaultList(); FaceSelectionMethodKind.InitializeOnceAtStartup();
             IsToFixHandDetectionRegions = new HidAccessPropertyBoolean() { DescriptionKey = Name.Of(() => Resources.EgsDeviceSettings_IsToFixHandDetectionRegions_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x50, PropertyId = 0x10, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToFixHandDetectionRegions", AvailableFirmwareVersion = new Version("1.1.8109") };
@@ -164,7 +166,7 @@ namespace Egs
             HidAccessPropertyList.Add(TouchInterfaceKind);
             HidAccessPropertyList.Add(DeviceRotationAngleInClockwise);
             HidAccessPropertyList.Add(IsToDetectFacesOnDevice);
-            HidAccessPropertyList.Add(IsToDetectHands);
+            HidAccessPropertyList.Add(IsToDetectHandsOnDevice);
             HidAccessPropertyList.Add(IsToSendTouchScreenHidReport);
             HidAccessPropertyList.Add(IsToSendHoveringStateOnTouchScreenHidReport);
             HidAccessPropertyList.Add(IsToSendEgsGestureHidReport);
@@ -179,7 +181,7 @@ namespace Egs
             HidAccessPropertyList.Add(LensFNumber);
             HidAccessPropertyList.Add(SensorExposureTimeInMilliseconds);
             HidAccessPropertyList.Add(CameraViewImageSourceBitmapSize);
-            HidAccessPropertyList.Add(CameraViewImageSourceRectInCapturedImage);
+            HidAccessPropertyList.Add(CameraViewImageSourceRectInCaptureImage);
             HidAccessPropertyList.Add(IsToDrawBordersOnCameraViewImageByDevice);
             HidAccessPropertyList.Add(FaceSelectionMethodKind);
             HidAccessPropertyList.Add(IsToFixHandDetectionRegions);
@@ -208,6 +210,7 @@ namespace Egs
             IsToDetectFaces.Value = true;
             IsToDetectFacesOnDevice.Value = false;
             IsToDetectHands.Value = true;
+            IsToDetectHandsOnDevice.Value = false;
             IsToSendTouchScreenHidReport.Value = true;
             IsToSendHoveringStateOnTouchScreenHidReport.Value = false;
             IsToSendEgsGestureHidReport.Value = true;
