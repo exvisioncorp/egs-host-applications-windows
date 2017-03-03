@@ -167,7 +167,7 @@
 
             // TODO: MUSTDO: Debug the firmware.  So, do not return here.
             //return;
-            Debug.WriteLine("\"On some PCs\", the host application cannot get the correct CameraViewImageSourceRectInCapturedImage from device for a while, after it changes CameraViewImageSize.");
+            Debug.WriteLine("\"On some PCs\", the host application cannot get the correct CameraViewImageSourceRectInCapturedImage from device for a while, after it changes CameraViewImageSourceBitmapSize.");
 
             // NOTE: If you update the value directly, infinite loop occurs.
             var correctCameraViewImageSourceRectInCapturedImageRect = new System.Drawing.Rectangle();

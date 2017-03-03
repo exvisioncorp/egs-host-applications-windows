@@ -90,7 +90,11 @@
             set
             {
                 var hr = OptionalValue.SelectSingleItemByPredicate(e => e.Value.Equals(value));
-                if (hr == false) { throw new ArgumentOutOfRangeException(); }
+                if (hr == false)
+                {
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    throw new ArgumentOutOfRangeException();
+                }
             }
         }
 
@@ -110,7 +114,7 @@
             }
             catch (Exception ex)
             {
-                Debugger.Break();
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                 Console.WriteLine(ex.Message);
                 throw;
             }
