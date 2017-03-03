@@ -486,6 +486,14 @@
         {
             RatioRect RightHandDetectionAreaRatioRect = new RatioRect();
             RatioRect LeftHandDetectionAreaRatioRect = new RatioRect();
+            RightHandDetectionAreaRatioRect.XRange.From = (float)(CaptureImageRightHandDetectionArea.X / CaptureImageWidth);
+            RightHandDetectionAreaRatioRect.XRange.To = (float)((CaptureImageRightHandDetectionArea.X + CaptureImageRightHandDetectionArea.Width) / CaptureImageWidth);
+            RightHandDetectionAreaRatioRect.YRange.From = (float)(CaptureImageRightHandDetectionArea.Y / CaptureImageHeight);
+            RightHandDetectionAreaRatioRect.YRange.To = (float)((CaptureImageRightHandDetectionArea.Y + CaptureImageRightHandDetectionArea.Height) / CaptureImageHeight);
+            LeftHandDetectionAreaRatioRect.XRange.From = (float)(CaptureImageLeftHandDetectionArea.X / CaptureImageWidth);
+            LeftHandDetectionAreaRatioRect.XRange.To = (float)((CaptureImageLeftHandDetectionArea.X + CaptureImageLeftHandDetectionArea.Width) / CaptureImageWidth);
+            LeftHandDetectionAreaRatioRect.YRange.From = (float)(CaptureImageLeftHandDetectionArea.Y / CaptureImageHeight);
+            LeftHandDetectionAreaRatioRect.YRange.To = (float)((CaptureImageLeftHandDetectionArea.Y + CaptureImageLeftHandDetectionArea.Height) / CaptureImageHeight);
 
             var newHandDetectionScaleForEgsDevice = HandDetectionScaleForEgsDevice_DividedBy_CaptureImagePalmImageWidth * CaptureImagePalmImageWidth;
             if (newHandDetectionScaleForEgsDevice > HandDetectionScaleForEgsDeviceMaximum)
@@ -496,39 +504,21 @@
             }
             int HandDetectionScaleForEgsDevice = (int)Math.Min(newHandDetectionScaleForEgsDevice, short.MaxValue);
 
-            if (HandDetectionScaleForEgsDevice == 0 || newHandDetectionScaleForEgsDevice > HandDetectionScaleForEgsDeviceMaximum)
+            if (HandDetectionScaleForEgsDevice == 0)
             {
-                RightHandDetectionAreaRatioRect.XRange.From = 0.0f;
-                RightHandDetectionAreaRatioRect.XRange.To   = 1.0f / short.MaxValue;
-                RightHandDetectionAreaRatioRect.YRange.From = 0.0f;
-                RightHandDetectionAreaRatioRect.YRange.To   = 1.0f / short.MaxValue;
-                LeftHandDetectionAreaRatioRect.XRange.From  = 0.0f;
-                LeftHandDetectionAreaRatioRect.XRange.To    = 1.0f / short.MaxValue;
-                LeftHandDetectionAreaRatioRect.YRange.From  = 0.0f;
-                LeftHandDetectionAreaRatioRect.YRange.To    = 1.0f / short.MaxValue;
-
                 // TODO: MUSTDO: This is work-around.  We have to fix firmware
-                //if (deviceSettings.IsToDetectHands.Value != false) { deviceSettings.IsToDetectHands.Value = false; }
+                if (deviceSettings.IsToDetectHands.Value != false) { deviceSettings.IsToDetectHands.Value = false; }
             }
             else
             {
-                RightHandDetectionAreaRatioRect.XRange.From = (float)(CaptureImageRightHandDetectionArea.X / CaptureImageWidth);
-                RightHandDetectionAreaRatioRect.XRange.To = (float)((CaptureImageRightHandDetectionArea.X + CaptureImageRightHandDetectionArea.Width) / CaptureImageWidth);
-                RightHandDetectionAreaRatioRect.YRange.From = (float)(CaptureImageRightHandDetectionArea.Y / CaptureImageHeight);
-                RightHandDetectionAreaRatioRect.YRange.To = (float)((CaptureImageRightHandDetectionArea.Y + CaptureImageRightHandDetectionArea.Height) / CaptureImageHeight);
-                LeftHandDetectionAreaRatioRect.XRange.From = (float)(CaptureImageLeftHandDetectionArea.X / CaptureImageWidth);
-                LeftHandDetectionAreaRatioRect.XRange.To = (float)((CaptureImageLeftHandDetectionArea.X + CaptureImageLeftHandDetectionArea.Width) / CaptureImageWidth);
-                LeftHandDetectionAreaRatioRect.YRange.From = (float)(CaptureImageLeftHandDetectionArea.Y / CaptureImageHeight);
-                LeftHandDetectionAreaRatioRect.YRange.To = (float)((CaptureImageLeftHandDetectionArea.Y + CaptureImageLeftHandDetectionArea.Height) / CaptureImageHeight);
+                // It has to set Value property atomically.
+                deviceSettings.RightHandDetectionAreaOnFixed.Value = RightHandDetectionAreaRatioRect;
+                deviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
+                deviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
+                deviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
 
-                //if (deviceSettings.IsToDetectHands.Value != true) { deviceSettings.IsToDetectHands.Value = true; }
+                if (deviceSettings.IsToDetectHands.Value != true) { deviceSettings.IsToDetectHands.Value = true; }
             }
-
-            // It has to set Value property atomically.
-            deviceSettings.RightHandDetectionAreaOnFixed.Value = RightHandDetectionAreaRatioRect;
-            deviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
-            deviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
-            deviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
         }
 
         #region IDisposable
