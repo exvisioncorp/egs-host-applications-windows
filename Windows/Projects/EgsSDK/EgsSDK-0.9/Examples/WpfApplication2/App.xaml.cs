@@ -13,7 +13,6 @@
 
     public partial class App : Application
     {
-        public EgsDeviceSettings DeviceSettings { get; private set; }
         public EgsDevice Device { get; private set; }
         public OnePersonBothHandsViewModel OnePersonBothHandsViewModel { get; private set; }
         public IList<CursorForm> CursorViews { get; private set; }
@@ -40,25 +39,21 @@
             }
 
 
-            // Sorry, EgsHostSettings is no longer available.
-            // EgsHostAppBaseComponents creates and has the object of EgsDeviceSettings.
-            // EgsDeviceSettings i.e. the device settings are saved on Host PC,
+            // Sorry, EgsHostSettings and EgsDevice.GetDefaultEgsDevice(EgsDeviceSettings) are no longer available.
+            // Device settings are saved on Host PC,
             // and the host application transfers the device settings to connected device when it starts running or a device is connected.
-            DeviceSettings = new EgsDeviceSettings();
-            // A lot of classes in "Egs" namespace have "InitializeOnceAtStartup..." methods.
-            // Please call the initialization before they are used as arguments of some other objects, or before some event handlers are attached.
-            DeviceSettings.InitializeOnceAtStartup();
-            DeviceSettings.IsToDetectFaces.Value = true;
-            DeviceSettings.IsToDetectHands.Value = true;
-           
             // You can use EgsDevice object directly, without EgsHostAppBaseComponents or EgsHostOnUserControl.
-            Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
-
+            Device = EgsDevice.GetDefaultEgsDevice();
+            Device.Settings.FaceDetectionMethod.Value = Egs.PropertyTypes.FaceDetectionMethodKind.DefaultProcessOnEgsDevice;
+            Device.Settings.IsToDetectFaces.Value = true;
+            Device.Settings.IsToDetectHands.Value = true;
 
 
             // OnePersonBothHandsViewModel can receive information from EgsDevice on EgsGestureHidReport.ReportUpdated event etc.
             // It interprets the information from EgsDevice for CursorForm and so on.
             OnePersonBothHandsViewModel = new OnePersonBothHandsViewModel();
+            // A lot of classes in "Egs" namespace have "InitializeOnceAtStartup..." methods.
+            // Please call the initialization before they are used as arguments of some other objects, or before some event handlers are attached.
             OnePersonBothHandsViewModel.InitializeOnceAtStartup(Device);
             // CursorForm shows Gesture Cursor.  It is available on Windows 7, 8, 8.1 (contains start screen) and 10.
             CursorViews = new CursorForm[Device.TrackableHandsCountMaximum];
@@ -74,7 +69,7 @@
             CameraViewWindow = new CameraViewWindow();
 
             CameraViewUserControlModel.IsToDrawImageSet = true;
-            DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+            Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
 
             CameraViewUserControlModel.InitializeOnceAtStartup(Device);
             CameraViewWindowModel.InitializeOnceAtStartup(Device);
@@ -116,8 +111,8 @@
                 Device.EgsGestureHidReport.ReportUpdated -= EgsGestureHidReport_ReportUpdated;
 
                 // When you get EgsDevice by EgsDevice.GetDefaultEgsDevice, you need to call EgsDevice.CloseDefaultEgsDevice(). 
-                DeviceSettings.IsToDetectFaces.Value = false;
-                DeviceSettings.IsToDetectHands.Value = false;
+                Device.Settings.IsToDetectFaces.Value = false;
+                Device.Settings.IsToDetectHands.Value = false;
                 EgsDevice.CloseDefaultEgsDevice();
 
                 // And then, you need to close cursorViews.

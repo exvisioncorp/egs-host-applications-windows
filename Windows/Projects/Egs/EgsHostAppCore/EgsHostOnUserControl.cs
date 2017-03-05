@@ -41,10 +41,6 @@
 
         [DataMember]
         public EgsDevice Device { get; private set; }
-
-        public EgsDeviceSettings DeviceSettings { get; private set; }
-
-
         // TODO: better implementation
         [DataMember]
         public CameraViewUserControlModel CameraViewUserControlModel { get; private set; }
@@ -80,7 +76,6 @@
             CursorDrawingTimingMethod = new OptionalValue<CursorDrawingTimingMethodDetail>();
             CameraViewBordersAndPointersAreDrawnBy = new OptionalValue<CameraViewBordersAndPointersAreDrawnByDetail>();
 
-            DeviceSettings = new EgsDeviceSettings();
             CameraViewUserControlModel = new CameraViewUserControlModel();
             OnePersonBothHandsViewModel = new OnePersonBothHandsViewModel();
             CursorViews = new List<CursorForm>();
@@ -135,8 +130,7 @@
 
         public virtual void InitializeOnceAtStartup()
         {
-            DeviceSettings.InitializeOnceAtStartup();
-            Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
+            Device = EgsDevice.GetDefaultEgsDevice();
 
             InitializeCursorModelsAndCursorViews();
 
@@ -152,7 +146,7 @@
             // NOTE: Even if it is Mouse mode, the application should draw not the OS protocol (TouchScreenHidRpoert) but the vendor-specific protocol (EgsGestureHidReport)!
             Device.TouchScreenHidReport.ReportUpdated += delegate
             {
-                if (DeviceSettings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue == EgsDeviceTouchInterfaceKind.Mouse) { OnDeviceTouchScreenHidReportReportUpdated(); }
+                if (Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue == EgsDeviceTouchInterfaceKind.Mouse) { OnDeviceTouchScreenHidReportReportUpdated(); }
             };
 #endif
 
@@ -166,16 +160,16 @@
                 {
                     case CameraViewBordersAndPointersAreDrawnByKind.HostApplication:
                         CameraViewUserControlModel.IsToDrawImageSet = true;
-                        if (DeviceSettings != null)
+                        if (Device.Settings != null)
                         {
-                            DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+                            Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
                         }
                         break;
                     case CameraViewBordersAndPointersAreDrawnByKind.Device:
                         CameraViewUserControlModel.IsToDrawImageSet = false;
-                        if (DeviceSettings != null)
+                        if (Device.Settings != null)
                         {
-                            DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
+                            Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
                         }
                         break;
                     default:
@@ -268,7 +262,7 @@
             // So the application can let the mouse cursor track (first found / right / left) gesture cursor. 
             // MUSTDO: In some PCs, the position is not updated to the correct value.   Should be fixed.
             if (MouseCursorPositionUpdatedByGestureCursorMethod.SelectedItem.EnumValue != MouseCursorPositionUpdatedByGestureCursorMethods.None
-                && DeviceSettings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue != EgsDeviceTouchInterfaceKind.Mouse
+                && Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue != EgsDeviceTouchInterfaceKind.Mouse
                 && OnePersonBothHandsViewModel != null)
             {
                 CursorViewModel hand = null;

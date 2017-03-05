@@ -18,7 +18,6 @@
         //  * EgsDeviceCameraViewImageSourceBitmapCapture  CameraViewImageSourceBitmapCapture;    // Bitmap capture with AForge.NET
         //  * EgsDeviceEgsGestureHidReport      EgsGestureHidReport;        // HID report as vendor-specific
         //  * EgsDeviceTouchScreenHidReport     TouchScreenHidReport;       // HID report for OS
-        public EgsDeviceSettings DeviceSettings { get; private set; }
         public EgsDevice Device { get; private set; }
 
         // CursorViewModel can receive EgsGestureHidReport objects and get more useful information about tracking hands.
@@ -43,19 +42,17 @@
             this.Size = new Size(800, 600);
 
 
-            DeviceSettings = new EgsDeviceSettings();
-            DeviceSettings.InitializeOnceAtStartup();
-            DeviceSettings.IsToDetectFaces.Value = true;
-            DeviceSettings.IsToDetectHands.Value = true;
+            Device = EgsDevice.GetDefaultEgsDevice();
+            Device.Settings.FaceDetectionMethod.Value = Egs.PropertyTypes.FaceDetectionMethodKind.DefaultProcessOnEgsDevice;
+            Device.Settings.IsToDetectFaces.Value = true;
+            Device.Settings.IsToDetectHands.Value = true;
 #if DEBUG
-            DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
-            DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2;
+            Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
+            Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2;
 #else
-            DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
-            DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
+            Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+            Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
 #endif
-
-            Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
 
 
             // CursorForm objects observe CursorViewModel objects in the OnePersonBothHandsViewModel object, and draw the "Gesture Cursor" on desktop.
@@ -124,9 +121,9 @@
                 Device.EgsGestureHidReport.ReportUpdated -= EgsGestureHidReport_ReportUpdated;
 
                 // When the application quits, please stop face detection and hand detection.
-                DeviceSettings.IsToDetectFaces.Value = false;
-                DeviceSettings.IsToDetectHands.Value = false;
-                DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+                Device.Settings.IsToDetectFaces.Value = false;
+                Device.Settings.IsToDetectHands.Value = false;
+                Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
                 EgsDevice.CloseDefaultEgsDevice();
 
                 CameraViewImagePictureBox.Dispose();

@@ -141,7 +141,7 @@
             {
                 case FaceDetectionMethodKind.DefaultProcessOnEgsDevice:
                     {
-                        // NOTE: Work around of firmware bug?
+                        // NOTE: Work around.  Is this firmware bug?
                         if (Settings.IsToDetectHandsOnDevice.Value != false) { Settings.IsToDetectHandsOnDevice.Value = false; }
                         if (IsDetectingFaces)
                         {
@@ -177,7 +177,7 @@
                         if (Settings.IsToFixHandDetectionRegions.Value != true) { Settings.IsToFixHandDetectionRegions.Value = true; }
                         var newIsDetectingFaces = Settings.IsToDetectFaces.Value;
                         if (IsDetectingFaces != newIsDetectingFaces) { IsDetectingFaces = newIsDetectingFaces; }
-                        if (Settings.IsToDetectHandsOnDevice.Value != Settings.IsToDetectHands) { Settings.IsToDetectHandsOnDevice.Value = true; }
+                        if (Settings.IsToDetectHandsOnDevice.Value != Settings.IsToDetectHands) { Settings.IsToDetectHandsOnDevice.Value = Settings.IsToDetectHands; }
                     }
                     break;
                 default:

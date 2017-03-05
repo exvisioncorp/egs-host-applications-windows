@@ -39,12 +39,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EgsDeviceControlCore, Version=0.9.8213.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="EgsDeviceControlCore">
       <HintPath>..\..\Lib\EgsDeviceControlCore.dll</HintPath>
     </Reference>
-    <Reference Include="EgsHostAppCore, Version=0.9.8213.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="EgsHostAppCore">
       <HintPath>..\..\Lib\EgsHostAppCore.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -97,7 +95,7 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>このプロジェクトが参照している NuGet パッケージが、このコンピューター上で見つかりません。パッケージをダウンロードするには、NuGet パッケージの復元を有効化してください。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。不足しているファイルは {0} です。</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>

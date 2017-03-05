@@ -17,7 +17,6 @@
 
     public partial class FixedHandDetectionAreasExample01App : Application
     {
-        public EgsDeviceSettings DeviceSettings { get; private set; }
         public EgsDevice Device { get; private set; }
         public IList<CursorViewModel> CursorViewModels { get; private set; }
         public IList<CursorForm> CursorViews { get; private set; }
@@ -37,15 +36,14 @@
                 return;
             }
 
-            DeviceSettings = new EgsDeviceSettings();
-            DeviceSettings.InitializeOnceAtStartup();
-            DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
-            DeviceSettings.IsToDetectFaces.Value = false;
-            DeviceSettings.IsToDetectHands.Value = true;
-            DeviceSettings.IsToFixHandDetectionRegions.Value = true;
+            Device = EgsDevice.GetDefaultEgsDevice();
+            Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
+            Device.Settings.IsToDetectFaces.Value = true;
+            Device.Settings.IsToDetectHands.Value = true;
+            Device.Settings.IsToFixHandDetectionRegions.Value = true;
             // 0: 320*240  1:384*240  2:640*480
-            DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2;
-            Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
+            Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2;
+
             {
                 CursorViewModels = new CursorViewModel[Device.TrackableHandsCountMaximum];
                 CursorViewModels[0] = new CursorViewModel();
@@ -134,11 +132,11 @@
 
                 HandDetectionAreaDecision.Dispose();
 
-                DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
-                DeviceSettings.IsToDetectFaces.Value = false;
-                DeviceSettings.IsToDetectHands.Value = false;
-                DeviceSettings.IsToFixHandDetectionRegions.Value = false;
-                DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
+                Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+                Device.Settings.IsToDetectFaces.Value = false;
+                Device.Settings.IsToDetectHands.Value = false;
+                Device.Settings.IsToFixHandDetectionRegions.Value = false;
+                Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
                 // Call this method before CursorView.Close().
                 EgsDevice.CloseDefaultEgsDevice();
 
@@ -149,9 +147,7 @@
 
         void CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged(object sender, EventArgs e)
         {
-            var isToDetectFacesOnHost = DeviceSettings.IsToDetectFaces.Value == false;
-            isToDetectFacesOnHost = isToDetectFacesOnHost && (Device.EgsGestureHidReport.Hands[0].IsTracking == false);
-            isToDetectFacesOnHost = isToDetectFacesOnHost && (Device.EgsGestureHidReport.Hands[1].IsTracking == false);
+            var isToDetectFacesOnHost = (Device.EgsGestureHidReport.Hands[0].IsTracking == false) && (Device.EgsGestureHidReport.Hands[1].IsTracking == false);
             if (isToDetectFacesOnHost)
             {
                 FaceDetectionExample.DetectFaceAsync(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
@@ -163,11 +159,12 @@
             FaceDetectionExample.SelectOneFaceRect();
             if (FaceDetectionExample.SelectedFaceRect.HasValue)
             {
-                HandDetectionAreaDecision.CaptureImageWidth = DeviceSettings.CaptureImageSize.Width;
-                HandDetectionAreaDecision.CaptureImageHeight = DeviceSettings.CaptureImageSize.Height;
-                HandDetectionAreaDecision.CameraViewImageWidth = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Width;
-                HandDetectionAreaDecision.CameraViewImageHeight = DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Height;
+                HandDetectionAreaDecision.CaptureImageWidth = Device.Settings.CaptureImageSize.Width;
+                HandDetectionAreaDecision.CaptureImageHeight = Device.Settings.CaptureImageSize.Height;
+                HandDetectionAreaDecision.CameraViewImageWidth = Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Width;
+                HandDetectionAreaDecision.CameraViewImageHeight = Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Height;
                 HandDetectionAreaDecision.UpdateEgsDeviceSettingsHandDetectionAreas(FaceDetectionExample.SelectedFaceRect);
+                HandDetectionAreaDecision.UpdateDeviceSettings(Device.Settings);
                 FaceDetectionExample.ShowResultImage(HandDetectionAreaDecision.CameraViewImageRightHandDetectionArea, HandDetectionAreaDecision.CameraViewImageLeftHandDetectionArea);
             }
         }

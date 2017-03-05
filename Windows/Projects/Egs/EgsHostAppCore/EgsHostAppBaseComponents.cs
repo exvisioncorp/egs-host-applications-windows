@@ -262,7 +262,6 @@
         internal bool GetHasToUpdateDeviceFirmware()
         {
             if (Device == null) { Debugger.Break(); throw new InvalidOperationException("Device == null"); }
-            if (DeviceSettings == null) { Debugger.Break(); throw new InvalidOperationException("DeviceSettings == null"); }
 
             if (Device.IsHidDeviceConnected == false) { return false; }
             switch (DeviceFirmwareUpdateCondition)
@@ -272,7 +271,7 @@
                         var firmwareVersionInImageFile = new Version(ApplicationCommonSettings.FirmwareVersionInImageFileString);
                         var ret =
                             (firmwareVersionInImageFile > Device.FirmwareVersionAsVersion)
-                            && (DeviceSettings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue != EgsDeviceTouchInterfaceKind.Mouse);
+                            && (Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue != EgsDeviceTouchInterfaceKind.Mouse);
                         return ret;
                     }
                     break;
@@ -290,7 +289,6 @@
         internal void StartDeviceFirmwareUpdate()
         {
             if (Device == null) { Debugger.Break(); throw new InvalidOperationException("Device == null"); }
-            if (DeviceSettings == null) { Debugger.Break(); throw new InvalidOperationException("DeviceSettings == null"); }
 
             // NOTE: To call a code to exit "Tutorial" application, it raises such an ad-hoc event.
             var t = IsStartingDeviceFirmwareUpdate; if (t != null) { t(this, EventArgs.Empty); }

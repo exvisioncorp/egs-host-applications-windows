@@ -60,7 +60,7 @@
             {
                 foreach (var device in DeviceList)
                 {
-                    var isMonitoringTemperature = device.IsToMonitorTemperature && device.IsHidDeviceConnected;
+                    var isMonitoringTemperature = device.Settings.IsToMonitorTemperature.Value && device.IsHidDeviceConnected;
                     if (isMonitoringTemperature == false) { continue; }
                     device.UpdateTemperatureProperties();
                 }

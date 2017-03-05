@@ -38,7 +38,7 @@
                 try
                 {
                     // Sorry, EgsHostSettings is no longer available.
-                    // EgsHostAppBaseComponents creates and has the object of EgsDeviceSettings.
+                    // EgsHostAppBaseComponents creates and has the object of EgsDeviceSettings
                     hostAppComponents = new EgsHostAppBaseComponents();
                     hostAppComponents.InitializeOnceAtStartup();
 

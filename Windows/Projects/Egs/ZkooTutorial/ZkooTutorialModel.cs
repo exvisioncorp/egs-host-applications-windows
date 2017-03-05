@@ -186,7 +186,7 @@
 
 
             // TODO: MUSTDO: fix the bug, now it does not work.
-            if (ApplicationCommonSettings.IsDebuggingInternal) { CheckIfAllSoundFilesExistOrNot(); }
+            if (false && ApplicationCommonSettings.IsDebuggingInternal) { CheckIfAllSoundFilesExistOrNot(); }
 
 
 
@@ -195,12 +195,12 @@
             // TODO: MUSTDO: Test
             //RefToHostApp.FaceDetectionIsProcessedBy.SelectSingleItemByPredicate(e => e.EnumValue == FaceDetectionIsProcessedByKind.Device);
 
-            RefToHostApp.DeviceSettings.IsToSendTouchScreenHidReport.Value = true;
+            RefToHostApp.Device.Settings.IsToSendTouchScreenHidReport.Value = true;
             // In Windows 10, users cannot often tap by sending Hovering State
-            if (false) { RefToHostApp.DeviceSettings.IsToSendHoveringStateOnTouchScreenHidReport.Value = true; }
-            RefToHostApp.DeviceSettings.IsToSendEgsGestureHidReport.Value = true;
+            if (false) { RefToHostApp.Device.Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value = true; }
+            RefToHostApp.Device.Settings.IsToSendEgsGestureHidReport.Value = true;
             // Now this settings cannot be set from SettingsWindow, so I comment out the next line.
-            RefToHostApp.DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+            RefToHostApp.Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
             Launcher.InitializeOnceAtStartup(this);
 
             RefToHostApp.OnePersonBothHandsViewModel.RightHand.IsToUpdateVelocities = false;

@@ -12,8 +12,8 @@ namespace Egs
         public HidAccessPropertyString DeviceSerialNumber { get; private set; }
         public HidAccessPropertyOptional<HardwareTypeDetail> HardwareType { get; private set; }
         public HidAccessPropertyInt32Array FirmwareVersion { get; private set; }
-        internal HidAccessPropertySingle TemperatureInCelsius { get; private set; }
-        internal HidAccessPropertySingle TemperatureInFahrenheit { get; private set; }
+        public HidAccessPropertySingle TemperatureInCelsius { get; private set; }
+        public HidAccessPropertySingle TemperatureInFahrenheit { get; private set; }
 
         void CreateProperties()
         {
@@ -44,7 +44,7 @@ namespace Egs
         [DataMember]
         internal HidAccessPropertyInt32 UsbProtocolRevision { get; private set; }
         [DataMember]
-        internal ValueWithDescription<bool> IsToMonitorTemperature { get; private set; }
+        public ValueWithDescription<bool> IsToMonitorTemperature { get; private set; }
         [DataMember]
         public HidAccessPropertyOptional<PowerModeDetail> PowerMode { get; private set; }
         public HidAccessPropertyOptional<HostMachineOperatingSystemDetail> HostMachineOperatingSystem { get; private set; }
@@ -56,10 +56,10 @@ namespace Egs
         public ValueWithDescription<bool> IsToDetectFaces { get; private set; }
         [DataMember]
         public EnumValueWithDescription<FaceDetectionMethodKind> FaceDetectionMethod { get; private set; }
-        internal HidAccessPropertyBoolean IsToDetectFacesOnDevice { get; private set; }
+        public HidAccessPropertyBoolean IsToDetectFacesOnDevice { get; private set; }
         [DataMember]
         public ValueWithDescription<bool> IsToDetectHands { get; private set; }
-        internal HidAccessPropertyBoolean IsToDetectHandsOnDevice { get; private set; }
+        public HidAccessPropertyBoolean IsToDetectHandsOnDevice { get; private set; }
         [DataMember]
         public HidAccessPropertyBoolean IsToSendTouchScreenHidReport { get; private set; }
         [DataMember]

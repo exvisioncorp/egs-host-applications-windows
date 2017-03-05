@@ -68,50 +68,6 @@
             var t = HidAccessPropertyUpdated; if (t != null) { t(this, e); }
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        EgsDeviceSettings _Settings;
-        public event EventHandler SettingsChanged;
-        protected virtual void OnSettingsChanged(EventArgs e)
-        {
-            var t = SettingsChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Settings");
-        }
-        /// <summary>
-        /// The current settings of this device.
-        /// </summary>
-        public EgsDeviceSettings Settings
-        {
-            get { return _Settings; }
-        }
-
-        /// <summary>
-        /// Update the settings of this device.  If the device is already connected, the settings will be set to the device immediately.  If the device is not connected, it will be set when the device is re-connected.
-        /// </summary>
-        public void SetSettings(EgsDeviceSettings value)
-        {
-            // TODO: Use Rx?
-            if (_Settings != null)
-            {
-                _Settings.HidAccessPropertyUpdated -= EgsDeviceSettings_HidAccessPropertyUpdated;
-                _Settings.CurrentConnectedEgsDevice = null;
-                _Settings = null;
-            }
-            value.CurrentConnectedEgsDevice = this;
-            value.HidAccessPropertyUpdated += EgsDeviceSettings_HidAccessPropertyUpdated;
-            _Settings = value;
-
-            // NOTE: When device is connected and then settings is updated, the app sets the settings from host to device.
-            if (IsHidDeviceConnected)
-            {
-                SetAllSettingsToDeviceAndReadStatusFromDevice();
-            }
-            TouchScreenHidReport.Reset();
-            EgsGestureHidReport.Reset();
-
-            // NOTE: It need not check if ImageSource is updating or not.
-            OnSettingsChanged(EventArgs.Empty);
-        }
-
         /// <summary>
         /// This number depends on "TouchInterfaceKind".  MultiTouch mode returns 0.  Mouse mode and SingleTouch mode return 1.  If settings is not set, it returns 0.
         /// </summary>
@@ -267,13 +223,19 @@
         #endregion
 
         /// <summary>
-        /// To get EgsDevice easily, please use this method.
+        /// Please use this method insted of "new EgsDevice()".
         /// </summary>
-        public static EgsDevice GetDefaultEgsDevice(EgsDeviceSettings settings)
+        public static EgsDevice GetDefaultEgsDevice()
         {
             var ret = DefaultEgsDevicesManager.CreateNewEgsDeviceAndAddToDeviceList();
-            ret.SetSettings(settings);
             DefaultEgsDevicesManager.UpdateNotInitializedFirstEgsDeviceOnSomeDeviceConnected();
+            return ret;
+        }
+        [Obsolete]
+        public static EgsDevice GetDefaultEgsDevice(EgsDeviceSettings settings)
+        {
+            var ret = GetDefaultEgsDevice();
+            ret.SetSettings(settings);
             return ret;
         }
         /// <summary>
@@ -310,6 +272,8 @@
             _IsSendingEgsGestureHidReport = false;
 
             WaitTimeInMillisecondsBeforeSetFeatureReport = 2;
+            // TODO: MUSTDO: tune !!  For stability of 960x540, it should be larger, but for firmware update, it should be smaller.  (2016/3/3)
+            //WaitTimeInMillisecondsBeforeSetFeatureReport = 20;
             WaitTimeInMillisecondsBeforeGetFeatureReport = 10;
 
             CreateProperties();
@@ -319,11 +283,52 @@
             EgsGestureHidReport = new EgsDeviceEgsGestureHidReport();
 
             IsHidDeviceConnectedChanged += UpdateIsHidDeviceConnectedRelatedProperties;
+
+            _Settings = new EgsDeviceSettings();
+            _Settings.InitializeOnceAtStartup();
+            _Settings.CurrentConnectedEgsDevice = this;
+            _Settings.HidAccessPropertyUpdated += EgsDeviceSettings_HidAccessPropertyUpdated;
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        EgsDeviceSettings _Settings;
+        /// <summary>
+        /// The current settings of this device.
+        /// </summary>
+        [DataMember]
+        public EgsDeviceSettings Settings
+        {
+            get { return _Settings; }
+            private set { SetSettings(value); }
+        }
+
+        [Obsolete]
+        public void SetSettings(EgsDeviceSettings value)
+        {
+            Trace.Assert(value != null);
+
+            if (_Settings != null)
+            {
+                _Settings.HidAccessPropertyUpdated -= EgsDeviceSettings_HidAccessPropertyUpdated;
+                _Settings.CurrentConnectedEgsDevice = null;
+                _Settings = null;
+            }
+            value.CurrentConnectedEgsDevice = this;
+            value.HidAccessPropertyUpdated += EgsDeviceSettings_HidAccessPropertyUpdated;
+            _Settings = value;
+
+            // NOTE: When device is connected and then settings is updated, the app sets the settings from host to device.
+            if (IsHidDeviceConnected)
+            {
+                SetAllSettingsToDeviceAndReadStatusFromDevice();
+            }
+            TouchScreenHidReport.Reset();
+            EgsGestureHidReport.Reset();
         }
 
         internal void InitializeOnceAtStartup()
         {
-            HidReportsUpdate.InitializeOnceAtStartup(this);
+            if (HidReportsUpdate != null) { HidReportsUpdate.InitializeOnceAtStartup(this); }
             TouchScreenHidReport.InitializeOnceAtStartup(this);
             EgsGestureHidReport.InitializeOnceAtStartup(this);
 
@@ -378,6 +383,13 @@
             TouchScreenHidReport.Reset();
             EgsGestureHidReport.Reset();
             OnHidReportObjectsReset(EventArgs.Empty);
+        }
+
+        public void ResetSettings()
+        {
+            Settings.Reset();
+            //FaceDetectionOnHost.Reset();
+            ResetHidReportObjects();
         }
 
         /// <summary>
@@ -534,9 +546,9 @@
             // NOTE: Stop gesture recognition, if the host application is not running.
             if (Settings != null)
             {
-                Settings.IsToDetectFaces.Value = false;
+                Settings.IsToDetectFacesOnDevice.Value = false;
                 // NOTE: If the firmware version is larger than 1.1, stopping hand detection changes the LED color from blue to red.
-                Settings.IsToDetectHands.Value = false;
+                Settings.IsToDetectHandsOnDevice.Value = false;
             }
             if (HidReportsUpdate != null)
             {
@@ -548,11 +560,8 @@
         static internal EgsDevice CreateEgsDeviceForXamlDesign()
         {
             var ret = new EgsDevice();
-            var settings = new EgsDeviceSettings();
-            settings.InitializeOnceAtStartup();
             ret.InitializeOnceAtStartup();
             ret.IndexInHidDevicePathList = 0;
-            ret.SetSettings(settings);
             ret.DeviceSerialNumber.Value = "EXV000000005";
             ret._HidDeviceDevicePath = "THISISSOMEHIDDEVICEPATH";
             ret._IsHidDeviceConnected = true;
