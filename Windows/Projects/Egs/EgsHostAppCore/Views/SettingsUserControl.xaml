@@ -517,22 +517,25 @@
                                     <StackPanel Orientation="Horizontal" Margin="0,5,10,5">
                                         <Label
                                                 Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_CaptureFps_Description}" />
-                                        <Label Content="{Binding CaptureFps.OptionalValue.SelectedItem.Description}" />
+                                        <Label
+                                                Content="{Binding Device.Settings.CaptureFps.OptionalValue.SelectedItem.Description}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,5,10,5">
                                         <Label
                                                 Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_LensEquivalentFocalLengthInMillimeters_Description}" />
-                                        <Label Content="{Binding LensEquivalentFocalLengthInMillimeters.Value}" />
+                                        <Label
+                                                Content="{Binding Device.Settings.LensEquivalentFocalLengthInMillimeters.Value}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,5,10,5">
                                         <Label
                                                 Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_SensorOnePixelSideLengthInMillimeters_Description}" />
-                                        <Label Content="{Binding SensorOnePixelSideLengthInMillimeters.Value}" />
+                                        <Label
+                                                Content="{Binding Device.Settings.SensorOnePixelSideLengthInMillimeters.Value}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,5,10,5">
                                         <Label
                                                 Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_LensFNumber_Description}" />
-                                        <Label Content="{Binding LensFNumber.Value}" />
+                                        <Label Content="{Binding Device.Settings.LensFNumber.Value}" />
                                     </StackPanel>
                                 </WrapPanel>
 
