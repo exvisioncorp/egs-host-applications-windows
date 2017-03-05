@@ -184,8 +184,7 @@
                     Reset();
                     break;
                 case EgsGestureHidReportMessageIds.DetectingFaces:
-                    if (Device.Settings != null
-                        && Device.Settings.FaceDetectionMethod.Value == FaceDetectionMethodKind.DefaultProcessOnEgsDevice)
+                    if (Device.Settings.FaceDetectionMethod.Value == FaceDetectionMethodKind.DefaultProcessOnEgsDevice)
                     {
                         // NOTE: In Kickstarter 1st released version, when MessageId is DetectingFaces, the app needed to reset this object by Timer.
                         if (MessageId != previousMessageId)
@@ -198,10 +197,7 @@
                             TrackingHandsCount = 0;
                         }
                         // TODO: MUSTDO: When application detects faces on host, report from device is wrong.
-                        if (Device.IsDetectingFaces)
-                        {
-                            UpdateOnDetectingFaces(hidReport);
-                        }
+                        UpdateOnDetectingFaces(hidReport);
                     }
                     break;
                 case EgsGestureHidReportMessageIds.DetectingOrTrackingHands:

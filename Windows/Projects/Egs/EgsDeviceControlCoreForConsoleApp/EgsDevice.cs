@@ -265,8 +265,6 @@
 
             _IsUpdatingFirmware = false;
 
-            _IsDetectingFaces = false;
-            _IsDetectingHands = false;
             _IsSendingTouchScreenHidReport = false;
             _IsSendingHoveringStateOnTouchScreenHidReport = false;
             _IsSendingEgsGestureHidReport = false;
@@ -386,7 +384,6 @@
         public void ResetSettings()
         {
             Settings.Reset();
-            //FaceDetectionOnHost.Reset();
             ResetHidReportObjects();
         }
 

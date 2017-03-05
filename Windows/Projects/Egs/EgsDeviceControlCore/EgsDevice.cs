@@ -285,8 +285,6 @@
 
             _IsUpdatingFirmware = false;
 
-            _IsDetectingFaces = false;
-            _IsDetectingHands = false;
             _IsSendingTouchScreenHidReport = false;
             _IsSendingHoveringStateOnTouchScreenHidReport = false;
             _IsSendingEgsGestureHidReport = false;
@@ -588,8 +586,6 @@
 
         internal void Close()
         {
-            if (FaceDetectionOnHost != null) { FaceDetectionOnHost.Dispose(); FaceDetectionOnHost = null; }
-
             // NOTE: Stop gesture recognition, if the host application is not running.
             if (Settings != null)
             {
@@ -597,6 +593,8 @@
                 // NOTE: If the firmware version is larger than 1.1, stopping hand detection changes the LED color from blue to red.
                 Settings.IsToDetectHandsOnDevice.Value = false;
             }
+            if (FaceDetectionOnHost != null) { FaceDetectionOnHost.Dispose(); FaceDetectionOnHost = null; }
+
             // static event
             Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= EgsGestureHidReport.OnDisplaySettingsChanged;
             if (CameraViewImageSourceBitmapCapture != null)

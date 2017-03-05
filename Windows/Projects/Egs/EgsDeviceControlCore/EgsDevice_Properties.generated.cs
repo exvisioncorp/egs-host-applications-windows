@@ -62,40 +62,6 @@
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        bool _IsDetectingFaces;
-        public event EventHandler IsDetectingFacesChanged;
-        protected virtual void OnIsDetectingFacesChanged(EventArgs e)
-        {
-            var t = IsDetectingFacesChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsDetectingFaces");
-        }
-        public bool IsDetectingFaces
-        {
-            get { return _IsDetectingFaces; }
-            internal set
-            {
-                _IsDetectingFaces = value; OnIsDetectingFacesChanged(EventArgs.Empty);
-            }
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool _IsDetectingHands;
-        public event EventHandler IsDetectingHandsChanged;
-        protected virtual void OnIsDetectingHandsChanged(EventArgs e)
-        {
-            var t = IsDetectingHandsChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsDetectingHands");
-        }
-        public bool IsDetectingHands
-        {
-            get { return _IsDetectingHands; }
-            internal set
-            {
-                _IsDetectingHands = value; OnIsDetectingHandsChanged(EventArgs.Empty);
-            }
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
         bool _IsSendingTouchScreenHidReport;
         public event EventHandler IsSendingTouchScreenHidReportChanged;
         protected virtual void OnIsSendingTouchScreenHidReportChanged(EventArgs e)

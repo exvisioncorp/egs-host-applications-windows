@@ -76,7 +76,7 @@
                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                 return;
             }
-            CurrentConnectedEgsDevice.UpdatePropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDevice();
+            CurrentConnectedEgsDevice.On_FaceDetectionMethod_IsToDetectFaces_IsToDetectHands_IsHidDeviceConnected_Changed();
         }
 
         public string CameraSpecificationValue

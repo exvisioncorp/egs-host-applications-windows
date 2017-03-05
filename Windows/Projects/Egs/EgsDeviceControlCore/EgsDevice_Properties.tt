@@ -11,8 +11,6 @@ var propertyElementsList = new List<PropertyInfoForT4Template>()
 
 	// NOTE: "IsTo" properties are defined EgsDeviceSettings object updated by HID access,
 	//       because the settings must be set to the device.
-    new PropertyInfoForT4Template("", "public", "bool", "IsDetectingFaces", "internal", false),
-    new PropertyInfoForT4Template("", "public", "bool", "IsDetectingHands", "internal", false),
     new PropertyInfoForT4Template("", "public", "bool", "IsSendingTouchScreenHidReport", "internal", false),
     new PropertyInfoForT4Template("", "public", "bool", "IsSendingHoveringStateOnTouchScreenHidReport", "internal", false),
     new PropertyInfoForT4Template("", "public", "bool", "IsSendingEgsGestureHidReport", "internal", false),

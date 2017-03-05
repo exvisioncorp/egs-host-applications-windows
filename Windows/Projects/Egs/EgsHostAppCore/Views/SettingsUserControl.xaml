@@ -382,7 +382,7 @@
                                     ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
                         </GroupBox>
 
-                        <GroupBox Header="Host Status Related to Device">
+                        <GroupBox Header="Settings">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel DataContext="{Binding Device.Settings.FaceDetectionMethod}"
                                         Orientation="Horizontal">
@@ -399,28 +399,30 @@
                                             Margin="10,5" VerticalAlignment="Center"
                                             IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=2}" />
                                 </StackPanel>
+                                <CheckBox
+                                        IsChecked="{Binding Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value}"
+                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description}" />
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox
                                             Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectFaces_Description}"
-                                            IsChecked="{Binding Device.Settings.IsToDetectFaces.Value}" Margin="10" />
+                                            IsChecked="{Binding Device.Settings.IsToDetectFaces.Value}" MinWidth="120" />
                                     <CheckBox
                                             Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectHands_Description}"
-                                            IsChecked="{Binding Device.Settings.IsToDetectHands.Value}" Margin="10" />
-                                    <CheckBox
-                                            IsChecked="{Binding Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value}"
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox Content="Detecting Faces" IsEnabled="False"
-                                            IsChecked="{Binding Device.IsDetectingFaces, Mode=OneWay}" />
-                                    <CheckBox Content="Detecting Hands" IsEnabled="False"
-                                            IsChecked="{Binding Device.IsDetectingHands, Mode=OneWay}" />
+                                            IsChecked="{Binding Device.Settings.IsToDetectHands.Value}" MinWidth="120" />
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="Device Status">
+                        <GroupBox Header="Status">
                             <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Content="Detecting Faces" IsEnabled="False"
+                                            IsChecked="{Binding Device.IsDetectingFaces, Mode=OneWay}" MinWidth="120" />
+                                    <CheckBox Content="Detecting Hands" IsEnabled="False"
+                                            IsChecked="{Binding Device.IsDetectingHands, Mode=OneWay}" MinWidth="120" />
+                                    <CheckBox Content="Tracking One or More Hands" IsEnabled="False"
+                                            IsChecked="{Binding Device.IsTrackingOneOrMoreHands, Mode=OneWay}" />
+                                </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox Content="IsHidDeviceConnected" IsEnabled="False"
                                             IsChecked="{Binding Device.IsHidDeviceConnected, Mode=OneWay}" />

@@ -86,7 +86,18 @@
         public RangedInt SetCameraViewImageBitmapIntervalMilliseconds { get; private set; }
         Stopwatch SetCameraViewImageBitmapIntervalStopwatch { get; set; }
         System.ComponentModel.BackgroundWorker Worker { get; set; }
-        internal bool IsDetecting { get; private set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        bool _IsDetecting;
+        public bool IsDetecting
+        {
+            get { return _IsDetecting; }
+            private set
+            {
+                _IsDetecting = value;
+                OnPropertyChanged(Name.Of(() => IsDetecting));
+            }
+        }
 
         DlibSharp.Array2dUchar DlibArray2dUcharImage { get; set; }
         DlibSharp.FrontalFaceDetector DlibHogSvm { get; set; }
@@ -281,7 +292,16 @@
 
         void Device_CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged(object sender, EventArgs e)
         {
-            if (false && Device.Settings.FaceDetectionMethod.Value == PropertyTypes.FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication && ApplicationCommonSettings.IsDebugging)
+            if (Device.Settings.FaceDetectionMethod.Value != PropertyTypes.FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication)
+            {
+                return;
+            }
+            if (Device.IsDetectingFaces == false)
+            {
+                return;
+            }
+
+            if (false && ApplicationCommonSettings.IsDebugging)
             {
                 // Draw the latest result before return;
                 if (SelectedFaceRect.HasValue)
@@ -297,16 +317,7 @@
             if (SetCameraViewImageBitmapIntervalStopwatch.ElapsedMilliseconds < SetCameraViewImageBitmapIntervalMilliseconds) { return; }
             SetCameraViewImageBitmapIntervalStopwatch.Reset();
             SetCameraViewImageBitmapIntervalStopwatch.Start();
-
-            var isToDetectFacesOnHost =
-                (Device.Settings.FaceDetectionMethod.Value == PropertyTypes.FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication)
-                && (Device.IsDetectingFaces == true)
-                && (Device.EgsGestureHidReport.Hands[0].IsTracking == false)
-                && (Device.EgsGestureHidReport.Hands[1].IsTracking == false);
-            if (isToDetectFacesOnHost)
-            {
-                DetectFaceRunWorkerAsync(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
-            }
+            DetectFaceRunWorkerAsync(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
         }
 
         public void DetectFaceRunWorkerAsync(System.Drawing.Bitmap cameraViewImageBitmap)
@@ -517,7 +528,8 @@
                 deviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
                 deviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
 
-                if (deviceSettings.IsToDetectHandsOnDevice.Value != true) { deviceSettings.IsToDetectHandsOnDevice.Value = true; }
+                var newIsToDetectHandsOnDevice = deviceSettings.IsToDetectHands.Value;
+                if (deviceSettings.IsToDetectHandsOnDevice.Value != newIsToDetectHandsOnDevice) { deviceSettings.IsToDetectHandsOnDevice.Value = newIsToDetectHandsOnDevice; }
             }
         }
 

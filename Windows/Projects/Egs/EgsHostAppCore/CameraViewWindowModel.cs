@@ -238,10 +238,6 @@
             SetWindowStateToMinimizedDelayTimer.Start();
         }
 
-        bool IsDetectingFaces { get { return Device.EgsGestureHidReport.MessageId == EgsGestureHidReportMessageIds.DetectingFaces; } }
-        bool IsDetectingHands { get { return (Device.EgsGestureHidReport.MessageId == EgsGestureHidReportMessageIds.DetectingOrTrackingHands) && (IsTrackingOneOrMoreHands == false); } }
-        bool IsTrackingOneOrMoreHands { get { return (Device.EgsGestureHidReport.Hands[0].IsTracking || Device.EgsGestureHidReport.Hands[1].IsTracking); } }
-
         public void StartCheckingIsShowingCameraViewWindow()
         {
             if (WindowStateUsersControlMethod.SelectedItem.EnumValue == CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart
@@ -250,9 +246,9 @@
                 SetWindowStateToMinimizedWithDelay();
             }
 
-            if (IsDetectingFaces) { EgsGestureHidReport_RecognitionStateChanged(null, new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.StandingBy_DetectingFaces)); }
-            else if (IsDetectingHands) { EgsGestureHidReport_RecognitionStateChanged(null, new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_DetectingHands)); }
-            else if (IsTrackingOneOrMoreHands) { EgsGestureHidReport_RecognitionStateChanged(null, new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.DetectingHands_TrackingHands)); }
+            if (Device.IsDetectingFaces) { EgsGestureHidReport_RecognitionStateChanged(null, new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.StandingBy_DetectingFaces)); }
+            else if (Device.IsDetectingHands) { EgsGestureHidReport_RecognitionStateChanged(null, new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_DetectingHands)); }
+            else if (Device.IsTrackingOneOrMoreHands) { EgsGestureHidReport_RecognitionStateChanged(null, new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.DetectingHands_TrackingHands)); }
             else { EgsGestureHidReport_RecognitionStateChanged(null, new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_StandingBy)); }
         }
         void EgsGestureHidReport_RecognitionStateChanged(object sender, EgsGestureHidReportRecognitionStateChangedEventArgs e)

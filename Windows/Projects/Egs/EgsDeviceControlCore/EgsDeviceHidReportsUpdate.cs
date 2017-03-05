@@ -76,6 +76,8 @@
                         if ((HidReportIds)reportAsByteArray[0] == HidReportIds.EgsGesture)
                         {
                             owner.EgsGestureHidReport.UpdateByHidReportAsByteArray(reportAsByteArray);
+                            owner.UpdateIsDetectingFaces();
+                            owner.UpdateIsDetectingHands();
                         }
                     }
                 }
