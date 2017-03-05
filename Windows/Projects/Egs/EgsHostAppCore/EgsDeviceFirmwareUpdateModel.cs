@@ -422,6 +422,10 @@
                 if (FirmwareImageFilePathList == null) { throw new ArgumentNullException("binaryFilepathList"); }
                 if (FirmwareImageFilePathList.Count == 0) { throw new ArgumentException("binaryFilepathList.Count == 0"); }
 
+                // TODO: MUSTDO: test!
+                Device.WaitTimeInMillisecondsBeforeSetFeatureReport = 2;
+                Device.WaitTimeInMillisecondsBeforeGetFeatureReport = 10;
+
                 CurrentIndexInFirmwareImageFilePathList = 0;
                 LastStateReport = new EgsDeviceFirmwareUpdateStateReport() { Message = "File List:" + Environment.NewLine };
                 foreach (var firmwareImageFilePath in FirmwareImageFilePathList) { LastStateReport.Message += "  " + firmwareImageFilePath + Environment.NewLine; }

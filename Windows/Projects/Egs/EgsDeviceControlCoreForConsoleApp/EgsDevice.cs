@@ -271,10 +271,8 @@
             _IsSendingHoveringStateOnTouchScreenHidReport = false;
             _IsSendingEgsGestureHidReport = false;
 
-            WaitTimeInMillisecondsBeforeSetFeatureReport = 2;
-            // TODO: MUSTDO: tune !!  For stability of 960x540, it should be larger, but for firmware update, it should be smaller.  (2016/3/3)
-            //WaitTimeInMillisecondsBeforeSetFeatureReport = 20;
-            WaitTimeInMillisecondsBeforeGetFeatureReport = 10;
+            WaitTimeInMillisecondsBeforeSetFeatureReport = 20;
+            WaitTimeInMillisecondsBeforeGetFeatureReport = 20;
 
             CreateProperties();
 
