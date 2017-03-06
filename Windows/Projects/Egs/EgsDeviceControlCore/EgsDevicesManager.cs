@@ -64,17 +64,12 @@
             DeviceList = new List<EgsDevice>();
             MessageReceivingForm = new EgsDevicesWindowMessageReceivingForm();
 
-            EachDeviceStatusMonitoringTimer = new System.Windows.Forms.Timer() { Interval = ApplicationCommonSettings.IsDebugging ? 1000 : 60000 };
+            EachDeviceStatusMonitoringTimer = new System.Windows.Forms.Timer() { Interval = ApplicationCommonSettings.IsDebugging ? 1000 : 5000 };
             EachDeviceStatusMonitoringTimer.Tick += delegate
             {
-                foreach (var device in DeviceList)
-                {
-                    var isMonitoringTemperature = device.Settings.IsToMonitorTemperature.Value && device.IsHidDeviceConnected;
-                    if (isMonitoringTemperature == false) { continue; }
-                    device.UpdateTemperatureProperties();
-                }
+                foreach (var device in DeviceList) { device.UpdateTemperatureProperties(); }
             };
-
+            EachDeviceStatusMonitoringTimer.Start();
 
             // MUSTDO: Need investigatino.  "Connecting a device after running a host application" can cause a problem that the host application cannot catch the mouse event from the device!
             // NOTE: Immediately after the source event raises, AForge.NET (DirectShow wrapper) cannot enumerate all devices!!  So I added delay reluctantly.

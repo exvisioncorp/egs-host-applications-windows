@@ -198,50 +198,6 @@
             }
         }
 
-        #region Temperature
-        System.IO.StreamWriter TemperatureStreamWriter { get; set; }
-        DateTime StartTime { get; set; }
-        void CloseTemperatureStreamWriter()
-        {
-            if (TemperatureStreamWriter != null)
-            {
-                TemperatureStreamWriter.Flush();
-                TemperatureStreamWriter.Close();
-                TemperatureStreamWriter = null;
-            }
-        }
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool _IsToWriteLogOfTemperature = false;
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool IsToWriteLogOfTemperature
-        {
-            get { return _IsToWriteLogOfTemperature; }
-            set
-            {
-                _IsToWriteLogOfTemperature = value;
-                CloseTemperatureStreamWriter();
-
-                if (_IsToWriteLogOfTemperature)
-                {
-                    var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    var zkooTestResultFolderPath = System.IO.Path.Combine(desktopPath, @"ZkooTestResults");
-                    if (System.IO.Directory.Exists(zkooTestResultFolderPath) == false)
-                    {
-                        System.IO.Directory.CreateDirectory(zkooTestResultFolderPath);
-                    }
-                    var fileName = @"ZkooDeviceTemperature_";
-                    fileName += DateTime.Now.ToString("yyMMdd-HHmmss", CultureInfo.InvariantCulture);
-                    fileName += ".csv";
-                    var fullPath = System.IO.Path.Combine(zkooTestResultFolderPath, fileName);
-                    TemperatureStreamWriter = new System.IO.StreamWriter(fullPath);
-                    StartTime = DateTime.Now;
-                    TemperatureStreamWriter.WriteLine("DateTime.Now, Elapsed[sec], Temperature[C], Temperature[F}");
-                }
-                OnPropertyChanged("IsToWriteLogOfTemperature");
-            }
-        }
-        #endregion
-
         /// <summary>
         /// Please use this method insted of "new EgsDevice()".
         /// </summary>
@@ -417,25 +373,22 @@
             ResetHidReportObjects();
         }
 
+        public event EventHandler TemperaturePropertiesUpdated;
+        protected void OnTemperaturePropertiesUpdated(EventArgs e)
+        {
+            var t = TemperaturePropertiesUpdated; if (t != null) { t(this, e); }
+        }
+
         /// <summary>
-        /// Sorry but this is internal.  But for DataBinding, it is public.  Only in newer device hardware can measure temperature.
+        /// MA2100 cannot measure temperature.  MA2150 can measure temperature.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void UpdateTemperatureProperties()
         {
-            if (IsHidDeviceConnected == false) { Debugger.Break(); throw new EgsDeviceOperationException("IsHidDeviceConnected == false"); }
+            if (IsMonitoringTemperature == false) { return; }
             GetReadonlyHidAccessPropertyByGetHidFeatureReport(TemperatureInCelsius);
             GetReadonlyHidAccessPropertyByGetHidFeatureReport(TemperatureInFahrenheit);
-            if (IsToWriteLogOfTemperature)
-            {
-                Trace.Assert(TemperatureStreamWriter != null);
-                TemperatureStreamWriter.WriteLine("{0}, {1}, {2}, {3}",
-                    DateTime.Now,
-                    (DateTime.Now - StartTime).TotalSeconds,
-                    TemperatureInCelsius.Value,
-                    TemperatureInFahrenheit.Value);
-                TemperatureStreamWriter.Flush();
-            }
+            OnTemperaturePropertiesUpdated(EventArgs.Empty);
         }
 
         void SetAllSettingsToDeviceAndReadStatusFromDevice()

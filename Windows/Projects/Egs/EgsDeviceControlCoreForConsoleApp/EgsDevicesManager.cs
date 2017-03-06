@@ -55,16 +55,12 @@
             SetupDi = new Win32SetupDiForEgsDevice();
 
 #if false
-            EachDeviceStatusMonitoringTimer = new System.Windows.Forms.Timer() { Interval = ApplicationCommonSettings.IsDebugging ? 1000 : 60000 };
+            EachDeviceStatusMonitoringTimer = new System.Windows.Forms.Timer() { Interval = ApplicationCommonSettings.IsDebugging ? 1000 : 5000 };
             EachDeviceStatusMonitoringTimer.Tick += delegate
             {
-                foreach (var device in DeviceList)
-                {
-                    var isMonitoringTemperature = device.Settings.IsToMonitorTemperature.Value && device.IsHidDeviceConnected;
-                    if (isMonitoringTemperature == false) { continue; }
-                    device.UpdateTemperatureProperties();
-                }
+                foreach (var device in DeviceList) { device.UpdateTemperatureProperties(); }
             };
+            EachDeviceStatusMonitoringTimer.Start();
 #endif
         }
 

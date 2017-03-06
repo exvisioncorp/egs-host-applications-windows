@@ -29,7 +29,7 @@
         }
 
         #region Host Settings
-        // TODO: NOTE: DataMember is not described.  But have to think again.
+        [DataMember]
         public OptionalValue<CultureInfoAndDescriptionDetail> CultureInfoAndDescription { get; private set; }
         [DataMember]
         public OptionalValue<MouseCursorPositionUpdatedByGestureCursorMethodDetail> MouseCursorPositionUpdatedByGestureCursorMethod { get; private set; }
@@ -51,6 +51,50 @@
         [DataMember]
         public TimeSpan WaitTimeTillMouseCursorHideOnMouseMode { get; set; }
 
+        #region Temperature
+        System.IO.StreamWriter TemperatureStreamWriter { get; set; }
+        DateTime StartTime { get; set; }
+        void CloseTemperatureStreamWriter()
+        {
+            if (TemperatureStreamWriter != null)
+            {
+                TemperatureStreamWriter.Flush();
+                TemperatureStreamWriter.Close();
+                TemperatureStreamWriter = null;
+            }
+        }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        bool _IsToWriteLogOfTemperature = false;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool IsToWriteLogOfTemperature
+        {
+            get { return _IsToWriteLogOfTemperature; }
+            set
+            {
+                _IsToWriteLogOfTemperature = value;
+                CloseTemperatureStreamWriter();
+
+                if (_IsToWriteLogOfTemperature)
+                {
+                    var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    var zkooTestResultFolderPath = System.IO.Path.Combine(desktopPath, @"ZkooTestResults");
+                    if (System.IO.Directory.Exists(zkooTestResultFolderPath) == false)
+                    {
+                        System.IO.Directory.CreateDirectory(zkooTestResultFolderPath);
+                    }
+                    var fileName = @"ZkooDeviceTemperature_";
+                    fileName += DateTime.Now.ToString("yyMMdd-HHmmss", CultureInfo.InvariantCulture);
+                    fileName += ".csv";
+                    var fullPath = System.IO.Path.Combine(zkooTestResultFolderPath, fileName);
+                    TemperatureStreamWriter = new System.IO.StreamWriter(fullPath);
+                    StartTime = DateTime.Now;
+                    TemperatureStreamWriter.WriteLine("DateTime.Now, Elapsed[sec], Temperature[C], Temperature[F}");
+                }
+                OnPropertyChanged("IsToWriteLogOfTemperature");
+            }
+        }
+        #endregion
+
         Stopwatch drawingCursorsStopwatch { get; set; }
         public IList<CursorForm> CursorViews { get; protected set; }
         internal TimerPrecisionLogger PrecisionLogger { get; private set; }
@@ -71,6 +115,8 @@
 
         public EgsHostOnUserControl()
         {
+            Device = EgsDevice.GetDefaultEgsDevice();
+
             CultureInfoAndDescription = new OptionalValue<CultureInfoAndDescriptionDetail>();
             MouseCursorPositionUpdatedByGestureCursorMethod = new OptionalValue<MouseCursorPositionUpdatedByGestureCursorMethodDetail>();
             CursorDrawingTimingMethod = new OptionalValue<CursorDrawingTimingMethodDetail>();
@@ -119,6 +165,16 @@
                 Device.ResetDevice();
             };
 
+            Device.IsHidDeviceConnectedChanged += Device_IsHidDeviceConnectedChanged;
+
+            // NOTE: The next 2 lines are necessary.
+            SaveSettingsToFlashCommand.CanPerform = Device.IsHidDeviceConnected;
+            ResetDeviceCommand.CanPerform = Device.IsHidDeviceConnected;
+
+            CursorDrawingTimingMethod.SelectedItemChanged += delegate { OnCursorDrawingTimingMethod_SelectedItemChanged(); };
+            CameraViewBordersAndPointersAreDrawnBy.SelectedItemChanged += CameraViewBordersAndPointersAreDrawnBy_SelectedItemChanged;
+            CultureInfoAndDescription.SelectedItemChanged += delegate { BindableResources.Current.ChangeCulture(CultureInfoAndDescription.SelectedItem.CultureInfoString); };
+
             // TODO: MUSTDO: When users cancel DFU, exceptions occur in Timer thread basically, and the app cannot deal with them.  So it is necessary to attach them to event handlers.
             // The design of EgsDevicesManager is not completed.  So I don't think this is good way.
             EgsDevice.DefaultEgsDevicesManager.Disposed += delegate
@@ -130,16 +186,6 @@
 
         public virtual void InitializeOnceAtStartup()
         {
-            Device = EgsDevice.GetDefaultEgsDevice();
-
-            InitializeCursorModelsAndCursorViews();
-
-            Device.IsHidDeviceConnectedChanged += Device_IsHidDeviceConnectedChanged;
-
-            // NOTE: The next 2 lines are necessary.
-            SaveSettingsToFlashCommand.CanPerform = Device.IsHidDeviceConnected;
-            ResetDeviceCommand.CanPerform = Device.IsHidDeviceConnected;
-
             Device.EgsGestureHidReport.ReportUpdated += Device_EgsGestureHidReport_ReportUpdated;
 
 #if false
@@ -151,37 +197,47 @@
 #endif
 
             Device.HidReportObjectsReset += Device_HidReportObjectsReset;
+            Device.TemperaturePropertiesUpdated += TemperatureInCelsius_TemperaturePropertiesUpdated;
 
-            CursorDrawingTimingMethod.SelectedItemChanged += delegate { OnCursorDrawingTimingMethod_SelectedItemChanged(); };
+            InitializeCursorModelsAndCursorViews();
+        }
 
-            CameraViewBordersAndPointersAreDrawnBy.SelectedItemChanged += delegate
+        void TemperatureInCelsius_TemperaturePropertiesUpdated(object sender, EventArgs e)
+        {
+            if (IsToWriteLogOfTemperature)
             {
-                switch (CameraViewBordersAndPointersAreDrawnBy.SelectedItem.EnumValue)
-                {
-                    case CameraViewBordersAndPointersAreDrawnByKind.HostApplication:
-                        CameraViewUserControlModel.IsToDrawImageSet = true;
-                        if (Device.Settings != null)
-                        {
-                            Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
-                        }
-                        break;
-                    case CameraViewBordersAndPointersAreDrawnByKind.Device:
-                        CameraViewUserControlModel.IsToDrawImageSet = false;
-                        if (Device.Settings != null)
-                        {
-                            Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
-                        }
-                        break;
-                    default:
-                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                        throw new NotImplementedException();
-                }
-            };
+                Trace.Assert(TemperatureStreamWriter != null);
+                TemperatureStreamWriter.WriteLine("{0}, {1}, {2}, {3}",
+                    DateTime.Now,
+                    (DateTime.Now - StartTime).TotalSeconds,
+                    Device.TemperatureInCelsius.Value,
+                    Device.TemperatureInFahrenheit.Value);
+                TemperatureStreamWriter.Flush();
+            }
+        }
 
-            CultureInfoAndDescription.SelectedItemChanged += delegate
+        void CameraViewBordersAndPointersAreDrawnBy_SelectedItemChanged(object sender, EventArgs e)
+        {
+            switch (CameraViewBordersAndPointersAreDrawnBy.SelectedItem.EnumValue)
             {
-                BindableResources.Current.ChangeCulture(CultureInfoAndDescription.SelectedItem.CultureInfoString);
-            };
+                case CameraViewBordersAndPointersAreDrawnByKind.HostApplication:
+                    CameraViewUserControlModel.IsToDrawImageSet = true;
+                    if (Device.Settings != null)
+                    {
+                        Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+                    }
+                    break;
+                case CameraViewBordersAndPointersAreDrawnByKind.Device:
+                    CameraViewUserControlModel.IsToDrawImageSet = false;
+                    if (Device.Settings != null)
+                    {
+                        Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
+                    }
+                    break;
+                default:
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    throw new NotImplementedException();
+            }
         }
 
         void Device_IsHidDeviceConnectedChanged(object sender, EventArgs e)
