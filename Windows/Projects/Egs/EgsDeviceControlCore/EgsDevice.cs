@@ -311,8 +311,8 @@
             AddPropertiesToHidAccessPropertyList();
             InitializePropertiesByDefaultValue();
 
-            TemperatureInCelsius.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => TemperatureInCelsiusString)); };
-            TemperatureInFahrenheit.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => TemperatureInFahrenheitString)); };
+            TemperatureInCelsius.ValueUpdated += delegate { OnPropertyChanged(nameof(TemperatureInCelsiusString)); };
+            TemperatureInFahrenheit.ValueUpdated += delegate { OnPropertyChanged(nameof(TemperatureInFahrenheitString)); };
 
             CameraViewImageSourceBitmapCapture.InitializeOnceAtStartup(this);
             FaceDetectionOnHost.InitializeOnceAtStartup(this);
@@ -460,12 +460,12 @@
         protected virtual void OnHidDeviceDevicePathChanged(EventArgs e)
         {
             var t = HidDeviceDevicePathChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("HidDeviceDevicePath");
+            OnPropertyChanged(nameof(HidDeviceDevicePath));
         }
         protected virtual void OnIsHidDeviceConnectedChanged(EventArgs e)
         {
             var t = IsHidDeviceConnectedChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsHidDeviceConnected");
+            OnPropertyChanged(nameof(IsHidDeviceConnected));
         }
         /// <summary>
         /// The "DevicePath" of the HID device of the connected device.

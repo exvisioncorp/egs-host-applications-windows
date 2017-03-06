@@ -40,7 +40,7 @@
             {
                 _PersonId = value;
                 OnPersonIdChanged(EventArgs.Empty);
-                OnPropertyChanged("PersonId");
+                OnPropertyChanged(nameof(PersonId));
             }
         }
 
@@ -52,7 +52,7 @@
         public CursorViewModel FirstFoundHand
         {
             get { return _FirstFoundHand; }
-            private set { _FirstFoundHand = value; OnPropertyChanged("FirstFoundHand"); }
+            private set { _FirstFoundHand = value; OnPropertyChanged(nameof(FirstFoundHand)); }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -60,7 +60,7 @@
         public CursorViewModel LeftHand
         {
             get { return _LeftHand; }
-            private set { _LeftHand = value; OnPropertyChanged("LeftHand"); }
+            private set { _LeftHand = value; OnPropertyChanged(nameof(LeftHand)); }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -68,7 +68,7 @@
         public CursorViewModel RightHand
         {
             get { return _RightHand; }
-            private set { _RightHand = value; OnPropertyChanged("RightHand"); }
+            private set { _RightHand = value; OnPropertyChanged(nameof(RightHand)); }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

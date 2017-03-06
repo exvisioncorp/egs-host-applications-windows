@@ -17,7 +17,7 @@
         protected virtual void OnDraggingThumbVisibilityChanged(EventArgs e)
         {
             var t = DraggingThumbVisibilityChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("DraggingThumbVisibility");
+            OnPropertyChanged(nameof(DraggingThumbVisibility));
         }
         public Visibility DraggingThumbVisibility
         {
@@ -37,7 +37,7 @@
         protected virtual void OnDraggingThumbLeftChanged(EventArgs e)
         {
             var t = DraggingThumbLeftChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("DraggingThumbLeft");
+            OnPropertyChanged(nameof(DraggingThumbLeft));
         }
         public double DraggingThumbLeft
         {
@@ -57,7 +57,7 @@
         protected virtual void OnDraggingThumbTopChanged(EventArgs e)
         {
             var t = DraggingThumbTopChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("DraggingThumbTop");
+            OnPropertyChanged(nameof(DraggingThumbTop));
         }
         public double DraggingThumbTop
         {
@@ -77,7 +77,7 @@
         protected virtual void OnDraggingThumbWidthChanged(EventArgs e)
         {
             var t = DraggingThumbWidthChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("DraggingThumbWidth");
+            OnPropertyChanged(nameof(DraggingThumbWidth));
         }
         public double DraggingThumbWidth
         {
@@ -97,7 +97,7 @@
         protected virtual void OnDraggingThumbHeightChanged(EventArgs e)
         {
             var t = DraggingThumbHeightChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("DraggingThumbHeight");
+            OnPropertyChanged(nameof(DraggingThumbHeight));
         }
         public double DraggingThumbHeight
         {
@@ -117,7 +117,7 @@
         protected virtual void OnDraggingThumbOpacityChanged(EventArgs e)
         {
             var t = DraggingThumbOpacityChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("DraggingThumbOpacity");
+            OnPropertyChanged(nameof(DraggingThumbOpacity));
         }
         public double DraggingThumbOpacity
         {
@@ -137,7 +137,7 @@
         protected virtual void OnDraggingThumbCenterPointChanged(EventArgs e)
         {
             var t = DraggingThumbCenterPointChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("DraggingThumbCenterPoint");
+            OnPropertyChanged(nameof(DraggingThumbCenterPoint));
         }
         public Point DraggingThumbCenterPoint
         {
@@ -157,7 +157,7 @@
         protected virtual void OnLargeCircleAreaCenterPointChanged(EventArgs e)
         {
             var t = LargeCircleAreaCenterPointChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("LargeCircleAreaCenterPoint");
+            OnPropertyChanged(nameof(LargeCircleAreaCenterPoint));
         }
         public Point[] LargeCircleAreaCenterPoint
         {
@@ -177,7 +177,7 @@
         protected virtual void OnThumbToLargeCircleAreaCenterDistanceListChanged(EventArgs e)
         {
             var t = ThumbToLargeCircleAreaCenterDistanceListChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("ThumbToLargeCircleAreaCenterDistanceList");
+            OnPropertyChanged(nameof(ThumbToLargeCircleAreaCenterDistanceList));
         }
         public double[] ThumbToLargeCircleAreaCenterDistanceList
         {
@@ -197,7 +197,7 @@
         protected virtual void OnIsDraggingThumbDraggingChanged(EventArgs e)
         {
             var t = IsDraggingThumbDraggingChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsDraggingThumbDragging");
+            OnPropertyChanged(nameof(IsDraggingThumbDragging));
         }
         public bool IsDraggingThumbDragging
         {
@@ -217,7 +217,7 @@
         protected virtual void OnIsDraggingThumbHoveredChanged(EventArgs e)
         {
             var t = IsDraggingThumbHoveredChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsDraggingThumbHovered");
+            OnPropertyChanged(nameof(IsDraggingThumbHovered));
         }
         public bool IsDraggingThumbHovered
         {

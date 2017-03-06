@@ -38,7 +38,7 @@
         protected virtual void OnIsCameraDeviceConnectedChanged(EventArgs e)
         {
             var t = IsCameraDeviceConnectedChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsCameraDeviceConnected");
+            OnPropertyChanged(nameof(IsCameraDeviceConnected));
         }
         public bool IsCameraDeviceConnected
         {
@@ -57,7 +57,7 @@
         protected virtual void OnIsToUpdateImageSourceChanged(EventArgs e)
         {
             var t = IsToUpdateImageSourceChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToUpdateImageSource");
+            OnPropertyChanged(nameof(IsToUpdateImageSource));
         }
         /// <summary>
         /// When this value is set true and device can work correctly, image source will be updated continuously.
@@ -76,7 +76,7 @@
         protected virtual void OnIsUpdatingImageSourceChanged(EventArgs e)
         {
             var t = IsUpdatingImageSourceChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsUpdatingImageSource");
+            OnPropertyChanged(nameof(IsUpdatingImageSource));
         }
         public bool IsUpdatingImageSource
         {
@@ -123,14 +123,14 @@
         protected virtual void OnCameraViewImageSourceBitmapChanged(EventArgs e)
         {
             var t = CameraViewImageSourceBitmapChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CameraViewImageSourceBitmap");
+            OnPropertyChanged(nameof(CameraViewImageSourceBitmap));
         }
         protected virtual void OnCameraViewImageSourceBitmapSizeOrPixelFormatChanged(EventArgs e)
         {
             var t = CameraViewImageSourceBitmapSizeOrPixelFormatChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CameraViewImageSourceBitmap");
-            OnPropertyChanged("CameraViewImageSourceBitmapSize");
-            OnPropertyChanged("CameraViewImageSourceBitmapPixelFormat");
+            OnPropertyChanged(nameof(CameraViewImageSourceBitmap));
+            OnPropertyChanged(nameof(CameraViewImageSourceBitmapSize));
+            OnPropertyChanged(nameof(CameraViewImageSourceBitmapPixelFormat));
         }
 
         /// <summary>

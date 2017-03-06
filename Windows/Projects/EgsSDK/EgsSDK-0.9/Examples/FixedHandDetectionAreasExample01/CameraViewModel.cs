@@ -38,7 +38,7 @@
         protected virtual void OnCameraViewWpfBitmapSourceChanged(EventArgs e)
         {
             var t = CameraViewWpfBitmapSourceChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CameraViewWpfBitmapSource");
+            OnPropertyChanged(nameof(CameraViewWpfBitmapSource));
         }
         public System.Windows.Media.Imaging.BitmapSource CameraViewWpfBitmapSource
         {
@@ -55,7 +55,7 @@
         protected virtual void OnCameraViewWpfBitmapSourceWidthChanged(EventArgs e)
         {
             var t = CameraViewWpfBitmapSourceWidthChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CameraViewWpfBitmapSourceWidth");
+            OnPropertyChanged(nameof(CameraViewWpfBitmapSourceWidth));
         }
         public int CameraViewWpfBitmapSourceWidth
         {
@@ -72,7 +72,7 @@
         protected virtual void OnCameraViewWpfBitmapSourceHeightChanged(EventArgs e)
         {
             var t = CameraViewWpfBitmapSourceHeightChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CameraViewWpfBitmapSourceHeight");
+            OnPropertyChanged(nameof(CameraViewWpfBitmapSourceHeight));
         }
         public int CameraViewWpfBitmapSourceHeight
         {

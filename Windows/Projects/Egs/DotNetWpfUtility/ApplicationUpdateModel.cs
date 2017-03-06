@@ -111,7 +111,7 @@
                     string jsonString = reader.ReadToEnd();
                     LatestInstallerInformation = Newtonsoft.Json.JsonConvert.DeserializeObject<ApplicationInstallerInformation>(jsonString);
                 }
-                OnPropertyChanged("LatestInstallerInformation");
+                OnPropertyChanged(nameof(LatestInstallerInformation));
                 return true;
             }
             catch (Exception ex)
@@ -131,12 +131,12 @@
                 var tempFolderFullPath = System.IO.Path.GetTempPath();
                 var downloadedFileName = GetFileName(LatestInstallerInformation.InstallerUrl);
                 DownloadedInstallerFileFullPath = System.IO.Path.Combine(tempFolderFullPath, downloadedFileName);
-                OnPropertyChanged("DownloadedInstallerFileFullPath");
+                OnPropertyChanged(nameof(DownloadedInstallerFileFullPath));
                 DownloadWebClient = new WebClient();
                 DownloadWebClient.DownloadProgressChanged += (sender, e) =>
                 {
                     InstallerFileDownloadingProgressPercentage = e.ProgressPercentage;
-                    OnPropertyChanged("InstallerFileDownloadingProgressPercentage");
+                    OnPropertyChanged(nameof(InstallerFileDownloadingProgressPercentage));
                 };
                 DownloadWebClient.DownloadFileCompleted += (sender, e) =>
                 {

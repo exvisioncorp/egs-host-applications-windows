@@ -83,7 +83,7 @@
             if (ModifiedValueTypeOnHost.Contains("HidAccessProperty")
                 || ModifiedValueTypeOnHost.Contains("ValueWithDescription"))
             {
-                ret += "DescriptionKey = Name.Of(() => Resources." + DescriptionKey + ")";
+                ret += "DescriptionKey = nameof(Resources." + DescriptionKey + ")";
             }
             if (ModifiedValueTypeOnHost.Contains("HidAccessProperty"))
             {

@@ -17,7 +17,7 @@
         protected virtual void OnIndexChanged(EventArgs e)
         {
             var t = IndexChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Index");
+            OnPropertyChanged(nameof(Index));
         }
         public int Index
         {
@@ -37,7 +37,7 @@
         protected virtual void OnIsThumbDraggedChanged(EventArgs e)
         {
             var t = IsThumbDraggedChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsThumbDragged");
+            OnPropertyChanged(nameof(IsThumbDragged));
         }
         public bool IsThumbDragged
         {
@@ -57,7 +57,7 @@
         protected virtual void OnTapsCountChanged(EventArgs e)
         {
             var t = TapsCountChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("TapsCount");
+            OnPropertyChanged(nameof(TapsCount));
         }
         public int TapsCount
         {
@@ -77,7 +77,7 @@
         protected virtual void OnLongTapsCountChanged(EventArgs e)
         {
             var t = LongTapsCountChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("LongTapsCount");
+            OnPropertyChanged(nameof(LongTapsCount));
         }
         public int LongTapsCount
         {

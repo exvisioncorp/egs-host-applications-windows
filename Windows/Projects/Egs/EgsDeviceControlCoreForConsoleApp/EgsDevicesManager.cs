@@ -43,7 +43,7 @@
                     throw new ArgumentOutOfRangeException("TemperatureMonitoringTimerInterval", "Interval must be from 1[sec] to 60[sec]");
                 }
                 EachDeviceStatusMonitoringTimer.Interval = (int)(value * 1000.0);
-                OnPropertyChanged("TemperatureMonitoringTimerIntervalTotalSeconds");
+                OnPropertyChanged(nameof(TemperatureMonitoringTimerIntervalTotalSeconds));
             }
         }
 #endif

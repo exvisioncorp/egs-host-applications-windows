@@ -45,8 +45,8 @@
         protected virtual void OnWindowStateChanged(EventArgs e)
         {
             var t = WindowStateChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("WindowState");
-            OnPropertyChanged("IsNormalOrElseMinimized");
+            OnPropertyChanged(nameof(WindowState));
+            OnPropertyChanged(nameof(IsNormalOrElseMinimized));
         }
         public WindowState WindowState
         {
@@ -126,7 +126,7 @@
             set
             {
                 SetWindowStateToMinimizedDelayTimer.Interval = value;
-                OnPropertyChanged("SetWindowStateToMinimizedDelayTimerInterval");
+                OnPropertyChanged(nameof(SetWindowStateToMinimizedDelayTimerInterval));
             }
         }
 

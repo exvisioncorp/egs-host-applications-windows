@@ -29,35 +29,35 @@
         internal CursorSpeedAndPrecisionModeButtonModel ModeButtonModel
         {
             get { return _ModeButtonModel; }
-            set { _ModeButtonModel = value; OnPropertyChanged("ModeButtonModel"); }
+            set { _ModeButtonModel = value; OnPropertyChanged(nameof(ModeButtonModel)); }
         }
         string _ModeDescriptionText;
         [DataMember]
         internal string ModeDescriptionText
         {
             get { return _ModeDescriptionText; }
-            set { _ModeDescriptionText = value; OnPropertyChanged("ModeDescriptionText"); }
+            set { _ModeDescriptionText = value; OnPropertyChanged(nameof(ModeDescriptionText)); }
         }
         string _RecommendedAppsToPlayText;
         [DataMember]
         internal string RecommendedAppsToPlayText
         {
             get { return _RecommendedAppsToPlayText; }
-            set { _RecommendedAppsToPlayText = value; OnPropertyChanged("RecommendedAppsToPlayText"); }
+            set { _RecommendedAppsToPlayText = value; OnPropertyChanged(nameof(RecommendedAppsToPlayText)); }
         }
         LauncherRecommendedAppViewModel _RecommendedAppLeft;
         [DataMember]
         internal LauncherRecommendedAppViewModel RecommendedAppLeft
         {
             get { return _RecommendedAppLeft; }
-            set { _RecommendedAppLeft = value; OnPropertyChanged("RecommendedAppLeft"); }
+            set { _RecommendedAppLeft = value; OnPropertyChanged(nameof(RecommendedAppLeft)); }
         }
         LauncherRecommendedAppViewModel _RecommendedAppRight;
         [DataMember]
         internal LauncherRecommendedAppViewModel RecommendedAppRight
         {
             get { return _RecommendedAppRight; }
-            set { _RecommendedAppRight = value; OnPropertyChanged("RecommendedAppRight"); }
+            set { _RecommendedAppRight = value; OnPropertyChanged(nameof(RecommendedAppRight)); }
         }
     }
 }

@@ -17,7 +17,7 @@
         protected virtual void OnCanDragMoveChanged(EventArgs e)
         {
             var t = CanDragMoveChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CanDragMove");
+            OnPropertyChanged(nameof(CanDragMove));
         }
         [DataMember]
         public bool CanDragMove
@@ -35,7 +35,7 @@
         protected virtual void OnCanResizeChanged(EventArgs e)
         {
             var t = CanResizeChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CanResize");
+            OnPropertyChanged(nameof(CanResize));
         }
         [DataMember]
         public bool CanResize
@@ -53,7 +53,7 @@
         protected virtual void OnTopmostChanged(EventArgs e)
         {
             var t = TopmostChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Topmost");
+            OnPropertyChanged(nameof(Topmost));
         }
         [DataMember]
         public bool Topmost
@@ -71,7 +71,7 @@
         protected virtual void OnLeftChanged(EventArgs e)
         {
             var t = LeftChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Left");
+            OnPropertyChanged(nameof(Left));
         }
         [DataMember]
         public int Left
@@ -89,7 +89,7 @@
         protected virtual void OnTopChanged(EventArgs e)
         {
             var t = TopChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Top");
+            OnPropertyChanged(nameof(Top));
         }
         [DataMember]
         public int Top
@@ -107,7 +107,7 @@
         protected virtual void OnWidthChanged(EventArgs e)
         {
             var t = WidthChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Width");
+            OnPropertyChanged(nameof(Width));
         }
         [DataMember]
         public int Width
@@ -125,7 +125,7 @@
         protected virtual void OnHeightChanged(EventArgs e)
         {
             var t = HeightChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Height");
+            OnPropertyChanged(nameof(Height));
         }
         [DataMember]
         public int Height
@@ -143,7 +143,7 @@
         protected virtual void OnCanShowMenuChanged(EventArgs e)
         {
             var t = CanShowMenuChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CanShowMenu");
+            OnPropertyChanged(nameof(CanShowMenu));
         }
         [DataMember]
         public bool CanShowMenu

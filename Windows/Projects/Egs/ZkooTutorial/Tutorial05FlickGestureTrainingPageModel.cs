@@ -23,7 +23,7 @@
         public Visibility ScrollAreaStackPanelVisibility
         {
             get { return _ScrollAreaStackPanelVisibility; }
-            set { _ScrollAreaStackPanelVisibility = value; OnPropertyChanged("ScrollAreaStackPanelVisibility"); }
+            set { _ScrollAreaStackPanelVisibility = value; OnPropertyChanged(nameof(ScrollAreaStackPanelVisibility)); }
         }
         public bool IsDragging { get; set; }
         public Point DragStartedPoint { get; set; }

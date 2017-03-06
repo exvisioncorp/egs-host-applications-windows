@@ -355,7 +355,7 @@
                 var XBytes = BitConverter.GetBytes(XRange.Value);
                 XBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 0);
                 OnValueUpdated();
-                OnPropertyChanged("X");
+                OnPropertyChanged(nameof(X));
             }
         }
         [DataMember(Order = 10)]
@@ -373,7 +373,7 @@
                 var YBytes = BitConverter.GetBytes(YRange.Value);
                 YBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 4);
                 OnValueUpdated();
-                OnPropertyChanged("Y");
+                OnPropertyChanged(nameof(Y));
             }
         }
 
@@ -391,9 +391,9 @@
                 XRange.Value = (int)value.X;
                 YRange.Value = (int)value.Y;
                 OnValueUpdated();
-                OnPropertyChanged("X");
-                OnPropertyChanged("Y");
-                OnPropertyChanged("Point");
+                OnPropertyChanged(nameof(X));
+                OnPropertyChanged(nameof(Y));
+                OnPropertyChanged(nameof(Value));
             }
         }
 
@@ -422,7 +422,7 @@
                 var widthBytes = BitConverter.GetBytes(WidthRange.Value);
                 widthBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 0);
                 OnValueUpdated();
-                OnPropertyChanged("Width");
+                OnPropertyChanged(nameof(Width));
             }
         }
         [DataMember(Order = 10)]
@@ -440,7 +440,7 @@
                 var heightBytes = BitConverter.GetBytes(HeightRange.Value);
                 heightBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 4);
                 OnValueUpdated();
-                OnPropertyChanged("Height");
+                OnPropertyChanged(nameof(Height));
             }
         }
 
@@ -458,9 +458,9 @@
                 WidthRange.Value = (int)value.Width;
                 HeightRange.Value = (int)value.Height;
                 OnValueUpdated();
-                OnPropertyChanged("Width");
-                OnPropertyChanged("Height");
-                OnPropertyChanged("Size");
+                OnPropertyChanged(nameof(Width));
+                OnPropertyChanged(nameof(Height));
+                OnPropertyChanged(nameof(Value));
             }
         }
 
@@ -489,7 +489,7 @@
                 var XBytes = BitConverter.GetBytes(XRange.Value);
                 XBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 0);
                 OnValueUpdated();
-                OnPropertyChanged("X");
+                OnPropertyChanged(nameof(X));
             }
         }
         [DataMember(Order = 10)]
@@ -507,7 +507,7 @@
                 var YBytes = BitConverter.GetBytes(YRange.Value);
                 YBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 4);
                 OnValueUpdated();
-                OnPropertyChanged("Y");
+                OnPropertyChanged(nameof(Y));
             }
         }
         [DataMember(Order = 20)]
@@ -525,7 +525,7 @@
                 var widthBytes = BitConverter.GetBytes(WidthRange.Value);
                 widthBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 8);
                 OnValueUpdated();
-                OnPropertyChanged("Width");
+                OnPropertyChanged(nameof(Width));
             }
         }
         [DataMember(Order = 20)]
@@ -543,7 +543,7 @@
                 var heightBytes = BitConverter.GetBytes(HeightRange.Value);
                 heightBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 12);
                 OnValueUpdated();
-                OnPropertyChanged("Height");
+                OnPropertyChanged(nameof(Height));
             }
         }
 
@@ -567,11 +567,11 @@
                 WidthRange.Value = (int)value.Width;
                 HeightRange.Value = (int)value.Height;
                 OnValueUpdated();
-                OnPropertyChanged("X");
-                OnPropertyChanged("Y");
-                OnPropertyChanged("Width");
-                OnPropertyChanged("Height");
-                OnPropertyChanged("Rect");
+                OnPropertyChanged(nameof(X));
+                OnPropertyChanged(nameof(Y));
+                OnPropertyChanged(nameof(Width));
+                OnPropertyChanged(nameof(Height));
+                OnPropertyChanged(nameof(Value));
             }
         }
 
@@ -759,12 +759,12 @@
         public float Left
         {
             get { return (float)_Value.XRange.From; }
-            set { _Value.XRange.From = value; UpdateLeftBytes(); OnValueUpdated(); OnPropertyChanged("Left"); }
+            set { _Value.XRange.From = value; UpdateLeftBytes(); OnValueUpdated(); OnPropertyChanged(nameof(Left)); }
         }
         public float Right
         {
             get { return (float)_Value.XRange.To; }
-            set { _Value.XRange.To = value; UpdateWidthBytes(); OnValueUpdated(); OnPropertyChanged("Right"); }
+            set { _Value.XRange.To = value; UpdateWidthBytes(); OnValueUpdated(); OnPropertyChanged(nameof(Right)); }
         }
         void UpdateHeightBytes()
         {
@@ -781,12 +781,12 @@
         public float Top
         {
             get { return (float)_Value.YRange.From; }
-            set { _Value.YRange.From = value; UpdateTopBytes(); OnValueUpdated(); OnPropertyChanged("Top"); }
+            set { _Value.YRange.From = value; UpdateTopBytes(); OnValueUpdated(); OnPropertyChanged(nameof(Top)); }
         }
         public float Bottom
         {
             get { return (float)_Value.YRange.To; }
-            set { _Value.YRange.To = value; UpdateHeightBytes(); OnValueUpdated(); OnPropertyChanged("Bottom"); }
+            set { _Value.YRange.To = value; UpdateHeightBytes(); OnValueUpdated(); OnPropertyChanged(nameof(Bottom)); }
         }
 
         [DataMember]
@@ -803,12 +803,12 @@
                 UpdateTopBytes();
                 // need not to call UpdateWidthBytes and UpdateHeightBytes
                 OnValueUpdated();
-                OnPropertyChanged("Left");
-                OnPropertyChanged("Right");
-                OnPropertyChanged("Top");
-                OnPropertyChanged("Bottom");
-                OnPropertyChanged("Value");
-                OnPropertyChanged("ValuesAsString");
+                OnPropertyChanged(nameof(Left));
+                OnPropertyChanged(nameof(Right));
+                OnPropertyChanged(nameof(Top));
+                OnPropertyChanged(nameof(Bottom));
+                OnPropertyChanged(nameof(Value));
+                OnPropertyChanged(nameof(ValueAsString));
             }
         }
 
@@ -832,12 +832,12 @@
                 UpdateTopBytes();
                 // need not to call UpdateWidthBytes and UpdateHeightBytes
                 OnValueUpdated();
-                OnPropertyChanged("Left");
-                OnPropertyChanged("Right");
-                OnPropertyChanged("Top");
-                OnPropertyChanged("Bottom");
-                OnPropertyChanged("Value");
-                OnPropertyChanged("ValuesAsString");
+                OnPropertyChanged(nameof(Left));
+                OnPropertyChanged(nameof(Right));
+                OnPropertyChanged(nameof(Top));
+                OnPropertyChanged(nameof(Bottom));
+                OnPropertyChanged(nameof(Value));
+                OnPropertyChanged(nameof(ValueAsString));
             }
         }
 

@@ -57,20 +57,20 @@
         internal void RaiseMultipleObjectsPropertyChanged()
         {
             // NOTE: The properties are not independent properties which have data fields, just references to model properties.
-            OnPropertyChanged("CameraViewWpfBitmapSource");
-            OnPropertyChanged("CameraViewWpfBitmapSourceWidth");
-            OnPropertyChanged("CameraViewWpfBitmapSourceHeight");
-            OnPropertyChanged("Device");
-            OnPropertyChanged("Report");
-            OnPropertyChanged("IsFaceDetecting");
-            OnPropertyChanged("FaceDetectionArea");
-            OnPropertyChanged("Face0");
-            OnPropertyChanged("Face1");
-            OnPropertyChanged("Face2");
-            OnPropertyChanged("Face3");
-            OnPropertyChanged("Face4");
-            OnPropertyChanged("Hand0");
-            OnPropertyChanged("Hand1");
+            OnPropertyChanged(nameof(CameraViewWpfBitmapSource));
+            OnPropertyChanged(nameof(CameraViewWpfBitmapSourceWidth));
+            OnPropertyChanged(nameof(CameraViewWpfBitmapSourceHeight));
+            OnPropertyChanged(nameof(Device));
+            OnPropertyChanged(nameof(Report));
+            OnPropertyChanged(nameof(IsFaceDetecting));
+            OnPropertyChanged(nameof(FaceDetectionArea));
+            OnPropertyChanged(nameof(Face0));
+            OnPropertyChanged(nameof(Face1));
+            OnPropertyChanged(nameof(Face2));
+            OnPropertyChanged(nameof(Face3));
+            OnPropertyChanged(nameof(Face4));
+            OnPropertyChanged(nameof(Hand0));
+            OnPropertyChanged(nameof(Hand1));
         }
 
         public CameraViewUserControlModel()

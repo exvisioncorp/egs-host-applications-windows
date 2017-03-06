@@ -16,7 +16,7 @@
         protected virtual void OnRightOrLeftChanged(EventArgs e)
         {
             var t = RightOrLeftChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("RightOrLeft");
+            OnPropertyChanged(nameof(RightOrLeft));
         }
         [DataMember]
         public RightOrLeftKind RightOrLeft
@@ -37,7 +37,7 @@
         protected virtual void OnIsToShowCursorChanged(EventArgs e)
         {
             var t = IsToShowCursorChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToShowCursor");
+            OnPropertyChanged(nameof(IsToShowCursor));
         }
         [DataMember]
         public bool IsToShowCursor
@@ -58,7 +58,7 @@
         protected virtual void OnIsToDetectLongTouchChanged(EventArgs e)
         {
             var t = IsToDetectLongTouchChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToDetectLongTouch");
+            OnPropertyChanged(nameof(IsToDetectLongTouch));
         }
         [DataMember]
         public bool IsToDetectLongTouch
@@ -79,7 +79,7 @@
         protected virtual void OnIsToUpdateVelocitiesChanged(EventArgs e)
         {
             var t = IsToUpdateVelocitiesChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToUpdateVelocities");
+            OnPropertyChanged(nameof(IsToUpdateVelocities));
         }
         [DataMember]
         public bool IsToUpdateVelocities
@@ -100,7 +100,7 @@
         protected virtual void OnLongTapElapsedThresholdInMillisecondsChanged(EventArgs e)
         {
             var t = LongTapElapsedThresholdInMillisecondsChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("LongTapElapsedThresholdInMilliseconds");
+            OnPropertyChanged(nameof(LongTapElapsedThresholdInMilliseconds));
         }
         [DataMember]
         public double LongTapElapsedThresholdInMilliseconds
@@ -121,7 +121,7 @@
         protected virtual void OnCurrentCursorImageSetIndexChanged(EventArgs e)
         {
             var t = CurrentCursorImageSetIndexChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CurrentCursorImageSetIndex");
+            OnPropertyChanged(nameof(CurrentCursorImageSetIndex));
         }
         public int CurrentCursorImageSetIndex
         {

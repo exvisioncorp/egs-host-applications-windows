@@ -22,12 +22,12 @@
             ret.Add(new CameraViewBordersAndPointersAreDrawnByDetail()
             {
                 EnumValue = CameraViewBordersAndPointersAreDrawnByKind.HostApplication,
-                DescriptionKey = Name.Of(() => Resources.CameraViewBordersAndPointersAreDrawnByDetail_ByHostApplication_Description)
+                DescriptionKey = nameof(Resources.CameraViewBordersAndPointersAreDrawnByDetail_ByHostApplication_Description)
             });
             ret.Add(new CameraViewBordersAndPointersAreDrawnByDetail()
             {
                 EnumValue = CameraViewBordersAndPointersAreDrawnByKind.Device,
-                DescriptionKey = Name.Of(() => Resources.CameraViewBordersAndPointersAreDrawnByDetail_ByDevice_Description)
+                DescriptionKey = nameof(Resources.CameraViewBordersAndPointersAreDrawnByDetail_ByDevice_Description)
             });
             return ret;
         }
@@ -43,22 +43,22 @@
             ret.Add(new CultureInfoAndDescriptionDetail()
             {
                 CultureInfoString = "",
-                DescriptionKey = Name.Of(() => Resources.CultureInfoAndDescriptionDetail_UseOSCulture_Description)
+                DescriptionKey = nameof(Resources.CultureInfoAndDescriptionDetail_UseOSCulture_Description)
             });
             ret.Add(new CultureInfoAndDescriptionDetail()
             {
                 CultureInfoString = "en",
-                DescriptionKey = Name.Of(() => Resources.CultureInfoAndDescriptionDetail_English_Description)
+                DescriptionKey = nameof(Resources.CultureInfoAndDescriptionDetail_English_Description)
             });
             ret.Add(new CultureInfoAndDescriptionDetail()
             {
                 CultureInfoString = "ja",
-                DescriptionKey = Name.Of(() => Resources.CultureInfoAndDescriptionDetail_Japanese_Description)
+                DescriptionKey = nameof(Resources.CultureInfoAndDescriptionDetail_Japanese_Description)
             });
             ret.Add(new CultureInfoAndDescriptionDetail()
             {
                 CultureInfoString = "zh-Hans",
-                DescriptionKey = Name.Of(() => Resources.CultureInfoAndDescriptionDetail_Chinese_Description)
+                DescriptionKey = nameof(Resources.CultureInfoAndDescriptionDetail_Chinese_Description)
             });
             return ret;
         }
@@ -73,22 +73,22 @@
             ret.Add(new MouseCursorPositionUpdatedByGestureCursorMethodDetail()
             {
                 EnumValue = MouseCursorPositionUpdatedByGestureCursorMethods.None,
-                DescriptionKey = Name.Of(() => Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_None_Description)
+                DescriptionKey = nameof(Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_None_Description)
             });
             ret.Add(new MouseCursorPositionUpdatedByGestureCursorMethodDetail()
             {
                 EnumValue = MouseCursorPositionUpdatedByGestureCursorMethods.FirstFoundHand,
-                DescriptionKey = Name.Of(() => Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_FirstFoundHand_Description)
+                DescriptionKey = nameof(Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_FirstFoundHand_Description)
             });
             ret.Add(new MouseCursorPositionUpdatedByGestureCursorMethodDetail()
             {
                 EnumValue = MouseCursorPositionUpdatedByGestureCursorMethods.RightHand,
-                DescriptionKey = Name.Of(() => Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_RightHand_Description)
+                DescriptionKey = nameof(Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_RightHand_Description)
             });
             ret.Add(new MouseCursorPositionUpdatedByGestureCursorMethodDetail()
             {
                 EnumValue = MouseCursorPositionUpdatedByGestureCursorMethods.LeftHand,
-                DescriptionKey = Name.Of(() => Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_LeftHand_Description)
+                DescriptionKey = nameof(Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_LeftHand_Description)
             });
             return ret;
         }
@@ -103,17 +103,17 @@
             ret.Add(new CursorDrawingTimingMethodDetail()
             {
                 EnumValue = CursorDrawingTimingMethods.ByHidReportUpdatedEvent,
-                DescriptionKey = Name.Of(() => Resources.CursorDrawingTimingMethodDetail_ByHidReportUpdatedEvent_Description)
+                DescriptionKey = nameof(Resources.CursorDrawingTimingMethodDetail_ByHidReportUpdatedEvent_Description)
             });
             ret.Add(new CursorDrawingTimingMethodDetail()
             {
                 EnumValue = CursorDrawingTimingMethods.ByTimer60Fps,
-                DescriptionKey = Name.Of(() => Resources.CursorDrawingTimingMethodDetail_ByTimer60Fps_Description)
+                DescriptionKey = nameof(Resources.CursorDrawingTimingMethodDetail_ByTimer60Fps_Description)
             });
             ret.Add(new CursorDrawingTimingMethodDetail()
             {
                 EnumValue = CursorDrawingTimingMethods.ByTimer30Fps,
-                DescriptionKey = Name.Of(() => Resources.CursorDrawingTimingMethodDetail_ByTimer30Fps_Description)
+                DescriptionKey = nameof(Resources.CursorDrawingTimingMethodDetail_ByTimer30Fps_Description)
             });
             return ret;
         }
@@ -129,17 +129,17 @@
             ret.Add(new CameraViewWindowStateHostApplicationsControlMethodDetail()
             {
                 EnumValue = CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods,
-                DescriptionKey = Name.Of(() => Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_UseUsersControlMethods_Description)
+                DescriptionKey = nameof(Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_UseUsersControlMethods_Description)
             });
             ret.Add(new CameraViewWindowStateHostApplicationsControlMethodDetail()
             {
                 EnumValue = CameraViewWindowStateHostApplicationsControlMethods.KeepNormal,
-                DescriptionKey = Name.Of(() => Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_KeepNormal_Description)
+                DescriptionKey = nameof(Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_KeepNormal_Description)
             });
             ret.Add(new CameraViewWindowStateHostApplicationsControlMethodDetail()
             {
                 EnumValue = CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized,
-                DescriptionKey = Name.Of(() => Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_KeepMinimized_Description)
+                DescriptionKey = nameof(Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_KeepMinimized_Description)
             });
             return ret;
         }
@@ -155,42 +155,42 @@
             ret.Add(new CameraViewWindowStateUsersControlMethodDetail()
             {
                 EnumValue = CameraViewWindowStateUsersControlMethods.ManualOnOff,
-                DescriptionKey = Name.Of(() => Resources.CameraViewWindowStateUsersControlMethodDetail_ManualOnOff_Description)
+                DescriptionKey = nameof(Resources.CameraViewWindowStateUsersControlMethodDetail_ManualOnOff_Description)
             });
             ret.Add(new CameraViewWindowStateUsersControlMethodDetail()
             {
                 EnumValue = CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandTrackingStart,
-                DescriptionKey = Name.Of(() => Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandTrackingStarts_Description)
+                DescriptionKey = nameof(Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandTrackingStarts_Description)
             });
             ret.Add(new CameraViewWindowStateUsersControlMethodDetail()
             {
                 EnumValue = CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandDetectionStart_ShowWhenHandTrackingStart,
-                DescriptionKey = Name.Of(() => Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandDetectionStarts_ShowWhenHandTrackingStarts_Description)
+                DescriptionKey = nameof(Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandDetectionStarts_ShowWhenHandTrackingStarts_Description)
             });
             ret.Add(new CameraViewWindowStateUsersControlMethodDetail()
             {
                 EnumValue = CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandDetectionStart_ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart,
-                DescriptionKey = Name.Of(() => Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandDetectionStarts_ShowWhenHandTrackingStarts_HideSoonAfterHandTrackingStarts_Description)
+                DescriptionKey = nameof(Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandDetectionStarts_ShowWhenHandTrackingStarts_HideSoonAfterHandTrackingStarts_Description)
             });
             ret.Add(new CameraViewWindowStateUsersControlMethodDetail()
             {
                 EnumValue = CameraViewWindowStateUsersControlMethods.ShowWhenHandDetectionStart_HideWhenHandDetectionEnd_HideWhenHandTrackingEnd,
-                DescriptionKey = Name.Of(() => Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandDetectionStarts_HideWhenHandDetectionEnds_HideWhenHandTrackingEnds_Description)
+                DescriptionKey = nameof(Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandDetectionStarts_HideWhenHandDetectionEnds_HideWhenHandTrackingEnds_Description)
             });
             ret.Add(new CameraViewWindowStateUsersControlMethodDetail()
             {
                 EnumValue = CameraViewWindowStateUsersControlMethods.ShowWhenHandDetectionStart_HideWhenHandDetectionEnd_HideSoonAfterHandTrackingStart,
-                DescriptionKey = Name.Of(() => Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandDetectionStarts_HideWhenHandDetectionEnds_HideSoonAfterHandTrackingStarts_Description)
+                DescriptionKey = nameof(Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandDetectionStarts_HideWhenHandDetectionEnds_HideSoonAfterHandTrackingStarts_Description)
             });
             ret.Add(new CameraViewWindowStateUsersControlMethodDetail()
             {
                 EnumValue = CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideWhenHandTrackingEnd,
-                DescriptionKey = Name.Of(() => Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandTrackingStarts_HideWhenHandTrackingEnds_Description)
+                DescriptionKey = nameof(Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandTrackingStarts_HideWhenHandTrackingEnds_Description)
             });
             ret.Add(new CameraViewWindowStateUsersControlMethodDetail()
             {
                 EnumValue = CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart,
-                DescriptionKey = Name.Of(() => Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandTrackingStarts_HideSoonAfterHandTrackingStarts_Description)
+                DescriptionKey = nameof(Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandTrackingStarts_HideSoonAfterHandTrackingStarts_Description)
             });
             return ret;
         }
