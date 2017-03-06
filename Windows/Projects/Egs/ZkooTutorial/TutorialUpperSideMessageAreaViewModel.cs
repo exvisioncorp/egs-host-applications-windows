@@ -20,19 +20,19 @@
         public string LeftTextBlockText
         {
             get { return _LeftTextBlockText; }
-            set { _LeftTextBlockText = value; OnPropertyChanged("LeftTextBlockText"); }
+            set { _LeftTextBlockText = value; OnPropertyChanged(nameof(LeftTextBlockText)); }
         }
         string _RightTextBlockText;
         public string RightTextBlockText
         {
             get { return _RightTextBlockText; }
-            set { _RightTextBlockText = value; OnPropertyChanged("RightTextBlockText"); }
+            set { _RightTextBlockText = value; OnPropertyChanged(nameof(RightTextBlockText)); }
         }
         Visibility _Visibility;
         public Visibility Visibility
         {
             get { return _Visibility; }
-            set { _Visibility = value; OnPropertyChanged("Visibility"); }
+            set { _Visibility = value; OnPropertyChanged(nameof(Visibility)); }
         }
 
         public TutorialUpperSideMessageAreaViewModel()

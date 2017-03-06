@@ -47,7 +47,7 @@
             set
             {
                 _Description = value;
-                OnPropertyChanged("Description");
+                OnPropertyChanged(nameof(Description));
             }
         }
 

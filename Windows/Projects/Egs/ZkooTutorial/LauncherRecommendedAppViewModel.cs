@@ -29,7 +29,7 @@
         public string AppTitle
         {
             get { return _AppTitle; }
-            set { _AppTitle = value; OnPropertyChanged("AppTitle"); }
+            set { _AppTitle = value; OnPropertyChanged(nameof(AppTitle)); }
         }
 
         LaunchingOtherApplicationButtonModel _LaunchingOtherApplicationButtonModel;
@@ -37,7 +37,7 @@
         public LaunchingOtherApplicationButtonModel LaunchingOtherApplicationButtonModel
         {
             get { return _LaunchingOtherApplicationButtonModel; }
-            set { _LaunchingOtherApplicationButtonModel = value; OnPropertyChanged("LaunchingOtherApplicationButtonModel"); }
+            set { _LaunchingOtherApplicationButtonModel = value; OnPropertyChanged(nameof(LaunchingOtherApplicationButtonModel)); }
         }
 
         string _AppIconImageSourceRelativeFolderPath;
@@ -49,7 +49,7 @@
             {
                 _AppIconImageSourceRelativeFolderPath = value;
                 UpdateAppIconImageSource();
-                OnPropertyChanged("AppIconImageSourceRelativeFolderPath");
+                OnPropertyChanged(nameof(AppIconImageSourceRelativeFolderPath));
             }
         }
         string _AppIconImageSourceFileName;
@@ -61,7 +61,7 @@
             {
                 _AppIconImageSourceFileName = value;
                 UpdateAppIconImageSource();
-                OnPropertyChanged("AppIconImageSourceFileName");
+                OnPropertyChanged(nameof(AppIconImageSourceFileName));
             }
         }
         public string AppIconImageSourceFilePath { get; private set; }
@@ -70,8 +70,8 @@
         {
             AppIconImageSourceFilePath = _AppIconImageSourceRelativeFolderPath + _AppIconImageSourceFileName;
             AppIconImageSource = BitmapImageUtility.LoadBitmapImageFromFile(AppIconImageSourceFilePath);
-            OnPropertyChanged("AppIconImageSourceFilePath");
-            OnPropertyChanged("AppIconImageSource");
+            OnPropertyChanged(nameof(AppIconImageSourceFilePath));
+            OnPropertyChanged(nameof(AppIconImageSource));
         }
     }
 }

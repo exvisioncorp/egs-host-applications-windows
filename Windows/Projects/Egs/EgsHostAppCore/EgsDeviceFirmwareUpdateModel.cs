@@ -83,8 +83,8 @@
             set
             {
                 _FirmwareImageFilePathList = value;
-                OnPropertyChanged("FirmwareImageFilePathList");
-                OnPropertyChanged("FirmwareImageFilePathListCount");
+                OnPropertyChanged(nameof(FirmwareImageFilePathList));
+                OnPropertyChanged(nameof(FirmwareImageFilePathListCount));
             }
         }
 
@@ -111,8 +111,8 @@
             private set
             {
                 _CurrentIndexInFirmwareImageFilePathList = value;
-                OnPropertyChanged("CurrentIndexInFirmwareImageFilePathList");
-                OnPropertyChanged("CurrentIndexInFirmwareImageFilePathListForView");
+                OnPropertyChanged(nameof(CurrentIndexInFirmwareImageFilePathList));
+                OnPropertyChanged(nameof(CurrentIndexInFirmwareImageFilePathListForView));
             }
         }
         /// <summary>
@@ -136,7 +136,7 @@
                 if (_PercentProgressInOneFile != value)
                 {
                     _PercentProgressInOneFile = value;
-                    OnPropertyChanged("PercentProgressInOneFile");
+                    OnPropertyChanged(nameof(PercentProgressInOneFile));
                     ProgressReport.ReportProgress(PercentProgress);
                 }
             }
@@ -167,8 +167,8 @@
             private set
             {
                 _IsBusy = value;
-                OnPropertyChanged("IsBusy");
-                OnPropertyChanged("StartOrCancelButtonContent");
+                OnPropertyChanged(nameof(IsBusy));
+                OnPropertyChanged(nameof(StartOrCancelButtonContent));
             }
         }
         public bool IsCanceled { get; private set; }
@@ -177,7 +177,7 @@
         public string MessageText
         {
             get { return _MessageText; }
-            set { _MessageText = value; OnPropertyChanged("MessageText"); }
+            set { _MessageText = value; OnPropertyChanged(nameof(MessageText)); }
         }
 
         EgsDeviceFirmwareUpdateUserActions _ExpectedUserAction = EgsDeviceFirmwareUpdateUserActions.None;
@@ -205,7 +205,7 @@
                         if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                         throw new NotImplementedException();
                 }
-                OnPropertyChanged("ExpectedUserAction");
+                OnPropertyChanged(nameof(ExpectedUserAction));
             }
         }
 

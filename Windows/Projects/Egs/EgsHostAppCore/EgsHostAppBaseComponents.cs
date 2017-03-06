@@ -51,7 +51,7 @@
         protected virtual void OnIsToStartTutorialWhenHostApplicationStartChanged(EventArgs e)
         {
             var t = IsToStartTutorialWhenHostApplicationStartChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToStartTutorialWhenHostApplicationStart");
+            OnPropertyChanged(nameof(IsToStartTutorialWhenHostApplicationStart));
         }
         [DataMember]
         public bool IsToStartTutorialWhenHostApplicationStart
@@ -80,7 +80,7 @@
         internal override void RaiseMultipleObjectsPropertyChanged()
         {
             base.RaiseMultipleObjectsPropertyChanged();
-            OnPropertyChanged("CameraViewWindowModel");
+            OnPropertyChanged(nameof(CameraViewWindowModel));
         }
 
         public EgsHostAppBaseComponents()

@@ -90,7 +90,7 @@
                     StartTime = DateTime.Now;
                     TemperatureStreamWriter.WriteLine("DateTime.Now, Elapsed[sec], Temperature[C], Temperature[F}");
                 }
-                OnPropertyChanged("IsToWriteLogOfTemperature");
+                OnPropertyChanged(nameof(IsToWriteLogOfTemperature));
             }
         }
         #endregion
@@ -107,10 +107,10 @@
 
         internal virtual void RaiseMultipleObjectsPropertyChanged()
         {
-            OnPropertyChanged("Device");
-            OnPropertyChanged("CameraViewUserControlModel");
+            OnPropertyChanged(nameof(Device));
+            OnPropertyChanged(nameof(CameraViewUserControlModel));
             CameraViewUserControlModel.RaiseMultipleObjectsPropertyChanged();
-            OnPropertyChanged("OnePersonBothHandsViewModel");
+            OnPropertyChanged(nameof(OnePersonBothHandsViewModel));
         }
 
         public EgsHostOnUserControl()

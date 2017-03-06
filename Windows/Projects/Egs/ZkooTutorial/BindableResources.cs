@@ -30,8 +30,8 @@
             var newCultureInfo = (string.IsNullOrEmpty(name)) ? CultureInfo.InstalledUICulture : CultureInfo.GetCultureInfo(name);
             Properties.Resources.Culture = newCultureInfo;
             Properties.NarrationTexts.Culture = newCultureInfo;
-            OnPropertyChanged("Resources");
-            OnPropertyChanged("NarrationTexts");
+            OnPropertyChanged(nameof(Resources));
+            OnPropertyChanged(nameof(NarrationTexts));
             var t = CultureChanged; if (t != null) { t(this, EventArgs.Empty); }
         }
     }

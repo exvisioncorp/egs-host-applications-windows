@@ -16,7 +16,7 @@
         protected virtual void OnIndexInHidDevicePathListChanged(EventArgs e)
         {
             var t = IndexInHidDevicePathListChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IndexInHidDevicePathList");
+            OnPropertyChanged(nameof(IndexInHidDevicePathList));
         }
         public int IndexInHidDevicePathList
         {
@@ -33,7 +33,7 @@
         protected virtual void OnIsConnectedChanged(EventArgs e)
         {
             var t = IsConnectedChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsConnected");
+            OnPropertyChanged(nameof(IsConnected));
         }
         public bool IsConnected
         {
@@ -50,7 +50,7 @@
         protected internal virtual void OnIsUpdatingFirmwareChanged(EventArgs e)
         {
             var t = IsUpdatingFirmwareChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsUpdatingFirmware");
+            OnPropertyChanged(nameof(IsUpdatingFirmware));
         }
         internal bool IsUpdatingFirmware
         {
@@ -67,7 +67,7 @@
         protected virtual void OnIsSendingTouchScreenHidReportChanged(EventArgs e)
         {
             var t = IsSendingTouchScreenHidReportChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsSendingTouchScreenHidReport");
+            OnPropertyChanged(nameof(IsSendingTouchScreenHidReport));
         }
         public bool IsSendingTouchScreenHidReport
         {
@@ -84,7 +84,7 @@
         protected virtual void OnIsSendingHoveringStateOnTouchScreenHidReportChanged(EventArgs e)
         {
             var t = IsSendingHoveringStateOnTouchScreenHidReportChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsSendingHoveringStateOnTouchScreenHidReport");
+            OnPropertyChanged(nameof(IsSendingHoveringStateOnTouchScreenHidReport));
         }
         public bool IsSendingHoveringStateOnTouchScreenHidReport
         {
@@ -101,7 +101,7 @@
         protected virtual void OnIsSendingEgsGestureHidReportChanged(EventArgs e)
         {
             var t = IsSendingEgsGestureHidReportChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsSendingEgsGestureHidReport");
+            OnPropertyChanged(nameof(IsSendingEgsGestureHidReport));
         }
         public bool IsSendingEgsGestureHidReport
         {
@@ -118,7 +118,7 @@
         protected virtual void OnIsMonitoringTemperatureChanged(EventArgs e)
         {
             var t = IsMonitoringTemperatureChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsMonitoringTemperature");
+            OnPropertyChanged(nameof(IsMonitoringTemperature));
         }
         public bool IsMonitoringTemperature
         {

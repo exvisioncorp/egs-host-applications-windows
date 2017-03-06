@@ -133,32 +133,32 @@
 
         internal void CallPropertyChangedOfOnlyUpdatedPropertiesAtOnce()
         {
-            if (hasToCallPropertyChangedOfIsTracking) { OnPropertyChanged("IsTracking"); }
-            if (hasToCallPropertyChangedOfIsVisible) { OnPropertyChanged("IsVisible"); }
-            if (hasToCallPropertyChangedOfPositionX) { OnPropertyChanged("PositionX"); }
-            if (hasToCallPropertyChangedOfPositionY) { OnPropertyChanged("PositionY"); }
-            if (hasToCallPropertyChangedOfRotation) { OnPropertyChanged("Rotation"); }
-            if (hasToCallPropertyChangedOfRelativeZ) { OnPropertyChanged("RelativeZ"); }
-            if (hasToCallPropertyChangedOfFingerPitch) { OnPropertyChanged("FingerPitch"); }
-            if (hasToCallPropertyChangedOfIsTouching) { OnPropertyChanged("IsTouching"); }
-            if (hasToCallPropertyChangedOfIsLongTouching) { OnPropertyChanged("IsLongTouching"); }
-            if (hasToCallPropertyChangedOfLastTapKind) { OnPropertyChanged("LastTapKind"); }
-            if (hasToCallPropertyChangedOfCurrentImageIndex) { OnPropertyChanged("CurrentImageIndex"); }
+            if (hasToCallPropertyChangedOfIsTracking) { OnPropertyChanged(nameof(IsTracking)); }
+            if (hasToCallPropertyChangedOfIsVisible) { OnPropertyChanged(nameof(IsVisible)); }
+            if (hasToCallPropertyChangedOfPositionX) { OnPropertyChanged(nameof(PositionX)); }
+            if (hasToCallPropertyChangedOfPositionY) { OnPropertyChanged(nameof(PositionY)); }
+            if (hasToCallPropertyChangedOfRotation) { OnPropertyChanged(nameof(Rotation)); }
+            if (hasToCallPropertyChangedOfRelativeZ) { OnPropertyChanged(nameof(RelativeZ)); }
+            if (hasToCallPropertyChangedOfFingerPitch) { OnPropertyChanged(nameof(FingerPitch)); }
+            if (hasToCallPropertyChangedOfIsTouching) { OnPropertyChanged(nameof(IsTouching)); }
+            if (hasToCallPropertyChangedOfIsLongTouching) { OnPropertyChanged(nameof(IsLongTouching)); }
+            if (hasToCallPropertyChangedOfLastTapKind) { OnPropertyChanged(nameof(LastTapKind)); }
+            if (hasToCallPropertyChangedOfCurrentImageIndex) { OnPropertyChanged(nameof(CurrentImageIndex)); }
         }
 
         internal void CallPropertyChangedOfAllPropertiesAtOnce()
         {
-            OnPropertyChanged("IsTracking");
-            OnPropertyChanged("IsVisible");
-            OnPropertyChanged("PositionX");
-            OnPropertyChanged("PositionY");
-            OnPropertyChanged("Rotation");
-            OnPropertyChanged("RelativeZ");
-            OnPropertyChanged("FingerPitch");
-            OnPropertyChanged("IsTouching");
-            OnPropertyChanged("IsLongTouching");
-            OnPropertyChanged("LastTapKind");
-            OnPropertyChanged("CurrentImageIndex");
+            OnPropertyChanged(nameof(IsTracking));
+            OnPropertyChanged(nameof(IsVisible));
+            OnPropertyChanged(nameof(PositionX));
+            OnPropertyChanged(nameof(PositionY));
+            OnPropertyChanged(nameof(Rotation));
+            OnPropertyChanged(nameof(RelativeZ));
+            OnPropertyChanged(nameof(FingerPitch));
+            OnPropertyChanged(nameof(IsTouching));
+            OnPropertyChanged(nameof(IsLongTouching));
+            OnPropertyChanged(nameof(LastTapKind));
+            OnPropertyChanged(nameof(CurrentImageIndex));
             SetFalseToAllHasToCallPeropertyChangedFields();
         }
 

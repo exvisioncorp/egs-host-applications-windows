@@ -521,7 +521,7 @@
         </member>
         <member name="M:Egs.EgsDevice.UpdateTemperatureProperties">
             <summary>
-            Sorry but this is internal.  But for DataBinding, it is public.  Only in newer device hardware can measure temperature.
+            MA2100 cannot measure temperature.  MA2150 can measure temperature.
             </summary>
         </member>
         <member name="P:Egs.EgsDevice.HidDeviceDevicePath">

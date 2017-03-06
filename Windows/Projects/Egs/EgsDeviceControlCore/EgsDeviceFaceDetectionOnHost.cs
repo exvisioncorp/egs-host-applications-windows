@@ -95,7 +95,7 @@
             private set
             {
                 _IsDetecting = value;
-                OnPropertyChanged(Name.Of(() => IsDetecting));
+                OnPropertyChanged(nameof(IsDetecting));
             }
         }
 
@@ -388,8 +388,8 @@
             UpdateDeviceSettings(Device.Settings);
 
             // TODO: MUSTDO: Check the order of event raising and IsDetecting = false.
-            OnPropertyChanged(Name.Of(() => IsFaceDetected));
-            OnPropertyChanged(Name.Of(() => SelectedFaceRect));
+            OnPropertyChanged(nameof(IsFaceDetected));
+            OnPropertyChanged(nameof(SelectedFaceRect));
             OnFaceDetectionCompleted(EventArgs.Empty);
 
             IsDetecting = false;

@@ -5,7 +5,6 @@ namespace Egs
 {
 <#@ include file = "../../DotNetUtility/Dpi.cs" #>
 <#@ include file = "../../DotNetUtility/DuplicatedProcessStartBlocking.cs" #>
-<#@ include file = "../../DotNetUtility/Name.cs" #>
 <#@ include file = "../../DotNetUtility/OptionalValue.cs" #>
 <#@ include file = "../../DotNetUtility/RangedNumericType.cs" #>
 <#@ include file = "../../DotNetUtility/RangedNumericTypes.cs" #>

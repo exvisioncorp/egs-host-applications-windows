@@ -169,7 +169,7 @@
         protected virtual void OnIsDetectingFacesChanged(EventArgs e)
         {
             var t = IsDetectingFacesChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsDetectingFaces");
+            OnPropertyChanged(nameof(IsDetectingFaces));
         }
         public void UpdateIsDetectingFaces()
         {
@@ -197,7 +197,7 @@
         protected virtual void OnIsDetectingHandsChanged(EventArgs e)
         {
             var t = IsDetectingHandsChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsDetectingHands");
+            OnPropertyChanged(nameof(IsDetectingHands));
         }
         public void UpdateIsDetectingHands()
         {
@@ -229,7 +229,7 @@
         protected virtual void OnIsTrackingOneOrMoreHandsChanged(EventArgs e)
         {
             var t = IsTrackingOneOrMoreHandsChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsTrackingOneOrMoreHands");
+            OnPropertyChanged(nameof(IsTrackingOneOrMoreHands));
         }
         public void UpdateIsTrackingOneOrMoreHands()
         {
@@ -263,23 +263,23 @@
             // MUSTDO: FIX.  The next line can cause cross thread exceptions.
             if (IsHidDeviceConnected == false) { ResetHidReportObjects(); }
 
-            OnPropertyChanged(Name.Of(() => DeviceStatusString));
-            OnPropertyChanged(Name.Of(() => DeviceStatusDetailString));
+            OnPropertyChanged(nameof(DeviceStatusString));
+            OnPropertyChanged(nameof(DeviceStatusDetailString));
 
-            OnPropertyChanged(Name.Of(() => DeviceSerialNumberString));
-            OnPropertyChanged(Name.Of(() => HardwareTypeString));
-            OnPropertyChanged(Name.Of(() => FirmwareVersionString));
-            OnPropertyChanged(Name.Of(() => FirmwareVersionAsVersion));
-            OnPropertyChanged(Name.Of(() => DeviceSpecificationString));
-            OnPropertyChanged(Name.Of(() => TemperatureInCelsiusString));
-            OnPropertyChanged(Name.Of(() => TemperatureInFahrenheitString));
+            OnPropertyChanged(nameof(DeviceSerialNumberString));
+            OnPropertyChanged(nameof(HardwareTypeString));
+            OnPropertyChanged(nameof(FirmwareVersionString));
+            OnPropertyChanged(nameof(FirmwareVersionAsVersion));
+            OnPropertyChanged(nameof(DeviceSpecificationString));
+            OnPropertyChanged(nameof(TemperatureInCelsiusString));
+            OnPropertyChanged(nameof(TemperatureInFahrenheitString));
         }
 
         void UpdateIsConnected(object sender, EventArgs e)
         {
             IsConnected = IsHidDeviceConnected;
-            OnPropertyChanged(Name.Of(() => DeviceStatusString));
-            OnPropertyChanged(Name.Of(() => DeviceStatusDetailString));
+            OnPropertyChanged(nameof(DeviceStatusString));
+            OnPropertyChanged(nameof(DeviceStatusDetailString));
         }
 
         void EgsDeviceSettings_HidAccessPropertyUpdated(object sender, HidAccessPropertyUpdatedEventArgs e)

@@ -20,18 +20,16 @@
 
         void InitializePropertiesByDefaultValueAdditional()
         {
-
-
         }
 
         void AttachInternalEventHandlersAdditional()
         {
-            CaptureImageSize.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
-            CaptureFps.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
-            LensEquivalentFocalLengthInMillimeters.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
-            SensorOnePixelSideLengthInMillimeters.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
-            LensFNumber.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
-            SensorExposureTimeInMilliseconds.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => CameraSpecificationValue)); };
+            CaptureImageSize.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
+            CaptureFps.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
+            LensEquivalentFocalLengthInMillimeters.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
+            SensorOnePixelSideLengthInMillimeters.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
+            LensFNumber.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
+            SensorExposureTimeInMilliseconds.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
 
             IsToMonitorTemperature.ValueUpdated += delegate
             {
@@ -58,7 +56,7 @@
             if (SensorOnePixelSideLengthInMillimeters.Value != newSensorOnePixelSideLengthInMillimeters)
             {
                 SensorOnePixelSideLengthInMillimeters.Value = newSensorOnePixelSideLengthInMillimeters;
-                OnPropertyChanged(Name.Of(() => CameraSpecificationValue));
+                OnPropertyChanged(nameof(CameraSpecificationValue));
             }
 
             if (CurrentConnectedEgsDevice == null)

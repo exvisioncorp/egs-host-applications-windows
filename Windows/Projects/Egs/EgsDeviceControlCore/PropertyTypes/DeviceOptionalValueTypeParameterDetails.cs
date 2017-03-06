@@ -13,14 +13,8 @@
     using Egs.DotNetUtility;
 
 
-    public class HidAccessPropertyOptionalTypeParameterBase : ValueWithDescriptionBase
+    public class HidAccessPropertyOptionalTypeParameterBase : ValueWithDescription<byte>
     {
-        // NOTE: Do not add implementation of IPropertyChanged to this class.  Use this only for Optional<T>.
-        public byte Value
-        {
-            get;
-            protected set;
-        }
     }
 
     public class HidAccessPropertyOptionalTypeParameterSize : HidAccessPropertyOptionalTypeParameterBase
@@ -39,10 +33,10 @@
         public static List<HardwareTypeDetail> GetDefaultList()
         {
             var ret = new List<HardwareTypeDetail>();
-            ret.Add(new HardwareTypeDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.HardwareTypeDetail_Value0_Description) });
-            ret.Add(new HardwareTypeDetail() { Value = 1, DescriptionKey = Name.Of(() => Resources.HardwareTypeDetail_Value1_Description) });
-            ret.Add(new HardwareTypeDetail() { Value = 2, DescriptionKey = Name.Of(() => Resources.HardwareTypeDetail_Value2_Description) });
-            ret.Add(new HardwareTypeDetail() { Value = 3, DescriptionKey = Name.Of(() => Resources.HardwareTypeDetail_Value3_Description) });
+            ret.Add(new HardwareTypeDetail() { Value = 0, DescriptionKey = nameof(Resources.HardwareTypeDetail_Value0_Description) });
+            ret.Add(new HardwareTypeDetail() { Value = 1, DescriptionKey = nameof(Resources.HardwareTypeDetail_Value1_Description) });
+            ret.Add(new HardwareTypeDetail() { Value = 2, DescriptionKey = nameof(Resources.HardwareTypeDetail_Value2_Description) });
+            ret.Add(new HardwareTypeDetail() { Value = 3, DescriptionKey = nameof(Resources.HardwareTypeDetail_Value3_Description) });
             return ret;
         }
     }
@@ -52,8 +46,8 @@
         public static List<PowerModeDetail> GetDefaultList()
         {
             var ret = new List<PowerModeDetail>();
-            ret.Add(new PowerModeDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.PowerModeDetail_Value0_Description) });
-            ret.Add(new PowerModeDetail() { Value = 1, DescriptionKey = Name.Of(() => Resources.PowerModeDetail_Value1_Description) });
+            ret.Add(new PowerModeDetail() { Value = 0, DescriptionKey = nameof(Resources.PowerModeDetail_Value0_Description) });
+            ret.Add(new PowerModeDetail() { Value = 1, DescriptionKey = nameof(Resources.PowerModeDetail_Value1_Description) });
             return ret;
         }
     }
@@ -63,8 +57,8 @@
         public static List<HostMachineOperatingSystemDetail> GetDefaultList()
         {
             var ret = new List<HostMachineOperatingSystemDetail>();
-            ret.Add(new HostMachineOperatingSystemDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.HostMachineOperatingSystemDetail_Value0_Description) });
-            ret.Add(new HostMachineOperatingSystemDetail() { Value = 1, DescriptionKey = Name.Of(() => Resources.HostMachineOperatingSystemDetail_Value1_Description) });
+            ret.Add(new HostMachineOperatingSystemDetail() { Value = 0, DescriptionKey = nameof(Resources.HostMachineOperatingSystemDetail_Value0_Description) });
+            ret.Add(new HostMachineOperatingSystemDetail() { Value = 1, DescriptionKey = nameof(Resources.HostMachineOperatingSystemDetail_Value1_Description) });
             return ret;
         }
     }
@@ -90,9 +84,9 @@
         public static List<TouchInterfaceKindDetail> GetDefaultList()
         {
             var ret = new List<TouchInterfaceKindDetail>();
-            ret.Add(new TouchInterfaceKindDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.TouchInterfaceKindDetail_Value0_Description) });
-            ret.Add(new TouchInterfaceKindDetail() { Value = 2, DescriptionKey = Name.Of(() => Resources.TouchInterfaceKindDetail_Value2_Description) });
-            ret.Add(new TouchInterfaceKindDetail() { Value = 1, DescriptionKey = Name.Of(() => Resources.TouchInterfaceKindDetail_Value1_Description) });
+            ret.Add(new TouchInterfaceKindDetail() { Value = 0, DescriptionKey = nameof(Resources.TouchInterfaceKindDetail_Value0_Description) });
+            ret.Add(new TouchInterfaceKindDetail() { Value = 2, DescriptionKey = nameof(Resources.TouchInterfaceKindDetail_Value2_Description) });
+            ret.Add(new TouchInterfaceKindDetail() { Value = 1, DescriptionKey = nameof(Resources.TouchInterfaceKindDetail_Value1_Description) });
             return ret;
         }
     }
@@ -102,10 +96,10 @@
         public static List<DeviceRotationAngleInClockwiseDetail> GetDefaultList()
         {
             var ret = new List<DeviceRotationAngleInClockwiseDetail>();
-            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.DeviceRotationAngleInClockwiseDetail_Value0_Description) });
-            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 1, DescriptionKey = Name.Of(() => Resources.DeviceRotationAngleInClockwiseDetail_Value1_Description) });
-            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 2, DescriptionKey = Name.Of(() => Resources.DeviceRotationAngleInClockwiseDetail_Value2_Description) });
-            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 3, DescriptionKey = Name.Of(() => Resources.DeviceRotationAngleInClockwiseDetail_Value3_Description) });
+            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 0, DescriptionKey = nameof(Resources.DeviceRotationAngleInClockwiseDetail_Value0_Description) });
+            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 1, DescriptionKey = nameof(Resources.DeviceRotationAngleInClockwiseDetail_Value1_Description) });
+            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 2, DescriptionKey = nameof(Resources.DeviceRotationAngleInClockwiseDetail_Value2_Description) });
+            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 3, DescriptionKey = nameof(Resources.DeviceRotationAngleInClockwiseDetail_Value3_Description) });
             return ret;
         }
     }
@@ -116,8 +110,8 @@
         public static List<DeviceUsageDetail> GetDefaultList()
         {
             var ret = new List<DeviceUsageDetail>();
-            ret.Add(new DeviceUsageDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.DeviceUsageDetail_Value0_Description) });
-            ret.Add(new DeviceUsageDetail() { Value = 1, DescriptionKey = Name.Of(() => Resources.DeviceUsageDetail_Value1_Description) });
+            ret.Add(new DeviceUsageDetail() { Value = 0, DescriptionKey = nameof(Resources.DeviceUsageDetail_Value0_Description) });
+            ret.Add(new DeviceUsageDetail() { Value = 1, DescriptionKey = nameof(Resources.DeviceUsageDetail_Value1_Description) });
             return ret;
         }
     }
@@ -127,7 +121,7 @@
         public static List<ModelSetIdDetail> GetDefaultList()
         {
             var ret = new List<ModelSetIdDetail>();
-            ret.Add(new ModelSetIdDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.ModelSetIdDetail_Value0_Description) });
+            ret.Add(new ModelSetIdDetail() { Value = 0, DescriptionKey = nameof(Resources.ModelSetIdDetail_Value0_Description) });
             return ret;
         }
     }
@@ -138,12 +132,12 @@
         public static List<CaptureBinningDetail> GetDefaultList()
         {
             var ret = new List<CaptureBinningDetail>();
-            ret.Add(new CaptureBinningDetail() { Value = 2, DescriptionKey = Name.Of(() => Resources.CaptureBinningDetail_Value2_Description) });
-            ret.Add(new CaptureBinningDetail() { Value = 1, DescriptionKey = Name.Of(() => Resources.CaptureBinningDetail_Value1_Description) });
+            ret.Add(new CaptureBinningDetail() { Value = 2, DescriptionKey = nameof(Resources.CaptureBinningDetail_Value2_Description) });
+            ret.Add(new CaptureBinningDetail() { Value = 1, DescriptionKey = nameof(Resources.CaptureBinningDetail_Value1_Description) });
             if (ApplicationCommonSettings.IsInternalRelease)
             {
-                ret.Add(new CaptureBinningDetail() { Value = 3, DescriptionKey = Name.Of(() => Resources.CaptureBinningDetail_Value3_Description) });
-                ret.Add(new CaptureBinningDetail() { Value = 4, DescriptionKey = Name.Of(() => Resources.CaptureBinningDetail_Value4_Description) });
+                ret.Add(new CaptureBinningDetail() { Value = 3, DescriptionKey = nameof(Resources.CaptureBinningDetail_Value3_Description) });
+                ret.Add(new CaptureBinningDetail() { Value = 4, DescriptionKey = nameof(Resources.CaptureBinningDetail_Value4_Description) });
             }
             return ret;
         }
@@ -154,9 +148,9 @@
         public static List<CaptureFpsDetail> GetDefaultList()
         {
             var ret = new List<CaptureFpsDetail>();
-            ret.Add(new CaptureFpsDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.CaptureFpsDetail_Value0_Description) });
-            ret.Add(new CaptureFpsDetail() { Value = 120, DescriptionKey = Name.Of(() => Resources.CaptureFpsDetail_Value120_Description) });
-            ret.Add(new CaptureFpsDetail() { Value = 100, DescriptionKey = Name.Of(() => Resources.CaptureFpsDetail_Value100_Description) });
+            ret.Add(new CaptureFpsDetail() { Value = 0, DescriptionKey = nameof(Resources.CaptureFpsDetail_Value0_Description) });
+            ret.Add(new CaptureFpsDetail() { Value = 120, DescriptionKey = nameof(Resources.CaptureFpsDetail_Value120_Description) });
+            ret.Add(new CaptureFpsDetail() { Value = 100, DescriptionKey = nameof(Resources.CaptureFpsDetail_Value100_Description) });
             return ret;
         }
     }
@@ -166,9 +160,9 @@
         public static List<CaptureExposureModeDetail> GetDefaultList()
         {
             var ret = new List<CaptureExposureModeDetail>();
-            ret.Add(new CaptureExposureModeDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.CaptureExposureModeDetail_Value0_Description) });
-            ret.Add(new CaptureExposureModeDetail() { Value = 1, DescriptionKey = Name.Of(() => Resources.CaptureExposureModeDetail_Value1_Description) });
-            //ret.Add(new CaptureExposureModeDetail() { Value = 2, DescriptionKey = Name.Of(() => Resources.CaptureExposureModeDetail_Value2_Description) });
+            ret.Add(new CaptureExposureModeDetail() { Value = 0, DescriptionKey = nameof(Resources.CaptureExposureModeDetail_Value0_Description) });
+            ret.Add(new CaptureExposureModeDetail() { Value = 1, DescriptionKey = nameof(Resources.CaptureExposureModeDetail_Value1_Description) });
+            //ret.Add(new CaptureExposureModeDetail() { Value = 2, DescriptionKey = nameof(Resources.CaptureExposureModeDetail_Value2_Description) });
             return ret;
         }
     }
@@ -198,9 +192,9 @@
         public static List<FaceSelectionMethodKindDetail> GetDefaultList()
         {
             var ret = new List<FaceSelectionMethodKindDetail>();
-            ret.Add(new FaceSelectionMethodKindDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.FaceSelectionMethodKindDetail_Value0_Description) });
-            ret.Add(new FaceSelectionMethodKindDetail() { Value = 1, DescriptionKey = Name.Of(() => Resources.FaceSelectionMethodKindDetail_Value1_Description) });
-            ret.Add(new FaceSelectionMethodKindDetail() { Value = 2, DescriptionKey = Name.Of(() => Resources.FaceSelectionMethodKindDetail_Value2_Description) });
+            ret.Add(new FaceSelectionMethodKindDetail() { Value = 0, DescriptionKey = nameof(Resources.FaceSelectionMethodKindDetail_Value0_Description) });
+            ret.Add(new FaceSelectionMethodKindDetail() { Value = 1, DescriptionKey = nameof(Resources.FaceSelectionMethodKindDetail_Value1_Description) });
+            ret.Add(new FaceSelectionMethodKindDetail() { Value = 2, DescriptionKey = nameof(Resources.FaceSelectionMethodKindDetail_Value2_Description) });
             return ret;
         }
     }
@@ -210,9 +204,9 @@
         public static List<CursorSpeedAndPrecisionModeDetail> GetDefaultList()
         {
             var ret = new List<CursorSpeedAndPrecisionModeDetail>();
-            ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.CursorSpeedAndPrecisionModeDetail_Value0_Description) });
-            ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 1, DescriptionKey = Name.Of(() => Resources.CursorSpeedAndPrecisionModeDetail_Value1_Description) });
-            ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 2, DescriptionKey = Name.Of(() => Resources.CursorSpeedAndPrecisionModeDetail_Value2_Description) });
+            ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 0, DescriptionKey = nameof(Resources.CursorSpeedAndPrecisionModeDetail_Value0_Description) });
+            ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 1, DescriptionKey = nameof(Resources.CursorSpeedAndPrecisionModeDetail_Value1_Description) });
+            ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 2, DescriptionKey = nameof(Resources.CursorSpeedAndPrecisionModeDetail_Value2_Description) });
             if (ApplicationCommonSettings.IsInternalRelease)
             {
                 ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 3, DescriptionKey = "" });
@@ -230,8 +224,8 @@
         public static List<FastMovingHandsGestureModeDetail> GetDefaultList()
         {
             var ret = new List<FastMovingHandsGestureModeDetail>();
-            ret.Add(new FastMovingHandsGestureModeDetail() { Value = 0, DescriptionKey = Name.Of(() => Resources.FastMovingHandsGestureModeDetail_Value0_Description) });
-            ret.Add(new FastMovingHandsGestureModeDetail() { Value = 1, DescriptionKey = Name.Of(() => Resources.FastMovingHandsGestureModeDetail_Value1_Description) });
+            ret.Add(new FastMovingHandsGestureModeDetail() { Value = 0, DescriptionKey = nameof(Resources.FastMovingHandsGestureModeDetail_Value0_Description) });
+            ret.Add(new FastMovingHandsGestureModeDetail() { Value = 1, DescriptionKey = nameof(Resources.FastMovingHandsGestureModeDetail_Value1_Description) });
             return ret;
         }
     }

@@ -46,7 +46,7 @@
         {
             var newCultureInfo = (string.IsNullOrEmpty(name)) ? CultureInfo.InstalledUICulture : CultureInfo.GetCultureInfo(name);
             Egs.EgsDeviceControlCore.Properties.Resources.Culture = newCultureInfo;
-            OnPropertyChanged("Resources");
+            OnPropertyChanged(nameof(Resources));
             var t = CultureChanged; if (t != null) { t(this, EventArgs.Empty); }
         }
     }

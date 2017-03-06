@@ -712,7 +712,7 @@ namespace DotNetUtility
                     string jsonString = reader.ReadToEnd();
                     LatestInstallerInformation = Newtonsoft.Json.JsonConvert.DeserializeObject<ApplicationInstallerInformation>(jsonString);
                 }
-                OnPropertyChanged("LatestInstallerInformation");
+                OnPropertyChanged(nameof(LatestInstallerInformation));
                 return true;
             }
             catch (Exception ex)
@@ -732,12 +732,12 @@ namespace DotNetUtility
                 var tempFolderFullPath = System.IO.Path.GetTempPath();
                 var downloadedFileName = GetFileName(LatestInstallerInformation.InstallerUrl);
                 DownloadedInstallerFileFullPath = System.IO.Path.Combine(tempFolderFullPath, downloadedFileName);
-                OnPropertyChanged("DownloadedInstallerFileFullPath");
+                OnPropertyChanged(nameof(DownloadedInstallerFileFullPath));
                 DownloadWebClient = new WebClient();
                 DownloadWebClient.DownloadProgressChanged += (sender, e) =>
                 {
                     InstallerFileDownloadingProgressPercentage = e.ProgressPercentage;
-                    OnPropertyChanged("InstallerFileDownloadingProgressPercentage");
+                    OnPropertyChanged(nameof(InstallerFileDownloadingProgressPercentage));
                 };
                 DownloadWebClient.DownloadFileCompleted += (sender, e) =>
                 {
@@ -869,8 +869,8 @@ namespace DotNetUtility
                 _CanPerform = value;
                 CommandManager.InvalidateRequerySuggested();
                 //var t = CanExecuteChanged; if (t != null) { t(this, EventArgs.Empty); }
-                //OnPropertyChanged("CanPerform");
-                //OnPropertyChanged("CanExecute");
+                //OnPropertyChanged(nameof(CanPerform));
+                //OnPropertyChanged(nameof(CanExecute));
             }
         }
         bool _IsPerforming = false;
@@ -882,9 +882,9 @@ namespace DotNetUtility
                 _IsPerforming = value;
                 CommandManager.InvalidateRequerySuggested();
                 //var t = CanExecuteChanged; if (t != null) { t(this, EventArgs.Empty); }
-                //OnPropertyChanged("IsPerforming");
-                //OnPropertyChanged("CanPerform");
-                //OnPropertyChanged("CanExecute");
+                //OnPropertyChanged(nameof(IsPerforming));
+                //OnPropertyChanged(nameof(CanPerform));
+                //OnPropertyChanged(nameof(CanExecute));
             }
         }
 

@@ -59,7 +59,7 @@
         public TextButtonModel CursorOveringLauncherButtonSummary
         {
             get { return _CursorOveringLauncherButtonSummary; }
-            set { _CursorOveringLauncherButtonSummary = value; OnPropertyChanged("CursorOveringLauncherButtonSummary"); }
+            set { _CursorOveringLauncherButtonSummary = value; OnPropertyChanged(nameof(CursorOveringLauncherButtonSummary)); }
         }
 
 
@@ -77,7 +77,7 @@
         public LauncherCursorSpeedAndPrecisionModeAndRecommendedAppsViewModel CursorSpeedAndPrecisionModeAndRecommendedApps
         {
             get { return _CursorSpeedAndPrecisionModeAndRecommendedApps; }
-            set { _CursorSpeedAndPrecisionModeAndRecommendedApps = value; OnPropertyChanged("CursorSpeedAndPrecisionModeAndRecommendedApps"); }
+            set { _CursorSpeedAndPrecisionModeAndRecommendedApps = value; OnPropertyChanged(nameof(CursorSpeedAndPrecisionModeAndRecommendedApps)); }
         }
 
         internal List<LauncherRecommendedAppViewModel> LauncherRecommendedAppViewModelList = new List<LauncherRecommendedAppViewModel>();

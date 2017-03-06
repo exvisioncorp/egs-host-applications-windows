@@ -46,7 +46,7 @@ foreach (var item in propertyElementsList)
 foreach (var item in propertyElementsList)
 {
 #>
-            if (hasToCallPropertyChangedOf<#= item.Name #>) { OnPropertyChanged("<#= item.Name #>"); }
+            if (hasToCallPropertyChangedOf<#= item.Name #>) { OnPropertyChanged(nameof(<#= item.Name #>)); }
 <#
 }
 #>
@@ -58,7 +58,7 @@ foreach (var item in propertyElementsList)
 foreach (var item in propertyElementsList)
 {
 #>
-            OnPropertyChanged("<#= item.Name #>");
+            OnPropertyChanged(nameof(<#= item.Name #>));
 <#
 }
 #>

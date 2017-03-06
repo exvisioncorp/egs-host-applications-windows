@@ -21,7 +21,7 @@
         public Visibility PracticeSlideShow01VideoUserControlVisibility
         {
             get { return _PracticeSlideShow01VideoUserControlVisibility; }
-            set { _PracticeSlideShow01VideoUserControlVisibility = value; OnPropertyChanged("PracticeSlideShow01VideoUserControlVisibility"); }
+            set { _PracticeSlideShow01VideoUserControlVisibility = value; OnPropertyChanged(nameof(PracticeSlideShow01VideoUserControlVisibility)); }
         }
 
         NarrationInformation[] cornerAreaNarrations { get; set; }
