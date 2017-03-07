@@ -245,8 +245,8 @@
             _IsSendingHoveringStateOnTouchScreenHidReport = false;
             _IsSendingEgsGestureHidReport = false;
 
-            WaitTimeInMillisecondsBeforeSetFeatureReport = 20;
-            WaitTimeInMillisecondsBeforeGetFeatureReport = 20;
+            WaitTimeInMillisecondsBeforeSetFeatureReport = 2;
+            WaitTimeInMillisecondsBeforeGetFeatureReport = 10;
 
             CreateProperties();
 

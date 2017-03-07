@@ -149,7 +149,7 @@
                         bool newIsToDetectHandsOnDevice = Settings.IsToDetectHands;
                         if (Settings.IsToDetectHandsOnDevice.Value != newIsToDetectHandsOnDevice) { Settings.IsToDetectHandsOnDevice.Value = newIsToDetectHandsOnDevice; }
 
-                        if (Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex != 1) { Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1; }
+                        //if (Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex != 1) { Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1; }
                     }
                     break;
                 case FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication:

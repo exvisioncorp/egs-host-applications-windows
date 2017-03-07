@@ -154,7 +154,7 @@
                         bool newIsToDetectHandsOnDevice = Settings.IsToDetectHands;
                         if (Settings.IsToDetectHandsOnDevice.Value != newIsToDetectHandsOnDevice) { Settings.IsToDetectHandsOnDevice.Value = newIsToDetectHandsOnDevice; }
 
-                        if (Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex != 1) { Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1; }
+                        //if (Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex != 1) { Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1; }
                     }
                     break;
                 case FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication:
@@ -165,11 +165,10 @@
                         //bool newIsToDetectHandsOnDevice = (FaceDetectionOnHost != null) && FaceDetectionOnHost.IsFaceDetected && Settings.IsToDetectHands;
                         //if (Settings.IsToDetectHandsOnDevice.Value != newIsToDetectHandsOnDevice) { Settings.IsToDetectHandsOnDevice.Value = newIsToDetectHandsOnDevice; }
 
-                        if (Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex != 2) { Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2; }
+                        //if (Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex != 2) { Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2; }
                     }
                     break;
                 case FaceDetectionMethodKind.SdkUserProcess:
-                    throw new NotImplementedException();
                     break;
                 default:
                     if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
