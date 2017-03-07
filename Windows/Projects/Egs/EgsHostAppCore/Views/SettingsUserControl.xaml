@@ -431,7 +431,7 @@
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="Device Status (Capability)">
+                        <GroupBox Header="Device Status">
                             <StackPanel>
                                 <WrapPanel>
                                     <StackPanel Orientation="Horizontal" Margin="5,5,10,5">
@@ -508,6 +508,25 @@
                                             <Label Content="Height:" />
                                             <Label Content="{Binding Height}" />
                                         </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox Header="Temperature">
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel.Resources>
+                                            <Style TargetType="{x:Type Label}">
+                                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        <CheckBox Content="Monitor"
+                                                IsChecked="{Binding Device.Settings.IsToMonitorTemperature.Value}"
+                                                VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                                        <CheckBox Content="Write Log" IsChecked="{Binding IsToWriteLogOfTemperature}"
+                                                VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                                        <Label Content="Current: " Margin="20,0,0,0" />
+                                        <Label Content="{Binding Device.TemperatureInCelsiusString}" />
+                                        <Label Content="{Binding Device.TemperatureInFahrenheitString}"
+                                                Margin="0,0,10,0" />
                                     </StackPanel>
                                 </GroupBox>
 
@@ -601,28 +620,6 @@
 
                 <TabItem Header="Settings 4">
                     <localViews:EgsDeviceFaceDetectionOnHostUserControl />
-                </TabItem>
-
-                <TabItem Header="Settings 5">
-                    <GroupBox Header="Temperature">
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type Label}">
-                                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                                </Style>
-                            </StackPanel.Resources>
-                            <CheckBox Content="Monitor"
-                                    IsChecked="{Binding Device.Settings.IsToMonitorTemperature.Value}"
-                                    VerticalAlignment="Center" VerticalContentAlignment="Center" />
-                            <CheckBox Content="Write Log" IsChecked="{Binding IsToWriteLogOfTemperature}"
-                                    VerticalAlignment="Center" VerticalContentAlignment="Center" />
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Current: " Margin="20,0,0,0" />
-                                <Label Content="{Binding Device.TemperatureInCelsiusString}" />
-                                <Label Content="{Binding Device.TemperatureInFahrenheitString}" Margin="0,0,10,0" />
-                            </StackPanel>
-                        </StackPanel>
-                    </GroupBox>
                 </TabItem>
             </TabControl>
         </TabItem>
