@@ -51,7 +51,11 @@
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
-                    if (ApplicationCommonSettings.IsDebugging) { MessageBox.Show("Failed to load the last settings.", EgsHostAppBaseComponents.EgsHostApplicationName); }
+                    if (ApplicationCommonSettings.IsDebugging)
+                    {
+                        Debugger.Break();
+                        MessageBox.Show("Failed to load the last settings.", EgsHostAppBaseComponents.EgsHostApplicationName);
+                    }
 
                     // It constructs the object again.
                     if (hostAppComponents != null) { hostAppComponents.Dispose(); hostAppComponents = null; }

@@ -47,9 +47,13 @@
         {
             get { return ValueTypeOnHost == "HidAccessPropertyOptional"; }
         }
+        public bool IsValueWithDescription
+        {
+            get { return ValueTypeOnHost.StartsWith("ValueWithDescription"); }
+        }
         public bool IsEnumValueWithDescription
         {
-            get { return ValueTypeOnHost.Contains("EnumValueWithDescription"); }
+            get { return ValueTypeOnHost.StartsWith("EnumValueWithDescription") || ValueTypeOnHost.EndsWith("Options"); }
         }
         public string DetailTypeName
         {
@@ -81,7 +85,8 @@
         {
             var ret = string.Format(System.Globalization.CultureInfo.InvariantCulture, "            {0} = new {1}() {{ ", ValueNameOnHost, ModifiedValueTypeOnHost);
             if (ModifiedValueTypeOnHost.Contains("HidAccessProperty")
-                || ModifiedValueTypeOnHost.Contains("ValueWithDescription"))
+                || IsValueWithDescription
+                || IsEnumValueWithDescription)
             {
                 ret += "DescriptionKey = nameof(Resources." + DescriptionKey + ")";
             }

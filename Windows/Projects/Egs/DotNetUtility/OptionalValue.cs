@@ -85,16 +85,6 @@
         {
             var result = Options.Single(predicate);
             if (result == null) { return false; }
-#if false
-            var newSelectedIndex = Options.IndexOf(result);
-            if (_SelectedIndex != newSelectedIndex)
-            {
-                _SelectedIndex = newSelectedIndex;
-                OnSelectedItemChanged(EventArgs.Empty);
-                OnSelectedIndexChanged(EventArgs.Empty);
-            }
-#endif
-            SelectedIndex = Options.IndexOf(result);
             SelectedIndex = Options.IndexOf(result);
 #if DEBUG
             if (SelectedItem != result) { System.Diagnostics.Debugger.Break(); }

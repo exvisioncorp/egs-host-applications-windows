@@ -195,23 +195,22 @@
             CameraViewWindowModel.CanResizeChanged += delegate { OnCanResizeCameraViewWindowChanged(); };
             OnCanResizeCameraViewWindowChanged();
 
-            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectedItemChanged += delegate
+            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.ValueUpdated += delegate
             {
                 CameraViewWindowModel.StartCheckingIsShowingCameraViewWindow();
             };
-            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(
-                e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods);
-            CameraViewWindowModel.WindowStateUsersControlMethod.SelectedItemChanged += delegate
+            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods;
+            CameraViewWindowModel.WindowStateUsersControlMethod.ValueUpdated += delegate
             {
                 CameraViewWindowModel.StartCheckingIsShowingCameraViewWindow();
             };
-            CameraViewWindowModel.WindowStateUsersControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateUsersControlMethods.ManualOnOff);
+            CameraViewWindowModel.WindowStateUsersControlMethod.Value = CameraViewWindowStateUsersControlMethods.ManualOnOff;
 
             Device.IsHidDeviceConnectedChanged += Device_IsHidDeviceConnectedChanged;
             // NOTE: Update is necessary here, too.
             if (ApplicationCommonSettings.IsInternalRelease) { UpdateDeviceFirmwareCommand.CanPerform = Device.IsHidDeviceConnected ? true : false; }
 
-            CultureInfoAndDescription.SelectedItemChanged += delegate
+            CultureInfoAndDescription.ValueUpdated += delegate
             {
                 SettingsWindow.ReloadDataContext();
                 CameraViewWindow.ReloadDataContext();
@@ -306,7 +305,7 @@
             Device.IsHidDeviceConnectedChanged -= Device_IsHidDeviceConnectedChanged;
             IsToDisposeThisWhenCameraViewWindowClosed = false;
             SettingsWindow.Close();
-            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized);
+            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized;
 
             var dfuWindow = new Window();
             dfuWindow.Content = dfuUserControl;
@@ -359,7 +358,7 @@
 
             dfuWindow.ShowDialog();
 
-            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods);
+            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods;
 
             // NOTE: Whether it completes or fails, it exits the host application.
             throw new EgsHostApplicationIsClosingException(dfuUserControl.Model.LastResult.Message);

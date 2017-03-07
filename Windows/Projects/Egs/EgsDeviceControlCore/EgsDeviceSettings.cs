@@ -86,6 +86,19 @@
             AttachInternalEventHandlersAdditional();
         }
 
+        public bool IsCaptureExposureModeManual
+        {
+            get { return CaptureExposureMode.OptionalValue.SelectedItem.Value == 1; }
+        }
+        public bool IsFaceDetectionMethodDefaultProcessOnEgsDevice
+        {
+            get { return FaceDetectionMethod.Value == FaceDetectionMethodKind.DefaultProcessOnEgsDevice; }
+        }
+        public bool IsFaceDetectionMethodDefaultProcessOnEgsHostApplication
+        {
+            get { return FaceDetectionMethod.Value == FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication; }
+        }
+
         internal void AttachInternalEventHandlers()
         {
             foreach (var item in HidAccessPropertyList)
@@ -97,6 +110,16 @@
                     OnHidAccessPropertyUpdated(e);
                 };
             }
+
+            CaptureExposureMode.OptionalValue.SelectedItemChanged += delegate
+            {
+                OnPropertyChanged(nameof(IsCaptureExposureModeManual));
+            };
+            FaceDetectionMethod.ValueUpdated += delegate
+            {
+                OnPropertyChanged(nameof(IsFaceDetectionMethodDefaultProcessOnEgsDevice));
+                OnPropertyChanged(nameof(IsFaceDetectionMethodDefaultProcessOnEgsHostApplication));
+            };
 
             TouchInterfaceKind.OptionalValue.SelectedItemChanged += (sender, e) =>
             {

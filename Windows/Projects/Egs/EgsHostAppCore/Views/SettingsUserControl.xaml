@@ -113,20 +113,11 @@
 
                 <GroupBox
                         Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowStateUsersControlMethodDetail_Type_Description}">
-                    <StackPanel DataContext="{Binding CameraViewWindowModel.WindowStateUsersControlMethod}">
-                        <RadioButton x:Name="WindowStateUsersControlMethodValue0RadioButton"
-                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowStateUsersControlMethodDetail_ManualOnOff_Description}"
-                                Margin="10,10" VerticalAlignment="Center"
-                                IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=0}" />
-                        <RadioButton x:Name="WindowStateUsersControlMethodValue1RadioButton"
-                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandTrackingStarts_Description}"
-                                Margin="10,10" VerticalAlignment="Center"
-                                IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=1}" />
-                        <RadioButton x:Name="WindowStateUsersControlMethodValue7RadioButton"
-                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandTrackingStarts_HideSoonAfterHandTrackingStarts_Description}"
-                                Margin="10,10" VerticalAlignment="Center"
-                                IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=7}" />
-                    </StackPanel>
+                    <ListBox DataContext="{Binding CameraViewWindowModel.WindowStateUsersControlMethod}"
+                            Style="{StaticResource listBoxWithRadioButton}"
+                            ItemsSource="{Binding OptionalValue.Options}"
+                            SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                            ItemsPanel="{StaticResource ItemsPanelTemplateIsVerticalStackPanel}" />
                 </GroupBox>
             </StackPanel>
         </TabItem>
@@ -179,53 +170,45 @@
 
                 <GroupBox x:Name="AdvancedSettings_CaptureExposureModeGroupBox"
                         Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_CaptureExposureMode_Description}">
-                    <DockPanel>
-                        <StackPanel DockPanel.Dock="Left"
-                                DataContext="{Binding Device.Settings.CaptureExposureMode.OptionalValue}"
-                                Orientation="Horizontal">
-                            <RadioButton x:Name="CaptureExposureModeValue0RadioButton"
-                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CaptureExposureModeDetail_Value0_Description}"
-                                    Margin="10,5" VerticalAlignment="Center"
-                                    IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=0}" />
-                            <RadioButton x:Name="CaptureExposureModeValue1RadioButton"
-                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CaptureExposureModeDetail_Value1_Description}"
-                                    Margin="10,5" VerticalAlignment="Center"
-                                    IsChecked="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=1}" />
-                        </StackPanel>
-                        <DockPanel DataContext="{Binding Device.Settings.CaptureManualExposureParameters}"
-                                IsEnabled="{Binding ElementName=CaptureExposureModeValue1RadioButton, Path=IsChecked}">
-                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Margin="5,0"
-                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_AnalogGain_Description}" />
-                            <TextBox DockPanel.Dock="Right"
-                                    Text="{Binding Value, ElementName=CaptureManualExposureParameters_Value00_Slider, StringFormat={}{0:G5}}"
-                                    Width="50" IsReadOnly="True" TextAlignment="Center"
-                                    VerticalContentAlignment="Center" />
-                            <Slider x:Name="CaptureManualExposureParameters_Value00_Slider"
-                                    Value="{Binding Value00, Mode=TwoWay}" Minimum="1" Maximum="32"
-                                    VerticalAlignment="Center" TickFrequency="0.2" IsSnapToTickEnabled="true"
-                                    TickPlacement="Both" />
-                            <!-- ValueOnThumbDragCompleted -->
-                        </DockPanel>
-                    </DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ListBox Grid.Column="0" DataContext="{Binding Device.Settings.CaptureExposureMode}"
+                                Style="{StaticResource listBoxWithRadioButton}"
+                                ItemsSource="{Binding OptionalValue.Options}"
+                                SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                                ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                        <Grid Grid.Column="1" IsEnabled="{Binding Device.Settings.IsCaptureExposureModeManual}">
+                            <DockPanel DataContext="{Binding Device.Settings.CaptureManualExposureParameters}">
+                                <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Margin="5,0"
+                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_AnalogGain_Description}" />
+                                <TextBox DockPanel.Dock="Right"
+                                        Text="{Binding Value, ElementName=CaptureManualExposureParameters_Value00_Slider, StringFormat={}{0:G5}}"
+                                        Width="50" IsReadOnly="True" TextAlignment="Center"
+                                        VerticalContentAlignment="Center" />
+                                <Slider x:Name="CaptureManualExposureParameters_Value00_Slider"
+                                        Value="{Binding Value00, Mode=TwoWay}" Minimum="1" Maximum="32"
+                                        VerticalAlignment="Center" TickFrequency="0.2" IsSnapToTickEnabled="true"
+                                        TickPlacement="Both" />
+                                <!-- ValueOnThumbDragCompleted -->
+                            </DockPanel>
+                        </Grid>
+                    </Grid>
                 </GroupBox>
 
                 <GroupBox x:Name="AdvancedSettings_FaceDetectionModeGroupBox"
                         Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceDetectionMethod_Description}">
                     <StackPanel Orientation="Vertical">
-                        <StackPanel DataContext="{Binding Device.Settings.FaceDetectionMethod}" Orientation="Vertical">
-                            <RadioButton x:Name="FaceDetectionMethod_Value0RadioButton"
-                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionMethodDetail_Value0_Description}"
-                                    Margin="10,5" VerticalAlignment="Center"
-                                    IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=0}" />
-                            <StackPanel Orientation="Horizontal">
-                                <RadioButton x:Name="FaceDetectionMethod_Value1RadioButton"
-                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionMethodDetail_Value1_Description}"
-                                        Margin="10,5" VerticalAlignment="Center"
-                                        IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=1}" />
-                            </StackPanel>
-                        </StackPanel>
+                        <ListBox DockPanel.Dock="Left" DataContext="{Binding Device.Settings.FaceDetectionMethod}"
+                                Style="{StaticResource listBoxWithRadioButton}"
+                                ItemsSource="{Binding OptionalValue.Options}"
+                                SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                                ItemsPanel="{StaticResource ItemsPanelTemplateIsVerticalStackPanel}" />
                         <GroupBox Margin="30,0,0,0"
-                                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Options}">
+                                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Options}"
+                                IsEnabled="{Binding Device.Settings.IsFaceDetectionMethodDefaultProcessOnEgsHostApplication}">
                             <GroupBox.Resources>
                                 <Style TargetType="Label">
                                     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -249,8 +232,7 @@
                                     <Label Grid.Row="1" HorizontalContentAlignment="Right" Margin="20,0,0,0"
                                             Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceFaceDetectionOnHost_MaxDetectableDistanceInMeter_Description}" />
                                     <DockPanel Grid.Row="1" Grid.Column="1"
-                                            DataContext="{Binding Device.FaceDetectionOnHost.MaxDetectableDistanceInMeter}"
-                                            IsEnabled="{Binding ElementName=FaceDetectionMethod_Value1RadioButton, Path=IsChecked}">
+                                            DataContext="{Binding Device.FaceDetectionOnHost.MaxDetectableDistanceInMeter}">
                                         <Label DockPanel.Dock="Left" MinWidth="30" HorizontalContentAlignment="Right"
                                                 Content="{Binding Minimum, Mode=TwoWay, StringFormat={}{0:G2}}" />
                                         <Label DockPanel.Dock="Right" MinWidth="30" HorizontalContentAlignment="Left"
@@ -267,8 +249,7 @@
                                     <Label Grid.Row="2" HorizontalContentAlignment="Right" Margin="20,0,0,0"
                                             Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_SensitivityAndSpecificity}" />
                                     <DockPanel Grid.Row="2" Grid.Column="1"
-                                            DataContext="{Binding Device.FaceDetectionOnHost.SensitivityAndSpecificity}"
-                                            IsEnabled="{Binding ElementName=FaceDetectionMethod_Value1RadioButton, Path=IsChecked}">
+                                            DataContext="{Binding Device.FaceDetectionOnHost.SensitivityAndSpecificity}">
                                         <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
                                                 Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_DecreaseFalseNegativeRate}" />
                                         <Label DockPanel.Dock="Right" MinWidth="100" HorizontalContentAlignment="Left"
@@ -289,7 +270,7 @@
 
                 <GroupBox x:Name="EgsDeviceSettings_FaceSelectionMethodKind_GroupBox"
                         Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceSelectionMethodKind_Description}"
-                        IsEnabled="{Binding ElementName=FaceDetectionMethod_Value0RadioButton, Path=IsChecked}">
+                        IsEnabled="{Binding Device.Settings.IsFaceDetectionMethodDefaultProcessOnEgsDevice}">
                     <ListBox DataContext="{Binding Device.Settings.FaceSelectionMethodKind}"
                             Style="{StaticResource listBoxWithRadioButton}"
                             ItemsSource="{Binding OptionalValue.Options}"
@@ -339,16 +320,18 @@
                         <GroupBox
                                 Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CursorDrawingTimingMethodDetail_Type_Description}">
                             <ListBox DataContext="{Binding CursorDrawingTimingMethod}"
-                                    Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding Options}"
-                                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                    Style="{StaticResource listBoxWithRadioButton}"
+                                    ItemsSource="{Binding OptionalValue.Options}"
+                                    SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
                                     ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
                         </GroupBox>
 
                         <GroupBox
                                 Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewBordersAndPointersAreDrawnByDetail_Type_Description}">
                             <ListBox DataContext="{Binding CameraViewBordersAndPointersAreDrawnBy}"
-                                    Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding Options}"
-                                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                    Style="{StaticResource listBoxWithRadioButton}"
+                                    ItemsSource="{Binding OptionalValue.Options}"
+                                    SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
                                     ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
                         </GroupBox>
                     </StackPanel>
@@ -382,8 +365,9 @@
                         <GroupBox x:Name="LanguageSelectionGroupBox"
                                 Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CultureInfoAndDescriptionDetail_Type_Description}">
                             <ListBox DataContext="{Binding CultureInfoAndDescription}"
-                                    Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding Options}"
-                                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                    Style="{StaticResource listBoxWithRadioButton}"
+                                    ItemsSource="{Binding OptionalValue.Options}"
+                                    SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
                                     ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
                         </GroupBox>
 
@@ -397,8 +381,9 @@
 
                         <GroupBox DataContext="{Binding MouseCursorPositionUpdatedByGestureCursorMethod}"
                                 Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_Type_Description}">
-                            <ListBox Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding Options}"
-                                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                            <ListBox Style="{StaticResource listBoxWithRadioButton}"
+                                    ItemsSource="{Binding OptionalValue.Options}"
+                                    SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
                                     ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
                         </GroupBox>
 
@@ -554,21 +539,11 @@
 
                         <GroupBox
                                 Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceDetectionMethod_Description}">
-                            <StackPanel DataContext="{Binding Device.Settings.FaceDetectionMethod}"
-                                    Orientation="Horizontal">
-                                <RadioButton
-                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionMethodDetail_Value0_Description}"
-                                        Margin="10,5" VerticalAlignment="Center"
-                                        IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=0}" />
-                                <RadioButton
-                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionMethodDetail_Value1_Description}"
-                                        Margin="10,5" VerticalAlignment="Center"
-                                        IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=1}" />
-                                <RadioButton
-                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionMethodDetail_Value2_Description}"
-                                        Margin="10,5" VerticalAlignment="Center"
-                                        IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=2}" />
-                            </StackPanel>
+                            <ListBox DockPanel.Dock="Left" DataContext="{Binding Device.Settings.FaceDetectionMethod}"
+                                    Style="{StaticResource listBoxWithRadioButton}"
+                                    ItemsSource="{Binding OptionalValue.Options}"
+                                    SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                                    ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
                         </GroupBox>
 
                         <GroupBox Header="Settings">
@@ -626,6 +601,28 @@
 
                 <TabItem Header="Settings 4">
                     <localViews:EgsDeviceFaceDetectionOnHostUserControl />
+                </TabItem>
+
+                <TabItem Header="Settings 5">
+                    <GroupBox Header="Temperature">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type Label}">
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                </Style>
+                            </StackPanel.Resources>
+                            <CheckBox Content="Monitor"
+                                    IsChecked="{Binding Device.Settings.IsToMonitorTemperature.Value}"
+                                    VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                            <CheckBox Content="Write Log" IsChecked="{Binding IsToWriteLogOfTemperature}"
+                                    VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Current: " Margin="20,0,0,0" />
+                                <Label Content="{Binding Device.TemperatureInCelsiusString}" />
+                                <Label Content="{Binding Device.TemperatureInFahrenheitString}" Margin="0,0,10,0" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
                 </TabItem>
             </TabControl>
         </TabItem>

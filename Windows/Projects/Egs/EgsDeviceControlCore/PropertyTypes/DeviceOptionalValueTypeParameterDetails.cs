@@ -182,9 +182,34 @@
 
     public enum FaceDetectionMethodKind
     {
-        DefaultProcessOnEgsDevice,
-        DefaultProcessOnEgsHostApplication,
-        SdkUserProcess,
+        DefaultProcessOnEgsDevice = 0,
+        DefaultProcessOnEgsHostApplication = 1,
+        SdkUserProcess = 2,
+    }
+    public partial class FaceDetectionMethodOptions : EnumValueWithDescriptionOptions<FaceDetectionMethodKind>
+    {
+        public FaceDetectionMethodOptions()
+            : base()
+        {
+            OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethodKind>()
+            {
+                Value = FaceDetectionMethodKind.DefaultProcessOnEgsDevice,
+                DescriptionKey = nameof(Resources.FaceDetectionMethodDetail_Value0_Description)
+            });
+            OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethodKind>()
+            {
+                Value = FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication,
+                DescriptionKey = nameof(Resources.FaceDetectionMethodDetail_Value1_Description)
+            });
+            if (ApplicationCommonSettings.IsDeveloperRelease)
+            {
+                OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethodKind>()
+                {
+                    Value = FaceDetectionMethodKind.SdkUserProcess,
+                    DescriptionKey = nameof(Resources.FaceDetectionMethodDetail_Value2_Description)
+                });
+            }
+        }
     }
 
     public partial class FaceSelectionMethodKindDetail : HidAccessPropertyOptionalTypeParameterBase

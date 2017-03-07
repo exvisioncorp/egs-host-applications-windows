@@ -692,10 +692,7 @@
 
         public byte ValueOfSelectedItem
         {
-            get
-            {
-                return OptionalValue.SelectedItem.Value;
-            }
+            get { return OptionalValue.SelectedItem.Value; }
             set
             {
                 var hr = OptionalValue.SelectSingleItemByPredicate(e => e.Value == valueInByteArrayData);

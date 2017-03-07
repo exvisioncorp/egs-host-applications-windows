@@ -63,7 +63,7 @@
                     return;
                 }
                 WindowState newWindowState;
-                switch (WindowStateHostApplicationsControlMethod.SelectedItem.EnumValue)
+                switch (WindowStateHostApplicationsControlMethod.Value)
                 {
                     case CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods:
                         newWindowState = value;
@@ -132,9 +132,10 @@
 
         public bool IsDragging { get; internal set; }
         public bool IsMouseHovered { get; internal set; }
-        public OptionalValue<CameraViewWindowStateHostApplicationsControlMethodDetail> WindowStateHostApplicationsControlMethod { get; private set; }
+
+        public CameraViewWindowStateHostApplicationsControlMethodOptions WindowStateHostApplicationsControlMethod { get; private set; }
         [DataMember]
-        public OptionalValue<CameraViewWindowStateUsersControlMethodDetail> WindowStateUsersControlMethod { get; private set; }
+        public CameraViewWindowStateUsersControlMethodOptions WindowStateUsersControlMethod { get; private set; }
         public SimpleDelegateCommand MinimizeCommand { get; private set; }
         public SimpleDelegateCommand SettingsCommand { get; private set; }
         public SimpleDelegateCommand ExitCommand { get; private set; }
@@ -160,9 +161,9 @@
 
             IsDragging = false;
             IsMouseHovered = false;
-            WindowStateHostApplicationsControlMethod = new OptionalValue<CameraViewWindowStateHostApplicationsControlMethodDetail>();
-            WindowStateUsersControlMethod = new OptionalValue<CameraViewWindowStateUsersControlMethodDetail>();
-
+            WindowStateHostApplicationsControlMethod = new CameraViewWindowStateHostApplicationsControlMethodOptions();
+            WindowStateUsersControlMethod = new CameraViewWindowStateUsersControlMethodOptions();
+            
             MinimizeCommand = new SimpleDelegateCommand();
             SettingsCommand = new SimpleDelegateCommand();
             ExitCommand = new SimpleDelegateCommand();
@@ -173,21 +174,19 @@
             _CanShowMenu = true;
 
 
-            WindowStateHostApplicationsControlMethod.Options = CameraViewWindowStateHostApplicationsControlMethodDetail.GetDefaultList();
-            WindowStateUsersControlMethod.Options = CameraViewWindowStateUsersControlMethodDetail.GetDefaultList();
-            WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods);
-            WindowStateUsersControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateUsersControlMethods.ManualOnOff);
+            WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods;
+            WindowStateUsersControlMethod.Value = CameraViewWindowStateUsersControlMethods.ManualOnOff;
 
-            WindowStateHostApplicationsControlMethod.SelectedItemChanged += delegate
+            WindowStateHostApplicationsControlMethod.ValueUpdated += delegate
             {
                 SetWindowStateToMinimizedDelayTimer.Stop();
                 // NOTE: "WindowState = WindowState.Normal" means that the app shows Camera View.   The app shows Camera View to notify that users can change the state manually.
-                if (WindowStateUsersControlMethod.SelectedItem.EnumValue == CameraViewWindowStateUsersControlMethods.ManualOnOff) { WindowState = WindowState.Normal; }
+                if (WindowStateUsersControlMethod.Value == CameraViewWindowStateUsersControlMethods.ManualOnOff) { WindowState = WindowState.Normal; }
             };
-            WindowStateUsersControlMethod.SelectedItemChanged += delegate
+            WindowStateUsersControlMethod.ValueUpdated += delegate
             {
                 SetWindowStateToMinimizedDelayTimer.Stop();
-                if (WindowStateUsersControlMethod.SelectedItem.EnumValue == CameraViewWindowStateUsersControlMethods.ManualOnOff) { WindowState = WindowState.Normal; }
+                if (WindowStateUsersControlMethod.Value == CameraViewWindowStateUsersControlMethods.ManualOnOff) { WindowState = WindowState.Normal; }
             };
             MinimizeCommand.PerformEventHandler += delegate { ToggleWindowStateControlMethodOnAutoOrOff(); };
         }
@@ -205,16 +204,14 @@
 
         public void Reset()
         {
-            WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods);
-            WindowStateUsersControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateUsersControlMethods.ManualOnOff);
+            WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods;
+            WindowStateUsersControlMethod.Value = CameraViewWindowStateUsersControlMethods.ManualOnOff;
 
             CanDragMove = ApplicationCommonSettings.IsDebugging;
             CanResize = ApplicationCommonSettings.IsDebugging;
             Topmost = !(ApplicationCommonSettings.IsDebugging);
             CanShowMenu = true;
 
-            WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods);
-            WindowStateUsersControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateUsersControlMethods.ManualOnOff);
             WindowState = WindowState.Normal;
 
             UpdateWindowLocationAndSize();
@@ -240,8 +237,8 @@
 
         public void StartCheckingIsShowingCameraViewWindow()
         {
-            if (WindowStateUsersControlMethod.SelectedItem.EnumValue == CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart
-                || WindowStateUsersControlMethod.SelectedItem.EnumValue == CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideWhenHandTrackingEnd)
+            if (WindowStateUsersControlMethod.Value == CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart
+                || WindowStateUsersControlMethod.Value == CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideWhenHandTrackingEnd)
             {
                 SetWindowStateToMinimizedWithDelay();
             }
@@ -268,12 +265,12 @@
                 return;
             }
 
-            if (WindowStateUsersControlMethod.SelectedItem.EnumValue == CameraViewWindowStateUsersControlMethods.ManualOnOff)
+            if (WindowStateUsersControlMethod.Value == CameraViewWindowStateUsersControlMethods.ManualOnOff)
             {
                 return;
             }
 
-            switch (WindowStateUsersControlMethod.SelectedItem.EnumValue)
+            switch (WindowStateUsersControlMethod.Value)
             {
                 case CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandTrackingStart:
                     switch (e.TransitionType)

@@ -83,11 +83,11 @@
     }
 
     [DataContract]
-    public class EnumValueWithDescription<T> : ValueWithDescriptionBase
+    public class EnumValueWithDescriptionOptions<T> : ValueWithDescriptionBase
         where T : IComparable
     {
         [DataMember]
-        public OptionalValue<ValueWithDescription<T>> OptionalValue { get; private set; }
+        public OptionalValue<ValueWithDescription<T>> OptionalValue { get; set; }
 
         public T Value
         {
@@ -103,14 +103,21 @@
             }
         }
 
-        public static implicit operator T(EnumValueWithDescription<T> self)
+        public static implicit operator T(EnumValueWithDescriptionOptions<T> self)
         {
             return self.Value;
         }
 
-        public EnumValueWithDescription()
+        public EnumValueWithDescriptionOptions()
         {
             OptionalValue = new OptionalValue<ValueWithDescription<T>>();
+            OptionalValue.SelectedIndexChanged += delegate { OnValueUpdated(); };
+        }
+
+        [Obsolete]
+        public static EnumValueWithDescriptionOptions<T> CreateDefaults()
+        {
+            var ret = new EnumValueWithDescriptionOptions<T>();
             try
             {
                 var names = Enum.GetNames(typeof(T));
@@ -119,7 +126,7 @@
                     var newItem = new ValueWithDescription<T>();
                     newItem.Value = (T)Enum.Parse(typeof(T), name);
                     newItem.DescriptionKey = typeof(T).Name + "_" + name + "_Description";
-                    OptionalValue.Options.Add(newItem);
+                    ret.OptionalValue.Options.Add(newItem);
                 }
             }
             catch (Exception ex)
@@ -128,7 +135,7 @@
                 Console.WriteLine(ex.Message);
                 throw;
             }
-            OptionalValue.SelectedIndexChanged += delegate { OnValueUpdated(); };
+            return ret;
         }
     }
 }

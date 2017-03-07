@@ -190,8 +190,8 @@
 
 
 
-            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized);
-            RefToHostApp.CameraViewBordersAndPointersAreDrawnBy.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewBordersAndPointersAreDrawnByKind.HostApplication);
+            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized;
+            RefToHostApp.CameraViewBordersAndPointersAreDrawnBy.Value = CameraViewBordersAndPointersAreDrawnByKind.HostApplication;
             // TODO: MUSTDO: Test
             //RefToHostApp.FaceDetectionIsProcessedBy.SelectSingleItemByPredicate(e => e.EnumValue == FaceDetectionIsProcessedByKind.Device);
 
@@ -223,14 +223,14 @@
 
         public void EnableUpdatingCameraViewImageButHideWindow()
         {
-            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized);
+            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized;
             RefToHostApp.Device.Settings.IsToDetectFaces.Value = true;
             RefToHostApp.Device.Settings.IsToDetectHands.Value = true;
         }
 
         public void EnableUpdatingCameraViewImageAndShowWindow()
         {
-            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods);
+            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods;
             RefToHostApp.CameraViewWindowModel.SetWindowStateToNormal();
             RefToHostApp.Device.Settings.IsToDetectFaces.Value = true;
             RefToHostApp.Device.Settings.IsToDetectHands.Value = true;

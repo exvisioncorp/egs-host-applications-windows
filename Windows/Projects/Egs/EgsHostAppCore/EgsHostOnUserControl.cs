@@ -30,13 +30,13 @@
 
         #region Host Settings
         [DataMember]
-        public OptionalValue<CultureInfoAndDescriptionDetail> CultureInfoAndDescription { get; private set; }
+        public CultureInfoAndDescriptionOptions CultureInfoAndDescription { get; private set; }
         [DataMember]
-        public OptionalValue<MouseCursorPositionUpdatedByGestureCursorMethodDetail> MouseCursorPositionUpdatedByGestureCursorMethod { get; private set; }
+        public MouseCursorPositionUpdatedByGestureCursorMethodOptions MouseCursorPositionUpdatedByGestureCursorMethod { get; private set; }
         [DataMember]
-        public OptionalValue<CursorDrawingTimingMethodDetail> CursorDrawingTimingMethod { get; private set; }
+        public CursorDrawingTimingMethodOptions CursorDrawingTimingMethod { get; private set; }
         [DataMember]
-        public OptionalValue<CameraViewBordersAndPointersAreDrawnByDetail> CameraViewBordersAndPointersAreDrawnBy { get; private set; }
+        public CameraViewBordersAndPointersAreDrawnByOptions CameraViewBordersAndPointersAreDrawnBy { get; private set; }
         #endregion
 
         [DataMember]
@@ -117,10 +117,10 @@
         {
             Device = EgsDevice.GetDefaultEgsDevice();
 
-            CultureInfoAndDescription = new OptionalValue<CultureInfoAndDescriptionDetail>();
-            MouseCursorPositionUpdatedByGestureCursorMethod = new OptionalValue<MouseCursorPositionUpdatedByGestureCursorMethodDetail>();
-            CursorDrawingTimingMethod = new OptionalValue<CursorDrawingTimingMethodDetail>();
-            CameraViewBordersAndPointersAreDrawnBy = new OptionalValue<CameraViewBordersAndPointersAreDrawnByDetail>();
+            CultureInfoAndDescription = new CultureInfoAndDescriptionOptions();
+            MouseCursorPositionUpdatedByGestureCursorMethod = new MouseCursorPositionUpdatedByGestureCursorMethodOptions();
+            CursorDrawingTimingMethod = new CursorDrawingTimingMethodOptions();
+            CameraViewBordersAndPointersAreDrawnBy = new CameraViewBordersAndPointersAreDrawnByOptions();
 
             CameraViewUserControlModel = new CameraViewUserControlModel();
             OnePersonBothHandsViewModel = new OnePersonBothHandsViewModel();
@@ -130,15 +130,10 @@
             PrecisionLogger = new TimerPrecisionLogger();
 
 
-            CultureInfoAndDescription.Options = CultureInfoAndDescriptionDetail.GetDefaultList();
-            MouseCursorPositionUpdatedByGestureCursorMethod.Options = MouseCursorPositionUpdatedByGestureCursorMethodDetail.GetDefaultList();
-            CursorDrawingTimingMethod.Options = CursorDrawingTimingMethodDetail.GetDefaultList();
-            CameraViewBordersAndPointersAreDrawnBy.Options = CameraViewBordersAndPointersAreDrawnByDetail.GetDefaultList();
-
             //CultureInfoAndDescription.SelectSingleItemByPredicate(e => e.CultureInfoString == ApplicationCommonSettings.DefaultCultureInfoName);
-            MouseCursorPositionUpdatedByGestureCursorMethod.SelectedIndex = 0;
-            CursorDrawingTimingMethod.SelectedIndex = 0;
-            CameraViewBordersAndPointersAreDrawnBy.SelectedIndex = 0;
+            MouseCursorPositionUpdatedByGestureCursorMethod.Value = MouseCursorPositionUpdatedByGestureCursorMethods.None;
+            CursorDrawingTimingMethod.Value = CursorDrawingTimingMethods.ByHidReportUpdatedEvent;
+            CameraViewBordersAndPointersAreDrawnBy.Value = CameraViewBordersAndPointersAreDrawnByKind.HostApplication;
             WaitTimeTillMouseCursorHideOnMouseMode = TimeSpan.FromSeconds(10);
 
             ResetSettingsCommand = new SimpleDelegateCommand();
@@ -171,9 +166,9 @@
             SaveSettingsToFlashCommand.CanPerform = Device.IsHidDeviceConnected;
             ResetDeviceCommand.CanPerform = Device.IsHidDeviceConnected;
 
-            CursorDrawingTimingMethod.SelectedItemChanged += delegate { OnCursorDrawingTimingMethod_SelectedItemChanged(); };
-            CameraViewBordersAndPointersAreDrawnBy.SelectedItemChanged += CameraViewBordersAndPointersAreDrawnBy_SelectedItemChanged;
-            CultureInfoAndDescription.SelectedItemChanged += delegate { BindableResources.Current.ChangeCulture(CultureInfoAndDescription.SelectedItem.CultureInfoString); };
+            CursorDrawingTimingMethod.ValueUpdated += delegate { OnCursorDrawingTimingMethod_SelectedItemChanged(); };
+            CameraViewBordersAndPointersAreDrawnBy.ValueUpdated += CameraViewBordersAndPointersAreDrawnBy_SelectedItemChanged;
+            CultureInfoAndDescription.ValueUpdated += delegate { BindableResources.Current.ChangeCulture(CultureInfoAndDescription.Value); };
 
             // TODO: MUSTDO: When users cancel DFU, exceptions occur in Timer thread basically, and the app cannot deal with them.  So it is necessary to attach them to event handlers.
             // The design of EgsDevicesManager is not completed.  So I don't think this is good way.
@@ -188,13 +183,14 @@
         {
             Device.EgsGestureHidReport.ReportUpdated += Device_EgsGestureHidReport_ReportUpdated;
 
-#if false
-            // NOTE: Even if it is Mouse mode, the application should draw not the OS protocol (TouchScreenHidRpoert) but the vendor-specific protocol (EgsGestureHidReport)!
-            Device.TouchScreenHidReport.ReportUpdated += delegate
+            if (false)
             {
-                if (Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue == EgsDeviceTouchInterfaceKind.Mouse) { OnDeviceTouchScreenHidReportReportUpdated(); }
-            };
-#endif
+                // NOTE: Even if it is Mouse mode, the application should draw not the OS protocol (TouchScreenHidRpoert) but the vendor-specific protocol (EgsGestureHidReport)!
+                Device.TouchScreenHidReport.ReportUpdated += delegate
+                {
+                    if (Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue == EgsDeviceTouchInterfaceKind.Mouse) { OnDeviceTouchScreenHidReportReportUpdated(); }
+                };
+            }
 
             Device.HidReportObjectsReset += Device_HidReportObjectsReset;
             Device.TemperaturePropertiesUpdated += TemperatureInCelsius_TemperaturePropertiesUpdated;
@@ -218,7 +214,7 @@
 
         void CameraViewBordersAndPointersAreDrawnBy_SelectedItemChanged(object sender, EventArgs e)
         {
-            switch (CameraViewBordersAndPointersAreDrawnBy.SelectedItem.EnumValue)
+            switch (CameraViewBordersAndPointersAreDrawnBy.Value)
             {
                 case CameraViewBordersAndPointersAreDrawnByKind.HostApplication:
                     CameraViewUserControlModel.IsToDrawImageSet = true;
@@ -261,7 +257,7 @@
 
         void OnCursorDrawingTimingMethod_SelectedItemChanged()
         {
-            var value = CursorDrawingTimingMethod.SelectedItem.EnumValue;
+            var value = CursorDrawingTimingMethod.Value;
             switch (value)
             {
                 case CursorDrawingTimingMethods.ByHidReportUpdatedEvent:
@@ -286,9 +282,9 @@
             Device.ResetSettings();
             // TODO: Very old memo says "Do not change!", should check the reason and test it again.
             //CultureInfoAndDescription.SelectedIndex = 0;
-            CameraViewBordersAndPointersAreDrawnBy.SelectedIndex = 0;
-            MouseCursorPositionUpdatedByGestureCursorMethod.SelectedIndex = 0;
-            CursorDrawingTimingMethod.SelectedIndex = 0;
+            CameraViewBordersAndPointersAreDrawnBy.Value = CameraViewBordersAndPointersAreDrawnByKind.HostApplication;
+            MouseCursorPositionUpdatedByGestureCursorMethod.Value = MouseCursorPositionUpdatedByGestureCursorMethods.None;
+            CursorDrawingTimingMethod.Value = CursorDrawingTimingMethods.ByHidReportUpdatedEvent;
             OnePersonBothHandsViewModel.CursorImageSetInformationOptionalValue.SelectedIndex = 0;
         }
 
@@ -317,12 +313,12 @@
             // Some applications can use MouseMove event, so mouse cursor position is important.
             // So the application can let the mouse cursor track (first found / right / left) gesture cursor. 
             // MUSTDO: In some PCs, the position is not updated to the correct value.   Should be fixed.
-            if (MouseCursorPositionUpdatedByGestureCursorMethod.SelectedItem.EnumValue != MouseCursorPositionUpdatedByGestureCursorMethods.None
+            if (MouseCursorPositionUpdatedByGestureCursorMethod.Value != MouseCursorPositionUpdatedByGestureCursorMethods.None
                 && Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue != EgsDeviceTouchInterfaceKind.Mouse
                 && OnePersonBothHandsViewModel != null)
             {
                 CursorViewModel hand = null;
-                switch (MouseCursorPositionUpdatedByGestureCursorMethod.SelectedItem.EnumValue)
+                switch (MouseCursorPositionUpdatedByGestureCursorMethod.Value)
                 {
                     case MouseCursorPositionUpdatedByGestureCursorMethods.FirstFoundHand:
                         hand = OnePersonBothHandsViewModel.FirstFoundHand;
@@ -390,7 +386,8 @@
             {
                 if (DateTime.Now - Device.LastUpdateTime > WaitTimeTillMouseCursorHideOnMouseMode)
                 {
-                    CursorViews[0].Hide();
+                    OnePersonBothHandsViewModel.Hands[0].IsVisible = false;
+                    CursorViews[0].UpdatePosition();
                 }
             }
         }

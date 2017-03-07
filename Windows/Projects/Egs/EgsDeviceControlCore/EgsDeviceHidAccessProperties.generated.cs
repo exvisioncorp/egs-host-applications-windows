@@ -55,7 +55,7 @@ namespace Egs
         [DataMember]
         public ValueWithDescription<bool> IsToDetectFaces { get; private set; }
         [DataMember]
-        public EnumValueWithDescription<FaceDetectionMethodKind> FaceDetectionMethod { get; private set; }
+        public FaceDetectionMethodOptions FaceDetectionMethod { get; private set; }
         public HidAccessPropertyBoolean IsToDetectFacesOnDevice { get; private set; }
         [DataMember]
         public ValueWithDescription<bool> IsToDetectHands { get; private set; }
@@ -121,7 +121,7 @@ namespace Egs
             TouchInterfaceKind = new HidAccessPropertyOptional<TouchInterfaceKindDetail>() { DescriptionKey = nameof(Resources.EgsDeviceSettings_TouchInterfaceKind_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0x40, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "TouchInterfaceKind", AvailableFirmwareVersion = new Version("1.0") }; TouchInterfaceKind.OptionalValue.Options = TouchInterfaceKindDetail.GetDefaultList(); TouchInterfaceKind.InitializeOnceAtStartup();
             DeviceRotationAngleInClockwise = new HidAccessPropertyOptional<DeviceRotationAngleInClockwiseDetail>() { DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0x50, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "DeviceRotationAngleInClockwise", AvailableFirmwareVersion = new Version("1.0") }; DeviceRotationAngleInClockwise.OptionalValue.Options = DeviceRotationAngleInClockwiseDetail.GetDefaultList(); DeviceRotationAngleInClockwise.InitializeOnceAtStartup();
             IsToDetectFaces = new ValueWithDescription<bool>() { DescriptionKey = nameof(Resources.EgsDeviceSettings_IsToDetectFaces_Description) };
-            FaceDetectionMethod = new EnumValueWithDescription<FaceDetectionMethodKind>() { DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Description) };
+            FaceDetectionMethod = new FaceDetectionMethodOptions() { DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Description) };
             IsToDetectFacesOnDevice = new HidAccessPropertyBoolean() { DescriptionKey = nameof(Resources.EgsDeviceSettings_IsToDetectFacesOnDevice_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0xA0, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToDetectFacesOnDevice", AvailableFirmwareVersion = new Version("1.0") };
             IsToDetectHands = new ValueWithDescription<bool>() { DescriptionKey = nameof(Resources.EgsDeviceSettings_IsToDetectHands_Description) };
             IsToDetectHandsOnDevice = new HidAccessPropertyBoolean() { DescriptionKey = nameof(Resources.EgsDeviceSettings_IsToDetectHandsOnDevice_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0xA8, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToDetectHandsOnDevice", AvailableFirmwareVersion = new Version("1.1") };
