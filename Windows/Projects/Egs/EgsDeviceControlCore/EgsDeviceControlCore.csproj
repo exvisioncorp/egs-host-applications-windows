@@ -26,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\EgsDeviceControlCore.xml</DocumentationFile>
-    <NoWarn>CS1591</NoWarn>
+    <NoWarn>162,649,1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -104,6 +104,11 @@
     <Compile Include="EgsDeviceEgsGestureHidReportFace.cs" />
     <Compile Include="EgsDeviceEgsGestureHidReportHand.cs" />
     <Compile Include="EgsDeviceEnumTypes.cs" />
+    <Compile Include="EgsDeviceFaceDetectionOnHost_Properties.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EgsDeviceFaceDetectionOnHost_Properties.tt</DependentUpon>
+    </Compile>
     <Compile Include="EgsDeviceHidAccessProperties.generated.cs" />
     <Compile Include="EgsDeviceSettings.cs" />
     <Compile Include="EgsDeviceSettings_DependentProperties.cs" />
@@ -215,6 +220,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EgsDeviceCameraViewImageSourceBitmapCapture_Properties.generated.cs</LastGenOutput>
     </None>
+    <Content Include="EgsDeviceFaceDetectionOnHost_Properties.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EgsDeviceFaceDetectionOnHost_Properties.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="version.txt">
       <DependentUpon>version.tt</DependentUpon>
       <AutoGen>True</AutoGen>

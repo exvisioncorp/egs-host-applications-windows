@@ -2,7 +2,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:deviceControl="clr-namespace:Egs;assembly=EgsDeviceControlCore" xmlns:local="clr-namespace:Egs"
-        xmlns:localViews="clr-namespace:Egs.Views" xmlns:properties="clr-namespace:Egs.EgsDeviceControlCore.Properties"
+        xmlns:localViews="clr-namespace:Egs.EgsHostAppCore.Views"
+        xmlns:properties="clr-namespace:Egs.EgsDeviceControlCore.Properties"
         xmlns:dotnetutilviews="clr-namespace:Egs.DotNetUtility.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" SnapsToDevicePixels="True"
         Background="White">
@@ -374,95 +375,16 @@
             <TabControl x:Name="DeveloperSettingsTabControl" Margin="10">
                 <TabItem Header="Settings 1">
                     <StackPanel>
+                        <TextBlock Margin="10"
+                                Text="Settings are saved on host devices basically.  The host app sets the settings to a connected device when the app starts or a new device is connected."
+                                TextWrapping="Wrap" />
+
                         <GroupBox x:Name="LanguageSelectionGroupBox"
                                 Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CultureInfoAndDescriptionDetail_Type_Description}">
                             <ListBox DataContext="{Binding CultureInfoAndDescription}"
                                     Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding Options}"
                                     SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
                                     ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
-                        </GroupBox>
-
-                        <GroupBox Header="Settings">
-                            <StackPanel Orientation="Vertical">
-                                <StackPanel DataContext="{Binding Device.Settings.FaceDetectionMethod}"
-                                        Orientation="Horizontal">
-                                    <RadioButton
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionMethodDetail_Value0_Description}"
-                                            Margin="10,5" VerticalAlignment="Center"
-                                            IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=0}" />
-                                    <RadioButton
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionMethodDetail_Value1_Description}"
-                                            Margin="10,5" VerticalAlignment="Center"
-                                            IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=1}" />
-                                    <RadioButton
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionMethodDetail_Value2_Description}"
-                                            Margin="10,5" VerticalAlignment="Center"
-                                            IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=2}" />
-                                </StackPanel>
-                                <CheckBox
-                                        IsChecked="{Binding Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value}"
-                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description}" />
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectFaces_Description}"
-                                            IsChecked="{Binding Device.Settings.IsToDetectFaces.Value}" MinWidth="120" />
-                                    <CheckBox
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectHands_Description}"
-                                            IsChecked="{Binding Device.Settings.IsToDetectHands.Value}" MinWidth="120" />
-                                </StackPanel>
-                            </StackPanel>
-                        </GroupBox>
-
-                        <GroupBox Header="Status">
-                            <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox Content="Detecting Faces" IsEnabled="False"
-                                            IsChecked="{Binding Device.IsDetectingFaces, Mode=OneWay}" MinWidth="120" />
-                                    <CheckBox Content="Detecting Hands" IsEnabled="False"
-                                            IsChecked="{Binding Device.IsDetectingHands, Mode=OneWay}" MinWidth="120" />
-                                    <CheckBox Content="Tracking One or More Hands" IsEnabled="False"
-                                            IsChecked="{Binding Device.IsTrackingOneOrMoreHands, Mode=OneWay}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox Content="IsHidDeviceConnected" IsEnabled="False"
-                                            IsChecked="{Binding Device.IsHidDeviceConnected, Mode=OneWay}" />
-                                    <CheckBox Content="CameraViewImageSourceBitmapCapture.IsCameraDeviceConnected"
-                                            IsEnabled="False"
-                                            IsChecked="{Binding Device.CameraViewImageSourceBitmapCapture.IsCameraDeviceConnected, Mode=OneWay}" />
-                                    <CheckBox Content="Connected" IsEnabled="False"
-                                            IsChecked="{Binding Device.IsConnected, Mode=OneWay}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </GroupBox>
-
-                        <GroupBox Header="Device Settings">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Margin="10"
-                                        Text="Settings are saved on host devices basically.  The host app sets the settings to a connected device when the app starts or a new device is connected."
-                                        TextWrapping="Wrap" />
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox IsChecked="{Binding Device.Settings.IsToDetectFacesOnDevice.Value}"
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectFacesOnDevice_Description}" />
-                                    <CheckBox IsChecked="{Binding Device.Settings.IsToDetectHandsOnDevice.Value}"
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectHandsOnDevice_Description}" />
-                                    <CheckBox IsChecked="{Binding Device.Settings.IsToFixHandDetectionRegions.Value}"
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToFixHandDetectionRegions_Description}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToSendTouchScreenHidReport_Description}"
-                                            IsChecked="{Binding Device.Settings.IsToSendTouchScreenHidReport.Value}"
-                                            Margin="10" />
-                                    <CheckBox
-                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToSendEgsGestureHidReport_Description}"
-                                            IsChecked="{Binding Device.Settings.IsToSendEgsGestureHidReport.Value}"
-                                            Margin="10" />
-                                </StackPanel>
-                                <CheckBox
-                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToSendHoveringStateOnTouchScreenHidReport_Description}"
-                                        IsChecked="{Binding Device.Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value}"
-                                        Margin="10" />
-                            </StackPanel>
                         </GroupBox>
 
                         <GroupBox DataContext="{Binding Device.Settings.TouchInterfaceKind}"
@@ -478,6 +400,25 @@
                             <ListBox Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding Options}"
                                     SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
                                     ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                        </GroupBox>
+
+                        <GroupBox Header="HID Report">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToSendTouchScreenHidReport_Description}"
+                                            IsChecked="{Binding Device.Settings.IsToSendTouchScreenHidReport.Value}"
+                                            Margin="10" />
+                                    <CheckBox
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToSendEgsGestureHidReport_Description}"
+                                            IsChecked="{Binding Device.Settings.IsToSendEgsGestureHidReport.Value}"
+                                            Margin="10" />
+                                </StackPanel>
+                                <CheckBox
+                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToSendHoveringStateOnTouchScreenHidReport_Description}"
+                                        IsChecked="{Binding Device.Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value}"
+                                        Margin="10" />
+                            </StackPanel>
                         </GroupBox>
                     </StackPanel>
                 </TabItem>
@@ -598,6 +539,93 @@
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
+                </TabItem>
+
+                <TabItem Header="Settings 3">
+                    <StackPanel>
+                        <GroupBox x:Name="CameraViewImageSourceBitmapSizeGroupBox"
+                                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Description}">
+                            <ListBox DataContext="{Binding Device.Settings.CameraViewImageSourceBitmapSize}"
+                                    Style="{StaticResource listBoxWithRadioButton}"
+                                    ItemsSource="{Binding OptionalValue.Options}"
+                                    SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                                    ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                        </GroupBox>
+
+                        <GroupBox
+                                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceDetectionMethod_Description}">
+                            <StackPanel DataContext="{Binding Device.Settings.FaceDetectionMethod}"
+                                    Orientation="Horizontal">
+                                <RadioButton
+                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionMethodDetail_Value0_Description}"
+                                        Margin="10,5" VerticalAlignment="Center"
+                                        IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=0}" />
+                                <RadioButton
+                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionMethodDetail_Value1_Description}"
+                                        Margin="10,5" VerticalAlignment="Center"
+                                        IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=1}" />
+                                <RadioButton
+                                        Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.FaceDetectionMethodDetail_Value2_Description}"
+                                        Margin="10,5" VerticalAlignment="Center"
+                                        IsChecked="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource Int32IndexToBooleanConverter}, ConverterParameter=2}" />
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Settings">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectFaces_Description}"
+                                            IsChecked="{Binding Device.Settings.IsToDetectFaces.Value}" MinWidth="120" />
+                                    <CheckBox
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectHands_Description}"
+                                            IsChecked="{Binding Device.Settings.IsToDetectHands.Value}" MinWidth="120" />
+                                    <CheckBox
+                                            IsChecked="{Binding Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value}"
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Status">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Content="Detecting Faces" IsEnabled="False"
+                                            IsChecked="{Binding Device.IsDetectingFaces, Mode=OneWay}" MinWidth="120" />
+                                    <CheckBox Content="Detecting Hands" IsEnabled="False"
+                                            IsChecked="{Binding Device.IsDetectingHands, Mode=OneWay}" MinWidth="120" />
+                                    <CheckBox Content="Tracking One or More Hands" IsEnabled="False"
+                                            IsChecked="{Binding Device.IsTrackingOneOrMoreHands, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Content="IsHidDeviceConnected" IsEnabled="False"
+                                            IsChecked="{Binding Device.IsHidDeviceConnected, Mode=OneWay}" />
+                                    <CheckBox Content="CameraViewImageSourceBitmapCapture.IsCameraDeviceConnected"
+                                            IsEnabled="False"
+                                            IsChecked="{Binding Device.CameraViewImageSourceBitmapCapture.IsCameraDeviceConnected, Mode=OneWay}" />
+                                    <CheckBox Content="Connected" IsEnabled="False"
+                                            IsChecked="{Binding Device.IsConnected, Mode=OneWay}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Device Settings">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding Device.Settings.IsToDetectFacesOnDevice.Value}"
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectFacesOnDevice_Description}" />
+                                    <CheckBox IsChecked="{Binding Device.Settings.IsToDetectHandsOnDevice.Value}"
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectHandsOnDevice_Description}" />
+                                    <CheckBox IsChecked="{Binding Device.Settings.IsToFixHandDetectionRegions.Value}"
+                                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToFixHandDetectionRegions_Description}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem Header="Settings 4">
+                    <localViews:EgsDeviceFaceDetectionOnHostUserControl />
                 </TabItem>
             </TabControl>
         </TabItem>

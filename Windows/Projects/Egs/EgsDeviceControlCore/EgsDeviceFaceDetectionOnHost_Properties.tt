@@ -1,0 +1,27 @@
+﻿<#
+var namespaceName = "Egs";
+var classDescription = "public partial class EgsDeviceFaceDetectionOnHost";
+
+var propertyElementsList = new List<PropertyInfoForT4Template>()
+{
+    new PropertyInfoForT4Template("", "public", "double", "CalibratedFocalLength", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "CaptureImageBinnedPixelOneSideLength", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "CaptureImageWidth", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "CaptureImageHeight", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "CameraViewImageWidth", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "CameraViewImageHeight", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "CameraViewImageScale_DividedBy_CaptureImageScale", "", true),
+    new PropertyInfoForT4Template("", "public", "double", "DetectorImageScale_DividedBy_CameraViewImageScale", "private", true),
+
+    new PropertyInfoForT4Template("", "public", "bool", "IsDetecting", "private", true),
+
+    new PropertyInfoForT4Template("[DataMember]", "public", "bool", "IsToUpdateRealHandDetectionAreaFromBodyParameters", "", true),
+
+    new PropertyInfoForT4Template("", "public", "System.Drawing.Rectangle", "CameraViewImageRightHandDetectionArea", "private", true),
+    new PropertyInfoForT4Template("", "public", "System.Drawing.Rectangle", "CameraViewImageLeftHandDetectionArea", "private", true),
+    new PropertyInfoForT4Template("", "public", "System.Drawing.Rectangle", "CaptureImageRightHandDetectionArea", "private", true),
+    new PropertyInfoForT4Template("", "public", "System.Drawing.Rectangle", "CaptureImageLeftHandDetectionArea", "private", true),
+    new PropertyInfoForT4Template("", "public", "double", "CaptureImagePalmImageWidth", "private", true),
+};
+#>
+<#@ include file=".\DotNetUtility\PartialClass_Properties.t4" #>

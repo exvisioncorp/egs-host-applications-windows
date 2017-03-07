@@ -24,7 +24,7 @@
             get { return _RightOrLeft; }
             set
             {
-                if (value != _RightOrLeft)
+                if (_RightOrLeft != value)
                 {
                     _RightOrLeft = value; OnRightOrLeftChanged(EventArgs.Empty);
                 }
@@ -45,7 +45,7 @@
             get { return _IsToShowCursor; }
             set
             {
-                if (value != _IsToShowCursor)
+                if (_IsToShowCursor != value)
                 {
                     _IsToShowCursor = value; OnIsToShowCursorChanged(EventArgs.Empty);
                 }
@@ -66,7 +66,7 @@
             get { return _IsToDetectLongTouch; }
             set
             {
-                if (value != _IsToDetectLongTouch)
+                if (_IsToDetectLongTouch != value)
                 {
                     _IsToDetectLongTouch = value; OnIsToDetectLongTouchChanged(EventArgs.Empty);
                 }
@@ -87,7 +87,7 @@
             get { return _IsToUpdateVelocities; }
             set
             {
-                if (value != _IsToUpdateVelocities)
+                if (_IsToUpdateVelocities != value)
                 {
                     _IsToUpdateVelocities = value; OnIsToUpdateVelocitiesChanged(EventArgs.Empty);
                 }
@@ -108,7 +108,7 @@
             get { return _LongTapElapsedThresholdInMilliseconds; }
             set
             {
-                if (value != _LongTapElapsedThresholdInMilliseconds)
+                if (_LongTapElapsedThresholdInMilliseconds != value)
                 {
                     _LongTapElapsedThresholdInMilliseconds = value; OnLongTapElapsedThresholdInMillisecondsChanged(EventArgs.Empty);
                 }

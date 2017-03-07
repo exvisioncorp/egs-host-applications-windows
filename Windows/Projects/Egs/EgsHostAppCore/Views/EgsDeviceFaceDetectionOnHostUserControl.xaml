@@ -1,0 +1,283 @@
+﻿<UserControl x:Class="Egs.EgsHostAppCore.Views.EgsDeviceFaceDetectionOnHostUserControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:deviceControl="clr-namespace:Egs;assembly=EgsDeviceControlCore" xmlns:local="clr-namespace:Egs"
+        xmlns:localViews="clr-namespace:Egs.EgsHostAppCore.Views"
+        xmlns:properties="clr-namespace:Egs.EgsDeviceControlCore.Properties"
+        xmlns:dotnetutilviews="clr-namespace:Egs.DotNetUtility.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" SnapsToDevicePixels="True"
+        Background="White">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/EgsHostAppCore;component/Views/CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBox">
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+        </Grid.Resources>
+        
+        <GroupBox Header="Host Face Detection" DataContext="{Binding Device.FaceDetectionOnHost}">
+            <StackPanel Orientation="Vertical" Margin="10,5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Focal Length[mm]: " />
+                    <TextBlock Text="{Binding CalibratedFocalLength, StringFormat={}{0:G3}}" />
+
+                    <TextBlock Text="  One Pixel Side Length[mm]: " />
+                    <TextBlock Text="{Binding CaptureImageBinnedPixelOneSideLength, StringFormat={}{0:G3}}" />
+
+                    <TextBlock Text="  CaptureImageSize: (" />
+                    <TextBlock Text="{Binding CaptureImageWidth}" />
+                    <TextBlock Text="," />
+                    <TextBlock Text="{Binding CaptureImageHeight}" />
+                    <TextBlock Text=")" />
+
+                    <TextBlock Text="  CameraViewImageSize: (" />
+                    <TextBlock Text="{Binding CameraViewImageWidth}" />
+                    <TextBlock Text="," />
+                    <TextBlock Text="{Binding CameraViewImageHeight}" />
+                    <TextBlock Text=")" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="CameraViewImage/CaptureImage: " />
+                    <TextBlock Text="{Binding CameraViewImageScale_DividedBy_CaptureImageScale, StringFormat={}{0:G3}}" />
+                    <TextBlock Text="  DetectorImage/CameraViewImage: " />
+                    <TextBlock Text="{Binding DetectorImageScale_DividedBy_CameraViewImageScale, StringFormat={}{0:G3}}" />
+                </StackPanel>
+
+                <GroupBox Header="Basic Parameters (B. means Breadth)">
+                    <StackPanel>
+                        <DockPanel DataContext="{Binding SensitivityAndSpecificity}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Threshold" />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel DataContext="{Binding MaxDetectableDistanceInMeter}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="FaceZ Max [m]" />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel DataContext="{Binding RealFaceBreadth}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Face B. [mm]" />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel DataContext="{Binding RealPalmBreadth}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Palm B. [mm]" />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Update Real Hand Detection Area from Body Parameters">
+                    <StackPanel>
+                        <CheckBox Content="Enabled"
+                                IsChecked="{Binding IsToUpdateRealHandDetectionAreaFromBodyParameters}" />
+
+                        <DockPanel DataContext="{Binding RealShoulderBreadth}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Shoulder B.[mm]" />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel
+                                DataContext="{Binding RealHandDetectionAreaCenterXOffset_DividedBy_RealShoulderBreadth}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="X / Shoulder B." />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel DataContext="{Binding RealHandDetectionAreaCenterYOffset_DividedBy_RealFaceBreadth}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Y / Face B." />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel
+                                DataContext="{Binding RealHandDetectionAreaCenterZOffset_DividedBy_RealShoulderBreadth}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Z / Shoulder B." />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel DataContext="{Binding RealHandDetectionAreaWidth_DividedBy_RealPalmBreadth}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Width / Palm B." />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel DataContext="{Binding RealHandDetectionAreaHeight_DividedBy_RealPalmBreadth}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Height / Palm B." />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Real Hand Detection Area Parameters">
+                    <StackPanel>
+                        <DockPanel DataContext="{Binding RealHandDetectionAreaCenterXOffset}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="X Offset [mm]" />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel DataContext="{Binding RealHandDetectionAreaCenterYOffset}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Y Offset [mm]" />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel DataContext="{Binding RealHandDetectionAreaCenterZOffset}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Z Offset [mm]" />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel DataContext="{Binding RealHandDetectionAreaWidth}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Width [mm]" />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+
+                        <DockPanel DataContext="{Binding RealHandDetectionAreaHeight}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Height [mm]" />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

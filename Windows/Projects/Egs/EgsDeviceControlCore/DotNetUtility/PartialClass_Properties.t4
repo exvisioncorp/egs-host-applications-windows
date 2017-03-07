@@ -41,7 +41,7 @@ foreach (var item in propertyElementsList)
             <# if (string.IsNullOrEmpty(item.SetterAccessibility) == false) { #><#= item.SetterAccessibility #> <# } #>set
             {
 <# if (item.SetValueOnlyWhenTheNewValueIsDifferentFromCurrentValue) { #>
-                if (value != _<#= item.Name #>)
+                if (_<#= item.Name #> != value)
                 {
     <# } #>
                 _<#= item.Name #> = value; On<#= item.Name #>Changed(EventArgs.Empty);
