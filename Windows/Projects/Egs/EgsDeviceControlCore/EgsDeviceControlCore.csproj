@@ -103,6 +103,7 @@
     <Compile Include="EgsDeviceEgsGestureHidReport.cs" />
     <Compile Include="EgsDeviceEgsGestureHidReportFace.cs" />
     <Compile Include="EgsDeviceEgsGestureHidReportHand.cs" />
+    <Compile Include="EgsDeviceEgsGestureHidReport_FaceDetectionOnHost.cs" />
     <Compile Include="EgsDeviceEnumTypes.cs" />
     <Compile Include="EgsDeviceFaceDetectionOnHost_Properties.generated.cs">
       <AutoGen>True</AutoGen>

@@ -619,7 +619,18 @@
                 </TabItem>
 
                 <TabItem Header="Settings 4">
-                    <localViews:EgsDeviceFaceDetectionOnHostUserControl />
+                    <StackPanel>
+                        <GroupBox
+                                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceDetectionMethod_Description}">
+                            <ListBox DockPanel.Dock="Left" DataContext="{Binding Device.Settings.FaceDetectionMethod}"
+                                    Style="{StaticResource listBoxWithRadioButton}"
+                                    ItemsSource="{Binding OptionalValue.Options}"
+                                    SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                                    ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                        </GroupBox>
+
+                        <localViews:EgsDeviceFaceDetectionOnHostUserControl />
+                    </StackPanel>
                 </TabItem>
             </TabControl>
         </TabItem>

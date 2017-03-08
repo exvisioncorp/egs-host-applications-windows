@@ -352,25 +352,14 @@
         {
             if (IsFaceDetected == false && Device != null)
             {
-                Device.ResetHidReportObjects();
                 SelectedFaceRect = null;
+                Device.EgsGestureHidReport.ResetWhenHostFaceDetectionDidNotDetectAnyFaces();
             }
             else
             {
                 DetectedFaceRectsInCameraViewImage = DetectedFaceRectsInCameraViewImage.OrderBy(e => DistanceFromCameraViewImageCenter(e)).ToList();
                 SelectedFaceRect = DetectedFaceRectsInCameraViewImage.First();
-            }
-
-            for (int i = 0; i < Device.EgsGestureHidReport.Faces.Count; i++)
-            {
-                if (i < DetectedFaceRectsInCameraViewImage.Count)
-                {
-                    var item = DetectedFaceRectsInCameraViewImage[i];
-                    Device.EgsGestureHidReport.Faces[i].IsDetected = true;
-                    Device.EgsGestureHidReport.Faces[i].Area = item;
-                    Device.EgsGestureHidReport.Faces[i].IsSelected = (item == SelectedFaceRect);
-                    Device.EgsGestureHidReport.Faces[i].Score = 0;
-                }
+                Device.EgsGestureHidReport.UpdateWhenHostFaceDetectionDetectedFaces();
             }
 
             UpdateEgsDeviceSettingsHandDetectionAreas(SelectedFaceRect);

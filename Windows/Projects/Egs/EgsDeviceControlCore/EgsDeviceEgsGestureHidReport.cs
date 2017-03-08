@@ -33,7 +33,7 @@
     /// <summary>
     /// Vendor specific HID report for applications of EgsSDK users.  This class does not implement INotifyProperty.  Just this reconstructs the recognition state from byte array reports.
     /// </summary>
-    public class EgsDeviceEgsGestureHidReport
+    public partial class EgsDeviceEgsGestureHidReport
     {
         internal EgsDevice Device { get; private set; }
         internal HidReportIds ReportId { get; private set; }

@@ -29,7 +29,8 @@
         }
 
         #region Host Settings
-        [DataMember]
+        // NOTE: Currently disabled
+        //[DataMember]
         public CultureInfoAndDescriptionOptions CultureInfoAndDescription { get; private set; }
         [DataMember]
         public MouseCursorPositionUpdatedByGestureCursorMethodOptions MouseCursorPositionUpdatedByGestureCursorMethod { get; private set; }

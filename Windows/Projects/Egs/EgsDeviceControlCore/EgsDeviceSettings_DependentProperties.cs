@@ -81,6 +81,7 @@
                 return;
             }
             CurrentConnectedEgsDevice.On_FaceDetectionMethod_IsToDetectFaces_IsToDetectHands_IsHidDeviceConnected_Changed();
+            CurrentConnectedEgsDevice.ResetHidReportObjects();
         }
 
         public string CameraSpecificationValue
