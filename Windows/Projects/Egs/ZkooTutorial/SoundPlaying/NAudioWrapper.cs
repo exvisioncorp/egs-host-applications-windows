@@ -56,7 +56,8 @@
                 Stop();
                 Stream = newStream;
                 if (Output == null) { Output = new WaveOut(); }
-                if (Output != null) { Output.Init(Stream); }
+                // NOTE: this "true" means "convertTo16Bit", and in some audio devices, it seems to need this convert!!
+                if (Output != null) { Output.Init(Stream.ToSampleProvider(), true); }
                 if (Output != null) { Output.Play(); }
                 AudioFileFullPath = fullPath;
                 return true;
