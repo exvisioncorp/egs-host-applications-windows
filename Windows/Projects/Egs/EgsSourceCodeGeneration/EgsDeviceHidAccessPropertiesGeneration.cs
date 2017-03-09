@@ -7,7 +7,6 @@
     using System.IO;
     using Microsoft.Win32;
     using NPOI.XSSF.UserModel;
-    using DotNetUtility;
     using Egs;
 
     public class EgsDeviceHidAccessPropertiesGeneration

@@ -75,9 +75,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\DotNetUtility\Name.cs">
-      <Link>Name.cs</Link>
-    </Compile>
     <Compile Include="..\EgsDeviceControlCore\ApplicationCommonSettings.cs">
       <Link>ApplicationCommonSettings.cs</Link>
     </Compile>

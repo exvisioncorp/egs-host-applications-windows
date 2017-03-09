@@ -61,7 +61,6 @@
     <Compile Include="RangedRangeType.cs" />
     <Compile Include="RangedRangeTypes.cs" />
     <Compile Include="RatioRect.cs" />
-    <Compile Include="Name.cs" />
     <Compile Include="VelocityFilter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
