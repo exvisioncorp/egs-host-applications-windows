@@ -50,18 +50,35 @@
                     <TextBlock Text="  DetectorImage/CameraViewImage: " />
                     <TextBlock Text="{Binding DetectorImageScale_DividedBy_CameraViewImageScale, StringFormat={}{0:G3}}" />
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Elapsed [ms]: " />
+                    <TextBlock Text="{Binding DetectionElapsedMilliseconds, StringFormat={}{0:G3}}" />
+                </StackPanel>
 
                 <GroupBox Header="Basic Parameters (B. means Breadth)">
                     <StackPanel>
+                        <DockPanel DataContext="{Binding SetCameraViewImageBitmapIntervalMilliseconds}">
+                            <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
+                                    Content="Interval [ms]" />
+                            <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
+                                    Content="{Binding Minimum}" />
+                            <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Text="{Binding Value, Mode=TwoWay}" />
+                            <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
+                                    Content="{Binding Maximum}" />
+                            <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
+                                    Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
                         <DockPanel DataContext="{Binding SensitivityAndSpecificity}">
                             <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
                                     Content="Threshold" />
                             <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"
-                                    Content="{Binding Minimum, StringFormat=\{0:G3\}}" />
+                                    Content="{Binding Minimum}" />
                             <TextBox DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
-                                    Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:G3\}}" />
+                                    Text="{Binding Value, Mode=TwoWay}" />
                             <Label DockPanel.Dock="Right" MinWidth="50" HorizontalContentAlignment="Left"
-                                    Content="{Binding Maximum, StringFormat=\{0:G3\}}" />
+                                    Content="{Binding Maximum}" />
                             <Slider Value="{Binding Value, Mode=TwoWay}" Minimum="{Binding Minimum}"
                                     Maximum="{Binding Maximum}" TickFrequency="{Binding TickFrequency}"
                                     VerticalAlignment="Center" IsSnapToTickEnabled="true" TickPlacement="Both" />

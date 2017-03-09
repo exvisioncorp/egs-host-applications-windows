@@ -30,7 +30,13 @@
 
         void AttachInternalEventHandlersAdditional()
         {
-            CaptureImageSize.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
+            CaptureBinning.ValueUpdated += delegate { OnPixelOneSideLengthRelatedPropertiesUpdated(); };
+            CaptureImageSize.ValueUpdated += delegate
+            {
+                CurrentConnectedEgsDevice.FaceDetectionOnHost.CaptureImageWidth = CaptureImageSize.Width;
+                CurrentConnectedEgsDevice.FaceDetectionOnHost.CaptureImageHeight = CaptureImageSize.Height;
+                OnPropertyChanged(nameof(CameraSpecificationValue));
+            };
             CaptureFps.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
             LensEquivalentFocalLengthInMillimeters.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
             SensorOnePixelSideLengthInMillimeters.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
@@ -46,7 +52,11 @@
             IsToDetectFaces.ValueUpdated += delegate { OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged(); };
             IsToDetectHands.ValueUpdated += delegate { OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged(); };
 
-            CaptureBinning.ValueUpdated += delegate { OnPixelOneSideLengthRelatedPropertiesUpdated(); };
+            CameraViewImageSourceBitmapSize.ValueUpdated += delegate
+            {
+                CurrentConnectedEgsDevice.FaceDetectionOnHost.CameraViewImageWidth = CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Width;
+                CurrentConnectedEgsDevice.FaceDetectionOnHost.CameraViewImageHeight = CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Height;
+            };
         }
 
         void OnPixelOneSideLengthRelatedPropertiesUpdated()

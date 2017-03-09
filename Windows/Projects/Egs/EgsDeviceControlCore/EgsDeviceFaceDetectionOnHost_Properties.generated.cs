@@ -191,6 +191,23 @@
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        int _DetectionElapsedMilliseconds;
+        public event EventHandler DetectionElapsedMillisecondsChanged;
+        protected virtual void OnDetectionElapsedMillisecondsChanged(EventArgs e)
+        {
+            var t = DetectionElapsedMillisecondsChanged; if (t != null) { t(this, e); }
+            OnPropertyChanged(nameof(DetectionElapsedMilliseconds));
+        }
+        public int DetectionElapsedMilliseconds
+        {
+            get { return _DetectionElapsedMilliseconds; }
+            private set
+            {
+                _DetectionElapsedMilliseconds = value; OnDetectionElapsedMillisecondsChanged(EventArgs.Empty);
+            }
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         bool _IsToUpdateRealHandDetectionAreaFromBodyParameters;
         public event EventHandler IsToUpdateRealHandDetectionAreaFromBodyParametersChanged;
         protected virtual void OnIsToUpdateRealHandDetectionAreaFromBodyParametersChanged(EventArgs e)

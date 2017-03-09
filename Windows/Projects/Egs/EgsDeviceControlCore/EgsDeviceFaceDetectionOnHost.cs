@@ -99,6 +99,7 @@
         Stopwatch SetCameraViewImageBitmapIntervalStopwatch { get; set; }
         System.ComponentModel.BackgroundWorker Worker { get; set; }
 
+        Stopwatch DetectionElapsedStopwatch { get; set; }
         DlibSharp.Array2dUchar DlibArray2dUcharImage { get; set; }
         DlibSharp.FrontalFaceDetector DlibHogSvm { get; set; }
         public IList<System.Drawing.Rectangle> DetectedFaceRectsInCameraViewImage { get; private set; }
@@ -178,6 +179,7 @@
 
             DlibArray2dUcharImage = new DlibSharp.Array2dUchar();
             DlibHogSvm = new DlibSharp.FrontalFaceDetector();
+            DetectionElapsedStopwatch = new Stopwatch();
 
             IsToUpdateRealHandDetectionAreaFromBodyParametersChanged += delegate { UpdateRealHandDetectionAreaParametersFromRealBodyParameters(); };
             RealFaceBreadth.ValueChanged += delegate { UpdateRealHandDetectionAreaParametersFromRealBodyParameters(); };
@@ -336,10 +338,12 @@
                 var detectorImageHeight = (int)(CameraViewImageHeight * scale);
                 Debug.WriteLine("DetectorImageWidth: " + detectorImageWidth);
                 Debug.WriteLine("DetectorImageHeight: " + detectorImageHeight);
+                if (ApplicationCommonSettings.IsDeveloperRelease) { DetectionElapsedStopwatch.Reset(); DetectionElapsedStopwatch.Start(); }
                 DlibArray2dUcharImage.ResizeImage(detectorImageWidth, detectorImageHeight);
                 DetectedFaceRectsInCameraViewImage = DlibHogSvm.DetectFaces(DlibArray2dUcharImage, DlibHogSvmThreshold)
                     .Select(e => new System.Drawing.Rectangle((int)(e.X / scale), (int)(e.Y / scale), (int)(e.Width / scale), (int)(e.Height / scale)))
                     .ToList();
+                if (ApplicationCommonSettings.IsDeveloperRelease) { DetectionElapsedMilliseconds = (int)DetectionElapsedStopwatch.ElapsedMilliseconds; }
             }
             catch (Exception ex)
             {

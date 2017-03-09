@@ -14,6 +14,7 @@ var propertyElementsList = new List<PropertyInfoForT4Template>()
     new PropertyInfoForT4Template("", "public", "double", "DetectorImageScale_DividedBy_CameraViewImageScale", "private", true),
 
     new PropertyInfoForT4Template("", "public", "bool", "IsDetecting", "private", true),
+    new PropertyInfoForT4Template("", "public", "int", "DetectionElapsedMilliseconds", "private", false),
 
     new PropertyInfoForT4Template("[DataMember]", "public", "bool", "IsToUpdateRealHandDetectionAreaFromBodyParameters", "", true),
 
