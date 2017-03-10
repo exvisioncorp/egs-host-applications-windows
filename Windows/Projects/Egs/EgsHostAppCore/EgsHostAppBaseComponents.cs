@@ -270,7 +270,7 @@
                         var firmwareVersionInImageFile = new Version(ApplicationCommonSettings.FirmwareVersionInImageFileString);
                         var ret =
                             (firmwareVersionInImageFile > Device.FirmwareVersionAsVersion)
-                            && (Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue != EgsDeviceTouchInterfaceKind.Mouse);
+                            && (Device.Settings.TouchInterfaceKind.Value != TouchInterfaceKinds.Mouse);
                         return ret;
                     }
                     break;

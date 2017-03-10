@@ -12,246 +12,283 @@
     using Egs.EgsDeviceControlCore.Properties;
     using Egs.DotNetUtility;
 
-
-    public class HidAccessPropertyOptionalTypeParameterBase : ValueWithDescription<byte>
+    public enum HardwareTypes : byte
     {
+        NoInformation = 0,
+        ZkooForKickstarterBackers = 1,
+        MA2150_IMX208 = 2,
+        MA2150_IMX208_PIC = 3,
     }
-
-    public class HidAccessPropertyOptionalTypeParameterSize : HidAccessPropertyOptionalTypeParameterBase
+    public partial class HardwareTypeOptions : HidAccessPropertyEnumValue<HardwareTypes>
     {
-        public int Width { get; protected set; }
-        public int Height { get; protected set; }
-        public System.Drawing.Size Size { get { return new System.Drawing.Size(Width, Height); } }
-
-        public override string ToString() { return Width + "x" + Height; }
-    }
-
-
-
-    public partial class HardwareTypeDetail : HidAccessPropertyOptionalTypeParameterBase
-    {
-        public static List<HardwareTypeDetail> GetDefaultList()
+        public HardwareTypeOptions()
+            : base()
         {
-            var ret = new List<HardwareTypeDetail>();
-            ret.Add(new HardwareTypeDetail() { Value = 0, DescriptionKey = nameof(Resources.HardwareTypeDetail_Value0_Description) });
-            ret.Add(new HardwareTypeDetail() { Value = 1, DescriptionKey = nameof(Resources.HardwareTypeDetail_Value1_Description) });
-            ret.Add(new HardwareTypeDetail() { Value = 2, DescriptionKey = nameof(Resources.HardwareTypeDetail_Value2_Description) });
-            ret.Add(new HardwareTypeDetail() { Value = 3, DescriptionKey = nameof(Resources.HardwareTypeDetail_Value3_Description) });
-            return ret;
+            OptionalValue.Options.Add(new ValueWithDescription<HardwareTypes>() { Value = (HardwareTypes)0, DescriptionKey = nameof(Resources.EgsDevice_HardwareType_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<HardwareTypes>() { Value = (HardwareTypes)1, DescriptionKey = nameof(Resources.EgsDevice_HardwareType_Options_1_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<HardwareTypes>() { Value = (HardwareTypes)2, DescriptionKey = nameof(Resources.EgsDevice_HardwareType_Options_2_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<HardwareTypes>() { Value = (HardwareTypes)3, DescriptionKey = nameof(Resources.EgsDevice_HardwareType_Options_3_DescriptionKey) });
         }
     }
 
-    public partial class PowerModeDetail : HidAccessPropertyOptionalTypeParameterBase
+    public enum PowerModes : byte
     {
-        public static List<PowerModeDetail> GetDefaultList()
+        Active = 0,
+        StandingBy = 1,
+    }
+    public partial class PowerModeOptions : HidAccessPropertyEnumValue<PowerModes>
+    {
+        public PowerModeOptions()
+            : base()
         {
-            var ret = new List<PowerModeDetail>();
-            ret.Add(new PowerModeDetail() { Value = 0, DescriptionKey = nameof(Resources.PowerModeDetail_Value0_Description) });
-            ret.Add(new PowerModeDetail() { Value = 1, DescriptionKey = nameof(Resources.PowerModeDetail_Value1_Description) });
-            return ret;
+            OptionalValue.Options.Add(new ValueWithDescription<PowerModes>() { Value = (PowerModes)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_PowerMode_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<PowerModes>() { Value = (PowerModes)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_PowerMode_Options_1_DescriptionKey) });
         }
     }
 
-    public partial class HostMachineOperatingSystemDetail : HidAccessPropertyOptionalTypeParameterBase
+    public enum HostMachineOperatingSystems : byte
     {
-        public static List<HostMachineOperatingSystemDetail> GetDefaultList()
+        Windows = 0,
+        Android = 1,
+    }
+    public partial class HostMachineOperatingSystemOptions : HidAccessPropertyEnumValue<HostMachineOperatingSystems>
+    {
+        public HostMachineOperatingSystemOptions()
+            : base()
         {
-            var ret = new List<HostMachineOperatingSystemDetail>();
-            ret.Add(new HostMachineOperatingSystemDetail() { Value = 0, DescriptionKey = nameof(Resources.HostMachineOperatingSystemDetail_Value0_Description) });
-            ret.Add(new HostMachineOperatingSystemDetail() { Value = 1, DescriptionKey = nameof(Resources.HostMachineOperatingSystemDetail_Value1_Description) });
-            return ret;
+            OptionalValue.Options.Add(new ValueWithDescription<HostMachineOperatingSystems>() { Value = (HostMachineOperatingSystems)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_HostMachineOperatingSystem_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<HostMachineOperatingSystems>() { Value = (HostMachineOperatingSystems)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_HostMachineOperatingSystem_Options_1_DescriptionKey) });
         }
     }
 
-    public enum EgsDeviceTouchInterfaceKind : byte
+    public enum TouchInterfaceKinds : byte
     {
         MultiTouch = 0,
         Mouse = 2,
         SingleTouch = 1,
     }
-
-    public partial class TouchInterfaceKindDetail : HidAccessPropertyOptionalTypeParameterBase
+    public partial class TouchInterfaceKindOptions : HidAccessPropertyEnumValue<TouchInterfaceKinds>
     {
-        public EgsDeviceTouchInterfaceKind EnumValue
+        public TouchInterfaceKindOptions()
+            : base()
         {
-            get
-            {
-                var ret = (EgsDeviceTouchInterfaceKind)Value;
-                return ret;
-            }
-        }
-
-        public static List<TouchInterfaceKindDetail> GetDefaultList()
-        {
-            var ret = new List<TouchInterfaceKindDetail>();
-            ret.Add(new TouchInterfaceKindDetail() { Value = 0, DescriptionKey = nameof(Resources.TouchInterfaceKindDetail_Value0_Description) });
-            ret.Add(new TouchInterfaceKindDetail() { Value = 2, DescriptionKey = nameof(Resources.TouchInterfaceKindDetail_Value2_Description) });
-            ret.Add(new TouchInterfaceKindDetail() { Value = 1, DescriptionKey = nameof(Resources.TouchInterfaceKindDetail_Value1_Description) });
-            return ret;
+            OptionalValue.Options.Add(new ValueWithDescription<TouchInterfaceKinds>() { Value = (TouchInterfaceKinds)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_TouchInterfaceKind_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<TouchInterfaceKinds>() { Value = (TouchInterfaceKinds)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_TouchInterfaceKind_Options_2_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<TouchInterfaceKinds>() { Value = (TouchInterfaceKinds)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_TouchInterfaceKind_Options_1_DescriptionKey) });
         }
     }
 
-    public partial class DeviceRotationAngleInClockwiseDetail : HidAccessPropertyOptionalTypeParameterBase
+    public enum DeviceRotationAngleInClockwises : byte
     {
-        public static List<DeviceRotationAngleInClockwiseDetail> GetDefaultList()
+        Landscape_0 = 0,
+        PortraitFlipped_90 = 1,
+        LandscapeFlipped_180 = 2,
+        Portrait_270 = 3,
+    }
+    public partial class DeviceRotationAngleInClockwiseOptions : HidAccessPropertyEnumValue<DeviceRotationAngleInClockwises>
+    {
+        public DeviceRotationAngleInClockwiseOptions()
+            : base()
         {
-            var ret = new List<DeviceRotationAngleInClockwiseDetail>();
-            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 0, DescriptionKey = nameof(Resources.DeviceRotationAngleInClockwiseDetail_Value0_Description) });
-            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 1, DescriptionKey = nameof(Resources.DeviceRotationAngleInClockwiseDetail_Value1_Description) });
-            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 2, DescriptionKey = nameof(Resources.DeviceRotationAngleInClockwiseDetail_Value2_Description) });
-            ret.Add(new DeviceRotationAngleInClockwiseDetail() { Value = 3, DescriptionKey = nameof(Resources.DeviceRotationAngleInClockwiseDetail_Value3_Description) });
-            return ret;
+            OptionalValue.Options.Add(new ValueWithDescription<DeviceRotationAngleInClockwises>() { Value = (DeviceRotationAngleInClockwises)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<DeviceRotationAngleInClockwises>() { Value = (DeviceRotationAngleInClockwises)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_1_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<DeviceRotationAngleInClockwises>() { Value = (DeviceRotationAngleInClockwises)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_2_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<DeviceRotationAngleInClockwises>() { Value = (DeviceRotationAngleInClockwises)3, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_3_DescriptionKey) });
         }
     }
 
-#if false
-    public partial class DeviceUsageDetail : HidAccessPropertyOptionalTypeParameterBase
+#if true
+    public enum DeviceUsages : byte
     {
-        public static List<DeviceUsageDetail> GetDefaultList()
+        GestureCamera = 0,
+        WebCamera = 1,
+    }
+    public partial class DeviceUsageOptions : HidAccessPropertyEnumValue<DeviceUsages>
+    {
+        public DeviceUsageOptions()
+            : base()
         {
-            var ret = new List<DeviceUsageDetail>();
-            ret.Add(new DeviceUsageDetail() { Value = 0, DescriptionKey = nameof(Resources.DeviceUsageDetail_Value0_Description) });
-            ret.Add(new DeviceUsageDetail() { Value = 1, DescriptionKey = nameof(Resources.DeviceUsageDetail_Value1_Description) });
-            return ret;
+            OptionalValue.Options.Add(new ValueWithDescription<DeviceUsages>() { Value = (DeviceUsages)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<DeviceUsages>() { Value = (DeviceUsages)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey) });
         }
     }
 
-    public partial class ModelSetIdDetail : HidAccessPropertyOptionalTypeParameterBase
+    public enum ModelSetIds : byte
     {
-        public static List<ModelSetIdDetail> GetDefaultList()
+        FiveFingersForTv = 0,
+    }
+    public partial class ModelSetIdOptions : HidAccessPropertyEnumValue<ModelSetIds>
+    {
+        public ModelSetIdOptions()
+            : base()
         {
-            var ret = new List<ModelSetIdDetail>();
-            ret.Add(new ModelSetIdDetail() { Value = 0, DescriptionKey = nameof(Resources.ModelSetIdDetail_Value0_Description) });
-            return ret;
+            OptionalValue.Options.Add(new ValueWithDescription<ModelSetIds>() { Value = 0, DescriptionKey = nameof(Resources.EgsDeviceSettings_ModelSetId_Options_0_DescriptionKey) });
         }
     }
 #endif
 
-    public partial class CaptureBinningDetail : HidAccessPropertyOptionalTypeParameterBase
+    public enum CaptureBinnings : byte
     {
-        public static List<CaptureBinningDetail> GetDefaultList()
+        NoBinning = 1,
+        Binning2x2 = 2,
+        Binning3x3 = 3,
+        Binning4x4 = 4,
+    }
+    public partial class CaptureBinningOptions : HidAccessPropertyEnumValue<CaptureBinnings>
+    {
+        public CaptureBinningOptions()
+            : base()
         {
-            var ret = new List<CaptureBinningDetail>();
-            ret.Add(new CaptureBinningDetail() { Value = 2, DescriptionKey = nameof(Resources.CaptureBinningDetail_Value2_Description) });
-            ret.Add(new CaptureBinningDetail() { Value = 1, DescriptionKey = nameof(Resources.CaptureBinningDetail_Value1_Description) });
+            OptionalValue.Options.Add(new ValueWithDescription<CaptureBinnings>() { Value = (CaptureBinnings)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_CaptureBinning_Options_2_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<CaptureBinnings>() { Value = (CaptureBinnings)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_CaptureBinning_Options_1_DescriptionKey) });
             if (ApplicationCommonSettings.IsInternalRelease)
             {
-                ret.Add(new CaptureBinningDetail() { Value = 3, DescriptionKey = nameof(Resources.CaptureBinningDetail_Value3_Description) });
-                ret.Add(new CaptureBinningDetail() { Value = 4, DescriptionKey = nameof(Resources.CaptureBinningDetail_Value4_Description) });
+                OptionalValue.Options.Add(new ValueWithDescription<CaptureBinnings>() { Value = (CaptureBinnings)3, DescriptionKey = nameof(Resources.EgsDeviceSettings_CaptureBinning_Options_3_DescriptionKey) });
+                OptionalValue.Options.Add(new ValueWithDescription<CaptureBinnings>() { Value = (CaptureBinnings)4, DescriptionKey = nameof(Resources.EgsDeviceSettings_CaptureBinning_Options_4_DescriptionKey) });
             }
-            return ret;
         }
     }
 
-    public partial class CaptureFpsDetail : HidAccessPropertyOptionalTypeParameterBase
+    public enum CaptureFpsKind : byte
     {
-        public static List<CaptureFpsDetail> GetDefaultList()
-        {
-            var ret = new List<CaptureFpsDetail>();
-            ret.Add(new CaptureFpsDetail() { Value = 0, DescriptionKey = nameof(Resources.CaptureFpsDetail_Value0_Description) });
-            ret.Add(new CaptureFpsDetail() { Value = 120, DescriptionKey = nameof(Resources.CaptureFpsDetail_Value120_Description) });
-            ret.Add(new CaptureFpsDetail() { Value = 100, DescriptionKey = nameof(Resources.CaptureFpsDetail_Value100_Description) });
-            return ret;
-        }
+        Auto = 0,
+        Fps120 = 120,
+        Fps100 = 100,
     }
-
-    public partial class CaptureExposureModeDetail : HidAccessPropertyOptionalTypeParameterBase
+    public partial class CaptureFpsOptions : HidAccessPropertyEnumValue<CaptureFpsKind>
     {
-        public static List<CaptureExposureModeDetail> GetDefaultList()
+        public CaptureFpsOptions()
+            : base()
         {
-            var ret = new List<CaptureExposureModeDetail>();
-            ret.Add(new CaptureExposureModeDetail() { Value = 0, DescriptionKey = nameof(Resources.CaptureExposureModeDetail_Value0_Description) });
-            ret.Add(new CaptureExposureModeDetail() { Value = 1, DescriptionKey = nameof(Resources.CaptureExposureModeDetail_Value1_Description) });
-            //ret.Add(new CaptureExposureModeDetail() { Value = 2, DescriptionKey = nameof(Resources.CaptureExposureModeDetail_Value2_Description) });
-            return ret;
+            OptionalValue.Options.Add(new ValueWithDescription<CaptureFpsKind>() { Value = (CaptureFpsKind)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_CaptureFps_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<CaptureFpsKind>() { Value = (CaptureFpsKind)120, DescriptionKey = nameof(Resources.EgsDeviceSettings_CaptureFps_Options_120_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<CaptureFpsKind>() { Value = (CaptureFpsKind)100, DescriptionKey = nameof(Resources.EgsDeviceSettings_CaptureFps_Options_100_DescriptionKey) });
         }
     }
 
-    public partial class CameraViewImageSourceBitmapSizeDetail : HidAccessPropertyOptionalTypeParameterSize
+    public enum CaptureExposureModes : byte
     {
-        public override string Description { get { return string.Format(CultureInfo.InvariantCulture, "{0} x {1}", Width, Height); } }
-        public static List<CameraViewImageSourceBitmapSizeDetail> GetDefaultList()
+        Auto = 0,
+        Manual = 1,
+    }
+    public partial class CaptureExposureModeOptions : HidAccessPropertyEnumValue<CaptureExposureModes>
+    {
+        public CaptureExposureModeOptions()
+            : base()
         {
-            var ret = new List<CameraViewImageSourceBitmapSizeDetail>();
-            ret.Add(new CameraViewImageSourceBitmapSizeDetail() { Value = 0, Width = 320, Height = 240 });
-            ret.Add(new CameraViewImageSourceBitmapSizeDetail() { Value = 1, Width = 384, Height = 240 });
-            ret.Add(new CameraViewImageSourceBitmapSizeDetail() { Value = 2, Width = 640, Height = 480 });
-            return ret;
+            OptionalValue.Options.Add(new ValueWithDescription<CaptureExposureModes>() { Value = (CaptureExposureModes)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_CaptureExposureMode_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<CaptureExposureModes>() { Value = (CaptureExposureModes)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_CaptureExposureMode_Options_1_DescriptionKey) });
         }
     }
 
-    public enum FaceDetectionMethodKind
+    public enum CameraViewImageSourceBitmapSizes : byte
+    {
+        Size_320x240 = 0,
+        Size_384x240 = 1,
+        Size_640x480 = 2,
+    }
+    public class HidAccessPropertyOptionalTypeParameterSize<T> : HidAccessPropertyOptionalTypeParameterBase<T>
+        where T : IComparable
+    {
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public System.Drawing.Size Size { get { return new System.Drawing.Size(Width, Height); } }
+        public override string ToString() { return Width + "x" + Height; }
+    }
+    public partial class CameraViewImageSourceBitmapSizeDetail : HidAccessPropertyOptionalTypeParameterSize<CameraViewImageSourceBitmapSizes>
+    {
+        public override string Description { get { return string.Format(CultureInfo.InvariantCulture, "{0}: {1} x {2}", Value, Width, Height); } }
+    }
+    public partial class CameraViewImageSourceBitmapSizeOptions : HidAccessPropertyOptional<CameraViewImageSourceBitmapSizeDetail>
+    {
+        public CameraViewImageSourceBitmapSizeOptions()
+            : base()
+        {
+            OptionalValue.Options.Add(new CameraViewImageSourceBitmapSizeDetail() { Value = (CameraViewImageSourceBitmapSizes)0, Width = 320, Height = 240, DescriptionKey = nameof(Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new CameraViewImageSourceBitmapSizeDetail() { Value = (CameraViewImageSourceBitmapSizes)1, Width = 384, Height = 240, DescriptionKey = nameof(Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_1_DescriptionKey) });
+            OptionalValue.Options.Add(new CameraViewImageSourceBitmapSizeDetail() { Value = (CameraViewImageSourceBitmapSizes)2, Width = 640, Height = 480, DescriptionKey = nameof(Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_2_DescriptionKey) });
+        }
+    }
+
+    public enum FaceDetectionMethods
     {
         DefaultProcessOnEgsDevice = 0,
         DefaultProcessOnEgsHostApplication = 1,
         SdkUserProcess = 2,
     }
-    public partial class FaceDetectionMethodOptions : EnumValueWithDescriptionOptions<FaceDetectionMethodKind>
+    public partial class FaceDetectionMethodOptions : EnumValueWithDescriptionOptions<FaceDetectionMethods>
     {
         public FaceDetectionMethodOptions()
             : base()
         {
-            OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethodKind>()
-            {
-                Value = FaceDetectionMethodKind.DefaultProcessOnEgsDevice,
-                DescriptionKey = nameof(Resources.FaceDetectionMethodDetail_Value0_Description)
-            });
-            OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethodKind>()
-            {
-                Value = FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication,
-                DescriptionKey = nameof(Resources.FaceDetectionMethodDetail_Value1_Description)
-            });
+            OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethods>() { Value = FaceDetectionMethods.DefaultProcessOnEgsDevice, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethods>() { Value = FaceDetectionMethods.DefaultProcessOnEgsHostApplication, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey) });
             if (ApplicationCommonSettings.IsDeveloperRelease)
             {
-                OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethodKind>()
-                {
-                    Value = FaceDetectionMethodKind.SdkUserProcess,
-                    DescriptionKey = nameof(Resources.FaceDetectionMethodDetail_Value2_Description)
-                });
+                OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethods>() { Value = FaceDetectionMethods.SdkUserProcess, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Options_2_DescriptionKey) });
             }
         }
     }
 
-    public partial class FaceSelectionMethodKindDetail : HidAccessPropertyOptionalTypeParameterBase
+    public enum FaceSelectionOnDeviceMethods
     {
-        public static List<FaceSelectionMethodKindDetail> GetDefaultList()
+        Auto = 0,
+        OneByOne = 1,
+        MostCenter = 2,
+    }
+    public partial class FaceSelectionOnDeviceMethodOptions : HidAccessPropertyEnumValue<FaceSelectionOnDeviceMethods>
+    {
+        public FaceSelectionOnDeviceMethodOptions()
+            : base()
         {
-            var ret = new List<FaceSelectionMethodKindDetail>();
-            ret.Add(new FaceSelectionMethodKindDetail() { Value = 0, DescriptionKey = nameof(Resources.FaceSelectionMethodKindDetail_Value0_Description) });
-            ret.Add(new FaceSelectionMethodKindDetail() { Value = 1, DescriptionKey = nameof(Resources.FaceSelectionMethodKindDetail_Value1_Description) });
-            ret.Add(new FaceSelectionMethodKindDetail() { Value = 2, DescriptionKey = nameof(Resources.FaceSelectionMethodKindDetail_Value2_Description) });
-            return ret;
+            OptionalValue.Options.Add(new ValueWithDescription<FaceSelectionOnDeviceMethods>() { Value = (FaceSelectionOnDeviceMethods)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<FaceSelectionOnDeviceMethods>() { Value = (FaceSelectionOnDeviceMethods)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_1_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<FaceSelectionOnDeviceMethods>() { Value = (FaceSelectionOnDeviceMethods)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_2_DescriptionKey) });
         }
     }
 
-    public partial class CursorSpeedAndPrecisionModeDetail : HidAccessPropertyOptionalTypeParameterBase
+    public enum CursorSpeedAndPrecisionModes
     {
-        public static List<CursorSpeedAndPrecisionModeDetail> GetDefaultList()
+        Beginner = 0,
+        Standard = 1,
+        FruitNinja = 2,
+        Reserved3 = 3,
+        Reserved4 = 4,
+        Reserved5 = 5,
+        Reserved6 = 6,
+        Reserved7 = 7,
+    }
+    public partial class CursorSpeedAndPrecisionModeOptions : HidAccessPropertyEnumValue<CursorSpeedAndPrecisionModes>
+    {
+        public CursorSpeedAndPrecisionModeOptions()
+            : base()
         {
-            var ret = new List<CursorSpeedAndPrecisionModeDetail>();
-            ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 0, DescriptionKey = nameof(Resources.CursorSpeedAndPrecisionModeDetail_Value0_Description) });
-            ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 1, DescriptionKey = nameof(Resources.CursorSpeedAndPrecisionModeDetail_Value1_Description) });
-            ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 2, DescriptionKey = nameof(Resources.CursorSpeedAndPrecisionModeDetail_Value2_Description) });
+            OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_1_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_2_DescriptionKey) });
             if (ApplicationCommonSettings.IsInternalRelease)
             {
-                ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 3, DescriptionKey = "" });
-                ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 4, DescriptionKey = "" });
-                ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 5, DescriptionKey = "" });
-                ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 6, DescriptionKey = "" });
-                ret.Add(new CursorSpeedAndPrecisionModeDetail() { Value = 7, DescriptionKey = "" });
+                OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)3, DescriptionKey = "" });
+                OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)4, DescriptionKey = "" });
+                OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)5, DescriptionKey = "" });
+                OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)6, DescriptionKey = "" });
+                OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)7, DescriptionKey = "" });
             }
-            return ret;
         }
     }
 
-    public partial class FastMovingHandsGestureModeDetail : HidAccessPropertyOptionalTypeParameterBase
+    public enum FastMovingHandsGestureModes
     {
-        public static List<FastMovingHandsGestureModeDetail> GetDefaultList()
+        None = 0,
+        Touch = 1,
+    }
+    public partial class FastMovingHandsGestureModeOptions : HidAccessPropertyEnumValue<FastMovingHandsGestureModes>
+    {
+        public FastMovingHandsGestureModeOptions()
+            : base()
         {
-            var ret = new List<FastMovingHandsGestureModeDetail>();
-            ret.Add(new FastMovingHandsGestureModeDetail() { Value = 0, DescriptionKey = nameof(Resources.FastMovingHandsGestureModeDetail_Value0_Description) });
-            ret.Add(new FastMovingHandsGestureModeDetail() { Value = 1, DescriptionKey = nameof(Resources.FastMovingHandsGestureModeDetail_Value1_Description) });
-            return ret;
+            OptionalValue.Options.Add(new ValueWithDescription<FastMovingHandsGestureModes>() { Value = (FastMovingHandsGestureModes)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<FastMovingHandsGestureModes>() { Value = (FastMovingHandsGestureModes)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Options_1_DescriptionKey) });
         }
     }
 }

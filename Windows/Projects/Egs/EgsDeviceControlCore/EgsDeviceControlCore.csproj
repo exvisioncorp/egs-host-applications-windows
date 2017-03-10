@@ -148,6 +148,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="PropertyTypes\DeviceOptionalValueTypeParameterDetails.cs" />
+    <Compile Include="PropertyTypes\HidAccessPropertyEnumValue.cs" />
     <Compile Include="PropertyTypes\HidAccessPropertyPrimitiveTypeIds.generated.cs" />
     <Compile Include="PropertyTypes\HidAccessPropertyOptional.cs" />
     <Compile Include="PropertyTypes\ValueWithDescriptionBase.cs" />

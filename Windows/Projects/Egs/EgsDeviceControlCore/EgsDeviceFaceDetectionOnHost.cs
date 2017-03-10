@@ -282,7 +282,7 @@
 
         void Device_CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged(object sender, EventArgs e)
         {
-            if (Device.Settings.FaceDetectionMethod.Value != PropertyTypes.FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication)
+            if (Device.Settings.FaceDetectionMethod.Value != PropertyTypes.FaceDetectionMethods.DefaultProcessOnEgsHostApplication)
             {
                 return;
             }

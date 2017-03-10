@@ -184,7 +184,7 @@
                     Reset();
                     break;
                 case EgsGestureHidReportMessageIds.DetectingFaces:
-                    if (Device.Settings.FaceDetectionMethod.Value == FaceDetectionMethodKind.DefaultProcessOnEgsDevice)
+                    if (Device.Settings.FaceDetectionMethod.Value == FaceDetectionMethods.DefaultProcessOnEgsDevice)
                     {
                         // NOTE: In Kickstarter 1st released version, when MessageId is DetectingFaces, the app needed to reset this object by Timer.
                         if (MessageId != previousMessageId)

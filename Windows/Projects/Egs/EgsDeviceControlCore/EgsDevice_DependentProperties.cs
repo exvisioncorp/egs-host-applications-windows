@@ -134,7 +134,7 @@
             // TODO: MUSTDO: update and test!
             switch (Settings.FaceDetectionMethod.Value)
             {
-                case FaceDetectionMethodKind.DefaultProcessOnEgsDevice:
+                case FaceDetectionMethods.DefaultProcessOnEgsDevice:
                     {
                         // TODO: MUSTDO: Work around.  Confirm if it is firmware bug or not.
                         if (Settings.IsToDetectHandsOnDevice.Value != false) { Settings.IsToDetectHandsOnDevice.Value = false; }
@@ -157,7 +157,7 @@
                         //if (Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex != 1) { Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1; }
                     }
                     break;
-                case FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication:
+                case FaceDetectionMethods.DefaultProcessOnEgsHostApplication:
                     {
                         if (Settings.IsToDetectFacesOnDevice.Value != false) { Settings.IsToDetectFacesOnDevice.Value = false; }
                         if (Settings.IsToFixHandDetectionRegions.Value != true) { Settings.IsToFixHandDetectionRegions.Value = true; }
@@ -168,7 +168,7 @@
                         //if (Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex != 2) { Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2; }
                     }
                     break;
-                case FaceDetectionMethodKind.SdkUserProcess:
+                case FaceDetectionMethods.SdkUserProcess:
                     break;
                 default:
                     if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
@@ -191,13 +191,13 @@
         {
             switch (Settings.FaceDetectionMethod.Value)
             {
-                case FaceDetectionMethodKind.DefaultProcessOnEgsDevice:
+                case FaceDetectionMethods.DefaultProcessOnEgsDevice:
                     IsDetectingFaces = IsHidDeviceConnected && (EgsGestureHidReport.MessageId == EgsGestureHidReportMessageIds.DetectingFaces);
                     break;
-                case FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication:
+                case FaceDetectionMethods.DefaultProcessOnEgsHostApplication:
                     IsDetectingFaces = IsConnected && Settings.IsToDetectFaces.Value && (IsTrackingOneOrMoreHands == false);
                     break;
-                case FaceDetectionMethodKind.SdkUserProcess:
+                case FaceDetectionMethods.SdkUserProcess:
                     //IsDetectingFaces = _IsDetectingFaces;
                     break;
                 default:
@@ -226,13 +226,13 @@
             {
                 switch (Settings.FaceDetectionMethod.Value)
                 {
-                    case FaceDetectionMethodKind.DefaultProcessOnEgsDevice:
+                    case FaceDetectionMethods.DefaultProcessOnEgsDevice:
                         IsDetectingHands = (EgsGestureHidReport.MessageId == EgsGestureHidReportMessageIds.DetectingOrTrackingHands) && (IsTrackingOneOrMoreHands == false);
                         break;
-                    case FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication:
+                    case FaceDetectionMethods.DefaultProcessOnEgsHostApplication:
                         IsDetectingHands = Settings.IsToDetectFaces.Value && Settings.IsToDetectHands.Value && (IsTrackingOneOrMoreHands == false);
                         break;
-                    case FaceDetectionMethodKind.SdkUserProcess:
+                    case FaceDetectionMethods.SdkUserProcess:
                         //IsDetectingHands = _IsDetectingFaces;
                         break;
                     default:
@@ -325,13 +325,13 @@
             }
             else if (e.UpdatedProperty == settings.CaptureFps)
             {
-                switch (settings.CaptureFps.OptionalValue.SelectedItem.Value)
+                switch (settings.CaptureFps.Value)
                 {
-                    case 0:
-                    case 100:
+                    case CaptureFpsKind.Auto:
+                    case CaptureFpsKind.Fps100:
                         EgsGestureHidReport.FramesPerSecond = 100.0;
                         break;
-                    case 120:
+                    case CaptureFpsKind.Fps120:
                         EgsGestureHidReport.FramesPerSecond = 120.0;
                         break;
                     default:

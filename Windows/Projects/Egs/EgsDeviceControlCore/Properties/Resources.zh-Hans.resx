@@ -639,19 +639,19 @@ before starting ZKOO application.</comment>
     <value>硬件类型</value>
     <comment>Hardware Type</comment>
   </data>
-  <data name="HardwareTypeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDevice_HardwareType_Options_0_DescriptionKey" xml:space="preserve">
     <value>无信息</value>
     <comment>No Information</comment>
   </data>
-  <data name="HardwareTypeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDevice_HardwareType_Options_1_DescriptionKey" xml:space="preserve">
     <value>ZKOO为Kickstarter的支持者</value>
     <comment>ZKOO for Kickstarter Backers</comment>
   </data>
-  <data name="HardwareTypeDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDevice_HardwareType_Options_2_DescriptionKey" xml:space="preserve">
     <value>MA2150 + IMX208</value>
     <comment>MA2150 + IMX208</comment>
   </data>
-  <data name="HardwareTypeDetail_Value3_Description" xml:space="preserve">
+  <data name="EgsDevice_HardwareType_Options_3_DescriptionKey" xml:space="preserve">
     <value>MA2150 + IMX208 + PIC</value>
     <comment>MA2150 + IMX208 + PIC</comment>
   </data>
@@ -675,11 +675,11 @@ before starting ZKOO application.</comment>
     <value>电源模式</value>
     <comment>Power Mode</comment>
   </data>
-  <data name="PowerModeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_PowerMode_Options_0_DescriptionKey" xml:space="preserve">
     <value>激活</value>
     <comment>Active</comment>
   </data>
-  <data name="PowerModeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_PowerMode_Options_1_DescriptionKey" xml:space="preserve">
     <value>待机</value>
     <comment>StandingBy</comment>
   </data>
@@ -687,11 +687,11 @@ before starting ZKOO application.</comment>
     <value>主机操作系统</value>
     <comment>Host Machine OS</comment>
   </data>
-  <data name="HostMachineOperatingSystemDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_HostMachineOperatingSystem_Options_0_DescriptionKey" xml:space="preserve">
     <value>Windows</value>
     <comment>Windows</comment>
   </data>
-  <data name="HostMachineOperatingSystemDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_HostMachineOperatingSystem_Options_1_DescriptionKey" xml:space="preserve">
     <value>安卓</value>
     <comment>Android</comment>
   </data>
@@ -699,15 +699,15 @@ before starting ZKOO application.</comment>
     <value>触摸接口类型</value>
     <comment>Touch Interface Kind</comment>
   </data>
-  <data name="TouchInterfaceKindDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_TouchInterfaceKind_Options_0_DescriptionKey" xml:space="preserve">
     <value>多点触摸</value>
     <comment>MultiTouch</comment>
   </data>
-  <data name="TouchInterfaceKindDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_TouchInterfaceKind_Options_2_DescriptionKey" xml:space="preserve">
     <value>鼠标</value>
     <comment>Mouse</comment>
   </data>
-  <data name="TouchInterfaceKindDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_TouchInterfaceKind_Options_1_DescriptionKey" xml:space="preserve">
     <value>单点触摸 (安卓用)</value>
     <comment>SingleTouch (for Android)</comment>
   </data>
@@ -715,19 +715,19 @@ before starting ZKOO application.</comment>
     <value>主屏幕方向设置</value>
     <comment>Primary Screen Orientation</comment>
   </data>
-  <data name="DeviceRotationAngleInClockwiseDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_0_DescriptionKey" xml:space="preserve">
     <value>0: 水平</value>
     <comment>0: Landscape</comment>
   </data>
-  <data name="DeviceRotationAngleInClockwiseDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_1_DescriptionKey" xml:space="preserve">
     <value>90: 垂直翻转</value>
     <comment>90: Portrait (flipped)</comment>
   </data>
-  <data name="DeviceRotationAngleInClockwiseDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_2_DescriptionKey" xml:space="preserve">
     <value>180: 水平翻转</value>
     <comment>180: Landscape (flipped)</comment>
   </data>
-  <data name="DeviceRotationAngleInClockwiseDetail_Value3_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_3_DescriptionKey" xml:space="preserve">
     <value>270: 垂直</value>
     <comment>270: Portrait</comment>
   </data>
@@ -735,11 +735,11 @@ before starting ZKOO application.</comment>
     <value>ZKOO用途选项</value>
     <comment>Use ZKOO for</comment>
   </data>
-  <data name="DeviceUsageDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey" xml:space="preserve">
     <value>手势摄像头</value>
     <comment>Gesture Camera</comment>
   </data>
-  <data name="DeviceUsageDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey" xml:space="preserve">
     <value>网络摄像头</value>
     <comment>Web Camera</comment>
   </data>
@@ -751,15 +751,15 @@ before starting ZKOO application.</comment>
     <value>人脸识别方法</value>
     <comment>Face Detection Method</comment>
   </data>
-  <data name="FaceDetectionMethodDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey" xml:space="preserve">
     <value>ZKOO 设备</value>
     <comment>ZKOO Device</comment>
   </data>
-  <data name="FaceDetectionMethodDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey" xml:space="preserve">
     <value>主应用程序 (更高精度)</value>
     <comment>Host Application (Higher Accuracy)</comment>
   </data>
-  <data name="FaceDetectionMethodDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceDetectionMethod_Options_2_DescriptionKey" xml:space="preserve">
     <value>SDK用户自定义解决方案</value>
     <comment>Custom Solution by SDK Users</comment>
   </data>
@@ -791,11 +791,11 @@ before starting ZKOO application.</comment>
     <value>模式设置码</value>
     <comment>Model Set ID</comment>
   </data>
-  <data name="ModelSetIdDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_ModelSetId_Options_0_DescriptionKey" xml:space="preserve">
     <value>电视用五指模式</value>
     <comment>Five Fingers for TV</comment>
   </data>
-  <data name="ModelSetIdDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_ModelSetId_Options_1_DescriptionKey" xml:space="preserve">
     <value>魔棍</value>
     <comment>Wands?</comment>
   </data>
@@ -807,19 +807,19 @@ before starting ZKOO application.</comment>
     <value>Binning 模式</value>
     <comment>Binning Mode</comment>
   </data>
-  <data name="CaptureBinningDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureBinning_Options_2_DescriptionKey" xml:space="preserve">
     <value>2x2</value>
     <comment>2x2</comment>
   </data>
-  <data name="CaptureBinningDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureBinning_Options_1_DescriptionKey" xml:space="preserve">
     <value>1x1 (未测试)</value>
     <comment>1x1 (not tested yet)</comment>
   </data>
-  <data name="CaptureBinningDetail_Value3_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureBinning_Options_3_DescriptionKey" xml:space="preserve">
     <value>3x3</value>
     <comment>3x3</comment>
   </data>
-  <data name="CaptureBinningDetail_Value4_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureBinning_Options_4_DescriptionKey" xml:space="preserve">
     <value>4x4</value>
     <comment>4x4</comment>
   </data>
@@ -831,15 +831,15 @@ before starting ZKOO application.</comment>
     <value>摄像机帧每秒 (fps)</value>
     <comment>Camera Frame Per Second</comment>
   </data>
-  <data name="CaptureFpsDetail_Value120_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureFps_Options_120_DescriptionKey" xml:space="preserve">
     <value>120 fps</value>
     <comment>120 fps</comment>
   </data>
-  <data name="CaptureFpsDetail_Value100_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureFps_Options_100_DescriptionKey" xml:space="preserve">
     <value>100 fps</value>
     <comment>100 fps</comment>
   </data>
-  <data name="CaptureFpsDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureFps_Options_0_DescriptionKey" xml:space="preserve">
     <value>自动</value>
     <comment>Auto</comment>
   </data>
@@ -847,15 +847,15 @@ before starting ZKOO application.</comment>
     <value>曝光模式</value>
     <comment>Exposure Mode</comment>
   </data>
-  <data name="CaptureExposureModeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureExposureMode_Options_0_DescriptionKey" xml:space="preserve">
     <value>自动调整</value>
     <comment>Auto</comment>
   </data>
-  <data name="CaptureExposureModeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureExposureMode_Options_1_DescriptionKey" xml:space="preserve">
     <value>手动调整</value>
     <comment>Manual</comment>
   </data>
-  <data name="CaptureExposureModeDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureExposureMode_Options_2_DescriptionKey" xml:space="preserve">
     <value>脸识别兼用的自动调整</value>
     <comment>User Detected Faces</comment>
   </data>
@@ -883,15 +883,15 @@ before starting ZKOO application.</comment>
     <value>相机视图画像的源位图大小</value>
     <comment>Source Image Resolution</comment>
   </data>
-  <data name="CameraViewImageSourceBitmapSizeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_0_DescriptionKey" xml:space="preserve">
     <value>320*240</value>
     <comment>320*240</comment>
   </data>
-  <data name="CameraViewImageSourceBitmapSizeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_1_DescriptionKey" xml:space="preserve">
     <value>384*240</value>
     <comment>384*240</comment>
   </data>
-  <data name="CameraViewImageSourceBitmapSizeDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_2_DescriptionKey" xml:space="preserve">
     <value>640*480</value>
     <comment>640*480</comment>
   </data>
@@ -915,19 +915,19 @@ before starting ZKOO application.</comment>
     <value>人脸识别对象尺寸 (固定时)</value>
     <comment>Face Detection Scale (when fixed)</comment>
   </data>
-  <data name="EgsDeviceSettings_FaceSelectionMethodKind_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceSelectionOnDeviceMethod_Description" xml:space="preserve">
     <value>选择游戏玩家</value>
     <comment>How to Select a Player</comment>
   </data>
-  <data name="FaceSelectionMethodKindDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_0_DescriptionKey" xml:space="preserve">
     <value>自动: 自动选择挥手的人</value>
     <comment>Auto: Select a person who moves a hand automatically</comment>
   </data>
-  <data name="FaceSelectionMethodKindDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_1_DescriptionKey" xml:space="preserve">
     <value>挨个确认：一个人一个人地寻找挥手的人</value>
     <comment>One by One: Select a person one by one to find who moves a hand</comment>
   </data>
-  <data name="FaceSelectionMethodKindDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_2_DescriptionKey" xml:space="preserve">
     <value>最中心：选择在相机视图最中心的人 </value>
     <comment>Most Center: Select the most center person in Camera View</comment>
   </data>
@@ -983,15 +983,15 @@ before starting ZKOO application.</comment>
     <value>手势模式</value>
     <comment>Gesture Usage</comment>
   </data>
-  <data name="CursorSpeedAndPrecisionModeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_0_DescriptionKey" xml:space="preserve">
     <value>初学者: 适合较慢速度的手移动，点击也更容易。 左右手的两个光标不能交叉。</value>
     <comment>Beginner: For slower hand moving and easier tapping.  2 cursors cannot cross.</comment>
   </data>
-  <data name="CursorSpeedAndPrecisionModeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_1_DescriptionKey" xml:space="preserve">
     <value>标准: 适合标准速度的手移动。左右手的两个光标可以交叉。</value>
     <comment>Standard: For standard speed hand moving.  2 cursors can cross.</comment>
   </data>
-  <data name="CursorSpeedAndPrecisionModeDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_2_DescriptionKey" xml:space="preserve">
     <value>水果忍者: 适合水果忍者游戏。通过快速移动张开的手来切水果。</value>
     <comment>Fruit Ninja: Good for Fruit Ninja Game.  Cut fruits by fast moving opened hand.</comment>
   </data>
@@ -999,11 +999,11 @@ before starting ZKOO application.</comment>
     <value>通过手的快速移动来做手势</value>
     <comment>Gesture by Fast Moving Hands</comment>
   </data>
-  <data name="FastMovingHandsGestureModeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FastMovingHandsGestureMode_Options_0_DescriptionKey" xml:space="preserve">
     <value>无</value>
     <comment>None</comment>
   </data>
-  <data name="FastMovingHandsGestureModeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FastMovingHandsGestureMode_Options_1_DescriptionKey" xml:space="preserve">
     <value>触摸</value>
     <comment>Touch</comment>
   </data>

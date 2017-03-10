@@ -43,7 +43,7 @@
 
 
             Device = EgsDevice.GetDefaultEgsDevice();
-            Device.Settings.FaceDetectionMethod.Value = Egs.PropertyTypes.FaceDetectionMethodKind.DefaultProcessOnEgsDevice;
+            Device.Settings.FaceDetectionMethod.Value = Egs.PropertyTypes.FaceDetectionMethods.DefaultProcessOnEgsDevice;
             Device.Settings.IsToDetectFaces.Value = true;
             Device.Settings.IsToDetectHands.Value = true;
 #if DEBUG

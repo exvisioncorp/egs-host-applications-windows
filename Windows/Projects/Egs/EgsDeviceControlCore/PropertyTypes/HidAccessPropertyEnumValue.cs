@@ -13,30 +13,19 @@
     using Egs.EgsDeviceControlCore.Properties;
     using Egs.DotNetUtility;
 
-    public interface ITypeParameterOfHidAccessPropertyOptional
-    {
-        byte ConvertValueToByte();
-    }
-
-    public class HidAccessPropertyOptionalTypeParameterBase<T> : ValueWithDescription<T>, ITypeParameterOfHidAccessPropertyOptional
+    [DataContract]
+    public class HidAccessPropertyEnumValue<T> : HidAccessPropertyBase
         where T : IComparable
     {
-        byte ITypeParameterOfHidAccessPropertyOptional.ConvertValueToByte() { return Convert.ToByte(Value); }
-    }
-
-    [DataContract]
-    public class HidAccessPropertyOptional<T> : HidAccessPropertyBase
-        where T : class, ITypeParameterOfHidAccessPropertyOptional, new()
-    {
         [DataMember]
-        public OptionalValue<T> OptionalValue { get; set; }
+        public OptionalValue<ValueWithDescription<T>> OptionalValue { get; set; }
 
-        public T SelectedItem
+        public T Value
         {
-            get { return OptionalValue.SelectedItem; }
+            get { return OptionalValue.SelectedItem.Value; }
             set
             {
-                var hr = OptionalValue.SelectSingleItemByPredicate(e => e.ConvertValueToByte() == value.ConvertValueToByte());
+                var hr = OptionalValue.SelectSingleItemByPredicate(e => e.Value.Equals(value));
                 if (hr == false)
                 {
                     if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
@@ -48,7 +37,7 @@
 
         internal override void RaiseValueUpdatedOnGetHidFeatureReport()
         {
-            var hr = OptionalValue.SelectSingleItemByPredicate(e => e.ConvertValueToByte() == ValueInByteArrayData);
+            var hr = OptionalValue.SelectSingleItemByPredicate(e => Convert.ToByte(e.Value) == ValueInByteArrayData);
             if (hr)
             {
                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
@@ -56,9 +45,14 @@
             }
         }
 
-        public HidAccessPropertyOptional()
+        public static implicit operator T(HidAccessPropertyEnumValue<T> self)
         {
-            OptionalValue = new OptionalValue<T>();
+            return self.Value;
+        }
+
+        public HidAccessPropertyEnumValue()
+        {
+            OptionalValue = new OptionalValue<ValueWithDescription<T>>();
             OptionalValue.SelectedItemChanged += (sender, e) => { OnOptionalValueSelectedItemChanged(e); };
         }
 
@@ -70,7 +64,7 @@
                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                 OptionalValue.SelectedIndex = 0;
             }
-            var valueAsByte = SelectedItem.ConvertValueToByte();
+            var valueAsByte = Convert.ToByte(Value);
             if (ValueInByteArrayData != valueAsByte)
             {
                 ByteArrayData[OneValueOffsetInByteArrayData] = valueAsByte;

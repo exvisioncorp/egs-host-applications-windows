@@ -126,6 +126,9 @@
     <Compile Include="..\EgsDeviceControlCore\PropertyTypes\DeviceOptionalValueTypeParameterDetails.cs">
       <Link>PropertyTypes\DeviceOptionalValueTypeParameterDetails.cs</Link>
     </Compile>
+    <Compile Include="..\EgsDeviceControlCore\PropertyTypes\HidAccessPropertyEnumValue.cs">
+      <Link>PropertyTypes\HidAccessPropertyEnumValue.cs</Link>
+    </Compile>
     <Compile Include="..\EgsDeviceControlCore\PropertyTypes\HidAccessPropertyOptional.cs">
       <Link>PropertyTypes\HidAccessPropertyOptional.cs</Link>
     </Compile>

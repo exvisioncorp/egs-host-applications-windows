@@ -45,14 +45,8 @@
 
         void OnPixelOneSideLengthRelatedPropertiesUpdated()
         {
-            if (CaptureBinning.ValueOfSelectedItem <= 0)
-            {
-                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                throw new NotImplementedException();
-            }
-
             // TODO: get the actual binned pixel size from devices.
-            var newSensorOnePixelSideLengthInMillimeters = 0.0014f * CaptureBinning.ValueOfSelectedItem;
+            var newSensorOnePixelSideLengthInMillimeters = 0.0014f * (int)CaptureBinning.Value;
             if (SensorOnePixelSideLengthInMillimeters.Value != newSensorOnePixelSideLengthInMillimeters)
             {
                 SensorOnePixelSideLengthInMillimeters.Value = newSensorOnePixelSideLengthInMillimeters;

@@ -88,33 +88,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 320*240.
-        /// </summary>
-        public static string CameraViewImageSourceBitmapSizeDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("CameraViewImageSourceBitmapSizeDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 384*240.
-        /// </summary>
-        public static string CameraViewImageSourceBitmapSizeDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("CameraViewImageSourceBitmapSizeDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 640*480.
-        /// </summary>
-        public static string CameraViewImageSourceBitmapSizeDetail_Value2_Description {
-            get {
-                return ResourceManager.GetString("CameraViewImageSourceBitmapSizeDetail_Value2_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Borders and Pointers Type.
         /// </summary>
         public static string CameraViewUserControlModel_ImageSetIndex_Description {
@@ -328,96 +301,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string CameraViewWindowStateUsersControlMethodDetail_Type_Description {
             get {
                 return ResourceManager.GetString("CameraViewWindowStateUsersControlMethodDetail_Type_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 1x1 (not tested yet).
-        /// </summary>
-        public static string CaptureBinningDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("CaptureBinningDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 2x2.
-        /// </summary>
-        public static string CaptureBinningDetail_Value2_Description {
-            get {
-                return ResourceManager.GetString("CaptureBinningDetail_Value2_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 3x3.
-        /// </summary>
-        public static string CaptureBinningDetail_Value3_Description {
-            get {
-                return ResourceManager.GetString("CaptureBinningDetail_Value3_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 4x4.
-        /// </summary>
-        public static string CaptureBinningDetail_Value4_Description {
-            get {
-                return ResourceManager.GetString("CaptureBinningDetail_Value4_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Auto.
-        /// </summary>
-        public static string CaptureExposureModeDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("CaptureExposureModeDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Manual.
-        /// </summary>
-        public static string CaptureExposureModeDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("CaptureExposureModeDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User Detected Faces.
-        /// </summary>
-        public static string CaptureExposureModeDetail_Value2_Description {
-            get {
-                return ResourceManager.GetString("CaptureExposureModeDetail_Value2_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Auto.
-        /// </summary>
-        public static string CaptureFpsDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("CaptureFpsDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 100 fps.
-        /// </summary>
-        public static string CaptureFpsDetail_Value100_Description {
-            get {
-                return ResourceManager.GetString("CaptureFpsDetail_Value100_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 120 fps.
-        /// </summary>
-        public static string CaptureFpsDetail_Value120_Description {
-            get {
-                return ResourceManager.GetString("CaptureFpsDetail_Value120_Description", resourceCulture);
             }
         }
         
@@ -1026,87 +909,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beginner: For slower hand moving and easier tapping.  2 cursors cannot cross..
-        /// </summary>
-        public static string CursorSpeedAndPrecisionModeDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("CursorSpeedAndPrecisionModeDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Standard: For standard speed hand moving.  2 cursors can cross..
-        /// </summary>
-        public static string CursorSpeedAndPrecisionModeDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("CursorSpeedAndPrecisionModeDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fruit Ninja: Good for Fruit Ninja Game.  Cut fruits by fast moving opened hand..
-        /// </summary>
-        public static string CursorSpeedAndPrecisionModeDetail_Value2_Description {
-            get {
-                return ResourceManager.GetString("CursorSpeedAndPrecisionModeDetail_Value2_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 0: Landscape.
-        /// </summary>
-        public static string DeviceRotationAngleInClockwiseDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("DeviceRotationAngleInClockwiseDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 90: Portrait (flipped).
-        /// </summary>
-        public static string DeviceRotationAngleInClockwiseDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("DeviceRotationAngleInClockwiseDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 180: Landscape (flipped).
-        /// </summary>
-        public static string DeviceRotationAngleInClockwiseDetail_Value2_Description {
-            get {
-                return ResourceManager.GetString("DeviceRotationAngleInClockwiseDetail_Value2_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 270: Portrait.
-        /// </summary>
-        public static string DeviceRotationAngleInClockwiseDetail_Value3_Description {
-            get {
-                return ResourceManager.GetString("DeviceRotationAngleInClockwiseDetail_Value3_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Gesture Camera.
-        /// </summary>
-        public static string DeviceUsageDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("DeviceUsageDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Web Camera.
-        /// </summary>
-        public static string DeviceUsageDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("DeviceUsageDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Camera Device DevicePath.
         /// </summary>
         public static string EgsDevice_CameraDeviceDevicePath_Description {
@@ -1148,6 +950,42 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDevice_HardwareType_Description {
             get {
                 return ResourceManager.GetString("EgsDevice_HardwareType_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Information.
+        /// </summary>
+        public static string EgsDevice_HardwareType_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDevice_HardwareType_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZKOO for Kickstarter Backers.
+        /// </summary>
+        public static string EgsDevice_HardwareType_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDevice_HardwareType_Options_1_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MA2150 + IMX208.
+        /// </summary>
+        public static string EgsDevice_HardwareType_Options_2_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDevice_HardwareType_Options_2_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MA2150 + IMX208 + PIC.
+        /// </summary>
+        public static string EgsDevice_HardwareType_Options_3_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDevice_HardwareType_Options_3_DescriptionKey", resourceCulture);
             }
         }
         
@@ -1323,6 +1161,33 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 320*240.
+        /// </summary>
+        public static string EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 384*240.
+        /// </summary>
+        public static string EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_1_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 640*480.
+        /// </summary>
+        public static string EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_2_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_2_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Camera View Image Source Rect in Capture Image.
         /// </summary>
         public static string EgsDeviceSettings_CameraViewImageSourceRectInCaptureImage_Description {
@@ -1341,6 +1206,42 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1x1 (not tested yet).
+        /// </summary>
+        public static string EgsDeviceSettings_CaptureBinning_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CaptureBinning_Options_1_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2x2.
+        /// </summary>
+        public static string EgsDeviceSettings_CaptureBinning_Options_2_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CaptureBinning_Options_2_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3x3.
+        /// </summary>
+        public static string EgsDeviceSettings_CaptureBinning_Options_3_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CaptureBinning_Options_3_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4x4.
+        /// </summary>
+        public static string EgsDeviceSettings_CaptureBinning_Options_4_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CaptureBinning_Options_4_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exposure Mode.
         /// </summary>
         public static string EgsDeviceSettings_CaptureExposureMode_Description {
@@ -1350,11 +1251,65 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        public static string EgsDeviceSettings_CaptureExposureMode_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CaptureExposureMode_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        public static string EgsDeviceSettings_CaptureExposureMode_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CaptureExposureMode_Options_1_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Detected Faces.
+        /// </summary>
+        public static string EgsDeviceSettings_CaptureExposureMode_Options_2_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CaptureExposureMode_Options_2_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Camera Frame Per Second.
         /// </summary>
         public static string EgsDeviceSettings_CaptureFps_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_CaptureFps_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        public static string EgsDeviceSettings_CaptureFps_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CaptureFps_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 100 fps.
+        /// </summary>
+        public static string EgsDeviceSettings_CaptureFps_Options_100_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CaptureFps_Options_100_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 120 fps.
+        /// </summary>
+        public static string EgsDeviceSettings_CaptureFps_Options_120_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CaptureFps_Options_120_DescriptionKey", resourceCulture);
             }
         }
         
@@ -1386,6 +1341,33 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Beginner: For slower hand moving and easier tapping.  2 cursors cannot cross..
+        /// </summary>
+        public static string EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standard: For standard speed hand moving.  2 cursors can cross..
+        /// </summary>
+        public static string EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_1_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fruit Ninja: Good for Fruit Ninja Game.  Cut fruits by fast moving opened hand..
+        /// </summary>
+        public static string EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_2_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_2_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Primary Screen Orientation.
         /// </summary>
         public static string EgsDeviceSettings_DeviceRotationAngleInClockwise_Description {
@@ -1395,11 +1377,65 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 0: Landscape.
+        /// </summary>
+        public static string EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 90: Portrait (flipped).
+        /// </summary>
+        public static string EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_1_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 180: Landscape (flipped).
+        /// </summary>
+        public static string EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_2_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_2_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 270: Portrait.
+        /// </summary>
+        public static string EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_3_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_3_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use ZKOO for.
         /// </summary>
         public static string EgsDeviceSettings_DeviceUsage_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_DeviceUsage_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gesture Camera.
+        /// </summary>
+        public static string EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Web Camera.
+        /// </summary>
+        public static string EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey", resourceCulture);
             }
         }
         
@@ -1422,6 +1458,33 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ZKOO Device.
+        /// </summary>
+        public static string EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host Application (Higher Accuracy).
+        /// </summary>
+        public static string EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Solution by SDK Users.
+        /// </summary>
+        public static string EgsDeviceSettings_FaceDetectionMethod_Options_2_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_FaceDetectionMethod_Options_2_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Face Detection Scale (when fixed).
         /// </summary>
         public static string EgsDeviceSettings_FaceDetectionScaleOnFixed_Description {
@@ -1433,9 +1496,36 @@ namespace Egs.EgsDeviceControlCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to How to Select a Player.
         /// </summary>
-        public static string EgsDeviceSettings_FaceSelectionMethodKind_Description {
+        public static string EgsDeviceSettings_FaceSelectionOnDeviceMethod_Description {
             get {
-                return ResourceManager.GetString("EgsDeviceSettings_FaceSelectionMethodKind_Description", resourceCulture);
+                return ResourceManager.GetString("EgsDeviceSettings_FaceSelectionOnDeviceMethod_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto: Select a person who moves a hand automatically.
+        /// </summary>
+        public static string EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One by One: Select a person one by one to find who moves a hand.
+        /// </summary>
+        public static string EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_1_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Most Center: Select the most center person in Camera View.
+        /// </summary>
+        public static string EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_2_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_2_DescriptionKey", resourceCulture);
             }
         }
         
@@ -1445,6 +1535,24 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDeviceSettings_FastMovingHandsGestureMode_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_FastMovingHandsGestureMode_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string EgsDeviceSettings_FastMovingHandsGestureMode_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_FastMovingHandsGestureMode_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Touch.
+        /// </summary>
+        public static string EgsDeviceSettings_FastMovingHandsGestureMode_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_FastMovingHandsGestureMode_Options_1_DescriptionKey", resourceCulture);
             }
         }
         
@@ -1463,6 +1571,24 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDeviceSettings_HostMachineOperatingSystem_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_HostMachineOperatingSystem_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows.
+        /// </summary>
+        public static string EgsDeviceSettings_HostMachineOperatingSystem_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_HostMachineOperatingSystem_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Android.
+        /// </summary>
+        public static string EgsDeviceSettings_HostMachineOperatingSystem_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_HostMachineOperatingSystem_Options_1_DescriptionKey", resourceCulture);
             }
         }
         
@@ -1674,11 +1800,47 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Five Fingers for TV.
+        /// </summary>
+        public static string EgsDeviceSettings_ModelSetId_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_ModelSetId_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wands?.
+        /// </summary>
+        public static string EgsDeviceSettings_ModelSetId_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_ModelSetId_Options_1_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Power Mode.
         /// </summary>
         public static string EgsDeviceSettings_PowerMode_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_PowerMode_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string EgsDeviceSettings_PowerMode_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_PowerMode_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to StandingBy.
+        /// </summary>
+        public static string EgsDeviceSettings_PowerMode_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_PowerMode_Options_1_DescriptionKey", resourceCulture);
             }
         }
         
@@ -1791,6 +1953,33 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MultiTouch.
+        /// </summary>
+        public static string EgsDeviceSettings_TouchInterfaceKind_Options_0_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_TouchInterfaceKind_Options_0_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SingleTouch (for Android).
+        /// </summary>
+        public static string EgsDeviceSettings_TouchInterfaceKind_Options_1_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_TouchInterfaceKind_Options_1_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mouse.
+        /// </summary>
+        public static string EgsDeviceSettings_TouchInterfaceKind_Options_2_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_TouchInterfaceKind_Options_2_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Touch Target Screen Size.
         /// </summary>
         public static string EgsDeviceSettings_TouchTargetScreenSize_Description {
@@ -1814,150 +2003,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDeviceSettings_UsbProtocolRevision_Description {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_UsbProtocolRevision_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ZKOO Device.
-        /// </summary>
-        public static string FaceDetectionMethodDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("FaceDetectionMethodDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Host Application (Higher Accuracy).
-        /// </summary>
-        public static string FaceDetectionMethodDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("FaceDetectionMethodDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Custom Solution by SDK Users.
-        /// </summary>
-        public static string FaceDetectionMethodDetail_Value2_Description {
-            get {
-                return ResourceManager.GetString("FaceDetectionMethodDetail_Value2_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Auto: Select a person who moves a hand automatically.
-        /// </summary>
-        public static string FaceSelectionMethodKindDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("FaceSelectionMethodKindDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to One by One: Select a person one by one to find who moves a hand.
-        /// </summary>
-        public static string FaceSelectionMethodKindDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("FaceSelectionMethodKindDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Most Center: Select the most center person in Camera View.
-        /// </summary>
-        public static string FaceSelectionMethodKindDetail_Value2_Description {
-            get {
-                return ResourceManager.GetString("FaceSelectionMethodKindDetail_Value2_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to None.
-        /// </summary>
-        public static string FastMovingHandsGestureModeDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("FastMovingHandsGestureModeDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Touch.
-        /// </summary>
-        public static string FastMovingHandsGestureModeDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("FastMovingHandsGestureModeDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No Information.
-        /// </summary>
-        public static string HardwareTypeDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("HardwareTypeDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ZKOO for Kickstarter Backers.
-        /// </summary>
-        public static string HardwareTypeDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("HardwareTypeDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MA2150 + IMX208.
-        /// </summary>
-        public static string HardwareTypeDetail_Value2_Description {
-            get {
-                return ResourceManager.GetString("HardwareTypeDetail_Value2_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MA2150 + IMX208 + PIC.
-        /// </summary>
-        public static string HardwareTypeDetail_Value3_Description {
-            get {
-                return ResourceManager.GetString("HardwareTypeDetail_Value3_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Windows.
-        /// </summary>
-        public static string HostMachineOperatingSystemDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("HostMachineOperatingSystemDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Android.
-        /// </summary>
-        public static string HostMachineOperatingSystemDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("HostMachineOperatingSystemDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Five Fingers for TV.
-        /// </summary>
-        public static string ModelSetIdDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("ModelSetIdDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wands?.
-        /// </summary>
-        public static string ModelSetIdDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("ModelSetIdDetail_Value1_Description", resourceCulture);
             }
         }
         
@@ -2021,24 +2066,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string OnePersonBothHandsViewModel_IsToShowGestureCursors_Description {
             get {
                 return ResourceManager.GetString("OnePersonBothHandsViewModel_IsToShowGestureCursors_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Active.
-        /// </summary>
-        public static string PowerModeDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("PowerModeDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to StandingBy.
-        /// </summary>
-        public static string PowerModeDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("PowerModeDetail_Value1_Description", resourceCulture);
             }
         }
         
@@ -2120,33 +2147,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string SettingsUserControl_TutorialAppSettings_Description {
             get {
                 return ResourceManager.GetString("SettingsUserControl_TutorialAppSettings_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MultiTouch.
-        /// </summary>
-        public static string TouchInterfaceKindDetail_Value0_Description {
-            get {
-                return ResourceManager.GetString("TouchInterfaceKindDetail_Value0_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SingleTouch (for Android).
-        /// </summary>
-        public static string TouchInterfaceKindDetail_Value1_Description {
-            get {
-                return ResourceManager.GetString("TouchInterfaceKindDetail_Value1_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mouse.
-        /// </summary>
-        public static string TouchInterfaceKindDetail_Value2_Description {
-            get {
-                return ResourceManager.GetString("TouchInterfaceKindDetail_Value2_Description", resourceCulture);
             }
         }
     }

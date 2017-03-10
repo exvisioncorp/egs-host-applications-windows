@@ -608,6 +608,7 @@
         public HidAccessPropertyRangedInt()
         {
             RangedValue = new RangedInt();
+            RangedValue.ValueChanged += (sender, e) => { OnValueChanged(e); };
         }
 
         protected virtual void OnValueChanged(EventArgs e)
@@ -615,12 +616,6 @@
             var valueBytes = BitConverter.GetBytes(RangedValue.Value);
             valueBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData);
             OnValueUpdated();
-        }
-
-        public void InitializeOnceAtStartup()
-        {
-            RangedValue.ValueChanged += (sender, e) => { OnValueChanged(e); };
-            OnValueChanged(EventArgs.Empty);
         }
     }
 
@@ -633,6 +628,7 @@
         public HidAccessPropertyRangedSingle()
         {
             RangedValue = new RangedFloat();
+            RangedValue.ValueChanged += (sender, e) => { OnValueChanged(e); };
         }
 
         protected virtual void OnValueChanged(EventArgs e)
@@ -640,12 +636,6 @@
             var valueBytes = BitConverter.GetBytes(RangedValue.Value);
             valueBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData);
             OnValueUpdated();
-        }
-
-        public void InitializeOnceAtStartup()
-        {
-            RangedValue.ValueChanged += (sender, e) => { OnValueChanged(e); };
-            OnValueChanged(EventArgs.Empty);
         }
     }
 
@@ -658,6 +648,8 @@
         public HidAccessPropertyRangedIntRange()
         {
             RangedRange = new RangedIntRange();
+            RangedRange.FromChanged += (sender, e) => { OnValueFromChanged(e); };
+            RangedRange.ToChanged += (sender, e) => { OnValueToChanged(e); };
         }
 
         protected virtual void OnValueFromChanged(EventArgs e)
@@ -672,14 +664,6 @@
             var toBytes = BitConverter.GetBytes(RangedRange.To);
             toBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 4);
             OnValueUpdated();
-        }
-
-        public void InitializeOnceAtStartup()
-        {
-            RangedRange.FromChanged += (sender, e) => { OnValueFromChanged(e); };
-            RangedRange.ToChanged += (sender, e) => { OnValueToChanged(e); };
-            OnValueFromChanged(EventArgs.Empty);
-            OnValueToChanged(EventArgs.Empty);
         }
     }
 
@@ -793,10 +777,6 @@
             UpdateTopBytes();
             // need not to call UpdateWidthBytes and UpdateHeightBytes
             OnValueUpdated();
-        }
-
-        public void InitializeOnceAtStartup()
-        {
         }
     }
 }

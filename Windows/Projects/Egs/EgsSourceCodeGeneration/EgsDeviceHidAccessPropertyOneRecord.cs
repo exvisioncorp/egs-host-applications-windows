@@ -43,9 +43,21 @@
         {
             get { return OwnerClass + "_" + ValueNameOnHost + "_Description"; }
         }
+        public bool IsAKindOfHidAccessProperty
+        {
+            get { return ValueTypeOnHost.StartsWith("HidAccessProperty"); }
+        }
+        public bool IsAKindOfOptionalOrEnum
+        {
+            get { return IsHidAccessPropertyEnumValue || IsHidAccessPropertyOptional || IsEnumValueWithDescription; }
+        }
+        public bool IsHidAccessPropertyEnumValue
+        {
+            get { return ValueTypeOnHost.StartsWith("HidAccessPropertyEnumValue"); }
+        }
         public bool IsHidAccessPropertyOptional
         {
-            get { return ValueTypeOnHost == "HidAccessPropertyOptional"; }
+            get { return ValueTypeOnHost.StartsWith("HidAccessPropertyOptional"); }
         }
         public bool IsValueWithDescription
         {
@@ -61,7 +73,12 @@
         }
         public string ModifiedValueTypeOnHost
         {
-            get { return IsHidAccessPropertyOptional ? ("HidAccessPropertyOptional<" + DetailTypeName + ">") : ValueTypeOnHost; }
+            get
+            {
+                if (IsHidAccessPropertyOptional) { return "HidAccessPropertyOptional<" + DetailTypeName + ">"; }
+                else if (IsHidAccessPropertyEnumValue) { return ValueNameOnHost + "Options"; }
+                else { return ValueTypeOnHost; }
+            }
         }
 
 
@@ -84,13 +101,13 @@
         public string GetCodeOfCreatingPropertyObject()
         {
             var ret = string.Format(System.Globalization.CultureInfo.InvariantCulture, "            {0} = new {1}() {{ ", ValueNameOnHost, ModifiedValueTypeOnHost);
-            if (ModifiedValueTypeOnHost.Contains("HidAccessProperty")
+            if (IsAKindOfHidAccessProperty
                 || IsValueWithDescription
                 || IsEnumValueWithDescription)
             {
                 ret += "DescriptionKey = nameof(Resources." + DescriptionKey + ")";
             }
-            if (ModifiedValueTypeOnHost.Contains("HidAccessProperty"))
+            if (IsAKindOfHidAccessProperty)
             {
                 ret += string.IsNullOrEmpty(ReportId) ? "" : ", ReportId = " + ReportId;
                 ret += string.IsNullOrEmpty(MessageId) ? "" : ", MessageId = " + MessageId;
@@ -103,14 +120,19 @@
                 ret += ", AvailableFirmwareVersion = new Version(\"" + AvailableFirmwareVersion + "\")";
             }
             ret += " };";
-            if (IsHidAccessPropertyOptional)
+
+            if (false)
             {
-                ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}.OptionalValue.Options = {1}.GetDefaultList();", ValueNameOnHost, DetailTypeName);
+                if (IsHidAccessPropertyOptional)
+                {
+                    ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}.OptionalValue.Options = {1}.GetDefaultList();", ValueNameOnHost, DetailTypeName);
+                }
+                if (ModifiedValueTypeOnHostTypesWhichCallInitializeOnceAtStartup.Any(e => ModifiedValueTypeOnHost.Contains(e)))
+                {
+                    ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}.InitializeOnceAtStartup();", ValueNameOnHost);
+                }
             }
-            if (ModifiedValueTypeOnHostTypesWhichCallInitializeOnceAtStartup.Any(e => ModifiedValueTypeOnHost.Contains(e)))
-            {
-                ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}.InitializeOnceAtStartup();", ValueNameOnHost);
-            }
+
             ret += Environment.NewLine;
             return ret;
         }
@@ -118,7 +140,7 @@
         public string GetCodeOfAddingPropertiesToPropertyList()
         {
             var ret = "";
-            if (ModifiedValueTypeOnHost.Contains("HidAccessProperty"))
+            if (IsAKindOfHidAccessProperty)
             {
                 ret += "            HidAccessPropertyList.Add(" + ValueNameOnHost + ");" + Environment.NewLine;
             }
