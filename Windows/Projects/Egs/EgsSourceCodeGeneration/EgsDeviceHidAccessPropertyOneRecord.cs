@@ -43,9 +43,21 @@
         {
             get { return OwnerClass + "_" + ValueNameOnHost + "_Description"; }
         }
+        public bool IsAKindOfHidAccessProperty
+        {
+            get { return ValueTypeOnHost.StartsWith("HidAccessProperty"); }
+        }
+        public bool IsAKindOfOptionalOrEnum
+        {
+            get { return IsHidAccessPropertyEnumValue || IsHidAccessPropertyOptional || IsEnumValueWithDescription; }
+        }
+        public bool IsHidAccessPropertyEnumValue
+        {
+            get { return ValueTypeOnHost.StartsWith("HidAccessPropertyEnumValue"); }
+        }
         public bool IsHidAccessPropertyOptional
         {
-            get { return ValueTypeOnHost == "HidAccessPropertyOptional"; }
+            get { return ValueTypeOnHost.StartsWith("HidAccessPropertyOptional"); }
         }
         public bool IsValueWithDescription
         {
@@ -55,13 +67,22 @@
         {
             get { return ValueTypeOnHost.StartsWith("EnumValueWithDescription") || ValueTypeOnHost.EndsWith("Options"); }
         }
-        public string DetailTypeName
+        public string HidAccessPropertyOptionalDetailTypeName
         {
             get { return ValueNameOnHost + "Detail"; }
         }
+        public string HidAccessPropertyOptionalEnumTypeName
+        {
+            get { return ValueNameOnHost + "s"; }
+        }
         public string ModifiedValueTypeOnHost
         {
-            get { return IsHidAccessPropertyOptional ? ("HidAccessPropertyOptional<" + DetailTypeName + ">") : ValueTypeOnHost; }
+            get
+            {
+                if (IsHidAccessPropertyOptional) { return ValueNameOnHost + "Options"; }
+                else if (IsHidAccessPropertyEnumValue) { return ValueNameOnHost + "Options"; }
+                else { return ValueTypeOnHost; }
+            }
         }
 
 
@@ -84,13 +105,13 @@
         public string GetCodeOfCreatingPropertyObject()
         {
             var ret = string.Format(System.Globalization.CultureInfo.InvariantCulture, "            {0} = new {1}() {{ ", ValueNameOnHost, ModifiedValueTypeOnHost);
-            if (ModifiedValueTypeOnHost.Contains("HidAccessProperty")
+            if (IsAKindOfHidAccessProperty
                 || IsValueWithDescription
                 || IsEnumValueWithDescription)
             {
                 ret += "DescriptionKey = nameof(Resources." + DescriptionKey + ")";
             }
-            if (ModifiedValueTypeOnHost.Contains("HidAccessProperty"))
+            if (IsAKindOfHidAccessProperty)
             {
                 ret += string.IsNullOrEmpty(ReportId) ? "" : ", ReportId = " + ReportId;
                 ret += string.IsNullOrEmpty(MessageId) ? "" : ", MessageId = " + MessageId;
@@ -103,14 +124,19 @@
                 ret += ", AvailableFirmwareVersion = new Version(\"" + AvailableFirmwareVersion + "\")";
             }
             ret += " };";
-            if (IsHidAccessPropertyOptional)
+
+            if (false)
             {
-                ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}.OptionalValue.Options = {1}.GetDefaultList();", ValueNameOnHost, DetailTypeName);
+                if (IsHidAccessPropertyOptional)
+                {
+                    ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}.OptionalValue.Options = {1}.GetDefaultList();", ValueNameOnHost, HidAccessPropertyOptionalDetailTypeName);
+                }
+                if (ModifiedValueTypeOnHostTypesWhichCallInitializeOnceAtStartup.Any(e => ModifiedValueTypeOnHost.Contains(e)))
+                {
+                    ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}.InitializeOnceAtStartup();", ValueNameOnHost);
+                }
             }
-            if (ModifiedValueTypeOnHostTypesWhichCallInitializeOnceAtStartup.Any(e => ModifiedValueTypeOnHost.Contains(e)))
-            {
-                ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}.InitializeOnceAtStartup();", ValueNameOnHost);
-            }
+
             ret += Environment.NewLine;
             return ret;
         }
@@ -118,7 +144,7 @@
         public string GetCodeOfAddingPropertiesToPropertyList()
         {
             var ret = "";
-            if (ModifiedValueTypeOnHost.Contains("HidAccessProperty"))
+            if (IsAKindOfHidAccessProperty)
             {
                 ret += "            HidAccessPropertyList.Add(" + ValueNameOnHost + ");" + Environment.NewLine;
             }
@@ -129,16 +155,9 @@
         {
             var ret = "";
             if (string.IsNullOrEmpty(PropertyInitializationOnWindows)) { return ret; }
-            if (IsHidAccessPropertyOptional)
+            foreach (var initializationCode in PropertyInitializationOnWindows.Split(';'))
             {
-                ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, "            {0}.OptionalValue.SelectSingleItemByPredicate(e => e.{1});", ValueNameOnHost, PropertyInitializationOnWindows) + Environment.NewLine;
-            }
-            else
-            {
-                foreach (var initializationCode in PropertyInitializationOnWindows.Split(';'))
-                {
-                    ret += @"            " + ValueNameOnHost + "." + initializationCode.Trim() + ";" + Environment.NewLine;
-                }
+                ret += @"            " + ValueNameOnHost + "." + initializationCode.Trim() + ";" + Environment.NewLine;
             }
             return ret;
         }

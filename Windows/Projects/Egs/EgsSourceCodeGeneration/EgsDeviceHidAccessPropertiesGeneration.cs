@@ -78,7 +78,7 @@
                         {
                             var daoiol = new DescriptionAndOptionsInOneLanguage();
                             daoiol.PropertyDescription = row.GetCellString(headerCellString_ColumnIndex_Dict, "Description_" + culture);
-                            if (item.IsHidAccessPropertyOptional || item.IsEnumValueWithDescription)
+                            if (item.IsAKindOfOptionalOrEnum)
                             {
                                 var optionsString = row.GetCellString(headerCellString_ColumnIndex_Dict, "Options_" + culture);
                                 var optionStringArray = optionsString.Split('\n');
@@ -106,7 +106,7 @@
                             foreach (var option in item.Language_DescriptionAndOptions_Dict[culture].OptionalByteValueAndDescriptionList)
                             {
                                 var optionResourcesResXInformationOneRecord = new ResourcesResXInformationOneRecord();
-                                optionResourcesResXInformationOneRecord.Key = item.ValueNameOnHost + "Detail_Value" + option.Value + "_Description";
+                                optionResourcesResXInformationOneRecord.Key = item.OwnerClass + "_" + item.ValueNameOnHost + "_Options_" + option.Value + "_DescriptionKey";
                                 optionResourcesResXInformationOneRecord.Value = option.Description;
                                 optionResourcesResXInformationOneRecord.Comment = item.Language_DescriptionAndOptions_Dict[""].OptionalByteValueAndDescriptionList.Single(e => e.Value == option.Value).Description;
                                 newCulture_Resources_Dict[culture].Add(optionResourcesResXInformationOneRecord);

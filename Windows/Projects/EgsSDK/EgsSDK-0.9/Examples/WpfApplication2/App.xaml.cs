@@ -10,6 +10,7 @@
     using Egs;
     using Egs.Views;
     using Egs.DotNetUtility;
+    using Egs.PropertyTypes;
 
     public partial class App : Application
     {
@@ -44,7 +45,7 @@
             // and the host application transfers the device settings to connected device when it starts running or a device is connected.
             // You can use EgsDevice object directly, without EgsHostAppBaseComponents or EgsHostOnUserControl.
             Device = EgsDevice.GetDefaultEgsDevice();
-            Device.Settings.FaceDetectionMethod.Value = Egs.PropertyTypes.FaceDetectionMethodKind.DefaultProcessOnEgsDevice;
+            Device.Settings.FaceDetectionMethod.Value = FaceDetectionMethods.DefaultProcessOnEgsDevice;
             Device.Settings.IsToDetectFaces.Value = true;
             Device.Settings.IsToDetectHands.Value = true;
 

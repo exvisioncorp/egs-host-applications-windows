@@ -639,19 +639,19 @@ before starting ZKOO application.</comment>
     <value>Hardware Type</value>
     <comment>Hardware Type</comment>
   </data>
-  <data name="HardwareTypeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDevice_HardwareType_Options_0_DescriptionKey" xml:space="preserve">
     <value>No Information</value>
     <comment>No Information</comment>
   </data>
-  <data name="HardwareTypeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDevice_HardwareType_Options_1_DescriptionKey" xml:space="preserve">
     <value>ZKOO for Kickstarter Backers</value>
     <comment>ZKOO for Kickstarter Backers</comment>
   </data>
-  <data name="HardwareTypeDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDevice_HardwareType_Options_2_DescriptionKey" xml:space="preserve">
     <value>MA2150 + IMX208</value>
     <comment>MA2150 + IMX208</comment>
   </data>
-  <data name="HardwareTypeDetail_Value3_Description" xml:space="preserve">
+  <data name="EgsDevice_HardwareType_Options_3_DescriptionKey" xml:space="preserve">
     <value>MA2150 + IMX208 + PIC</value>
     <comment>MA2150 + IMX208 + PIC</comment>
   </data>
@@ -675,11 +675,11 @@ before starting ZKOO application.</comment>
     <value>Power Mode</value>
     <comment>Power Mode</comment>
   </data>
-  <data name="PowerModeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_PowerMode_Options_0_DescriptionKey" xml:space="preserve">
     <value>Active</value>
     <comment>Active</comment>
   </data>
-  <data name="PowerModeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_PowerMode_Options_1_DescriptionKey" xml:space="preserve">
     <value>StandingBy</value>
     <comment>StandingBy</comment>
   </data>
@@ -687,11 +687,11 @@ before starting ZKOO application.</comment>
     <value>Host Machine OS</value>
     <comment>Host Machine OS</comment>
   </data>
-  <data name="HostMachineOperatingSystemDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_HostMachineOperatingSystem_Options_0_DescriptionKey" xml:space="preserve">
     <value>Windows</value>
     <comment>Windows</comment>
   </data>
-  <data name="HostMachineOperatingSystemDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_HostMachineOperatingSystem_Options_1_DescriptionKey" xml:space="preserve">
     <value>Android</value>
     <comment>Android</comment>
   </data>
@@ -699,15 +699,15 @@ before starting ZKOO application.</comment>
     <value>Touch Interface Kind</value>
     <comment>Touch Interface Kind</comment>
   </data>
-  <data name="TouchInterfaceKindDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_TouchInterfaceKind_Options_0_DescriptionKey" xml:space="preserve">
     <value>MultiTouch</value>
     <comment>MultiTouch</comment>
   </data>
-  <data name="TouchInterfaceKindDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_TouchInterfaceKind_Options_2_DescriptionKey" xml:space="preserve">
     <value>Mouse</value>
     <comment>Mouse</comment>
   </data>
-  <data name="TouchInterfaceKindDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_TouchInterfaceKind_Options_1_DescriptionKey" xml:space="preserve">
     <value>SingleTouch (for Android)</value>
     <comment>SingleTouch (for Android)</comment>
   </data>
@@ -715,19 +715,19 @@ before starting ZKOO application.</comment>
     <value>Primary Screen Orientation</value>
     <comment>Primary Screen Orientation</comment>
   </data>
-  <data name="DeviceRotationAngleInClockwiseDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_0_DescriptionKey" xml:space="preserve">
     <value>0: Landscape</value>
     <comment>0: Landscape</comment>
   </data>
-  <data name="DeviceRotationAngleInClockwiseDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_1_DescriptionKey" xml:space="preserve">
     <value>90: Portrait (flipped)</value>
     <comment>90: Portrait (flipped)</comment>
   </data>
-  <data name="DeviceRotationAngleInClockwiseDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_2_DescriptionKey" xml:space="preserve">
     <value>180: Landscape (flipped)</value>
     <comment>180: Landscape (flipped)</comment>
   </data>
-  <data name="DeviceRotationAngleInClockwiseDetail_Value3_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_3_DescriptionKey" xml:space="preserve">
     <value>270: Portrait</value>
     <comment>270: Portrait</comment>
   </data>
@@ -735,11 +735,11 @@ before starting ZKOO application.</comment>
     <value>Use ZKOO for</value>
     <comment>Use ZKOO for</comment>
   </data>
-  <data name="DeviceUsageDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey" xml:space="preserve">
     <value>Gesture Camera</value>
     <comment>Gesture Camera</comment>
   </data>
-  <data name="DeviceUsageDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey" xml:space="preserve">
     <value>Web Camera</value>
     <comment>Web Camera</comment>
   </data>
@@ -751,15 +751,15 @@ before starting ZKOO application.</comment>
     <value>Face Detection Method</value>
     <comment>Face Detection Method</comment>
   </data>
-  <data name="FaceDetectionMethodDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey" xml:space="preserve">
     <value>ZKOO Device</value>
     <comment>ZKOO Device</comment>
   </data>
-  <data name="FaceDetectionMethodDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey" xml:space="preserve">
     <value>Host Application (Higher Accuracy)</value>
     <comment>Host Application (Higher Accuracy)</comment>
   </data>
-  <data name="FaceDetectionMethodDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceDetectionMethod_Options_2_DescriptionKey" xml:space="preserve">
     <value>Custom Solution by SDK Users</value>
     <comment>Custom Solution by SDK Users</comment>
   </data>
@@ -791,11 +791,11 @@ before starting ZKOO application.</comment>
     <value>Model Set ID</value>
     <comment>Model Set ID</comment>
   </data>
-  <data name="ModelSetIdDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_ModelSetId_Options_0_DescriptionKey" xml:space="preserve">
     <value>Five Fingers for TV</value>
     <comment>Five Fingers for TV</comment>
   </data>
-  <data name="ModelSetIdDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_ModelSetId_Options_1_DescriptionKey" xml:space="preserve">
     <value>Wands?</value>
     <comment>Wands?</comment>
   </data>
@@ -807,19 +807,19 @@ before starting ZKOO application.</comment>
     <value>Binning Mode</value>
     <comment>Binning Mode</comment>
   </data>
-  <data name="CaptureBinningDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureBinning_Options_2_DescriptionKey" xml:space="preserve">
     <value>2x2</value>
     <comment>2x2</comment>
   </data>
-  <data name="CaptureBinningDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureBinning_Options_1_DescriptionKey" xml:space="preserve">
     <value>1x1 (not tested yet)</value>
     <comment>1x1 (not tested yet)</comment>
   </data>
-  <data name="CaptureBinningDetail_Value3_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureBinning_Options_3_DescriptionKey" xml:space="preserve">
     <value>3x3</value>
     <comment>3x3</comment>
   </data>
-  <data name="CaptureBinningDetail_Value4_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureBinning_Options_4_DescriptionKey" xml:space="preserve">
     <value>4x4</value>
     <comment>4x4</comment>
   </data>
@@ -831,15 +831,15 @@ before starting ZKOO application.</comment>
     <value>Camera Frame Per Second</value>
     <comment>Camera Frame Per Second</comment>
   </data>
-  <data name="CaptureFpsDetail_Value120_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureFps_Options_120_DescriptionKey" xml:space="preserve">
     <value>120 fps</value>
     <comment>120 fps</comment>
   </data>
-  <data name="CaptureFpsDetail_Value100_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureFps_Options_100_DescriptionKey" xml:space="preserve">
     <value>100 fps</value>
     <comment>100 fps</comment>
   </data>
-  <data name="CaptureFpsDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureFps_Options_0_DescriptionKey" xml:space="preserve">
     <value>Auto</value>
     <comment>Auto</comment>
   </data>
@@ -847,15 +847,15 @@ before starting ZKOO application.</comment>
     <value>Exposure Mode</value>
     <comment>Exposure Mode</comment>
   </data>
-  <data name="CaptureExposureModeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureExposureMode_Options_0_DescriptionKey" xml:space="preserve">
     <value>Auto</value>
     <comment>Auto</comment>
   </data>
-  <data name="CaptureExposureModeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureExposureMode_Options_1_DescriptionKey" xml:space="preserve">
     <value>Manual</value>
     <comment>Manual</comment>
   </data>
-  <data name="CaptureExposureModeDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CaptureExposureMode_Options_2_DescriptionKey" xml:space="preserve">
     <value>User Detected Faces</value>
     <comment>User Detected Faces</comment>
   </data>
@@ -883,15 +883,15 @@ before starting ZKOO application.</comment>
     <value>Source Image Resolution</value>
     <comment>Source Image Resolution</comment>
   </data>
-  <data name="CameraViewImageSourceBitmapSizeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_0_DescriptionKey" xml:space="preserve">
     <value>320*240</value>
     <comment>320*240</comment>
   </data>
-  <data name="CameraViewImageSourceBitmapSizeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_1_DescriptionKey" xml:space="preserve">
     <value>384*240</value>
     <comment>384*240</comment>
   </data>
-  <data name="CameraViewImageSourceBitmapSizeDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_2_DescriptionKey" xml:space="preserve">
     <value>640*480</value>
     <comment>640*480</comment>
   </data>
@@ -915,19 +915,19 @@ before starting ZKOO application.</comment>
     <value>Face Detection Scale (when fixed)</value>
     <comment>Face Detection Scale (when fixed)</comment>
   </data>
-  <data name="EgsDeviceSettings_FaceSelectionMethodKind_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceSelectionOnDeviceMethod_Description" xml:space="preserve">
     <value>How to Select a Player</value>
     <comment>How to Select a Player</comment>
   </data>
-  <data name="FaceSelectionMethodKindDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_0_DescriptionKey" xml:space="preserve">
     <value>Auto: Select a person who moves a hand automatically</value>
     <comment>Auto: Select a person who moves a hand automatically</comment>
   </data>
-  <data name="FaceSelectionMethodKindDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_1_DescriptionKey" xml:space="preserve">
     <value>One by One: Select a person one by one to find who moves a hand</value>
     <comment>One by One: Select a person one by one to find who moves a hand</comment>
   </data>
-  <data name="FaceSelectionMethodKindDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_2_DescriptionKey" xml:space="preserve">
     <value>Most Center: Select the most center person in Camera View</value>
     <comment>Most Center: Select the most center person in Camera View</comment>
   </data>
@@ -983,15 +983,15 @@ before starting ZKOO application.</comment>
     <value>Gesture Usage</value>
     <comment>Gesture Usage</comment>
   </data>
-  <data name="CursorSpeedAndPrecisionModeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_0_DescriptionKey" xml:space="preserve">
     <value>Beginner: For slower hand moving and easier tapping.  2 cursors cannot cross.</value>
     <comment>Beginner: For slower hand moving and easier tapping.  2 cursors cannot cross.</comment>
   </data>
-  <data name="CursorSpeedAndPrecisionModeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_1_DescriptionKey" xml:space="preserve">
     <value>Standard: For standard speed hand moving.  2 cursors can cross.</value>
     <comment>Standard: For standard speed hand moving.  2 cursors can cross.</comment>
   </data>
-  <data name="CursorSpeedAndPrecisionModeDetail_Value2_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_2_DescriptionKey" xml:space="preserve">
     <value>Fruit Ninja: Good for Fruit Ninja Game.  Cut fruits by fast moving opened hand.</value>
     <comment>Fruit Ninja: Good for Fruit Ninja Game.  Cut fruits by fast moving opened hand.</comment>
   </data>
@@ -999,11 +999,11 @@ before starting ZKOO application.</comment>
     <value>Gesture by Fast Moving Hands</value>
     <comment>Gesture by Fast Moving Hands</comment>
   </data>
-  <data name="FastMovingHandsGestureModeDetail_Value0_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FastMovingHandsGestureMode_Options_0_DescriptionKey" xml:space="preserve">
     <value>None</value>
     <comment>None</comment>
   </data>
-  <data name="FastMovingHandsGestureModeDetail_Value1_Description" xml:space="preserve">
+  <data name="EgsDeviceSettings_FastMovingHandsGestureMode_Options_1_DescriptionKey" xml:space="preserve">
     <value>Touch</value>
     <comment>Touch</comment>
   </data>

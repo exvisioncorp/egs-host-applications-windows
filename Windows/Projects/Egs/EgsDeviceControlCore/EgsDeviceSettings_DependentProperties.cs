@@ -22,7 +22,7 @@
         {
             TouchTargetScreenSize.Width = (int)System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
             TouchTargetScreenSize.Height = (int)System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
-            FaceDetectionMethod.Value = FaceDetectionMethodKind.DefaultProcessOnEgsDevice;
+            FaceDetectionMethod.Value = FaceDetectionMethods.DefaultProcessOnEgsDevice;
 
             // TODO: MUSTDO: fix the bug.
             CaptureExposureMode.OptionalValue.SelectSingleItemByPredicate(e => e.Value == 0);
@@ -61,14 +61,8 @@
 
         void OnPixelOneSideLengthRelatedPropertiesUpdated()
         {
-            if (CaptureBinning.ValueOfSelectedItem <= 0)
-            {
-                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                throw new NotImplementedException();
-            }
-
             // TODO: get the actual binned pixel size from devices.
-            var newSensorOnePixelSideLengthInMillimeters = 0.0014f * CaptureBinning.ValueOfSelectedItem;
+            var newSensorOnePixelSideLengthInMillimeters = 0.0014f * (int)CaptureBinning.Value;
             if (SensorOnePixelSideLengthInMillimeters.Value != newSensorOnePixelSideLengthInMillimeters)
             {
                 SensorOnePixelSideLengthInMillimeters.Value = newSensorOnePixelSideLengthInMillimeters;

@@ -189,7 +189,7 @@
                 // NOTE: Even if it is Mouse mode, the application should draw not the OS protocol (TouchScreenHidRpoert) but the vendor-specific protocol (EgsGestureHidReport)!
                 Device.TouchScreenHidReport.ReportUpdated += delegate
                 {
-                    if (Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue == EgsDeviceTouchInterfaceKind.Mouse) { OnDeviceTouchScreenHidReportReportUpdated(); }
+                    if (Device.Settings.TouchInterfaceKind.Value == TouchInterfaceKinds.Mouse) { OnDeviceTouchScreenHidReportReportUpdated(); }
                 };
             }
 
@@ -315,7 +315,7 @@
             // So the application can let the mouse cursor track (first found / right / left) gesture cursor. 
             // MUSTDO: In some PCs, the position is not updated to the correct value.   Should be fixed.
             if (MouseCursorPositionUpdatedByGestureCursorMethod.Value != MouseCursorPositionUpdatedByGestureCursorMethods.None
-                && Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue != EgsDeviceTouchInterfaceKind.Mouse
+                && Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.Value != TouchInterfaceKinds.Mouse
                 && OnePersonBothHandsViewModel != null)
             {
                 CursorViewModel hand = null;
@@ -383,7 +383,7 @@
                 for (int i = 0; i < Device.TrackableHandsCount; i++) { CursorViews[i].UpdatePosition(); }
                 drawingCursorsStopwatch.Reset(); drawingCursorsStopwatch.Start();
             }
-            if (Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue == EgsDeviceTouchInterfaceKind.Mouse)
+            if (Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.Value == TouchInterfaceKinds.Mouse)
             {
                 if (DateTime.Now - Device.LastUpdateTime > WaitTimeTillMouseCursorHideOnMouseMode)
                 {

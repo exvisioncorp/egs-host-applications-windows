@@ -673,6 +673,26 @@
         <member name="F:Egs.EgsGestureHidReportMessageIds.DetectingOrTrackingHands">
             <summary>0x10</summary>
         </member>
+        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.SensitivityAndSpecificity">
+            <summary>
+            -3 => High Sensitivity.  +3 => High Specificity
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.DetectorImageDetectableFaceWidthMinimum">
+            <summary>
+            Decided by detector's specification.  In some case, dectector can find smaller faces by enlarging input image.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.HandDetectionScaleForEgsDeviceMaximum">
+            <summary>
+            Decided by device capability.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDeviceFaceDetectionOnHost.UpdateEgsDeviceSettingsHandDetectionAreas(System.Nullable{System.Drawing.Rectangle})">
+            <summary>
+            You can set "Hand Detection Areas" by setting "cameraViewImageFaceRect" detected by your method.
+            </summary>
+        </member>
         <member name="T:Egs.EgsDeviceSettings">
             <summary>
             The settings set from host application to connected device, when device is (re)connected or host application is started.
@@ -741,29 +761,6 @@
             Suggestion from the device about whether the touch contact was an intended or accidental touch. Your device should reject accidental touches as thoroughly as it can and report that information by using the confidence usage. The operating system uses confidence to help improve accidental touch rejection.
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.CalibratedFocalLength">
-            <summary>The focal length near its optical axis [mm]</summary>
-        </member>
-        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.CameraViewImageScale_DividedBy_CaptureImageScale">
-            <summary>
-            return CameraViewImageHeight / CaptureImageHeight  (Based on EGS device specification currently.)
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.SensitivityAndSpecificity">
-            <summary>
-            -3 => High Sensitivity.  +3 => High Specificity
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.DetectorImageDetectableFaceWidthMinimum">
-            <summary>
-            Decided by detector's specification.  In some case, dectector can find smaller faces by enlarging input image.
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDeviceFaceDetectionOnHost.UpdateEgsDeviceSettingsHandDetectionAreas(System.Nullable{System.Drawing.Rectangle})">
-            <summary>
-            You can set "Hand Detection Areas" by setting "cameraViewImageFaceRect" detected by your method.
-            </summary>
-        </member>
         <member name="T:Egs.IHidReportForCursorViewModel">
             <summary>
             Implemented in EgsDeviceTouchScreenHidReport and EgsDeviceEgsGestureHidReport
@@ -818,21 +815,6 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewBordersAndPointersAreDrawnByDetail_Type_Description">
             <summary>
               Looks up a localized string similar to Draw Borders and Pointers of Camera View.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewImageSourceBitmapSizeDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to 320*240.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewImageSourceBitmapSizeDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to 384*240.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewImageSourceBitmapSizeDetail_Value2_Description">
-            <summary>
-              Looks up a localized string similar to 640*480.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewUserControlModel_ImageSetIndex_Description">
@@ -948,56 +930,6 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_Type_Description">
             <summary>
               Looks up a localized string similar to Camera View Auto On/Off Control.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to 1x1 (not tested yet).
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value2_Description">
-            <summary>
-              Looks up a localized string similar to 2x2.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value3_Description">
-            <summary>
-              Looks up a localized string similar to 3x3.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value4_Description">
-            <summary>
-              Looks up a localized string similar to 4x4.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureExposureModeDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to Auto.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureExposureModeDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to Manual.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureExposureModeDetail_Value2_Description">
-            <summary>
-              Looks up a localized string similar to User Detected Faces.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureFpsDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to Auto.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureFpsDetail_Value100_Description">
-            <summary>
-              Looks up a localized string similar to 100 fps.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureFpsDetail_Value120_Description">
-            <summary>
-              Looks up a localized string similar to 120 fps.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Accept">
@@ -1336,51 +1268,6 @@
               Looks up a localized string similar to Gesture Cursor Drawing Frequency (Smaller Value for Lower Spec PC).
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorSpeedAndPrecisionModeDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to Beginner: For slower hand moving and easier tapping.  2 cursors cannot cross..
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorSpeedAndPrecisionModeDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to Standard: For standard speed hand moving.  2 cursors can cross..
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorSpeedAndPrecisionModeDetail_Value2_Description">
-            <summary>
-              Looks up a localized string similar to Fruit Ninja: Good for Fruit Ninja Game.  Cut fruits by fast moving opened hand..
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to 0: Landscape.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to 90: Portrait (flipped).
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value2_Description">
-            <summary>
-              Looks up a localized string similar to 180: Landscape (flipped).
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value3_Description">
-            <summary>
-              Looks up a localized string similar to 270: Portrait.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceUsageDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to Gesture Camera.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceUsageDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to Web Camera.
-            </summary>
-        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_CameraDeviceDevicePath_Description">
             <summary>
               Looks up a localized string similar to Camera Device DevicePath.
@@ -1404,6 +1291,26 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HardwareType_Description">
             <summary>
               Looks up a localized string similar to Hardware Type.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HardwareType_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to No Information.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HardwareType_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to ZKOO for Kickstarter Backers.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HardwareType_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to MA2150 + IMX208.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HardwareType_Options_3_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to MA2150 + IMX208 + PIC.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HidDeviceDevicePath_Description">
@@ -1501,6 +1408,21 @@
               Looks up a localized string similar to Source Image Resolution.
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 320*240.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 384*240.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 640*480.
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceRectInCaptureImage_Description">
             <summary>
               Looks up a localized string similar to Camera View Image Source Rect in Capture Image.
@@ -1511,14 +1433,64 @@
               Looks up a localized string similar to Binning Mode.
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureBinning_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 1x1 (not tested yet).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureBinning_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 2x2.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureBinning_Options_3_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 3x3.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureBinning_Options_4_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 4x4.
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureExposureMode_Description">
             <summary>
               Looks up a localized string similar to Exposure Mode.
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureExposureMode_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Auto.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureExposureMode_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Manual.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureExposureMode_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to User Detected Faces.
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureFps_Description">
             <summary>
               Looks up a localized string similar to Camera Frame Per Second.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureFps_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Auto.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureFps_Options_100_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 100 fps.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureFps_Options_120_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 120 fps.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureImageSize_Description">
@@ -1536,14 +1508,59 @@
               Looks up a localized string similar to Gesture Usage.
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Beginner: For slower hand moving and easier tapping.  2 cursors cannot cross..
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Standard: For standard speed hand moving.  2 cursors can cross..
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Fruit Ninja: Good for Fruit Ninja Game.  Cut fruits by fast moving opened hand..
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Description">
             <summary>
               Looks up a localized string similar to Primary Screen Orientation.
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 0: Landscape.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 90: Portrait (flipped).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 180: Landscape (flipped).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_3_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 270: Portrait.
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Description">
             <summary>
               Looks up a localized string similar to Use ZKOO for.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Gesture Camera.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Web Camera.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionAreaOnFixed_Description">
@@ -1556,19 +1573,59 @@
               Looks up a localized string similar to Face Detection Method.
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to ZKOO Device.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Host Application (Higher Accuracy).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionMethod_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Custom Solution by SDK Users.
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionScaleOnFixed_Description">
             <summary>
               Looks up a localized string similar to Face Detection Scale (when fixed).
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionMethodKind_Description">
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Description">
             <summary>
               Looks up a localized string similar to How to Select a Player.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Auto: Select a person who moves a hand automatically.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to One by One: Select a person one by one to find who moves a hand.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Most Center: Select the most center person in Camera View.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Description">
             <summary>
               Looks up a localized string similar to Gesture by Fast Moving Hands.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to None.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Touch.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HandDetectionParameters_Description">
@@ -1579,6 +1636,16 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HostMachineOperatingSystem_Description">
             <summary>
               Looks up a localized string similar to Host Machine OS.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HostMachineOperatingSystem_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Windows.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HostMachineOperatingSystem_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Android.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToDetectFaces_Description">
@@ -1696,9 +1763,29 @@
               Looks up a localized string similar to Model Set ID.
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_ModelSetId_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Five Fingers for TV.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_ModelSetId_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Wands?.
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_PowerMode_Description">
             <summary>
               Looks up a localized string similar to Power Mode.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_PowerMode_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Active.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_PowerMode_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to StandingBy.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandCloseHand_Description">
@@ -1761,6 +1848,21 @@
               Looks up a localized string similar to Touch Interface Kind.
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TouchInterfaceKind_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to MultiTouch.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TouchInterfaceKind_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to SingleTouch (for Android).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TouchInterfaceKind_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Mouse.
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TouchTargetScreenSize_Description">
             <summary>
               Looks up a localized string similar to Touch Target Screen Size.
@@ -1774,86 +1876,6 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_UsbProtocolRevision_Description">
             <summary>
               Looks up a localized string similar to USB Communication Protocol Revision.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceDetectionMethodDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to ZKOO Device.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceDetectionMethodDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to Host Application (Higher Accuracy).
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceDetectionMethodDetail_Value2_Description">
-            <summary>
-              Looks up a localized string similar to Custom Solution by SDK Users.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceSelectionMethodKindDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to Auto: Select a person who moves a hand automatically.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceSelectionMethodKindDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to One by One: Select a person one by one to find who moves a hand.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceSelectionMethodKindDetail_Value2_Description">
-            <summary>
-              Looks up a localized string similar to Most Center: Select the most center person in Camera View.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FastMovingHandsGestureModeDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to None.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FastMovingHandsGestureModeDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to Touch.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to No Information.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to ZKOO for Kickstarter Backers.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value2_Description">
-            <summary>
-              Looks up a localized string similar to MA2150 + IMX208.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value3_Description">
-            <summary>
-              Looks up a localized string similar to MA2150 + IMX208 + PIC.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HostMachineOperatingSystemDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to Windows.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HostMachineOperatingSystemDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to Android.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.ModelSetIdDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to Five Fingers for TV.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.ModelSetIdDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to Wands?.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_FirstFoundHand_Description">
@@ -1889,16 +1911,6 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.OnePersonBothHandsViewModel_IsToShowGestureCursors_Description">
             <summary>
               Looks up a localized string similar to Show Gesture Cursors.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.PowerModeDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to Active.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.PowerModeDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to StandingBy.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_AdvancedSettings_Description">
@@ -1944,21 +1956,6 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_TutorialAppSettings_Description">
             <summary>
               Looks up a localized string similar to Tutorial App.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.TouchInterfaceKindDetail_Value0_Description">
-            <summary>
-              Looks up a localized string similar to MultiTouch.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.TouchInterfaceKindDetail_Value1_Description">
-            <summary>
-              Looks up a localized string similar to SingleTouch (for Android).
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.TouchInterfaceKindDetail_Value2_Description">
-            <summary>
-              Looks up a localized string similar to Mouse.
             </summary>
         </member>
         <member name="T:Egs.PropertyTypes.ValueWithDescriptionBase">

@@ -86,18 +86,20 @@
             AttachInternalEventHandlersAdditional();
         }
 
+        #region For XAML bindings
         public bool IsCaptureExposureModeManual
         {
-            get { return CaptureExposureMode.OptionalValue.SelectedItem.Value == 1; }
+            get { return CaptureExposureMode.Value == CaptureExposureModes.Manual; }
         }
         public bool IsFaceDetectionMethodDefaultProcessOnEgsDevice
         {
-            get { return FaceDetectionMethod.Value == FaceDetectionMethodKind.DefaultProcessOnEgsDevice; }
+            get { return FaceDetectionMethod.Value == FaceDetectionMethods.DefaultProcessOnEgsDevice; }
         }
         public bool IsFaceDetectionMethodDefaultProcessOnEgsHostApplication
         {
-            get { return FaceDetectionMethod.Value == FaceDetectionMethodKind.DefaultProcessOnEgsHostApplication; }
+            get { return FaceDetectionMethod.Value == FaceDetectionMethods.DefaultProcessOnEgsHostApplication; }
         }
+        #endregion
 
         internal void AttachInternalEventHandlers()
         {
@@ -123,19 +125,19 @@
 
             TouchInterfaceKind.OptionalValue.SelectedItemChanged += (sender, e) =>
             {
-                switch (TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue)
+                switch (TouchInterfaceKind.Value)
                 {
-                    case EgsDeviceTouchInterfaceKind.MultiTouch:
+                    case PropertyTypes.TouchInterfaceKinds.MultiTouch:
                         TrackableHandsCount.Value = 2;
                         break;
-                    case EgsDeviceTouchInterfaceKind.SingleTouch:
+                    case PropertyTypes.TouchInterfaceKinds.SingleTouch:
                         TrackableHandsCount.Value = 1;
                         break;
-                    case EgsDeviceTouchInterfaceKind.Mouse:
+                    case PropertyTypes.TouchInterfaceKinds.Mouse:
                         TrackableHandsCount.Value = 1;
                         break;
                     default:
-                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "TouchInterfaceKind: {0}", TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue));
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "TouchInterfaceKind: {0}", TouchInterfaceKind.Value));
                         break;
                 }
                 if (CurrentConnectedEgsDevice != null)
@@ -147,19 +149,17 @@
             CursorSpeedAndPrecisionMode.OptionalValue.SelectedItemChanged += (sender, e) =>
             {
                 // TODO: test
-                switch (CursorSpeedAndPrecisionMode.OptionalValue.SelectedItem.Value)
+                switch (CursorSpeedAndPrecisionMode.Value)
                 {
-                    case 0:
-                        this.FastMovingHandsGestureMode.OptionalValue.SelectSingleItemByPredicate(item => item.Value == 0);
+                    case CursorSpeedAndPrecisionModes.Beginner:
+                    case CursorSpeedAndPrecisionModes.Standard:
+                        FastMovingHandsGestureMode.Value = FastMovingHandsGestureModes.None;
                         break;
-                    case 1:
-                        this.FastMovingHandsGestureMode.OptionalValue.SelectSingleItemByPredicate(item => item.Value == 0);
-                        break;
-                    case 2:
-                        this.FastMovingHandsGestureMode.OptionalValue.SelectSingleItemByPredicate(item => item.Value == 1);
+                    case CursorSpeedAndPrecisionModes.FruitNinja:
+                        FastMovingHandsGestureMode.Value = FastMovingHandsGestureModes.Touch;
                         break;
                     default:
-                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "TouchInterfaceKind: {0}", TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue));
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "CursorSpeedAndPrecisionMode: {0}", CursorSpeedAndPrecisionMode.Value));
                         break;
                 }
                 if (CurrentConnectedEgsDevice != null)

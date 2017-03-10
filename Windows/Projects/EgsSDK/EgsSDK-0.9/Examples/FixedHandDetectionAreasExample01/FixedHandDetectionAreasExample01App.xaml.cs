@@ -113,7 +113,7 @@
         public void InitializeFaceDetection()
         {
             // NOTE: important
-            Device.Settings.FaceDetectionMethod.Value = Egs.PropertyTypes.FaceDetectionMethodKind.SdkUserProcess;
+            Device.Settings.FaceDetectionMethod.Value = Egs.PropertyTypes.FaceDetectionMethods.SdkUserProcess;
 
             HandDetectionAreaDecision = new EgsDeviceFaceDetectionOnHost();
 
