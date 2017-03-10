@@ -221,11 +221,11 @@
         public FaceDetectionMethodOptions()
             : base()
         {
-            OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethods>() { Value = FaceDetectionMethods.DefaultProcessOnEgsDevice, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey) });
-            OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethods>() { Value = FaceDetectionMethods.DefaultProcessOnEgsHostApplication, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethods>() { Value = (FaceDetectionMethods)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethods>() { Value = (FaceDetectionMethods)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey) });
             if (ApplicationCommonSettings.IsDeveloperRelease)
             {
-                OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethods>() { Value = FaceDetectionMethods.SdkUserProcess, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Options_2_DescriptionKey) });
+                OptionalValue.Options.Add(new ValueWithDescription<FaceDetectionMethods>() { Value = (FaceDetectionMethods)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Options_2_DescriptionKey) });
             }
         }
     }

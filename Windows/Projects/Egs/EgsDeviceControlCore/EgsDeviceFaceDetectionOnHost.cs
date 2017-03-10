@@ -95,8 +95,8 @@
         public int DetectorImageDetectableFaceWidthMinimum { get; set; }
 
         [DataMember]
-        public RangedInt SetCameraViewImageBitmapIntervalMilliseconds { get; private set; }
-        Stopwatch SetCameraViewImageBitmapIntervalStopwatch { get; set; }
+        public RangedInt DetectFaceIntervalMillisecondsMinimum { get; private set; }
+        Stopwatch DetectFaceIntervalMinimumStopwatch { get; set; }
         System.ComponentModel.BackgroundWorker Worker { get; set; }
 
         Stopwatch DetectionElapsedStopwatch { get; set; }
@@ -164,8 +164,8 @@
 
             SensitivityAndSpecificity = new RangedInt(0, -3, 3, 1, 1, 1);
 
-            SetCameraViewImageBitmapIntervalMilliseconds = new RangedInt(200, 0, 2000, 10, 100, 10);
-            SetCameraViewImageBitmapIntervalStopwatch = Stopwatch.StartNew();
+            DetectFaceIntervalMillisecondsMinimum = new RangedInt(200, 0, 2000, 10, 100, 10);
+            DetectFaceIntervalMinimumStopwatch = Stopwatch.StartNew();
             Worker = new System.ComponentModel.BackgroundWorker();
             Worker.DoWork += delegate
             {
@@ -257,7 +257,7 @@
             Update_DetectorImageScale_DividedBy_CameraViewImageScale();
             Debug.WriteLine("DetectorImageScale_DividedBy_CameraViewImageScale: " + DetectorImageScale_DividedBy_CameraViewImageScale);
 
-            SetCameraViewImageBitmapIntervalMilliseconds.Value = 200;
+            DetectFaceIntervalMillisecondsMinimum.Value = 200;
 
             //IsDetecting = false;
 
@@ -304,9 +304,9 @@
                 }
             }
 
-            if (SetCameraViewImageBitmapIntervalStopwatch.ElapsedMilliseconds < SetCameraViewImageBitmapIntervalMilliseconds) { return; }
-            SetCameraViewImageBitmapIntervalStopwatch.Reset();
-            SetCameraViewImageBitmapIntervalStopwatch.Start();
+            if (DetectFaceIntervalMinimumStopwatch.ElapsedMilliseconds < DetectFaceIntervalMillisecondsMinimum) { return; }
+            DetectFaceIntervalMinimumStopwatch.Reset();
+            DetectFaceIntervalMinimumStopwatch.Start();
             DetectFaceRunWorkerAsync(Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap);
         }
 
@@ -336,8 +336,11 @@
                 var scale = DetectorImageScale_DividedBy_CameraViewImageScale;
                 var detectorImageWidth = (int)(CameraViewImageWidth * scale);
                 var detectorImageHeight = (int)(CameraViewImageHeight * scale);
-                Debug.WriteLine("DetectorImageWidth: " + detectorImageWidth);
-                Debug.WriteLine("DetectorImageHeight: " + detectorImageHeight);
+                if (false)
+                {
+                    Debug.WriteLine("DetectorImageWidth: " + detectorImageWidth);
+                    Debug.WriteLine("DetectorImageHeight: " + detectorImageHeight);
+                }
                 if (ApplicationCommonSettings.IsDeveloperRelease) { DetectionElapsedStopwatch.Reset(); DetectionElapsedStopwatch.Start(); }
                 DlibArray2dUcharImage.ResizeImage(detectorImageWidth, detectorImageHeight);
                 DetectedFaceRectsInCameraViewImage = DlibHogSvm.DetectFaces(DlibArray2dUcharImage, DlibHogSvmThreshold)
@@ -492,15 +495,13 @@
             var newHandDetectionScaleForEgsDevice = HandDetectionScaleForEgsDevice_DividedBy_CaptureImagePalmImageWidth * CaptureImagePalmImageWidth;
             if (newHandDetectionScaleForEgsDevice > HandDetectionScaleForEgsDeviceMaximum)
             {
-                // TODO: MUSTDO: fix
-                //if (ApplicationCommonSettings.IsDebuggingInternal) { Debug.WriteLine("HandDetectionScaleForEgsDevice > HandDetectionScaleForEgsDeviceMaximum"); }
-                Debug.WriteLine("newHandDetectionScaleForEgsDevice: " + newHandDetectionScaleForEgsDevice);
+                if (false) { Debug.WriteLine("newHandDetectionScaleForEgsDevice: " + newHandDetectionScaleForEgsDevice); }
             }
             int HandDetectionScaleForEgsDevice = (int)Math.Min(newHandDetectionScaleForEgsDevice, short.MaxValue);
 
             if (HandDetectionScaleForEgsDevice == 0)
             {
-                // TODO: MUSTDO: This is work-around.  We have to fix firmware
+                // TODO: MUSTDO: Test another way.
                 if (deviceSettings.IsToDetectHandsOnDevice.Value != false) { deviceSettings.IsToDetectHandsOnDevice.Value = false; }
             }
             else
@@ -530,12 +531,12 @@
                     // When InitializeOnceAtStartup is not called.
                     Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapChanged -= Device_CameraViewImageSourceBitmapCapture_CameraViewImageSourceBitmapChanged;
                 }
-                SetCameraViewImageBitmapIntervalStopwatch.Reset();
-                SetCameraViewImageBitmapIntervalStopwatch.Start();
+                DetectFaceIntervalMinimumStopwatch.Reset();
+                DetectFaceIntervalMinimumStopwatch.Start();
                 while (IsDetecting)
                 {
                     System.Threading.Thread.Sleep(50);
-                    if (SetCameraViewImageBitmapIntervalStopwatch.ElapsedMilliseconds > 2000)
+                    if (DetectFaceIntervalMinimumStopwatch.ElapsedMilliseconds > 2000)
                     {
                         if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                         Console.WriteLine("FaceDetection BackgroundWorkder did not completed.");

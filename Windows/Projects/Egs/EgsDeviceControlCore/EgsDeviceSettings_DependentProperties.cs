@@ -23,9 +23,7 @@
             TouchTargetScreenSize.Width = (int)System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
             TouchTargetScreenSize.Height = (int)System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
             FaceDetectionMethod.Value = FaceDetectionMethods.DefaultProcessOnEgsDevice;
-
-            // TODO: MUSTDO: fix the bug.
-            CaptureExposureMode.OptionalValue.SelectSingleItemByPredicate(e => e.Value == 0);
+            CaptureExposureMode.Value = CaptureExposureModes.Auto;
         }
 
         void AttachInternalEventHandlersAdditional()

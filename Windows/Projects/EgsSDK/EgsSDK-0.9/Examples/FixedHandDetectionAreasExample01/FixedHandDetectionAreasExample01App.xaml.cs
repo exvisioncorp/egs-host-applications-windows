@@ -41,8 +41,7 @@
             Device.Settings.IsToDetectFaces.Value = true;
             Device.Settings.IsToDetectHands.Value = true;
             Device.Settings.IsToFixHandDetectionRegions.Value = true;
-            // 0: 320*240  1:384*240  2:640*480
-            Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2;
+            Device.Settings.CameraViewImageSourceBitmapSize.Value = Egs.PropertyTypes.CameraViewImageSourceBitmapSizes.Size_640x480;
 
             {
                 CursorViewModels = new CursorViewModel[Device.TrackableHandsCountMaximum];
@@ -136,7 +135,7 @@
                 Device.Settings.IsToDetectFaces.Value = false;
                 Device.Settings.IsToDetectHands.Value = false;
                 Device.Settings.IsToFixHandDetectionRegions.Value = false;
-                Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
+                Device.Settings.CameraViewImageSourceBitmapSize.Value = Egs.PropertyTypes.CameraViewImageSourceBitmapSizes.Size_384x240;
                 // Call this method before CursorView.Close().
                 EgsDevice.CloseDefaultEgsDevice();
 

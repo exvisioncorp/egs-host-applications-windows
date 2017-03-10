@@ -57,7 +57,7 @@
 
                 <GroupBox Header="Basic Parameters (B. means Breadth)">
                     <StackPanel>
-                        <DockPanel DataContext="{Binding SetCameraViewImageBitmapIntervalMilliseconds}">
+                        <DockPanel DataContext="{Binding DetectFaceIntervalMillisecondsMinimum}">
                             <Label DockPanel.Dock="Left" MinWidth="100" HorizontalContentAlignment="Right"
                                     Content="Interval [ms]" />
                             <Label DockPanel.Dock="Left" MinWidth="50" HorizontalContentAlignment="Right"

@@ -126,7 +126,6 @@
 
         internal void On_FaceDetectionMethod_IsToDetectFaces_IsToDetectHands_IsHidDeviceConnected_Changed()
         {
-            // TODO: MUSTDO: update and test!
             switch (Settings.FaceDetectionMethod.Value)
             {
                 case FaceDetectionMethods.DefaultProcessOnEgsDevice:
@@ -149,7 +148,8 @@
                         bool newIsToDetectHandsOnDevice = Settings.IsToDetectHands;
                         if (Settings.IsToDetectHandsOnDevice.Value != newIsToDetectHandsOnDevice) { Settings.IsToDetectHandsOnDevice.Value = newIsToDetectHandsOnDevice; }
 
-                        //if (Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex != 1) { Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1; }
+                        // TODO: MUSTDO: test
+                        if (Settings.CameraViewImageSourceBitmapSize.Value != CameraViewImageSourceBitmapSizes.Size_384x240) { Settings.CameraViewImageSourceBitmapSize.Value = CameraViewImageSourceBitmapSizes.Size_384x240; }
                     }
                     break;
                 case FaceDetectionMethods.DefaultProcessOnEgsHostApplication:
@@ -285,14 +285,31 @@
         void EgsDeviceSettings_HidAccessPropertyUpdated(object sender, HidAccessPropertyUpdatedEventArgs e)
         {
             var settings = (EgsDeviceSettings)sender;
-            if (e.UpdatedProperty == settings.IsToDetectFacesOnDevice) { Update_IsDetectingFaces_IsDetectingHands_IsTracking(); }
-            else if (e.UpdatedProperty == settings.IsToDetectHandsOnDevice) { Update_IsDetectingFaces_IsDetectingHands_IsTracking(); }
-            else if (e.UpdatedProperty == settings.IsToSendTouchScreenHidReport) { IsSendingTouchScreenHidReport = Settings.IsToSendTouchScreenHidReport.Value && IsHidDeviceConnected; }
-            else if (e.UpdatedProperty == settings.IsToSendHoveringStateOnTouchScreenHidReport) { IsSendingHoveringStateOnTouchScreenHidReport = Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value && IsHidDeviceConnected; }
-            else if (e.UpdatedProperty == settings.IsToSendEgsGestureHidReport) { IsSendingEgsGestureHidReport = Settings.IsToSendEgsGestureHidReport.Value && IsHidDeviceConnected; }
+            if (e.UpdatedProperty == settings.IsToDetectFacesOnDevice)
+            {
+                Update_IsDetectingFaces_IsDetectingHands_IsTracking();
+            }
+            else if (e.UpdatedProperty == settings.IsToDetectHandsOnDevice)
+            {
+                Update_IsDetectingFaces_IsDetectingHands_IsTracking();
+            }
+            else if (e.UpdatedProperty == settings.IsToSendTouchScreenHidReport)
+            {
+                IsSendingTouchScreenHidReport = Settings.IsToSendTouchScreenHidReport.Value && IsHidDeviceConnected;
+            }
+            else if (e.UpdatedProperty == settings.IsToSendHoveringStateOnTouchScreenHidReport)
+            {
+                IsSendingHoveringStateOnTouchScreenHidReport = Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value && IsHidDeviceConnected;
+            }
+            else if (e.UpdatedProperty == settings.IsToSendEgsGestureHidReport)
+            {
+                IsSendingEgsGestureHidReport = Settings.IsToSendEgsGestureHidReport.Value && IsHidDeviceConnected;
+            }
             else if (e.UpdatedProperty == settings.CameraViewImageSourceBitmapSize)
             {
-                OnPropertyChanged(NameOf_Settings_CameraViewImageSourceBitmapSize);
+                ResetHidReportObjects();
+
+                System.Threading.Thread.Sleep(1000);
             }
             else if (e.UpdatedProperty == settings.CaptureFps)
             {
@@ -316,6 +333,7 @@
                 if (IsHidDeviceConnected && e.UpdatedProperty.IsReadOnly == false)
                 {
                     if (CheckHidPropertyVersionAndCurrentFirmwareVersion(e.UpdatedProperty) == false) { return; }
+                    // NOTE: Important!!
                     SetHidFeatureReport(e.UpdatedProperty.ByteArrayData);
                 }
             }
@@ -325,8 +343,5 @@
                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
             }
         }
-
-        // TODO: MUSTDO: needs smarter implementation.
-        internal const string NameOf_Settings_CameraViewImageSourceBitmapSize = "Settings.CameraViewImageSourceBitmapSize";
     }
 }

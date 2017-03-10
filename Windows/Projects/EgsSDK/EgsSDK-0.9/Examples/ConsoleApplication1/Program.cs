@@ -12,7 +12,7 @@
             Device.Settings.IsToDetectFaces.Value = true;
             Device.Settings.IsToDetectHands.Value = true;
             Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
-            Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
+            Device.Settings.CameraViewImageSourceBitmapSize.Value = Egs.PropertyTypes.CameraViewImageSourceBitmapSizes.Size_384x240;
 
             Device.EgsGestureHidReport.ReportUpdated += (sender, e) =>
             {

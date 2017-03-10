@@ -48,10 +48,10 @@
             Device.Settings.IsToDetectHands.Value = true;
 #if DEBUG
             Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
-            Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 2;
+            Device.Settings.CameraViewImageSourceBitmapSize.Value = Egs.PropertyTypes.CameraViewImageSourceBitmapSizes.Size_640x480;
 #else
             Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
-            Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
+            Device.Settings.CameraViewImageSourceBitmapSize.Value = Egs.PropertyTypes.CameraViewImageSourceBitmapSizes.Size_384x240;
 #endif
 
 

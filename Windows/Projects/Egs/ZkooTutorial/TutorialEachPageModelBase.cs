@@ -306,7 +306,7 @@
             refToAppModel.EnableUpdatingCameraViewImageButHideWindow();
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
-                refToAppModel.RefToHostApp.Device.Settings.CursorSpeedAndPrecisionMode.OptionalValue.SelectedIndex = 0;
+                refToAppModel.RefToHostApp.Device.Settings.CursorSpeedAndPrecisionMode.Value = PropertyTypes.CursorSpeedAndPrecisionModes.Beginner;
             }));
 
             CreateAudioPlayerInstances();
