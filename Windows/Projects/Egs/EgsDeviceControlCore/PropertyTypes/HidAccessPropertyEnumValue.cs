@@ -38,7 +38,7 @@
         internal override void RaiseValueUpdatedOnGetHidFeatureReport()
         {
             var hr = OptionalValue.SelectSingleItemByPredicate(e => Convert.ToByte(e.Value) == ValueInByteArrayData);
-            if (hr)
+            if (hr == false)
             {
                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                 throw new ArgumentOutOfRangeException();
