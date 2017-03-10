@@ -199,7 +199,7 @@
     {
         public override string Description { get { return string.Format(CultureInfo.InvariantCulture, "{0}: {1} x {2}", Value, Width, Height); } }
     }
-    public partial class CameraViewImageSourceBitmapSizeOptions : HidAccessPropertyOptional<CameraViewImageSourceBitmapSizeDetail>
+    public partial class CameraViewImageSourceBitmapSizeOptions : HidAccessPropertyOptional<CameraViewImageSourceBitmapSizeDetail, CameraViewImageSourceBitmapSizes>
     {
         public CameraViewImageSourceBitmapSizeOptions()
             : base()

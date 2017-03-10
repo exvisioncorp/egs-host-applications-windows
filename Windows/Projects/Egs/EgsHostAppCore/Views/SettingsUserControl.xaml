@@ -268,10 +268,10 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox x:Name="EgsDeviceSettings_FaceSelectionMethodKind_GroupBox"
-                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceSelectionMethodKind_Description}"
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Description}"
                         IsEnabled="{Binding Device.Settings.IsFaceDetectionMethodDefaultProcessOnEgsDevice}">
-                    <ListBox DataContext="{Binding Device.Settings.FaceSelectionMethodKind}"
+                    <ListBox DataContext="{Binding Device.Settings.FaceSelectionOnDeviceMethod}"
                             Style="{StaticResource listBoxWithRadioButton}"
                             ItemsSource="{Binding OptionalValue.Options}"
                             SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"

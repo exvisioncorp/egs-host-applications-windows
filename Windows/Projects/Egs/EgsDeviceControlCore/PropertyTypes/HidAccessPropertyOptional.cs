@@ -25,8 +25,9 @@
     }
 
     [DataContract]
-    public class HidAccessPropertyOptional<T> : HidAccessPropertyBase
-        where T : class, ITypeParameterOfHidAccessPropertyOptional, new()
+    public class HidAccessPropertyOptional<T, V> : HidAccessPropertyBase
+        where T : HidAccessPropertyOptionalTypeParameterBase<V>, ITypeParameterOfHidAccessPropertyOptional, new()
+        where V : IComparable
     {
         [DataMember]
         public OptionalValue<T> OptionalValue { get; set; }
@@ -34,9 +35,22 @@
         public T SelectedItem
         {
             get { return OptionalValue.SelectedItem; }
-            set
+            internal set
             {
                 var hr = OptionalValue.SelectSingleItemByPredicate(e => e.ConvertValueToByte() == value.ConvertValueToByte());
+                if (hr == false)
+                {
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+        public V Value
+        {
+            get { return OptionalValue.SelectedItem.Value; }
+            set
+            {
+                var hr = OptionalValue.SelectSingleItemByPredicate(e => e.Value.Equals(value));
                 if (hr == false)
                 {
                     if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }

@@ -81,7 +81,7 @@ namespace Egs
         public HidAccessPropertySingle LensFNumber { get; private set; }
         public HidAccessPropertySingle SensorExposureTimeInMilliseconds { get; private set; }
         [DataMember]
-        public HidAccessPropertyOptional<CameraViewImageSourceBitmapSizeDetail> CameraViewImageSourceBitmapSize { get; private set; }
+        public CameraViewImageSourceBitmapSizeOptions CameraViewImageSourceBitmapSize { get; private set; }
         public HidAccessPropertyRect CameraViewImageSourceRectInCaptureImage { get; private set; }
         [DataMember]
         public HidAccessPropertyBoolean IsToDrawBordersOnCameraViewImageByDevice { get; private set; }
@@ -138,7 +138,7 @@ namespace Egs
             SensorOnePixelSideLengthInMillimeters = new HidAccessPropertySingle() { DescriptionKey = nameof(Resources.EgsDeviceSettings_SensorOnePixelSideLengthInMillimeters_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x20, PropertyId = 0xA1, ValueTypeOnDevice = "float", DataLength = 1, IsReadOnly = true, NameOfProperty = "SensorOnePixelSideLengthInMillimeters", AvailableFirmwareVersion = new Version("1.0") };
             LensFNumber = new HidAccessPropertySingle() { DescriptionKey = nameof(Resources.EgsDeviceSettings_LensFNumber_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x20, PropertyId = 0xA2, ValueTypeOnDevice = "float", DataLength = 1, IsReadOnly = true, NameOfProperty = "LensFNumber", AvailableFirmwareVersion = new Version("1.0") };
             SensorExposureTimeInMilliseconds = new HidAccessPropertySingle() { DescriptionKey = nameof(Resources.EgsDeviceSettings_SensorExposureTimeInMilliseconds_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x20, PropertyId = 0xA3, ValueTypeOnDevice = "float", DataLength = 1, IsReadOnly = true, NameOfProperty = "SensorExposureTimeInMilliseconds", AvailableFirmwareVersion = new Version("1.0") };
-            CameraViewImageSourceBitmapSize = new HidAccessPropertyOptional<CameraViewImageSourceBitmapSizeDetail>() { DescriptionKey = nameof(Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x30, PropertyId = 0x00, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "CameraViewImageSourceBitmapSize", AvailableFirmwareVersion = new Version("1.0") };
+            CameraViewImageSourceBitmapSize = new CameraViewImageSourceBitmapSizeOptions() { DescriptionKey = nameof(Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x30, PropertyId = 0x00, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "CameraViewImageSourceBitmapSize", AvailableFirmwareVersion = new Version("1.0") };
             CameraViewImageSourceRectInCaptureImage = new HidAccessPropertyRect() { DescriptionKey = nameof(Resources.EgsDeviceSettings_CameraViewImageSourceRectInCaptureImage_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x30, PropertyId = 0x01, ValueTypeOnDevice = "int", DataLength = 4, IsReadOnly = true, NameOfProperty = "CameraViewImageSourceRectInCaptureImage", AvailableFirmwareVersion = new Version("1.0") };
             IsToDrawBordersOnCameraViewImageByDevice = new HidAccessPropertyBoolean() { DescriptionKey = nameof(Resources.EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x30, PropertyId = 0x02, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToDrawBordersOnCameraViewImageByDevice", AvailableFirmwareVersion = new Version("1.0") };
             FaceSelectionOnDeviceMethod = new FaceSelectionOnDeviceMethodOptions() { DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x40, PropertyId = 0xA0, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "FaceSelectionOnDeviceMethod", AvailableFirmwareVersion = new Version("1.0") };
@@ -222,7 +222,7 @@ namespace Egs
             SensorOnePixelSideLengthInMillimeters.Value = 0.0028f;
             LensFNumber.Value = 2.2f;
             SensorExposureTimeInMilliseconds.Value = 8.0f;
-            CameraViewImageSourceBitmapSize.OptionalValue.SelectSingleItemByPredicate(e => e.Value == (CameraViewImageSourceBitmapSizes)1);
+            CameraViewImageSourceBitmapSize.Value = CameraViewImageSourceBitmapSizes.Size_384x240;
             IsToDrawBordersOnCameraViewImageByDevice.Value = false;
             FaceSelectionOnDeviceMethod.Value = 0;
             IsToFixHandDetectionRegions.Value = false;

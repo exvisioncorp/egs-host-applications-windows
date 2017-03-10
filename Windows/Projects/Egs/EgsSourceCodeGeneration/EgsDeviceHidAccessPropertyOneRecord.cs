@@ -67,15 +67,19 @@
         {
             get { return ValueTypeOnHost.StartsWith("EnumValueWithDescription") || ValueTypeOnHost.EndsWith("Options"); }
         }
-        public string DetailTypeName
+        public string HidAccessPropertyOptionalDetailTypeName
         {
             get { return ValueNameOnHost + "Detail"; }
+        }
+        public string HidAccessPropertyOptionalEnumTypeName
+        {
+            get { return ValueNameOnHost + "s"; }
         }
         public string ModifiedValueTypeOnHost
         {
             get
             {
-                if (IsHidAccessPropertyOptional) { return "HidAccessPropertyOptional<" + DetailTypeName + ">"; }
+                if (IsHidAccessPropertyOptional) { return ValueNameOnHost + "Options"; }
                 else if (IsHidAccessPropertyEnumValue) { return ValueNameOnHost + "Options"; }
                 else { return ValueTypeOnHost; }
             }
@@ -125,7 +129,7 @@
             {
                 if (IsHidAccessPropertyOptional)
                 {
-                    ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}.OptionalValue.Options = {1}.GetDefaultList();", ValueNameOnHost, DetailTypeName);
+                    ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, " {0}.OptionalValue.Options = {1}.GetDefaultList();", ValueNameOnHost, HidAccessPropertyOptionalDetailTypeName);
                 }
                 if (ModifiedValueTypeOnHostTypesWhichCallInitializeOnceAtStartup.Any(e => ModifiedValueTypeOnHost.Contains(e)))
                 {
@@ -151,16 +155,9 @@
         {
             var ret = "";
             if (string.IsNullOrEmpty(PropertyInitializationOnWindows)) { return ret; }
-            if (IsHidAccessPropertyOptional)
+            foreach (var initializationCode in PropertyInitializationOnWindows.Split(';'))
             {
-                ret += string.Format(System.Globalization.CultureInfo.InvariantCulture, "            {0}.OptionalValue.SelectSingleItemByPredicate(e => e.{1});", ValueNameOnHost, PropertyInitializationOnWindows) + Environment.NewLine;
-            }
-            else
-            {
-                foreach (var initializationCode in PropertyInitializationOnWindows.Split(';'))
-                {
-                    ret += @"            " + ValueNameOnHost + "." + initializationCode.Trim() + ";" + Environment.NewLine;
-                }
+                ret += @"            " + ValueNameOnHost + "." + initializationCode.Trim() + ";" + Environment.NewLine;
             }
             return ret;
         }
