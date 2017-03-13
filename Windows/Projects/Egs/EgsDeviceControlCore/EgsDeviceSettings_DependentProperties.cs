@@ -28,7 +28,7 @@
 
         void AttachInternalEventHandlersAdditional()
         {
-            CaptureBinning.ValueUpdated += delegate { OnPixelOneSideLengthRelatedPropertiesUpdated(); };
+            CaptureBinning.ValueUpdated += delegate { OnPixelSizeRelatedPropertiesUpdated(); };
             CaptureImageSize.ValueUpdated += delegate
             {
                 CurrentConnectedEgsDevice.FaceDetectionOnHost.CaptureImageWidth = CaptureImageSize.Width;
@@ -46,7 +46,24 @@
                 if (CurrentConnectedEgsDevice == null) { if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); } return; }
                 CurrentConnectedEgsDevice.IsMonitoringTemperature = IsToMonitorTemperature.Value && CurrentConnectedEgsDevice.IsHidDeviceConnected;
             };
-            FaceDetectionMethod.ValueUpdated += delegate { OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged(); };
+            FaceDetectionMethod.ValueUpdated += delegate
+            {
+                switch (FaceDetectionMethod.Value)
+                {
+                    case FaceDetectionMethods.DefaultProcessOnEgsDevice:
+                        if (CameraViewImageSourceBitmapSize.Value != CameraViewImageSourceBitmapSizes.Size_384x240) { CameraViewImageSourceBitmapSize.Value = CameraViewImageSourceBitmapSizes.Size_384x240; }
+                        break;
+                    case FaceDetectionMethods.DefaultProcessOnEgsHostApplication:
+                        if (CameraViewImageSourceBitmapSize.Value != CameraViewImageSourceBitmapSizes.Size_640x480) { CameraViewImageSourceBitmapSize.Value = CameraViewImageSourceBitmapSizes.Size_640x480; }
+                        break;
+                    case FaceDetectionMethods.SdkUserProcess:
+                        break;
+                    default:
+                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                        throw new NotImplementedException();
+                }
+                OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged();
+            };
             IsToDetectFaces.ValueUpdated += delegate { OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged(); };
             IsToDetectHands.ValueUpdated += delegate { OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged(); };
 
@@ -54,10 +71,11 @@
             {
                 CurrentConnectedEgsDevice.FaceDetectionOnHost.CameraViewImageWidth = CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Width;
                 CurrentConnectedEgsDevice.FaceDetectionOnHost.CameraViewImageHeight = CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Height;
+                CurrentConnectedEgsDevice.FaceDetectionOnHost.SetCameraViewImageScale_DividedBy_CaptureImageScale_ToCameraViewImageHeight_DividedBy_CaptureImageheight();
             };
         }
 
-        void OnPixelOneSideLengthRelatedPropertiesUpdated()
+        void OnPixelSizeRelatedPropertiesUpdated()
         {
             // TODO: get the actual binned pixel size from devices.
             var newSensorOnePixelSideLengthInMillimeters = 0.0014f * (int)CaptureBinning.Value;
@@ -72,7 +90,8 @@
                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                 return;
             }
-            CurrentConnectedEgsDevice.FaceDetectionOnHost.CaptureImageBinnedPixelOneSideLength = SensorOnePixelSideLengthInMillimeters.Value;
+            CurrentConnectedEgsDevice.FaceDetectionOnHost.CaptureImageBinnedPixelSize = SensorOnePixelSideLengthInMillimeters.Value;
+            CurrentConnectedEgsDevice.FaceDetectionOnHost.SetCameraViewImageScale_DividedBy_CaptureImageScale_ToCameraViewImageHeight_DividedBy_CaptureImageheight();
         }
 
         void OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged()

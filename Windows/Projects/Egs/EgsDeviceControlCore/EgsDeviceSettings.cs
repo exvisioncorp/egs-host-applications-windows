@@ -113,7 +113,7 @@
                 };
             }
 
-            CaptureExposureMode.OptionalValue.SelectedItemChanged += delegate
+            CaptureExposureMode.ValueUpdated += delegate
             {
                 OnPropertyChanged(nameof(IsCaptureExposureModeManual));
             };
@@ -123,7 +123,7 @@
                 OnPropertyChanged(nameof(IsFaceDetectionMethodDefaultProcessOnEgsHostApplication));
             };
 
-            TouchInterfaceKind.OptionalValue.SelectedItemChanged += (sender, e) =>
+            TouchInterfaceKind.ValueUpdated += (sender, e) =>
             {
                 switch (TouchInterfaceKind.Value)
                 {
@@ -146,7 +146,7 @@
                 }
             };
 
-            CursorSpeedAndPrecisionMode.OptionalValue.SelectedItemChanged += (sender, e) =>
+            CursorSpeedAndPrecisionMode.ValueUpdated += (sender, e) =>
             {
                 // TODO: test
                 switch (CursorSpeedAndPrecisionMode.Value)

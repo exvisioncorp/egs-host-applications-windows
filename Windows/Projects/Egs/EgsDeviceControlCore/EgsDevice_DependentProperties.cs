@@ -135,7 +135,6 @@
             {
                 case FaceDetectionMethods.DefaultProcessOnEgsDevice:
                     {
-                        // TODO: MUSTDO: Work around.  Confirm if it is firmware bug or not.
                         if (Settings.IsToDetectHandsOnDevice.Value != false) { Settings.IsToDetectHandsOnDevice.Value = false; }
                         {
                             if (Settings.IsToDetectFacesOnDevice.Value == true)
@@ -152,18 +151,12 @@
 
                         bool newIsToDetectHandsOnDevice = Settings.IsToDetectHands;
                         if (Settings.IsToDetectHandsOnDevice.Value != newIsToDetectHandsOnDevice) { Settings.IsToDetectHandsOnDevice.Value = newIsToDetectHandsOnDevice; }
-
-                        // TODO: MUSTDO: test
-                        if (Settings.CameraViewImageSourceBitmapSize.Value != CameraViewImageSourceBitmapSizes.Size_384x240) { Settings.CameraViewImageSourceBitmapSize.Value = CameraViewImageSourceBitmapSizes.Size_384x240; }
                     }
                     break;
                 case FaceDetectionMethods.DefaultProcessOnEgsHostApplication:
                     {
                         if (Settings.IsToDetectFacesOnDevice.Value != false) { Settings.IsToDetectFacesOnDevice.Value = false; }
                         if (Settings.IsToFixHandDetectionRegions.Value != true) { Settings.IsToFixHandDetectionRegions.Value = true; }
-
-                        // TODO: MUSTDO: test
-                        if (Settings.CameraViewImageSourceBitmapSize.Value != CameraViewImageSourceBitmapSizes.Size_640x480) { Settings.CameraViewImageSourceBitmapSize.Value = CameraViewImageSourceBitmapSizes.Size_640x480; }
                     }
                     break;
                 case FaceDetectionMethods.SdkUserProcess:

@@ -24,6 +24,7 @@
 
         void AttachInternalEventHandlersAdditional()
         {
+            CaptureBinning.ValueUpdated += delegate { OnPixelSizeRelatedPropertiesUpdated(); };
             CaptureImageSize.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
             CaptureFps.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
             LensEquivalentFocalLengthInMillimeters.ValueUpdated += delegate { OnPropertyChanged(nameof(CameraSpecificationValue)); };
@@ -40,10 +41,9 @@
             IsToDetectFaces.ValueUpdated += delegate { OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged(); };
             IsToDetectHands.ValueUpdated += delegate { OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged(); };
 
-            CaptureBinning.ValueUpdated += delegate { OnPixelOneSideLengthRelatedPropertiesUpdated(); };
         }
 
-        void OnPixelOneSideLengthRelatedPropertiesUpdated()
+        void OnPixelSizeRelatedPropertiesUpdated()
         {
             // TODO: get the actual binned pixel size from devices.
             var newSensorOnePixelSideLengthInMillimeters = 0.0014f * (int)CaptureBinning.Value;

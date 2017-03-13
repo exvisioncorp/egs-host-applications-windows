@@ -22,15 +22,15 @@
                 <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
         </Grid.Resources>
-        
+
         <GroupBox Header="Host Face Detection" DataContext="{Binding Device.FaceDetectionOnHost}">
             <StackPanel Orientation="Vertical" Margin="10,5">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Focal Length[mm]: " />
-                    <TextBlock Text="{Binding CalibratedFocalLength, StringFormat={}{0:G3}}" />
+                    <TextBox Text="{Binding CalibratedFocalLength, StringFormat={}{0:G3}}" MinWidth="50" />
 
-                    <TextBlock Text="  One Pixel Side Length[mm]: " />
-                    <TextBlock Text="{Binding CaptureImageBinnedPixelOneSideLength, StringFormat={}{0:G3}}" />
+                    <TextBlock Text="  Pixel Size[mm]: " />
+                    <TextBox Text="{Binding CaptureImageBinnedPixelSize, StringFormat={}{0:G3}}" MinWidth="50" />
 
                     <TextBlock Text="  CaptureImageSize: (" />
                     <TextBlock Text="{Binding CaptureImageWidth}" />

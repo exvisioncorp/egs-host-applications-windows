@@ -18,6 +18,7 @@
             var t = CalibratedFocalLengthChanged; if (t != null) { t(this, e); }
             OnPropertyChanged(nameof(CalibratedFocalLength));
         }
+        [DataMember]
         public double CalibratedFocalLength
         {
             get { return _CalibratedFocalLength; }
@@ -31,21 +32,22 @@
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        double _CaptureImageBinnedPixelOneSideLength;
-        public event EventHandler CaptureImageBinnedPixelOneSideLengthChanged;
-        protected virtual void OnCaptureImageBinnedPixelOneSideLengthChanged(EventArgs e)
+        double _CaptureImageBinnedPixelSize;
+        public event EventHandler CaptureImageBinnedPixelSizeChanged;
+        protected virtual void OnCaptureImageBinnedPixelSizeChanged(EventArgs e)
         {
-            var t = CaptureImageBinnedPixelOneSideLengthChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged(nameof(CaptureImageBinnedPixelOneSideLength));
+            var t = CaptureImageBinnedPixelSizeChanged; if (t != null) { t(this, e); }
+            OnPropertyChanged(nameof(CaptureImageBinnedPixelSize));
         }
-        public double CaptureImageBinnedPixelOneSideLength
+        [DataMember]
+        public double CaptureImageBinnedPixelSize
         {
-            get { return _CaptureImageBinnedPixelOneSideLength; }
+            get { return _CaptureImageBinnedPixelSize; }
             set
             {
-                if (_CaptureImageBinnedPixelOneSideLength != value)
+                if (_CaptureImageBinnedPixelSize != value)
                 {
-                    _CaptureImageBinnedPixelOneSideLength = value; OnCaptureImageBinnedPixelOneSideLengthChanged(EventArgs.Empty);
+                    _CaptureImageBinnedPixelSize = value; OnCaptureImageBinnedPixelSizeChanged(EventArgs.Empty);
                 }
             }
         }

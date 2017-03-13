@@ -4,8 +4,8 @@ var classDescription = "public partial class EgsDeviceFaceDetectionOnHost";
 
 var propertyElementsList = new List<PropertyInfoForT4Template>()
 {
-    new PropertyInfoForT4Template("", "public", "double", "CalibratedFocalLength", "", true),
-    new PropertyInfoForT4Template("", "public", "double", "CaptureImageBinnedPixelOneSideLength", "", true),
+    new PropertyInfoForT4Template("[DataMember]", "public", "double", "CalibratedFocalLength", "", true),
+    new PropertyInfoForT4Template("[DataMember]", "public", "double", "CaptureImageBinnedPixelSize", "", true),
     new PropertyInfoForT4Template("", "public", "double", "CaptureImageWidth", "", true),
     new PropertyInfoForT4Template("", "public", "double", "CaptureImageHeight", "", true),
     new PropertyInfoForT4Template("", "public", "double", "CameraViewImageWidth", "", true),

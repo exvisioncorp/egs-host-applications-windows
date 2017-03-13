@@ -130,7 +130,6 @@
             {
                 case FaceDetectionMethods.DefaultProcessOnEgsDevice:
                     {
-                        // TODO: MUSTDO: Work around.  Confirm if it is firmware bug or not.
                         if (Settings.IsToDetectHandsOnDevice.Value != false) { Settings.IsToDetectHandsOnDevice.Value = false; }
                         {
                             if (Settings.IsToDetectFacesOnDevice.Value == true)
@@ -147,9 +146,6 @@
 
                         bool newIsToDetectHandsOnDevice = Settings.IsToDetectHands;
                         if (Settings.IsToDetectHandsOnDevice.Value != newIsToDetectHandsOnDevice) { Settings.IsToDetectHandsOnDevice.Value = newIsToDetectHandsOnDevice; }
-
-                        // TODO: MUSTDO: test
-                        if (Settings.CameraViewImageSourceBitmapSize.Value != CameraViewImageSourceBitmapSizes.Size_384x240) { Settings.CameraViewImageSourceBitmapSize.Value = CameraViewImageSourceBitmapSizes.Size_384x240; }
                     }
                     break;
                 case FaceDetectionMethods.DefaultProcessOnEgsHostApplication:
@@ -307,9 +303,15 @@
             }
             else if (e.UpdatedProperty == settings.CameraViewImageSourceBitmapSize)
             {
+                bool isToDetectFacesPrevious = settings.IsToDetectFaces.Value;
+                if (settings.IsToDetectFaces.Value != false) { settings.IsToDetectFaces.Value = false; }
+
                 ResetHidReportObjects();
 
+                // NOTE: Maybe necessary!
                 System.Threading.Thread.Sleep(1000);
+
+                if (settings.IsToDetectFaces.Value != isToDetectFacesPrevious) { settings.IsToDetectFaces.Value = isToDetectFacesPrevious; }
             }
             else if (e.UpdatedProperty == settings.CaptureFps)
             {

@@ -31,21 +31,21 @@
 
         public void Update_DetectorImageScale_DividedBy_CameraViewImageScale()
         {
-            // (CaptureImageBinnedPixelOneSideLength * CaptureImageFaceWidth) : CalibratedFocalLength == RealFaceBreadth : RealDetectableFaceZMaximum
-            // CaptureImageFaceWidth = (CalibratedFocalLength * RealFaceBreadth) / (CaptureImageBinnedPixelOneSideLength * RealDetectableFaceZMaximum);
+            // (CaptureImageBinnedPixelSize * CaptureImageFaceWidth) : CalibratedFocalLength == RealFaceBreadth : RealDetectableFaceZMaximum
+            // CaptureImageFaceWidth = (CalibratedFocalLength * RealFaceBreadth) / (CaptureImageBinnedPixelSize * RealDetectableFaceZMaximum);
 
-            // (DetectorImageBinnedPixelOneSideLength * DetectorImageDetectableFaceWidthMinimum) == (CaptureImageBinnedPixelOneSideLength * CaptureImageFaceWidth)
-            // DetectorImageBinnedPixelOneSideLength == (CaptureImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_CaptureImageScale) / DetectorImageScale_DividedBy_CameraViewImageScale
+            // (DetectorImageBinnedPixelSize * DetectorImageDetectableFaceWidthMinimum) == (CaptureImageBinnedPixelSize * CaptureImageFaceWidth)
+            // DetectorImageBinnedPixelSize == (CaptureImageBinnedPixelSize / CameraViewImageScale_DividedBy_CaptureImageScale) / DetectorImageScale_DividedBy_CameraViewImageScale
 
-            // ((CaptureImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_CaptureImageScale) / DetectorImageScale_DividedBy_CameraViewImageScale)
-            //                                        * DetectorImageDetectableFaceWidthMinimum  == (CaptureImageBinnedPixelOneSideLength * ((CalibratedFocalLength * RealFaceBreadth) / (CaptureImageBinnedPixelOneSideLength * RealDetectableFaceZMaximum)))
-            // ((CaptureImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_CaptureImageScale) / DetectorImageScale_DividedBy_CameraViewImageScale) * DetectorImageDetectableFaceWidthMinimum
+            // ((CaptureImageBinnedPixelSize / CameraViewImageScale_DividedBy_CaptureImageScale) / DetectorImageScale_DividedBy_CameraViewImageScale)
+            //                                        * DetectorImageDetectableFaceWidthMinimum  == (CaptureImageBinnedPixelSize * ((CalibratedFocalLength * RealFaceBreadth) / (CaptureImageBinnedPixelSize * RealDetectableFaceZMaximum)))
+            // ((CaptureImageBinnedPixelSize / CameraViewImageScale_DividedBy_CaptureImageScale) / DetectorImageScale_DividedBy_CameraViewImageScale) * DetectorImageDetectableFaceWidthMinimum
             //                                                                                   == CalibratedFocalLength * RealFaceBreadth / RealDetectableFaceZMaximum
-            // ((CaptureImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_CaptureImageScale) * RealDetectableFaceZMaximum                                 ) * DetectorImageDetectableFaceWidthMinimum
+            // ((CaptureImageBinnedPixelSize / CameraViewImageScale_DividedBy_CaptureImageScale) * RealDetectableFaceZMaximum                                 ) * DetectorImageDetectableFaceWidthMinimum
             //                                                                                   == CalibratedFocalLength * RealFaceBreadth * DetectorImageScale_DividedBy_CameraViewImageScale
 
-            // DetectorImageScale_DividedBy_CameraViewImageScale = ((CaptureImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_CaptureImageScale) * RealDetectableFaceZMaximum) * DetectorImageDetectableFaceWidthMinimum / (CalibratedFocalLength * RealFaceBreadth);
-            DetectorImageScale_DividedBy_CameraViewImageScale = (CaptureImageBinnedPixelOneSideLength * RealDetectableFaceZMaximum * DetectorImageDetectableFaceWidthMinimum) / (CameraViewImageScale_DividedBy_CaptureImageScale * CalibratedFocalLength * RealFaceBreadth);
+            // DetectorImageScale_DividedBy_CameraViewImageScale = ((CaptureImageBinnedPixelSize / CameraViewImageScale_DividedBy_CaptureImageScale) * RealDetectableFaceZMaximum) * DetectorImageDetectableFaceWidthMinimum / (CalibratedFocalLength * RealFaceBreadth);
+            DetectorImageScale_DividedBy_CameraViewImageScale = (CaptureImageBinnedPixelSize * RealDetectableFaceZMaximum * DetectorImageDetectableFaceWidthMinimum) / (CameraViewImageScale_DividedBy_CaptureImageScale * CalibratedFocalLength * RealFaceBreadth);
         }
 
         [DataMember]
@@ -119,8 +119,8 @@
         {
             get
             {
-                // (CaptureImagePalmImageWidthMaximum * CaptureImageBinnedPixelOneSideLength) : CalibratedFocalLength == RealPalmBreadth : RealDetectablePalmZMaximum
-                var ret = (CalibratedFocalLength * RealPalmBreadth) / (CaptureImagePalmImageWidthMaximum * CaptureImageBinnedPixelOneSideLength);
+                // (CaptureImagePalmImageWidthMaximum * CaptureImageBinnedPixelSize) : CalibratedFocalLength == RealPalmBreadth : RealDetectablePalmZMaximum
+                var ret = (CalibratedFocalLength * RealPalmBreadth) / (CaptureImagePalmImageWidthMaximum * CaptureImageBinnedPixelSize);
                 return ret;
             }
         }
@@ -228,8 +228,8 @@
                 CalibratedFocalLength = 2.39;
             }
 
-            // pixelOneSideLength: 0.0028[mm] (2x2 binning).
-            CaptureImageBinnedPixelOneSideLength = 0.0028;
+            // Pixel Size (One Side Length): 0.0028[mm] (2x2 binning).
+            CaptureImageBinnedPixelSize = 0.0028;
 
             CaptureImageWidth = 960;
             CaptureImageHeight = 540;
@@ -401,10 +401,10 @@
             // TODO: MUSTDO: SDK users can set SetCameraViewImageScale_DividedBy_CaptureImageScale by their method.
             SetCameraViewImageScale_DividedBy_CaptureImageScale_ToCameraViewImageHeight_DividedBy_CaptureImageheight();
 
-            double CameraViewImagePixelOneSideLengthOnSensor = CaptureImageBinnedPixelOneSideLength / CameraViewImageScale_DividedBy_CaptureImageScale;
+            double CameraViewImagePixelSizeOnSensor = CaptureImageBinnedPixelSize / CameraViewImageScale_DividedBy_CaptureImageScale;
 
-            // (CameraViewImagePixelOneSideLengthOnSensor * cameraViewImageFaceRect.Width) : CalibratedFocalLength = RealFaceBreadth : RealFaceCenterZ
-            double RealFaceBreadthOnSensor = CameraViewImagePixelOneSideLengthOnSensor * cameraViewImageFaceRect.Width;
+            // (CameraViewImagePixelSizeOnSensor * cameraViewImageFaceRect.Width) : CalibratedFocalLength = RealFaceBreadth : RealFaceCenterZ
+            double RealFaceBreadthOnSensor = CameraViewImagePixelSizeOnSensor * cameraViewImageFaceRect.Width;
             double RealFaceCenterZ = CalibratedFocalLength * (RealFaceBreadth / RealFaceBreadthOnSensor);
 
             // You can define different Z values to right and left.  (for example 2 players play)
@@ -420,9 +420,9 @@
             // Positive X => Right
             // Positive Y => Bottom
             double NormalizedCameraViewImageFaceCenterX = cameraViewImageFaceRect.X + cameraViewImageFaceRect.Width / 2.0 - CameraViewImageWidth / 2.0;
-            double RealFaceCenterX = (CameraViewImagePixelOneSideLengthOnSensor * NormalizedCameraViewImageFaceCenterX) * (RealFaceCenterZ / CalibratedFocalLength);
+            double RealFaceCenterX = (CameraViewImagePixelSizeOnSensor * NormalizedCameraViewImageFaceCenterX) * (RealFaceCenterZ / CalibratedFocalLength);
             double NormalizedCameraViewImageFaceCenterY = cameraViewImageFaceRect.Y + cameraViewImageFaceRect.Height / 2.0 - CameraViewImageHeight / 2.0;
-            double RealFaceCenterY = (CameraViewImagePixelOneSideLengthOnSensor * NormalizedCameraViewImageFaceCenterY) * (RealFaceCenterZ / CalibratedFocalLength);
+            double RealFaceCenterY = (CameraViewImagePixelSizeOnSensor * NormalizedCameraViewImageFaceCenterY) * (RealFaceCenterZ / CalibratedFocalLength);
 
             double RealRightDetectionAreaCenterX = RealFaceCenterX + RealHandDetectionAreaCenterXOffset;
             double RealRightDetectionAreaCenterY = RealFaceCenterY + RealHandDetectionAreaCenterYOffset;
@@ -434,9 +434,9 @@
             double RealLeftDetectionAreaTop = RealLeftDetectionAreaCenterY - RealHandDetectionAreaHeight / 2.0;
 
 
-            // (CaptureImageBinnedPixelOneSideLength * CaptureImageXY) : CalibratedFocalLength = RealXY : RealZ
-            // CaptureImageXY = (CalibratedFocalLength / (CaptureImageBinnedPixelOneSideLength * RealZ)) * RealXY
-            double CameraViewImagePixelsCount_DividedBy_Real = CalibratedFocalLength / (CameraViewImagePixelOneSideLengthOnSensor * RealDetectionAreaCenterZ);
+            // (CaptureImageBinnedPixelSize * CaptureImageXY) : CalibratedFocalLength = RealXY : RealZ
+            // CaptureImageXY = (CalibratedFocalLength / (CaptureImageBinnedPixelSize * RealZ)) * RealXY
+            double CameraViewImagePixelsCount_DividedBy_Real = CalibratedFocalLength / (CameraViewImagePixelSizeOnSensor * RealDetectionAreaCenterZ);
             double CameraViewImageRightDetectionAreaX = CameraViewImagePixelsCount_DividedBy_Real * RealRightDetectionAreaLeft + CameraViewImageWidth / 2.0;
             double CameraViewImageRightDetectionAreaY = CameraViewImagePixelsCount_DividedBy_Real * RealRightDetectionAreaTop + CameraViewImageHeight / 2.0;
             double CameraViewImageRightDetectionAreaWidth = CameraViewImagePixelsCount_DividedBy_Real * RealHandDetectionAreaWidth;
@@ -456,7 +456,7 @@
                 (int)CameraViewImageLeftDetectionAreaWidth,
                 (int)CameraViewImageLeftDetectionAreaHeight);
 
-            double CaptureImagePalmImageWidth_DividedBy_RealPalmBreadth = CalibratedFocalLength / (CaptureImageBinnedPixelOneSideLength * RealDetectionAreaCenterZ);
+            double CaptureImagePalmImageWidth_DividedBy_RealPalmBreadth = CalibratedFocalLength / (CaptureImageBinnedPixelSize * RealDetectionAreaCenterZ);
             double CaptureImageRightDetectionAreaX = CaptureImagePalmImageWidth_DividedBy_RealPalmBreadth * RealRightDetectionAreaLeft + CaptureImageWidth / 2.0;
             double CaptureImageRightDetectionAreaY = CaptureImagePalmImageWidth_DividedBy_RealPalmBreadth * RealRightDetectionAreaTop + CaptureImageHeight / 2.0;
             double CaptureImageRightDetectionAreaWidth = CaptureImagePalmImageWidth_DividedBy_RealPalmBreadth * RealHandDetectionAreaWidth;
