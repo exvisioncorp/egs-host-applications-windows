@@ -18,6 +18,10 @@
             hWndHiddenOwner = NativeMethods.GetWindow(hWnd, NativeMethods.GetWindowCmd.GW_OWNER);
             if (hWndHiddenOwner != IntPtr.Zero)
             {
+                // http://stackoverflow.com/questions/31362077/loadfromcontext-occurred/31760355#31760355
+                // If "Managed Debugging Assistant 'LoadFromContext' has detected a problem in ..." occurs in VS 2015 and so on,
+                // please uncheck the following option:
+                // Tools –> Options –> Debugging –> General –> Enable UI Debugging Tools for XAML
                 NativeMethods.SetWindowPos(hWnd, HWND_TOPMOST, zeroWindowPostLeftTopValue, zeroWindowPostLeftTopValue, 0, 0,
                     NativeMethods.SetWindowPosFlags.SWP_NOMOVE
                     | NativeMethods.SetWindowPosFlags.SWP_NOSIZE
