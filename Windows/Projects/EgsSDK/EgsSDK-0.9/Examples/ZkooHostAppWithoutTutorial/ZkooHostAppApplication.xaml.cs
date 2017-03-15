@@ -35,28 +35,9 @@
                     return;
                 }
 
-                try
-                {
-                    // Sorry, EgsHostSettings is no longer available.
-                    // EgsHostAppBaseComponents creates and has the object of EgsDeviceSettings
-                    hostAppComponents = new EgsHostAppBaseComponents();
-                    hostAppComponents.InitializeOnceAtStartup();
-
-                    ZkooHostAppWithoutTutorial.Properties.Settings.Default.Reload();
-                    if (string.IsNullOrEmpty(ZkooHostAppWithoutTutorial.Properties.Settings.Default.WholeSettingsAsJsonString) == false)
-                    {
-                        Newtonsoft.Json.JsonConvert.PopulateObject(ZkooHostAppWithoutTutorial.Properties.Settings.Default.WholeSettingsAsJsonString, hostAppComponents);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                    MessageBox.Show("Failed to load the last settings.", EgsHostAppBaseComponents.EgsHostApplicationName);
-                    ShutdownApplicationByException(ex);
-                    return;
-                }
-
+                hostAppComponents = new EgsHostAppBaseComponents();
+                hostAppComponents.InitializeOnceAtStartup();
+                if (SettingsSerialization.LoadSettingsJsonFile(hostAppComponents) == false) { hostAppComponents.Reset(); }
 
                 EgsHostAppBaseComponents.EgsHostApplicationName = "ZKOO";
                 hostAppComponents.AppTrayIconAndMenuItems.TextOfNotifyIconInTray = EgsHostAppBaseComponents.EgsHostApplicationName;
@@ -66,8 +47,7 @@
                 hostAppComponents.Disposing += delegate
                 {
                     // NOTE: Save settings before Dispose().
-                    // EgsDevice.Dispose() calls "Settings.IsToDetectFace.Value = false".
-                    SaveEgsHostAppBaseComponentsToPropertiesSettings(hostAppComponents);
+                    SettingsSerialization.SaveSettingsJsonFile(hostAppComponents);
                 };
 
                 base.Exit += delegate
@@ -92,27 +72,6 @@
             }
         }
 
-        void SaveEgsHostAppBaseComponentsToPropertiesSettings(EgsHostAppBaseComponents obj)
-        {
-            // NOTE: Sometimes, this serialization fails!! and if wrong settings is saved, it causes various problems.  So it checks with deserialization.
-            try
-            {
-                var serializationResult = Newtonsoft.Json.JsonConvert.SerializeObject(hostAppComponents, Newtonsoft.Json.Formatting.Indented);
-                var deserializationResult = Newtonsoft.Json.JsonConvert.DeserializeObject(serializationResult);
-                if (deserializationResult == null) { throw new Exception("Save Settings failed."); }
-                ZkooHostAppWithoutTutorial.Properties.Settings.Default.WholeSettingsAsJsonString = serializationResult;
-                ZkooHostAppWithoutTutorial.Properties.Settings.Default.Save();
-            }
-            catch (Exception ex)
-            {
-                if (ApplicationCommonSettings.IsDebugging)
-                {
-                    Debugger.Break();
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
-
         void ShutdownApplicationByException(Exception ex)
         {
             if (ex is EgsHostApplicationIsClosingException)
@@ -126,14 +85,6 @@
                 // NOTE: This is not handled exceptions.  At first it saves safer settings, and then it shows "we're sorry" window.
                 try
                 {
-                    // If settings object is broken, Settings.Default.[SomeMember].get and Reset() method cause exceptions, and Save() method does not save the updated settings without any exceptions!
-                    //ZkooHostAppWithoutTutorial.Properties.Settings.Default.WholeSettingsAsJsonString = ""; // error
-                    //ZkooHostAppWithoutTutorial.Properties.Settings.Default.Reset(); // error
-                    //var defaultSettings = new ZkooHostAppWithoutTutorial.Properties.Settings();
-                    //defaultSettings.WholeSettingsAsJsonString = ""; // error
-                    //defaultSettings.Properties.Clear();
-                    //defaultSettings.Save(); // do nothing without any exception!
-
                     // NOTE: But in some cases, application is already shutdown, so this code itself can occur exceptions
                     var window = new NotHandledExceptionReportWindow();
                     window.Initialize(ex);
