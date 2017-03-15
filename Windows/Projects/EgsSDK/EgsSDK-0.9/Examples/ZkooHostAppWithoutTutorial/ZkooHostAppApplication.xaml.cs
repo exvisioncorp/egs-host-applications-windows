@@ -51,19 +51,10 @@
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
-                    if (ApplicationCommonSettings.IsDebugging)
-                    {
-                        Debugger.Break();
-                        MessageBox.Show("Failed to load the last settings.", EgsHostAppBaseComponents.EgsHostApplicationName);
-                    }
-
-                    // It constructs the object again.
-                    if (hostAppComponents != null) { hostAppComponents.Dispose(); hostAppComponents = null; }
-                    hostAppComponents = new EgsHostAppBaseComponents();
-                    hostAppComponents.InitializeOnceAtStartup();
-                    // Save the safe settings.
-                    ZkooHostAppWithoutTutorial.Properties.Settings.Default.WholeSettingsAsJsonString = Newtonsoft.Json.JsonConvert.SerializeObject(hostAppComponents, Newtonsoft.Json.Formatting.Indented);
-                    ZkooHostAppWithoutTutorial.Properties.Settings.Default.Save();
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    MessageBox.Show("Failed to load the last settings.", EgsHostAppBaseComponents.EgsHostApplicationName);
+                    ShutdownApplicationByException(ex);
+                    return;
                 }
 
 
@@ -76,16 +67,13 @@
                 {
                     // NOTE: Save settings before Dispose().
                     // EgsDevice.Dispose() calls "Settings.IsToDetectFace.Value = false".
-                    var str = Newtonsoft.Json.JsonConvert.SerializeObject(hostAppComponents, Newtonsoft.Json.Formatting.Indented);
-                    ZkooHostAppWithoutTutorial.Properties.Settings.Default.WholeSettingsAsJsonString = str;
-                    ZkooHostAppWithoutTutorial.Properties.Settings.Default.Save();
-                    //if (Application.Current != null) { Application.Current.Shutdown(); }
+                    SaveEgsHostAppBaseComponentsToPropertiesSettings(hostAppComponents);
                 };
 
                 base.Exit += delegate
                 {
                     if (hostAppComponents != null) { hostAppComponents.Dispose(); hostAppComponents = null; }
-                    DuplicatedProcessStartBlocking.ReleaseMutex();
+                    ReleaseMutexAndShutdown();
                 };
 
                 hostAppComponents.CheckIfDeviceFirmwareIsLatestOrNotAndExitApplicationIfFailed();
@@ -104,43 +92,66 @@
             }
         }
 
+        void SaveEgsHostAppBaseComponentsToPropertiesSettings(EgsHostAppBaseComponents obj)
+        {
+            // NOTE: Sometimes, this serialization fails!! and if wrong settings is saved, it causes various problems.  So it checks with deserialization.
+            try
+            {
+                var serializationResult = Newtonsoft.Json.JsonConvert.SerializeObject(hostAppComponents, Newtonsoft.Json.Formatting.Indented);
+                var deserializationResult = Newtonsoft.Json.JsonConvert.DeserializeObject(serializationResult);
+                if (deserializationResult == null) { throw new Exception("Save Settings failed."); }
+                ZkooHostAppWithoutTutorial.Properties.Settings.Default.WholeSettingsAsJsonString = serializationResult;
+                ZkooHostAppWithoutTutorial.Properties.Settings.Default.Save();
+            }
+            catch (Exception ex)
+            {
+                if (ApplicationCommonSettings.IsDebugging)
+                {
+                    Debugger.Break();
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
         void ShutdownApplicationByException(Exception ex)
         {
             if (ex is EgsHostApplicationIsClosingException)
             {
+                // NOTE: Assuming that this is the correct way to shutdown the application.
                 MessageBox.Show(Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ApplicationWillExit, EgsHostAppBaseComponents.EgsHostApplicationName, MessageBoxButton.OK);
-                if (hostAppComponents != null)
-                {
-                    hostAppComponents.Dispose();
-                    hostAppComponents = null;
-                }
-                else
-                {
-                    if (Application.Current != null) { Application.Current.Shutdown(); }
-                }
-                return;
+                if (hostAppComponents != null) { hostAppComponents.Dispose(); hostAppComponents = null; }
             }
-            try
+            else
             {
-                if (true)
+                // NOTE: This is not handled exceptions.  At first it saves safer settings, and then it shows "we're sorry" window.
+                try
                 {
+                    // If settings object is broken, Settings.Default.[SomeMember].get and Reset() method cause exceptions, and Save() method does not save the updated settings without any exceptions!
+                    //ZkooHostAppWithoutTutorial.Properties.Settings.Default.WholeSettingsAsJsonString = ""; // error
+                    //ZkooHostAppWithoutTutorial.Properties.Settings.Default.Reset(); // error
+                    //var defaultSettings = new ZkooHostAppWithoutTutorial.Properties.Settings();
+                    //defaultSettings.WholeSettingsAsJsonString = ""; // error
+                    //defaultSettings.Properties.Clear();
+                    //defaultSettings.Save(); // do nothing without any exception!
+
+                    // NOTE: But in some cases, application is already shutdown, so this code itself can occur exceptions
                     var window = new NotHandledExceptionReportWindow();
                     window.Initialize(ex);
                     window.ShowDialog();
                 }
-                using (var saferObj = new EgsHostAppBaseComponents())
+                catch (Exception ex2)
                 {
-                    // NOTE: Save safer settings.
-                    saferObj.InitializeOnceAtStartup();
-                    var str = Newtonsoft.Json.JsonConvert.SerializeObject(saferObj, Newtonsoft.Json.Formatting.Indented);
-                    ZkooHostAppWithoutTutorial.Properties.Settings.Default.WholeSettingsAsJsonString = str;
-                    ZkooHostAppWithoutTutorial.Properties.Settings.Default.Save();
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    MessageBox.Show(ex2.Message);
                 }
             }
-            catch (Exception ex2)
-            {
-                Debug.WriteLine(ex2.Message);
-            }
+            ReleaseMutexAndShutdown();
+        }
+
+        void ReleaseMutexAndShutdown()
+        {
+            DuplicatedProcessStartBlocking.ReleaseMutex();
+            // TODO: MUSTDO: confirm this way is right or not.
             if (Application.Current != null) { Application.Current.Shutdown(); }
         }
     }
