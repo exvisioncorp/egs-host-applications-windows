@@ -160,7 +160,6 @@
                     var hr = audioPlayer.StartAsync(filePath);
                     if (hr == false)
                     {
-                        // TODO: MUSTDO: Find the reason that it cannot open audio files only in DEBUB mode.
                         hasAllFiles = false;
                         break;
                     }
@@ -169,12 +168,12 @@
             }
             catch (Exception ex)
             {
+                hasAllFiles = false;
                 MessageBox.Show(ex.Message);
             }
             if (hasAllFiles == false)
             {
-                if (Application.Current != null) { Application.Current.Shutdown(); }
-                return;
+                throw new Exception("Application could not find one or more sound files, or application could not play the sound file on the current sound device.");
             }
         }
 
