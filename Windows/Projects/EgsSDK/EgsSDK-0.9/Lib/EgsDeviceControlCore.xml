@@ -164,6 +164,11 @@
         <member name="M:Egs.DotNetUtility.RangedRangeType`1.Equals(System.Object)">
             <summary>Value, Minimum, Maximum, SmallChange, LargeChange and TickFrequency are compared.</summary>
         </member>
+        <member name="T:Egs.DotNetUtility.SettingsSerialization">
+            <summary>
+            Save [DataMember] properties with Json.NET
+            </summary>
+        </member>
         <member name="T:Egs.Win32.MonitorDpiType">
             <summary>
             Identifies dots per inch (dpi) type.  Refer to https://msdn.microsoft.com/en-us/library/windows/desktop/dn280511(v=vs.85).aspx
