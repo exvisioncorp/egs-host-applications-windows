@@ -231,6 +231,26 @@
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        double _RealFaceCenterZ;
+        public event EventHandler RealFaceCenterZChanged;
+        protected virtual void OnRealFaceCenterZChanged(EventArgs e)
+        {
+            var t = RealFaceCenterZChanged; if (t != null) { t(this, e); }
+            OnPropertyChanged(nameof(RealFaceCenterZ));
+        }
+        public double RealFaceCenterZ
+        {
+            get { return _RealFaceCenterZ; }
+            set
+            {
+                if (_RealFaceCenterZ != value)
+                {
+                    _RealFaceCenterZ = value; OnRealFaceCenterZChanged(EventArgs.Empty);
+                }
+            }
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         System.Drawing.Rectangle _CameraViewImageRightHandDetectionArea;
         public event EventHandler CameraViewImageRightHandDetectionAreaChanged;
         protected virtual void OnCameraViewImageRightHandDetectionAreaChanged(EventArgs e)

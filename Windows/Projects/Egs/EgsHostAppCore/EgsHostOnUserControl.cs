@@ -104,6 +104,7 @@
         public SimpleDelegateCommand ResetSettingsCommand { get; private set; }
         public SimpleDelegateCommand SaveSettingsToFlashCommand { get; private set; }
         public SimpleDelegateCommand ResetDeviceCommand { get; private set; }
+        public SimpleDelegateCommand SendManySettingsPacketsCommand { get; private set; }
 
 
         internal virtual void RaiseMultipleObjectsPropertyChanged()
@@ -140,10 +141,12 @@
             ResetSettingsCommand = new SimpleDelegateCommand();
             SaveSettingsToFlashCommand = new SimpleDelegateCommand();
             ResetDeviceCommand = new SimpleDelegateCommand();
+            SendManySettingsPacketsCommand = new SimpleDelegateCommand();
 
             ResetSettingsCommand.CanPerform = true;
             SaveSettingsToFlashCommand.CanPerform = false;
             ResetDeviceCommand.CanPerform = false;
+            SendManySettingsPacketsCommand.CanPerform = false;
 
             ResetSettingsCommand.PerformEventHandler += delegate
             {
@@ -160,12 +163,32 @@
                 if (MessageBox.Show(Resources.CommonStrings_ResetDeviceConfirmation, Resources.CommonStrings_Confirmation, MessageBoxButton.OKCancel) != MessageBoxResult.OK) { return; }
                 Device.ResetDevice();
             };
+            SendManySettingsPacketsCommand.PerformEventHandler += delegate
+            {
+                if (MessageBox.Show("Send many settings packets for HID stress test?", Resources.CommonStrings_Confirmation, MessageBoxButton.OKCancel) != MessageBoxResult.OK) { return; }
+                System.Threading.Tasks.Task.Run(() =>
+                {
+                    var elapsed = Stopwatch.StartNew();
+                    for (int i = 0; i < 10000; i++)
+                    {
+                        if (elapsed.ElapsedMilliseconds > 1000)
+                        {
+                            MessageBox.Show("Elapsed > 1000[ms].  Test will stop.");
+                            return;
+                        }
+                        Device.Settings.StatusLedBrightnessMaximum.Value = (byte)((i * 5) % 256);
+                        elapsed.Restart();
+                    }
+                    MessageBox.Show("Completed sending many settings packets!");
+                });
+            };
 
             Device.IsHidDeviceConnectedChanged += Device_IsHidDeviceConnectedChanged;
 
             // NOTE: The next 2 lines are necessary.
             SaveSettingsToFlashCommand.CanPerform = Device.IsHidDeviceConnected;
             ResetDeviceCommand.CanPerform = Device.IsHidDeviceConnected;
+            SendManySettingsPacketsCommand.CanPerform = Device.IsHidDeviceConnected;
 
             CursorDrawingTimingMethod.ValueUpdated += delegate { OnCursorDrawingTimingMethod_SelectedItemChanged(); };
             CameraViewBordersAndPointersAreDrawnBy.ValueUpdated += CameraViewBordersAndPointersAreDrawnBy_SelectedItemChanged;
@@ -241,6 +264,7 @@
         {
             SaveSettingsToFlashCommand.CanPerform = Device.IsHidDeviceConnected;
             ResetDeviceCommand.CanPerform = Device.IsHidDeviceConnected;
+            SendManySettingsPacketsCommand.CanPerform = Device.IsHidDeviceConnected;
         }
         void Device_EgsGestureHidReport_ReportUpdated(object sender, EventArgs e)
         {

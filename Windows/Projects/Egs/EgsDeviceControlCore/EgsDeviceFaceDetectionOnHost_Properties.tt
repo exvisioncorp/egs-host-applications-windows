@@ -18,6 +18,8 @@ var propertyElementsList = new List<PropertyInfoForT4Template>()
 
     new PropertyInfoForT4Template("[DataMember]", "public", "bool", "IsToUpdateRealHandDetectionAreaFromBodyParameters", "", true),
 
+    new PropertyInfoForT4Template("", "public", "double", "RealFaceCenterZ", "", true),
+
     new PropertyInfoForT4Template("", "public", "System.Drawing.Rectangle", "CameraViewImageRightHandDetectionArea", "private", true),
     new PropertyInfoForT4Template("", "public", "System.Drawing.Rectangle", "CameraViewImageLeftHandDetectionArea", "private", true),
     new PropertyInfoForT4Template("", "public", "System.Drawing.Rectangle", "CaptureImageRightHandDetectionArea", "private", true),

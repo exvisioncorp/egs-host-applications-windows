@@ -535,6 +535,7 @@
                 CameraViewImageSourceBitmapCapture.DisposeWithClearingVideoCaptureDeviceInformationOnDeviceDisconnected();
             }
             CameraViewImageSourceBitmapCapture.UpdateIsUpdatingImageSource();
+            ResetHidReportObjects();
         }
 
         internal void Close()

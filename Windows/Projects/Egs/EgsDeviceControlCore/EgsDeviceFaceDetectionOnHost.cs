@@ -142,8 +142,8 @@
             // Parameters input by user
             // 3[m].  10 feet UI
             MaxDetectableDistanceInMeter = new RangedDouble(3.0, 1.0, 5.0, 0.1, 0.5, 0.1);
-            // (140,200) Avg: M:162 F:156
-            RealFaceBreadth = new RangedDouble(159, 140, 200, 1, 5, 1);
+            // (120,200) Avg: M:162 F:156  But the actual recognition result breadth is smaller than this definition.
+            RealFaceBreadth = new RangedDouble(159, 120, 200, 1, 5, 1);
             // ( 65, 95) Avg: M: 82 F: 74
             RealPalmBreadth = new RangedDouble(78, 65, 95, 1, 3, 1);
 
@@ -161,6 +161,8 @@
             RealHandDetectionAreaCenterZOffset = new RangedDouble(RealHandDetectionAreaCenterZOffset_DividedBy_RealShoulderBreadth * RealShoulderBreadth, -300, 0, 10, 50, 10);
             RealHandDetectionAreaWidth = new RangedDouble(RealHandDetectionAreaWidth_DividedBy_RealPalmBreadth * RealPalmBreadth, 100, 500, 10, 50, 10);
             RealHandDetectionAreaHeight = new RangedDouble(RealHandDetectionAreaHeight_DividedBy_RealPalmBreadth * RealPalmBreadth, 100, 500, 10, 50, 10);
+
+            RealFaceCenterZ = double.PositiveInfinity;
 
             SensitivityAndSpecificity = new RangedInt(0, -3, 3, 1, 1, 1);
 
@@ -248,9 +250,9 @@
             RealHandDetectionAreaWidth_DividedBy_RealPalmBreadth.Value = 4.5;
             RealHandDetectionAreaHeight_DividedBy_RealPalmBreadth.Value = 5.1;
 
-            UpdateRealHandDetectionAreaParametersFromRealBodyParameters();
-
             SensitivityAndSpecificity.Value = 0;
+
+            UpdateRealHandDetectionAreaParametersFromRealBodyParameters();
 
             DetectorImageDetectableFaceWidthMinimum = 73;
             SetCameraViewImageScale_DividedBy_CaptureImageScale_ToCameraViewImageHeight_DividedBy_CaptureImageheight();
@@ -259,7 +261,7 @@
 
             DetectFaceIntervalMillisecondsMinimum.Value = 200;
 
-            //IsDetecting = false;
+            RealFaceCenterZ = double.PositiveInfinity;
 
             DetectedFaceRectsInCameraViewImage = new List<System.Drawing.Rectangle>();
 
@@ -325,7 +327,16 @@
             {
                 DlibArray2dUcharImage.SetBitmap(clonedBmp);
             }
-            Worker.RunWorkerAsync();
+
+            if (true)
+            {
+                Worker.RunWorkerAsync();
+            }
+            else
+            {
+                DetectFaces();
+                DetectFaces_RunWorkerCompleted();
+            }
         }
 
         public void DetectFaces()
@@ -405,7 +416,8 @@
 
             // (CameraViewImagePixelSizeOnSensor * cameraViewImageFaceRect.Width) : CalibratedFocalLength = RealFaceBreadth : RealFaceCenterZ
             double RealFaceBreadthOnSensor = CameraViewImagePixelSizeOnSensor * cameraViewImageFaceRect.Width;
-            double RealFaceCenterZ = CalibratedFocalLength * (RealFaceBreadth / RealFaceBreadthOnSensor);
+
+            RealFaceCenterZ = CalibratedFocalLength * (RealFaceBreadth / RealFaceBreadthOnSensor);
 
             // You can define different Z values to right and left.  (for example 2 players play)
             double RealDetectionAreaCenterZ = RealFaceCenterZ + RealHandDetectionAreaCenterZOffset;

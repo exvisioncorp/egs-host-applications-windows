@@ -58,8 +58,7 @@
                     SettingsSerialization.SaveSettingsJsonFile(hostAppComponents);
                     zkooTutorialModel = null;
                     // NOTE: IMPORTANT!
-                    navigator.Close();
-                    navigator = null;
+                    if (navigator != null) { navigator.Close(); navigator = null; }
                 };
 
                 base.Exit += delegate

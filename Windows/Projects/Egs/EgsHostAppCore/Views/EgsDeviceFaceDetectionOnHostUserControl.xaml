@@ -51,8 +51,10 @@
                     <TextBlock Text="{Binding DetectorImageScale_DividedBy_CameraViewImageScale, StringFormat={}{0:G3}}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Elapsed [ms]: " />
-                    <TextBlock Text="{Binding DetectionElapsedMilliseconds, StringFormat={}{0:G3}}" />
+                    <TextBlock Text="Face Z[mm]: " />
+                    <TextBlock Text="{Binding RealFaceCenterZ, StringFormat={}{0:F0}}" />
+                    <TextBlock Text="  Elapsed[ms]: " />
+                    <TextBlock Text="{Binding DetectionElapsedMilliseconds, StringFormat={}{0:D}}" />
                 </StackPanel>
 
                 <GroupBox Header="Basic Parameters (B. means Breadth)">
