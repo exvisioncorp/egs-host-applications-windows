@@ -60,7 +60,7 @@
         {
             get
             {
-                var ret = IsHidDeviceConnected ? HardwareType.OptionalValue.SelectedItem.Description : "";
+                var ret = IsHidDeviceConnected ? HardwareType.SelectedItem.Description : "";
                 return ret;
             }
         }

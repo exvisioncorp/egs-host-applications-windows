@@ -163,7 +163,7 @@
             IsMouseHovered = false;
             WindowStateHostApplicationsControlMethod = new CameraViewWindowStateHostApplicationsControlMethodOptions();
             WindowStateUsersControlMethod = new CameraViewWindowStateUsersControlMethodOptions();
-            
+
             MinimizeCommand = new SimpleDelegateCommand();
             SettingsCommand = new SimpleDelegateCommand();
             ExitCommand = new SimpleDelegateCommand();
@@ -196,7 +196,7 @@
             Trace.Assert(device != null);
             Device = device;
 
-            UpdateWindowLocationAndSize();
+            LocationAndSize = GetDefaultLocationAndSize();
 
             // NOTE: Thie is CameraView Window's Visibility.  This does not mean if the app captures images from device or not.
             Device.EgsGestureHidReport.RecognitionStateChanged += EgsGestureHidReport_RecognitionStateChanged;
@@ -214,16 +214,54 @@
 
             WindowState = WindowState.Normal;
 
-            UpdateWindowLocationAndSize();
+            LocationAndSize = GetDefaultLocationAndSize();
         }
 
-        void UpdateWindowLocationAndSize()
+        [DataMember]
+        public System.Windows.Rect LocationAndSize
         {
-            var rect = Device.Settings.GetCameraViewWindowRectByDefaultValue();
-            Left = rect.X;
-            Top = rect.Y;
-            Width = rect.Width;
-            Height = rect.Height;
+            get { return new Rect(Left, Top, Width, Height); }
+            set
+            {
+                var dpi = Dpi.DpiFromHdcForTheEntireScreen;
+                var screens = System.Windows.Forms.Screen.AllScreens;
+                bool isInsideAnyScreen = screens.Any(e => e.Bounds.ToWpfRect().Contains(value));
+                if (isInsideAnyScreen == false)
+                {
+                    value = GetDefaultLocationAndSize();
+                }
+
+                _Left = value.X;
+                _Top = value.Y;
+                _Width = value.Width;
+                _Height = value.Height;
+                OnLeftChanged(EventArgs.Empty);
+                OnTopChanged(EventArgs.Empty);
+                OnWidthChanged(EventArgs.Empty);
+                OnHeightChanged(EventArgs.Empty);
+            }
+        }
+
+        public void ResetLocationAndSizeIfNotInsideAnyScreen()
+        {
+            LocationAndSize = LocationAndSize;
+        }
+
+        public Rect GetDefaultLocationAndSize()
+        {
+            // MUSTDO: test with changing DPI, because it can change the position of Camera View.
+            // System.Window.Rectangle is struct, so it is difficult to use it in Binding.
+            if (Device.Settings == null) { Debugger.Break(); throw new EgsDeviceOperationException("Device.Settings == null"); }
+
+            var wVal = Device.Settings.CameraViewImageSourceBitmapSize.SelectedItem.Width + 10;
+            var hVal = Device.Settings.CameraViewImageSourceBitmapSize.SelectedItem.Height + 12;
+
+            var dpi = Dpi.DpiFromHdcForTheEntireScreen;
+            var primaryScreen = dpi.GetScaledRectangle(System.Windows.Forms.Screen.PrimaryScreen.Bounds);
+            var xVal = (int)(primaryScreen.Width - wVal - primaryScreen.Width / 40);
+            var yVal = primaryScreen.Height / 10;
+
+            return new Rect(xVal, yVal, wVal, hVal);
         }
 
         public void SetWindowStateToNormal()

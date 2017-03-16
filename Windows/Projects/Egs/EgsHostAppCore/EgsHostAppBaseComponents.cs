@@ -216,14 +216,18 @@
                 CameraViewWindow.ReloadDataContext();
             };
 
-            CameraViewWindow.Closed += delegate
+            if (false)
             {
-                if (IsToDisposeThisWhenCameraViewWindowClosed)
+                CameraViewWindow.Closed += delegate
                 {
-                    CameraViewWindow = null;
-                    this.Dispose();
-                }
-            };
+                    if (IsToDisposeThisWhenCameraViewWindowClosed)
+                    {
+                        CameraViewWindow = null;
+                        // TODO: MUSTDO: Application does not exit, if users click "close window" on the icon of CameraView on the task bar!!
+                        this.Dispose();
+                    }
+                };
+            }
 
             if (ApplicationCommonSettings.IsDebugging)
             {
@@ -383,8 +387,8 @@
                 if (SettingsWindow != null) { SettingsWindow.CloseToExitApplication(); SettingsWindow = null; }
                 if (CameraViewWindow != null) { CameraViewWindow.Close(); CameraViewWindow = null; }
             }
-            disposed = true;
             base.Dispose(disposing);
+            disposed = true;
         }
         #endregion
 

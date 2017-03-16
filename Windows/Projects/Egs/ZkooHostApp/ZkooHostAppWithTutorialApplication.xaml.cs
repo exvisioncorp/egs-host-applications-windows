@@ -16,14 +16,12 @@
     public partial class ZkooHostAppWithTutorialApplication : Application
     {
         EgsHostAppBaseComponents hostAppComponents { get; set; }
+        ZkooTutorialModel zkooTutorialModel { get; set; }
+        MainNavigationWindow navigator { get; set; }
 
         public ZkooHostAppWithTutorialApplication()
             : base()
         {
-            ZkooTutorialModel zkooTutorialModel = null;
-            MainNavigationWindow navigator = null;
-            hostAppComponents = null;
-
             // TODO: Check the correct way to catch all exceptions and show it "We're sorry" dialog.  But the next way is still meaningless now, and sometimes this code can cause a problem that application cannot exit.
             //AppDomain.CurrentDomain.UnhandledException += (sender, e) => { ShutdownApplicationByException((Exception)e.ExceptionObject); };
 
@@ -45,14 +43,15 @@
 
                 EgsHostAppBaseComponents.EgsHostApplicationName = "ZKOO";
                 hostAppComponents.AppTrayIconAndMenuItems.TextOfNotifyIconInTray = EgsHostAppBaseComponents.EgsHostApplicationName;
-                base.MainWindow = hostAppComponents.CameraViewWindow;
+
+                hostAppComponents.CameraViewWindow.Closed += delegate { hostAppComponents.Dispose(); };
 
                 hostAppComponents.Disposing += delegate
                 {
                     if (navigator != null)
                     {
                         // detach static event
-                        Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= navigator.OnDisplaySettingsChanged;
+                        Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= SystemEvents_DisplaySettingsChanged;
                     }
                     // Save hostAppComponents before Dispose().
                     SettingsSerialization.SaveSettingsJsonFile(hostAppComponents);
@@ -83,7 +82,7 @@
                         zkooTutorialModel = new ZkooTutorialModel(hostAppComponents);
                         navigator = new MainNavigationWindow();
                         // attach static event
-                        Microsoft.Win32.SystemEvents.DisplaySettingsChanged += navigator.OnDisplaySettingsChanged;
+                        Microsoft.Win32.SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
                         // NOTE: TODO: When exceptions occur in Initialize, we have to distinguish whether from Settings files or from source code.
                         zkooTutorialModel.TutorialAppHeaderMenu.InitializeOnceAtStartup(navigator, zkooTutorialModel);
                         zkooTutorialModel.InitializeOnceAtStartup(hostAppComponents);
@@ -114,6 +113,15 @@
             catch (Exception ex)
             {
                 ShutdownApplicationByException(ex);
+            }
+        }
+
+        void SystemEvents_DisplaySettingsChanged(object sender, EventArgs e)
+        {
+            if (navigator != null) { navigator.OnDisplaySettingsChanged(sender, e); }
+            if (hostAppComponents != null && hostAppComponents.CameraViewWindowModel != null)
+            {
+                hostAppComponents.CameraViewWindowModel.ResetLocationAndSizeIfNotInsideAnyScreen();
             }
         }
 

@@ -160,8 +160,8 @@
             {
                 HandDetectionAreaDecision.CaptureImageWidth = Device.Settings.CaptureImageSize.Width;
                 HandDetectionAreaDecision.CaptureImageHeight = Device.Settings.CaptureImageSize.Height;
-                HandDetectionAreaDecision.CameraViewImageWidth = Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Width;
-                HandDetectionAreaDecision.CameraViewImageHeight = Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Height;
+                HandDetectionAreaDecision.CameraViewImageWidth = Device.Settings.CameraViewImageSourceBitmapSize.SelectedItem.Width;
+                HandDetectionAreaDecision.CameraViewImageHeight = Device.Settings.CameraViewImageSourceBitmapSize.SelectedItem.Height;
                 HandDetectionAreaDecision.UpdateEgsDeviceSettingsHandDetectionAreas(FaceDetectionExample.SelectedFaceRect);
                 HandDetectionAreaDecision.UpdateDeviceSettings(Device.Settings);
                 FaceDetectionExample.ShowResultImage(HandDetectionAreaDecision.CameraViewImageRightHandDetectionArea, HandDetectionAreaDecision.CameraViewImageLeftHandDetectionArea);

@@ -20,6 +20,10 @@
         [DataMember]
         public OptionalValue<ValueWithDescription<T>> OptionalValue { get; set; }
 
+        public ValueWithDescription<T> SelectedItem
+        {
+            get { return OptionalValue.SelectedItem; }
+        }
         public T Value
         {
             get { return OptionalValue.SelectedItem.Value; }

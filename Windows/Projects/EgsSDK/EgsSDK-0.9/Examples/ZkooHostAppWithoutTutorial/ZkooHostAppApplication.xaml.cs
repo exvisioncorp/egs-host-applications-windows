@@ -42,6 +42,7 @@
                 EgsHostAppBaseComponents.EgsHostApplicationName = "ZKOO";
                 hostAppComponents.AppTrayIconAndMenuItems.TextOfNotifyIconInTray = EgsHostAppBaseComponents.EgsHostApplicationName;
 
+                hostAppComponents.CameraViewWindow.Closed += delegate { hostAppComponents.Dispose(); };
 
                 // NOTE: Not Disposed but Disposing
                 hostAppComponents.Disposing += delegate

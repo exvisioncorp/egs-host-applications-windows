@@ -71,7 +71,7 @@
             if (Device != null && Device.Settings != null && Device.Settings.CameraViewImageSourceRectInCaptureImage != null && Device.Settings.CameraViewImageSourceBitmapSize != null)
             {
                 var cameraViewImageSourceRectInCaptureImage = Device.Settings.CameraViewImageSourceRectInCaptureImage.Value;
-                var cameraViewImageSourceBitmapSize = Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size;
+                var cameraViewImageSourceBitmapSize = Device.Settings.CameraViewImageSourceBitmapSize.SelectedItem.Size;
                 // MUSTDO: This is tested by WinForm example code.  WPF code is not correct.
                 Debug.WriteLine("cameraViewImageSourceRectInCaptureImage: " + cameraViewImageSourceRectInCaptureImage + ", cameraViewImageSourceBitmapSize: " + cameraViewImageSourceBitmapSize);
                 tx = (double)cameraViewImageSourceRectInCaptureImage.X;

@@ -446,7 +446,7 @@
                                         <Label
                                                 Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_CaptureFps_Description}" />
                                         <Label
-                                                Content="{Binding Device.Settings.CaptureFps.OptionalValue.SelectedItem.Description}" />
+                                                Content="{Binding Device.Settings.CaptureFps.SelectedItem.Description}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,5,10,5">
                                         <Label
