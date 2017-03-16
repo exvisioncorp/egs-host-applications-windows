@@ -178,6 +178,11 @@
             {
                 mediaElement.Volume = (double)volumeSlider.Value;
             };
+
+            this.Unloaded += (sender, e) =>
+            {
+                _SeekUpdateTimer.Stop();
+            };
         }
 
         public void SetTheOtherMediaElementReusableInMultipleUserControls(MediaElementReusableInMultipleUserControls value)

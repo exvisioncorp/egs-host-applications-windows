@@ -56,12 +56,16 @@
                     }
                     // Save hostAppComponents before Dispose().
                     SettingsSerialization.SaveSettingsJsonFile(hostAppComponents);
+                    zkooTutorialModel = null;
+                    // NOTE: IMPORTANT!
+                    navigator.Close();
+                    navigator = null;
                 };
 
                 base.Exit += delegate
                 {
                     if (hostAppComponents != null) { hostAppComponents.Dispose(); hostAppComponents = null; }
-                    ReleaseMutexAndShutdown();
+                    DuplicatedProcessStartBlocking.ReleaseMutex();
                 };
 
                 hostAppComponents.CheckIfDeviceFirmwareIsLatestOrNotAndExitApplicationIfFailed();
@@ -138,14 +142,7 @@
                     MessageBox.Show(ex2.Message);
                 }
             }
-            ReleaseMutexAndShutdown();
-        }
-
-        void ReleaseMutexAndShutdown()
-        {
             DuplicatedProcessStartBlocking.ReleaseMutex();
-            // TODO: MUSTDO: confirm this way is right or not.
-            if (Application.Current != null) { Application.Current.Shutdown(); }
         }
     }
 }
