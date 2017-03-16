@@ -150,11 +150,11 @@
             IsToUpdateRealHandDetectionAreaFromBodyParameters = true;
             // (310,440) Avg: M:397 F:361
             RealShoulderBreadth = new RangedDouble(379, 310, 440, 1, 10, 1);
-            RealHandDetectionAreaCenterXOffset_DividedBy_RealShoulderBreadth = new RangedDouble(0.6, 0, 1, 0.01, 0.1, 0.01);
-            RealHandDetectionAreaCenterYOffset_DividedBy_RealFaceBreadth = new RangedDouble(0.7, 0, 2, 0.01, 0.1, 0.01);
-            RealHandDetectionAreaCenterZOffset_DividedBy_RealShoulderBreadth = new RangedDouble(-0.45, -1, 0, 0.01, 0.1, 0.01);
-            RealHandDetectionAreaWidth_DividedBy_RealPalmBreadth = new RangedDouble(4, 2, 5, 0.1, 1.0, 0.1);
-            RealHandDetectionAreaHeight_DividedBy_RealPalmBreadth = new RangedDouble(4, 2, 5, 0.1, 1.0, 0.1);
+            RealHandDetectionAreaCenterXOffset_DividedBy_RealShoulderBreadth = new RangedDouble(0.68, 0, 1, 0.01, 0.1, 0.01);
+            RealHandDetectionAreaCenterYOffset_DividedBy_RealFaceBreadth = new RangedDouble(0.63, 0, 2, 0.01, 0.1, 0.01);
+            RealHandDetectionAreaCenterZOffset_DividedBy_RealShoulderBreadth = new RangedDouble(-0.26, -1, 0, 0.01, 0.1, 0.01);
+            RealHandDetectionAreaWidth_DividedBy_RealPalmBreadth = new RangedDouble(4.5, 3, 6, 0.1, 1.0, 0.1);
+            RealHandDetectionAreaHeight_DividedBy_RealPalmBreadth = new RangedDouble(5.1, 3, 6, 0.1, 1.0, 0.1);
 
             RealHandDetectionAreaCenterXOffset = new RangedDouble(RealHandDetectionAreaCenterXOffset_DividedBy_RealShoulderBreadth * RealShoulderBreadth, 0, 500, 10, 50, 10);
             RealHandDetectionAreaCenterYOffset = new RangedDouble(RealHandDetectionAreaCenterYOffset_DividedBy_RealFaceBreadth * RealFaceBreadth, -100, 200, 10, 50, 10);
@@ -231,8 +231,8 @@
             // Pixel Size (One Side Length): 0.0028[mm] (2x2 binning).
             CaptureImageBinnedPixelSize = 0.0028;
 
-            CaptureImageWidth = 960;
-            CaptureImageHeight = 540;
+            CaptureImageWidth = 768;
+            CaptureImageHeight = 480;
             CameraViewImageWidth = 384;
             CameraViewImageHeight = 240;
 
@@ -242,11 +242,11 @@
 
             IsToUpdateRealHandDetectionAreaFromBodyParameters = true;
             RealShoulderBreadth.Value = 379;
-            RealHandDetectionAreaCenterXOffset_DividedBy_RealShoulderBreadth.Value = 0.6;
-            RealHandDetectionAreaCenterYOffset_DividedBy_RealFaceBreadth.Value = 0.7;
-            RealHandDetectionAreaCenterZOffset_DividedBy_RealShoulderBreadth.Value = -0.45;
-            RealHandDetectionAreaWidth_DividedBy_RealPalmBreadth.Value = 4;
-            RealHandDetectionAreaHeight_DividedBy_RealPalmBreadth.Value = 4;
+            RealHandDetectionAreaCenterXOffset_DividedBy_RealShoulderBreadth.Value = 0.68;
+            RealHandDetectionAreaCenterYOffset_DividedBy_RealFaceBreadth.Value = 0.63;
+            RealHandDetectionAreaCenterZOffset_DividedBy_RealShoulderBreadth.Value = -0.26;
+            RealHandDetectionAreaWidth_DividedBy_RealPalmBreadth.Value = 4.5;
+            RealHandDetectionAreaHeight_DividedBy_RealPalmBreadth.Value = 5.1;
 
             UpdateRealHandDetectionAreaParametersFromRealBodyParameters();
 
