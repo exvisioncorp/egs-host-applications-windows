@@ -14,7 +14,7 @@
     internal sealed class EgsDeviceHidReportsUpdate
     {
         EgsDevice owner { get; set; }
-        internal BackgroundWorker ReportMonitoringThread { get; private set; }
+        BackgroundWorker ReportMonitoringThread { get; set; }
         internal string DevicePath { get; private set; }
         internal bool IsInvalidHandle { get; private set; }
         internal bool HasStoppedReportMonitoringThread { get; private set; }
@@ -37,6 +37,14 @@
             DevicePath = devicePath;
             IsInvalidHandle = false;
             HasStoppedReportMonitoringThread = false;
+
+            // NOTE: When the device is disconnected, the ReportMonitoringThread must be completed.
+            if (ReportMonitoringThread != null)
+            {
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                OnDisable();
+            }
+
             ReportMonitoringThread = new BackgroundWorker() { WorkerSupportsCancellation = true };
             ReportMonitoringThread.DoWork += ReportMonitoringThread_DoWork;
             ReportMonitoringThread.RunWorkerCompleted += ReportMonitoringThread_RunWorkerCompleted;
@@ -63,14 +71,26 @@
                 //deviceDataFileStream.Read(reportAsByteArray, 0, reportAsByteArray.Length);
 
                 int numberOfBytesRead = 0;
-                while (ReportMonitoringThread.CancellationPending == false)
+                while (true)
                 {
+                    if (ReportMonitoringThread == null)
+                    {
+                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                        break;
+                    }
+                    if (ReportMonitoringThread.CancellationPending)
+                    {
+                        e.Cancel = true;
+                        break;
+                    }
+
                     // I think that this method is synchronous.
                     var hr = NativeMethods.ReadFile(readHandle, reportAsByteArray, reportAsByteArray.Length, out numberOfBytesRead, IntPtr.Zero);
-                    // So the next line is unnecessary.
+                    // So the next line is unnecessary, and the next line causes too much wait.
                     // System.Threading.Thread.Sleep(1);
-                    
-                    if (false && hr) { if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); } }
+
+                    // TODO: MUSTDO: NOTE: In some C++ Win32 application and .NET Stream classes, the callback function can be registered, so it can raise events only when it gets report from device.
+                    // But in this app, it seems to be impossible to register the callback function.  So it calls ReadFile() too many times.  I want to fix it.
                     if (numberOfBytesRead != 0)
                     {
                         if ((HidReportIds)reportAsByteArray[0] == HidReportIds.EgsGesture)
@@ -81,7 +101,6 @@
                         }
                     }
                 }
-                if (ReportMonitoringThread.CancellationPending) { e.Cancel = true; }
             }
         }
 
@@ -89,20 +108,10 @@
         {
             if (e.Error != null)
             {
-                if (e.Error is HidSimpleAccessException)
-                {
-                    if (ApplicationCommonSettings.IsDebugging)
-                    {
-                        Debugger.Break();
-                        Console.WriteLine(e.Error.Message);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine(e.Error.Message);
-                }
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                Console.WriteLine(e.Error.Message);
             }
-            if (e.Cancelled) { HasStoppedReportMonitoringThread = true; }
+            HasStoppedReportMonitoringThread = true;
         }
 
         public void OnDisable()
@@ -112,7 +121,14 @@
             var sw = Stopwatch.StartNew();
             while (true)
             {
-                if (HasStoppedReportMonitoringThread == false) { break; }
+                if (HasStoppedReportMonitoringThread == false)
+                {
+                    ReportMonitoringThread.DoWork -= ReportMonitoringThread_DoWork;
+                    ReportMonitoringThread.RunWorkerCompleted -= ReportMonitoringThread_RunWorkerCompleted;
+                    ReportMonitoringThread.Dispose();
+                    ReportMonitoringThread = null;
+                    break;
+                }
                 if (sw.ElapsedMilliseconds > 1000)
                 {
                     if (ApplicationCommonSettings.IsDebugging)

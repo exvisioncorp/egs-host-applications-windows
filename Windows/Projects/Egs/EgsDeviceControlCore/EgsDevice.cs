@@ -483,6 +483,8 @@
             if (string.IsNullOrEmpty(newDevicePath))
             {
                 _HidDeviceDevicePath = "";
+                // NOTE: When the device is disconnected, the ReportMonitoringThread must be completed.
+                if (HidReportsUpdate != null) { HidReportsUpdate.OnDisable(); }
                 _IsHidDeviceConnected = false;
             }
             else

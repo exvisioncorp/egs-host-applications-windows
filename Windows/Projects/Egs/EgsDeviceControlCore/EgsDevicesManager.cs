@@ -221,6 +221,7 @@
             MessageReceivingForm.CurrentDevice = null;
         }
 
+        #region IDisposable
         public event EventHandler Disposing;
         public event EventHandler Disposed;
         protected virtual void OnDisposing(EventArgs e) { var t = Disposing; if (t != null) { t(this, e); } }
@@ -252,5 +253,6 @@
             OnDisposed(EventArgs.Empty);
         }
         ~EgsDevicesManager() { Dispose(false); }
+        #endregion
     }
 }
