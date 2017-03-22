@@ -1,4 +1,4 @@
-﻿EgsDeviceControlCore.dll: 0.9.8717.0
-EgsHostAppCore.dll: 0.9.8717.0
-ZkooHostApp.exe: 0.9.8717.0
-Firmware: 1.1.8109.0
+﻿EgsDeviceControlCore.dll: 0.9.8722.0
+EgsHostAppCore.dll: 0.9.8722.0
+ZkooHostApp.exe: 0.9.8722.0
+Firmware: 1.1.8722.0

@@ -24,7 +24,7 @@
         /// <summary>Default CultureInfo.Name as string.</summary>
         public const string DefaultCultureInfoName = "en";
         /// <summary>Firmware version in an image file of this application.</summary>
-        public const string FirmwareVersionInImageFileString = "1.1.8109.0";
+        public const string FirmwareVersionInImageFileString = "1.1.8722.0";
 
         internal const bool IsDeveloperRelease = false;
         internal const bool IsInternalRelease = false;

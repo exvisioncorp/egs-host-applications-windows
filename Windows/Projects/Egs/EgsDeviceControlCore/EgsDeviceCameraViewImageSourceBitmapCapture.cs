@@ -209,6 +209,7 @@
             if (UvcIsWorkingMonitorStopwatch.ElapsedMilliseconds > UvcIsWorkingMonitorIntervalInMilliseconds)
             {
                 StopUvcIsWorkingMonitorTimer();
+                if (Device.IsUpdatingFirmware) { return; }
                 if (SetupCameraDevice() == false)
                 {
                     if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
