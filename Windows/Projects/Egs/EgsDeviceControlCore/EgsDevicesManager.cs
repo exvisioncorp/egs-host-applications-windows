@@ -58,6 +58,15 @@
 
         System.Windows.Forms.Timer OnDeviceConnectedDelayTimer { get; set; }
         System.Windows.Forms.Timer OnDeviceDisconnectedDelayTimer { get; set; }
+        internal int DeviceConnectionDelayTimersInterval
+        {
+            get { return OnDeviceConnectedDelayTimer.Interval; }
+            set
+            {
+                OnDeviceConnectedDelayTimer.Interval = value;
+                OnDeviceDisconnectedDelayTimer.Interval = value;
+            }
+        }
 
         internal EgsDevicesManager()
         {

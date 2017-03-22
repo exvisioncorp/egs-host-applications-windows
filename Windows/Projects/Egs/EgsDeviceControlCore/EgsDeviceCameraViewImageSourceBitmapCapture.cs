@@ -168,6 +168,23 @@
             }
         }
 
+        int UvcIsWorkingMonitorIntervalInMilliseconds { get; set; }
+        System.Windows.Forms.Timer UvcIsWorkingMonitorTimer { get; set; }
+        Stopwatch UvcIsWorkingMonitorStopwatch { get; set; }
+        void StartUvcIsWorkingMonitorTimer()
+        {
+            UvcIsWorkingMonitorStopwatch.Reset();
+            UvcIsWorkingMonitorStopwatch.Start();
+            UvcIsWorkingMonitorTimer.Start();
+        }
+        void StopUvcIsWorkingMonitorTimer()
+        {
+            UvcIsWorkingMonitorTimer.Stop();
+            UvcIsWorkingMonitorStopwatch.Stop();
+            UvcIsWorkingMonitorStopwatch.Reset();
+        }
+
+
         internal EgsDeviceCameraViewImageSourceBitmapCapture()
         {
             AForgeVideoCaptureInstance = null;
@@ -180,6 +197,24 @@
             _CameraViewImageSourceBitmapPixelFormat = _CameraViewImageSourceBitmap.PixelFormat;
 
             _IsCameraDeviceConnected = false;
+
+            //OnDeviceDisconnectedDelayTimer.Interval = 2000;
+            UvcIsWorkingMonitorIntervalInMilliseconds = EgsDevice.DefaultEgsDevicesManager.DeviceConnectionDelayTimersInterval * 2;
+            UvcIsWorkingMonitorTimer = new System.Windows.Forms.Timer() { Interval = UvcIsWorkingMonitorIntervalInMilliseconds };
+            UvcIsWorkingMonitorStopwatch = new Stopwatch();
+        }
+
+        void UvcIsWorkingMonitorTimer_Tick(object sender, EventArgs e)
+        {
+            if (UvcIsWorkingMonitorStopwatch.ElapsedMilliseconds > UvcIsWorkingMonitorIntervalInMilliseconds)
+            {
+                StopUvcIsWorkingMonitorTimer();
+                if (SetupCameraDevice() == false)
+                {
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    throw new Egs.EgsDeviceOperationException("Could not restart UVC device.");
+                }
+            }
         }
 
         internal void InitializeOnceAtStartup(EgsDevice device)
@@ -216,6 +251,8 @@
             if (AForgeVideoCaptureInstance != null)
             {
                 // NOTE: newは1箇所のみで、newした直後にイベントハンドラをアタッチしているので、ここで呼び出してOK。
+                StopUvcIsWorkingMonitorTimer();
+                UvcIsWorkingMonitorTimer.Tick -= UvcIsWorkingMonitorTimer_Tick;
                 AForgeVideoCaptureInstance.NewFrame -= AForgeVideoCaptureInstance_NewFrame;
                 StopAForgeVideoCaptureInstance();
                 AForgeVideoCaptureInstance = null;
@@ -241,6 +278,8 @@
                 AForgeVideoCaptureInstance = new AForge.Video.DirectShow.VideoCaptureDevice(VideoCaptureDeviceDevicePath);
                 if (AForgeVideoCaptureInstance == null) { if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); } throw new EgsDeviceOperationException("AForgeVideoCaptureInstance == null."); }
                 AForgeVideoCaptureInstance.NewFrame += AForgeVideoCaptureInstance_NewFrame;
+                StartUvcIsWorkingMonitorTimer();
+                UvcIsWorkingMonitorTimer.Tick += UvcIsWorkingMonitorTimer_Tick;
 
                 // TODO: MUSTDO: AForgeVideoCaptureInstance.VideoResolution = AForgeVideoCaptureInstance.VideoCapabilities[someIndex]; で解像度が変わるが、
                 // AForgeVideoCaptureInstance.IsRunning == true のままでは変更できない。
@@ -303,6 +342,8 @@
         void AForgeVideoCaptureInstance_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
         {
             CameraViewImageSourceBitmap = (System.Drawing.Bitmap)eventArgs.Frame;
+            UvcIsWorkingMonitorStopwatch.Reset();
+            UvcIsWorkingMonitorStopwatch.Start();
         }
 
         internal void DisposeWithClearingVideoCaptureDeviceInformationOnDeviceDisconnected()
