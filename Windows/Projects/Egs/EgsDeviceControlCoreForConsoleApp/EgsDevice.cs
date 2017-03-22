@@ -75,8 +75,24 @@
         {
             get
             {
-                var ret = (Settings == null) ? 0 : (int)Settings.TrackableHandsCount.Value;
-                return ret;
+                if (Settings == null) { return 0; }
+                // TODO: MUSTDO: fix firmware.  Settings.TrackableHandsCount can be wrong value!!
+                if (false) { return (int)Settings.TrackableHandsCount.Value; }
+                switch (Settings.TouchInterfaceKind.Value)
+                {
+                    case PropertyTypes.TouchInterfaceKinds.MultiTouch:
+                        return 2;
+                        break;
+                    case PropertyTypes.TouchInterfaceKinds.SingleTouch:
+                        return 1;
+                        break;
+                    case PropertyTypes.TouchInterfaceKinds.Mouse:
+                        return 1;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                        break;
+                }
             }
         }
 
@@ -522,5 +538,6 @@
     public sealed class EgsDeviceOperationException : Exception
     {
         public EgsDeviceOperationException(string message) : base(message) { }
+        public EgsDeviceOperationException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

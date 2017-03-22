@@ -82,8 +82,24 @@
         {
             get
             {
-                var ret = (Settings == null) ? 0 : (int)Settings.TrackableHandsCount.Value;
-                return ret;
+                if (Settings == null) { return 0; }
+                // TODO: MUSTDO: fix firmware.  Settings.TrackableHandsCount can be wrong value!!
+                if (false) { return (int)Settings.TrackableHandsCount.Value; }
+                switch (Settings.TouchInterfaceKind.Value)
+                {
+                    case PropertyTypes.TouchInterfaceKinds.MultiTouch:
+                        return 2;
+                        break;
+                    case PropertyTypes.TouchInterfaceKinds.SingleTouch:
+                        return 1;
+                        break;
+                    case PropertyTypes.TouchInterfaceKinds.Mouse:
+                        return 1;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                        break;
+                }
             }
         }
 
@@ -525,6 +541,26 @@
             }
         }
 
+        internal void StopFaceDetectionAndRestartUvcAndRestartFaceDetection()
+        {
+            bool isToDetectFacesPrevious = Settings.IsToDetectFaces.Value;
+            if (Settings.IsToDetectFaces.Value != false) { Settings.IsToDetectFaces.Value = false; }
+
+            // NOTE: Wait completion of host face detection
+            var sw = Stopwatch.StartNew();
+            while (sw.ElapsedMilliseconds < FaceDetectionOnHost.DetectFaceIntervalMillisecondsMinimum.Value * 2 && FaceDetectionOnHost.IsDetecting) { System.Threading.Thread.Sleep(100); }
+            ResetHidReportObjects();
+
+            if (CameraViewImageSourceBitmapCapture.IsCameraDeviceConnected)
+            {
+                CameraViewImageSourceBitmapCapture.SetupCameraDevice();
+            }
+            // NOTE: Maybe necessary!
+            System.Threading.Thread.Sleep(1000);
+
+            if (Settings.IsToDetectFaces.Value != isToDetectFacesPrevious) { Settings.IsToDetectFaces.Value = isToDetectFacesPrevious; }
+        }
+
         /// <summary>
         /// This method should be called only from EgsDevicesManager.  This updates only connection state of "Camera".
         /// </summary>
@@ -583,5 +619,6 @@
     public sealed class EgsDeviceOperationException : Exception
     {
         public EgsDeviceOperationException(string message) : base(message) { }
+        public EgsDeviceOperationException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

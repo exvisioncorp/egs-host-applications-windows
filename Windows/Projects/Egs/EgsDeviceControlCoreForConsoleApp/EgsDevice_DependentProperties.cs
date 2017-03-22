@@ -280,42 +280,41 @@
 
         void EgsDeviceSettings_HidAccessPropertyUpdated(object sender, HidAccessPropertyUpdatedEventArgs e)
         {
-            var settings = (EgsDeviceSettings)sender;
-            if (e.UpdatedProperty == settings.IsToDetectFacesOnDevice)
+            if (e.UpdatedProperty == Settings.IsToDetectFacesOnDevice)
             {
                 Update_IsDetectingFaces_IsDetectingHands_IsTracking();
             }
-            else if (e.UpdatedProperty == settings.IsToDetectHandsOnDevice)
+            else if (e.UpdatedProperty == Settings.IsToDetectHandsOnDevice)
             {
                 Update_IsDetectingFaces_IsDetectingHands_IsTracking();
             }
-            else if (e.UpdatedProperty == settings.IsToSendTouchScreenHidReport)
+            else if (e.UpdatedProperty == Settings.IsToSendTouchScreenHidReport)
             {
                 IsSendingTouchScreenHidReport = Settings.IsToSendTouchScreenHidReport.Value && IsHidDeviceConnected;
             }
-            else if (e.UpdatedProperty == settings.IsToSendHoveringStateOnTouchScreenHidReport)
+            else if (e.UpdatedProperty == Settings.IsToSendHoveringStateOnTouchScreenHidReport)
             {
                 IsSendingHoveringStateOnTouchScreenHidReport = Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value && IsHidDeviceConnected;
             }
-            else if (e.UpdatedProperty == settings.IsToSendEgsGestureHidReport)
+            else if (e.UpdatedProperty == Settings.IsToSendEgsGestureHidReport)
             {
                 IsSendingEgsGestureHidReport = Settings.IsToSendEgsGestureHidReport.Value && IsHidDeviceConnected;
             }
-            else if (e.UpdatedProperty == settings.CameraViewImageSourceBitmapSize)
+            else if (e.UpdatedProperty == Settings.CameraViewImageSourceBitmapSize)
             {
-                bool isToDetectFacesPrevious = settings.IsToDetectFaces.Value;
-                if (settings.IsToDetectFaces.Value != false) { settings.IsToDetectFaces.Value = false; }
+                bool isToDetectFacesPrevious = Settings.IsToDetectFaces.Value;
+                if (Settings.IsToDetectFaces.Value != false) { Settings.IsToDetectFaces.Value = false; }
 
                 ResetHidReportObjects();
 
                 // NOTE: Maybe necessary!
                 System.Threading.Thread.Sleep(1000);
 
-                if (settings.IsToDetectFaces.Value != isToDetectFacesPrevious) { settings.IsToDetectFaces.Value = isToDetectFacesPrevious; }
+                if (Settings.IsToDetectFaces.Value != isToDetectFacesPrevious) { Settings.IsToDetectFaces.Value = isToDetectFacesPrevious; }
             }
-            else if (e.UpdatedProperty == settings.CaptureFps)
+            else if (e.UpdatedProperty == Settings.CaptureFps)
             {
-                switch (settings.CaptureFps.Value)
+                switch (Settings.CaptureFps.Value)
                 {
                     case CaptureFpsKind.Auto:
                     case CaptureFpsKind.Fps100:

@@ -171,6 +171,7 @@
         int UvcIsWorkingMonitorIntervalInMilliseconds { get; set; }
         System.Windows.Forms.Timer UvcIsWorkingMonitorTimer { get; set; }
         Stopwatch UvcIsWorkingMonitorStopwatch { get; set; }
+        internal bool IsRestartingUvc { get; private set; }
         void StartUvcIsWorkingMonitorTimer()
         {
             UvcIsWorkingMonitorStopwatch.Reset();
@@ -202,6 +203,7 @@
             UvcIsWorkingMonitorIntervalInMilliseconds = EgsDevice.DefaultEgsDevicesManager.DeviceConnectionDelayTimersInterval * 2;
             UvcIsWorkingMonitorTimer = new System.Windows.Forms.Timer() { Interval = UvcIsWorkingMonitorIntervalInMilliseconds };
             UvcIsWorkingMonitorStopwatch = new Stopwatch();
+            IsRestartingUvc = false;
         }
 
         void UvcIsWorkingMonitorTimer_Tick(object sender, EventArgs e)
@@ -210,10 +212,22 @@
             {
                 StopUvcIsWorkingMonitorTimer();
                 if (Device.IsUpdatingFirmware) { return; }
-                if (SetupCameraDevice() == false)
+                try
+                {
+                    IsRestartingUvc = true;
+                    Device.ResetDevice();
+                    Device.ResetHidReportObjects();
+                    Device.StopFaceDetectionAndRestartUvcAndRestartFaceDetection();
+                    Device.Settings.IsToDetectFaces.Value = true;
+                }
+                catch (Exception ex)
                 {
                     if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                    throw new Egs.EgsDeviceOperationException("Could not restart UVC device.");
+                    throw new Egs.EgsDeviceOperationException("Could not restart UVC device.", ex);
+                }
+                finally
+                {
+                    IsRestartingUvc = false;
                 }
             }
         }

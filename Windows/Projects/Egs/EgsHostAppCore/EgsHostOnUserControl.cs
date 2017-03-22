@@ -165,22 +165,7 @@
             };
             SendManySettingsPacketsCommand.PerformEventHandler += delegate
             {
-                if (MessageBox.Show("Send many settings packets for HID stress test?", Resources.CommonStrings_Confirmation, MessageBoxButton.OKCancel) != MessageBoxResult.OK) { return; }
-                System.Threading.Tasks.Task.Run(() =>
-                {
-                    var elapsed = Stopwatch.StartNew();
-                    for (int i = 0; i < 10000; i++)
-                    {
-                        if (elapsed.ElapsedMilliseconds > 1000)
-                        {
-                            MessageBox.Show("Elapsed > 1000[ms].  Test will stop.");
-                            return;
-                        }
-                        Device.Settings.StatusLedBrightnessMaximum.Value = (byte)((i * 5) % 256);
-                        elapsed.Restart();
-                    }
-                    MessageBox.Show("Completed sending many settings packets!");
-                });
+                SendManySettingsPacketsAsync();
             };
 
             Device.IsHidDeviceConnectedChanged += Device_IsHidDeviceConnectedChanged;
@@ -201,6 +186,53 @@
                 if (false && ApplicationCommonSettings.IsDebuggingInternal) { Debugger.Break(); }
                 this.Dispose();
             };
+        }
+
+        bool isSendingManySettingsPackets = false;
+        async void SendManySettingsPacketsAsync()
+        {
+            await System.Threading.Tasks.Task.Run(() =>
+            {
+                if (isSendingManySettingsPackets)
+                {
+                    MessageBox.Show("The application is still doing previous task (sending many settings packets).");
+                    return;
+                }
+                isSendingManySettingsPackets = true;
+                var elapsed = Stopwatch.StartNew();
+                int i = 0;
+                for (i = 0; i < 10000; i++)
+                {
+                    if (disposed) { return; }
+                    if (elapsed.ElapsedMilliseconds > 1000)
+                    {
+                        MessageBox.Show("Elapsed > 1000[ms].  The application will stop this test.");
+                        break;
+                    }
+                    if (Device == null)
+                    {
+                        MessageBox.Show("Device == null.  The application will stop this test.");
+                        break;
+                    }
+                    if (Device.CameraViewImageSourceBitmapCapture == null)
+                    {
+                        MessageBox.Show("Device.CameraViewImageSourceBitmapCapture == null.  The application will stop this test.");
+                        break;
+                    }
+                    if (Device.CameraViewImageSourceBitmapCapture.IsRestartingUvc)
+                    {
+                        MessageBox.Show("UVC is restarting.  The application will stop this test.");
+                        break;
+                    }
+                    Device.Settings.StatusLedBrightnessMaximum.Value = (byte)((i * 5) % 256);
+                    elapsed.Restart();
+                }
+                if (i == 10000)
+                {
+                    MessageBox.Show("Completed sending many settings packets!");
+                }
+                isSendingManySettingsPackets = false;
+            });
         }
 
         public virtual void InitializeOnceAtStartup()
@@ -440,6 +472,7 @@
             if (disposing)
             {
                 if (hasOnDisposingCalled == false) { OnDisposing(EventArgs.Empty); hasOnDisposingCalled = true; }
+                isSendingManySettingsPackets = false;
 
                 Device.IsHidDeviceConnectedChanged -= Device_IsHidDeviceConnectedChanged;
                 Device.EgsGestureHidReport.ReportUpdated -= Device_EgsGestureHidReport_ReportUpdated;

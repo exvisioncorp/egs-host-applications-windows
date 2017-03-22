@@ -518,14 +518,21 @@
             }
             else
             {
-                // It has to set Value property atomically.
-                deviceSettings.RightHandDetectionAreaOnFixed.Value = RightHandDetectionAreaRatioRect;
-                deviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
-                deviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
-                deviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
+                try
+                {
+                    // It has to set Value property atomically.
+                    deviceSettings.RightHandDetectionAreaOnFixed.Value = RightHandDetectionAreaRatioRect;
+                    deviceSettings.RightHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
+                    deviceSettings.LeftHandDetectionAreaOnFixed.Value = LeftHandDetectionAreaRatioRect;
+                    deviceSettings.LeftHandDetectionScaleOnFixed.RangedValue.Value = HandDetectionScaleForEgsDevice;
 
-                var newIsToDetectHandsOnDevice = deviceSettings.IsToDetectHands.Value;
-                if (deviceSettings.IsToDetectHandsOnDevice.Value != newIsToDetectHandsOnDevice) { deviceSettings.IsToDetectHandsOnDevice.Value = newIsToDetectHandsOnDevice; }
+                    var newIsToDetectHandsOnDevice = deviceSettings.IsToDetectHands.Value;
+                    if (deviceSettings.IsToDetectHandsOnDevice.Value != newIsToDetectHandsOnDevice) { deviceSettings.IsToDetectHandsOnDevice.Value = newIsToDetectHandsOnDevice; }
+                }
+                catch (Exception ex)
+                {
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                }
             }
         }
 

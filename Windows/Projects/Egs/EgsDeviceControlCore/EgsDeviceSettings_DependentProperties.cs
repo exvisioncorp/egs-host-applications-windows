@@ -62,6 +62,10 @@
                         if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                         throw new NotImplementedException();
                 }
+                // TODO: MUSTDO: This is temporary work-around.
+                // After some troubles disable face detection in device settings, users may change this value or restart host application to enable face detection.
+                // Currently most of EGS applications need face detection.
+                IsToDetectFaces.Value = true;
                 OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged();
             };
             IsToDetectFaces.ValueUpdated += delegate { OnPropertiesRelatedToFaceDetectionAndIsToDetectHandsOnDeviceChanged(); };

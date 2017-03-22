@@ -170,7 +170,10 @@
 
             CaptureImageSize.ValueUpdated += delegate { OnImageSizeRelatedPropertiesUpdated(); };
             CameraViewImageSourceBitmapSize.ValueUpdated += delegate { OnImageSizeRelatedPropertiesUpdated(); };
-            CameraViewImageSourceRectInCaptureImage.ValueUpdated += delegate { OnImageSizeRelatedPropertiesUpdated(); };
+
+            // NOTE: this property depends on CaptureImageSize and CameraViewImageSourceBitmapSize.  So ValueUpdate event handler is unnecessary.
+            if (false) { CameraViewImageSourceRectInCaptureImage.ValueUpdated += delegate { OnImageSizeRelatedPropertiesUpdated(); }; }
+
             OnImageSizeRelatedPropertiesUpdated();
         }
 
@@ -202,7 +205,7 @@
                 else
                 {
                     if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                    throw new NotImplementedException();
+                    //throw new NotImplementedException();
                 }
             }
             else if (CaptureImageSize.Value == new System.Drawing.Size(960, 540))
@@ -213,14 +216,17 @@
                 else
                 {
                     if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                    throw new NotImplementedException();
+                    //throw new NotImplementedException();
                 }
 
             }
             else
             {
                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                throw new NotImplementedException();
+                if (CaptureImageSize.Value != new System.Drawing.Size(768, 480)) { CaptureImageSize.Value = new System.Drawing.Size(768, 480); }
+                if (CameraViewImageSourceBitmapSize.Value != CameraViewImageSourceBitmapSizes.Size_640x480) { CameraViewImageSourceBitmapSize.Value = CameraViewImageSourceBitmapSizes.Size_640x480; }
+                correctCameraViewImageSourceRectInCaptureImage = new System.Drawing.Rectangle(71, 0, 625, 470);
+                //throw new NotImplementedException();
             }
 
             if (CameraViewImageSourceRectInCaptureImage.Value != correctCameraViewImageSourceRectInCaptureImage)
