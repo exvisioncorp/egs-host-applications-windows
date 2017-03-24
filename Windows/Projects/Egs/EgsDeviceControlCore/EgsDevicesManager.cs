@@ -52,29 +52,33 @@
                     throw new ArgumentOutOfRangeException("TemperatureMonitoringTimerInterval", "Interval must be from 1[sec] to 60[sec]");
                 }
                 EachDeviceStatusMonitoringTimer.Interval = (int)(value * 1000.0);
-                OnPropertyChanged("TemperatureMonitoringTimerIntervalTotalSeconds");
+                OnPropertyChanged(nameof(TemperatureMonitoringTimerIntervalTotalSeconds));
             }
         }
 
         System.Windows.Forms.Timer OnDeviceConnectedDelayTimer { get; set; }
         System.Windows.Forms.Timer OnDeviceDisconnectedDelayTimer { get; set; }
+        internal int DeviceConnectionDelayTimersInterval
+        {
+            get { return OnDeviceConnectedDelayTimer.Interval; }
+            set
+            {
+                OnDeviceConnectedDelayTimer.Interval = value;
+                OnDeviceDisconnectedDelayTimer.Interval = value;
+            }
+        }
 
         internal EgsDevicesManager()
         {
             DeviceList = new List<EgsDevice>();
             MessageReceivingForm = new EgsDevicesWindowMessageReceivingForm();
 
-            EachDeviceStatusMonitoringTimer = new System.Windows.Forms.Timer() { Interval = ApplicationCommonSettings.IsDebugging ? 1000 : 60000 };
+            EachDeviceStatusMonitoringTimer = new System.Windows.Forms.Timer() { Interval = ApplicationCommonSettings.IsDebugging ? 1000 : 5000 };
             EachDeviceStatusMonitoringTimer.Tick += delegate
             {
-                foreach (var device in DeviceList)
-                {
-                    var isMonitoringTemperature = device.IsToMonitorTemperature && device.IsHidDeviceConnected;
-                    if (isMonitoringTemperature == false) { continue; }
-                    device.UpdateTemperatureProperties();
-                }
+                foreach (var device in DeviceList) { device.UpdateTemperatureProperties(); }
             };
-
+            EachDeviceStatusMonitoringTimer.Start();
 
             // MUSTDO: Need investigatino.  "Connecting a device after running a host application" can cause a problem that the host application cannot catch the mouse event from the device!
             // NOTE: Immediately after the source event raises, AForge.NET (DirectShow wrapper) cannot enumerate all devices!!  So I added delay reluctantly.
@@ -226,6 +230,7 @@
             MessageReceivingForm.CurrentDevice = null;
         }
 
+        #region IDisposable
         public event EventHandler Disposing;
         public event EventHandler Disposed;
         protected virtual void OnDisposing(EventArgs e) { var t = Disposing; if (t != null) { t(this, e); } }
@@ -257,5 +262,6 @@
             OnDisposed(EventArgs.Empty);
         }
         ~EgsDevicesManager() { Dispose(false); }
+        #endregion
     }
 }

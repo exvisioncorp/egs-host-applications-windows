@@ -30,7 +30,7 @@ foreach (var item in propertyElementsList)
         protected <# if (item.BaseAccessibility == "internal") { #>internal <# } #>virtual void On<#= item.Name #>Changed(EventArgs e)
         {
             var t = <#= item.Name #>Changed; if (t != null) { t(this, e); }
-            OnPropertyChanged("<#= item.Name #>");
+            OnPropertyChanged(nameof(<#= item.Name #>));
         }
 <# if (string.IsNullOrEmpty(item.AttributeDescription) == false) { #>
         <#= item.AttributeDescription #>
@@ -41,7 +41,7 @@ foreach (var item in propertyElementsList)
             <# if (string.IsNullOrEmpty(item.SetterAccessibility) == false) { #><#= item.SetterAccessibility #> <# } #>set
             {
 <# if (item.SetValueOnlyWhenTheNewValueIsDifferentFromCurrentValue) { #>
-                if (value != _<#= item.Name #>)
+                if (_<#= item.Name #> != value)
                 {
     <# } #>
                 _<#= item.Name #> = value; On<#= item.Name #>Changed(EventArgs.Empty);

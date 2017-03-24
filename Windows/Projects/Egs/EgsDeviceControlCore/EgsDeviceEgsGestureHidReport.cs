@@ -33,7 +33,7 @@
     /// <summary>
     /// Vendor specific HID report for applications of EgsSDK users.  This class does not implement INotifyProperty.  Just this reconstructs the recognition state from byte array reports.
     /// </summary>
-    public class EgsDeviceEgsGestureHidReport
+    public partial class EgsDeviceEgsGestureHidReport
     {
         internal EgsDevice Device { get; private set; }
         internal HidReportIds ReportId { get; private set; }
@@ -58,30 +58,30 @@
 
         internal double EgsDeviceScreenMappedAreaResolutionSizeWidth { get { return 7540.0; } }
         internal double EgsDeviceScreenMappedAreaResolutionSizeHeight { get { return 7540.0; } }
-        /// <summary>X_host = sx * (X_device - tx).  Translation Offset X of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        /// <summary>X_host = sx * (X_device - tx).  Translation Offset X of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         double tx { get; set; }
-        /// <summary>X_host = sx * (X_device - tx).  Scaling X of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        /// <summary>X_host = sx * (X_device - tx).  Scaling X of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         double sx { get; set; }
-        /// <summary>Y_host = sy * (Y_device - ty).  Translation Offset Y of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        /// <summary>Y_host = sy * (Y_device - ty).  Translation Offset Y of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         double ty { get; set; }
-        /// <summary>Y_host = sy * (Y_device - ty).  Scaling Y of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+        /// <summary>Y_host = sy * (Y_device - ty).  Scaling Y of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         double sy { get; set; }
         internal void UpdateImageSizeRelatedProperties()
         {
-            if (Device != null && Device.Settings != null && Device.Settings.CameraViewImageSourceRectInCapturedImage != null && Device.Settings.CameraViewImageSourceBitmapSize != null)
+            if (Device != null && Device.Settings != null && Device.Settings.CameraViewImageSourceRectInCaptureImage != null && Device.Settings.CameraViewImageSourceBitmapSize != null)
             {
-                var cameraViewImageSourceRectInCapturedImageRect = Device.Settings.CameraViewImageSourceRectInCapturedImage.Rect;
-                var cameraViewImageSourceBitmapSize = Device.Settings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedItem.Size;
+                var cameraViewImageSourceRectInCaptureImage = Device.Settings.CameraViewImageSourceRectInCaptureImage.Value;
+                var cameraViewImageSourceBitmapSize = Device.Settings.CameraViewImageSourceBitmapSize.SelectedItem.Size;
                 // MUSTDO: This is tested by WinForm example code.  WPF code is not correct.
-                Debug.WriteLine("cameraViewImageSourceRectInCapturedImageRect: " + cameraViewImageSourceRectInCapturedImageRect + ", cameraViewImageSourceBitmapSize: " + cameraViewImageSourceBitmapSize);
-                tx = (double)cameraViewImageSourceRectInCapturedImageRect.X;
-                ty = (double)cameraViewImageSourceRectInCapturedImageRect.Y;
-                sx = (double)cameraViewImageSourceBitmapSize.Width / (double)cameraViewImageSourceRectInCapturedImageRect.Width;
-                sy = (double)cameraViewImageSourceBitmapSize.Height / (double)cameraViewImageSourceRectInCapturedImageRect.Height;
+                Debug.WriteLine("cameraViewImageSourceRectInCaptureImage: " + cameraViewImageSourceRectInCaptureImage + ", cameraViewImageSourceBitmapSize: " + cameraViewImageSourceBitmapSize);
+                tx = (double)cameraViewImageSourceRectInCaptureImage.X;
+                ty = (double)cameraViewImageSourceRectInCaptureImage.Y;
+                sx = (double)cameraViewImageSourceBitmapSize.Width / (double)cameraViewImageSourceRectInCaptureImage.Width;
+                sy = (double)cameraViewImageSourceBitmapSize.Height / (double)cameraViewImageSourceRectInCaptureImage.Height;
             }
             else
             {
-                Debug.WriteLine("cameraViewImageSourceBitmapSize or cameraViewImageSourceRectInCapturedImageRect is unavailable");
+                Debug.WriteLine("cameraViewImageSourceBitmapSize or cameraViewImageSourceRectInCaptureImage is unavailable");
                 tx = 0;
                 ty = 0;
                 sx = 1;
@@ -184,17 +184,21 @@
                     Reset();
                     break;
                 case EgsGestureHidReportMessageIds.DetectingFaces:
-                    // NOTE: In Kickstarter 1st released version, when MessageId is DetectingFaces, the app needed to reset this object by Timer.
-                    if (MessageId != previousMessageId)
+                    if (Device.Settings.FaceDetectionMethod.Value == FaceDetectionMethods.DefaultProcessOnEgsDevice)
                     {
-                        if (false) { Debug.WriteLine("DetectingFaces && MessageId has changed."); }
-                        foreach (var face in Faces) { face.Reset(); }
-                        DetectedFacesCount = 0;
-                        SelectedFaceIndex = -1;
-                        foreach (var hand in Hands) { hand.Reset(); }
-                        TrackingHandsCount = 0;
+                        // NOTE: In Kickstarter 1st released version, when MessageId is DetectingFaces, the app needed to reset this object by Timer.
+                        if (MessageId != previousMessageId)
+                        {
+                            if (false) { Debug.WriteLine("DetectingFaces && MessageId has changed."); }
+                            foreach (var face in Faces) { face.Reset(); }
+                            DetectedFacesCount = 0;
+                            SelectedFaceIndex = -1;
+                            foreach (var hand in Hands) { hand.Reset(); }
+                            TrackingHandsCount = 0;
+                        }
+                        // TODO: MUSTDO: When application detects faces on host, report from device is wrong.
+                        UpdateOnDetectingFaces(hidReport);
                     }
-                    UpdateOnDetectingFaces(hidReport);
                     break;
                 case EgsGestureHidReportMessageIds.DetectingOrTrackingHands:
                     UpdateOnDetectingOrTrackingHands(hidReport);

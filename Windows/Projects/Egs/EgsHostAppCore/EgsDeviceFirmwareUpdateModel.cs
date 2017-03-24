@@ -83,8 +83,8 @@
             set
             {
                 _FirmwareImageFilePathList = value;
-                OnPropertyChanged("FirmwareImageFilePathList");
-                OnPropertyChanged("FirmwareImageFilePathListCount");
+                OnPropertyChanged(nameof(FirmwareImageFilePathList));
+                OnPropertyChanged(nameof(FirmwareImageFilePathListCount));
             }
         }
 
@@ -111,8 +111,8 @@
             private set
             {
                 _CurrentIndexInFirmwareImageFilePathList = value;
-                OnPropertyChanged("CurrentIndexInFirmwareImageFilePathList");
-                OnPropertyChanged("CurrentIndexInFirmwareImageFilePathListForView");
+                OnPropertyChanged(nameof(CurrentIndexInFirmwareImageFilePathList));
+                OnPropertyChanged(nameof(CurrentIndexInFirmwareImageFilePathListForView));
             }
         }
         /// <summary>
@@ -136,7 +136,7 @@
                 if (_PercentProgressInOneFile != value)
                 {
                     _PercentProgressInOneFile = value;
-                    OnPropertyChanged("PercentProgressInOneFile");
+                    OnPropertyChanged(nameof(PercentProgressInOneFile));
                     ProgressReport.ReportProgress(PercentProgress);
                 }
             }
@@ -167,8 +167,8 @@
             private set
             {
                 _IsBusy = value;
-                OnPropertyChanged("IsBusy");
-                OnPropertyChanged("StartOrCancelButtonContent");
+                OnPropertyChanged(nameof(IsBusy));
+                OnPropertyChanged(nameof(StartOrCancelButtonContent));
             }
         }
         public bool IsCanceled { get; private set; }
@@ -177,7 +177,7 @@
         public string MessageText
         {
             get { return _MessageText; }
-            set { _MessageText = value; OnPropertyChanged("MessageText"); }
+            set { _MessageText = value; OnPropertyChanged(nameof(MessageText)); }
         }
 
         EgsDeviceFirmwareUpdateUserActions _ExpectedUserAction = EgsDeviceFirmwareUpdateUserActions.None;
@@ -202,9 +202,10 @@
                         MessageText = Resources.EgsDeviceFirmwareUpdateModel_DoNotDisconnectTheDevice;
                         break;
                     default:
+                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                         throw new NotImplementedException();
                 }
-                OnPropertyChanged("ExpectedUserAction");
+                OnPropertyChanged(nameof(ExpectedUserAction));
             }
         }
 
@@ -364,7 +365,7 @@
         public void StartAsync()
         {
             Trace.Assert(ProgressReport.IsBusy == false);
-            Device.IsToMonitorTemperature = false;
+            Device.Settings.IsToMonitorTemperature.Value = false;
             Device.IsUpdatingFirmware = true;
             IsBusy = true;
             IsCanceled = false;
@@ -420,6 +421,10 @@
             {
                 if (FirmwareImageFilePathList == null) { throw new ArgumentNullException("binaryFilepathList"); }
                 if (FirmwareImageFilePathList.Count == 0) { throw new ArgumentException("binaryFilepathList.Count == 0"); }
+
+                // TODO: MUSTDO: test!
+                Device.WaitTimeInMillisecondsBeforeSetFeatureReport = 2;
+                Device.WaitTimeInMillisecondsBeforeGetFeatureReport = 10;
 
                 CurrentIndexInFirmwareImageFilePathList = 0;
                 LastStateReport = new EgsDeviceFirmwareUpdateStateReport() { Message = "File List:" + Environment.NewLine };

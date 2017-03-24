@@ -23,7 +23,7 @@
         public Visibility ScrollAreaStackPanelVisibility
         {
             get { return _ScrollAreaStackPanelVisibility; }
-            set { _ScrollAreaStackPanelVisibility = value; OnPropertyChanged("ScrollAreaStackPanelVisibility"); }
+            set { _ScrollAreaStackPanelVisibility = value; OnPropertyChanged(nameof(ScrollAreaStackPanelVisibility)); }
         }
         public bool IsDragging { get; set; }
         public Point DragStartedPoint { get; set; }
@@ -95,7 +95,7 @@
                                 SetCurrentMessageWithoutVoice(Messages.View005_Message00400);
                                 break;
                             default:
-                                Debugger.Break();
+                                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                                 throw new NotImplementedException();
                         }
                         narrationKind++;
@@ -122,7 +122,7 @@
                         SetCurrentMessageWithoutVoice(Messages.View005_Message00500);
                         break;
                     default:
-                        Debugger.Break();
+                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                         throw new NotImplementedException();
                 }
 
@@ -152,7 +152,7 @@
                                     }
                                     break;
                                 default:
-                                    Debugger.Break();
+                                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                                     throw new NotImplementedException();
                             }
                             // It restarts from initial detection again.
@@ -186,7 +186,7 @@
                             SetCurrentMessage(Messages.View005_Message00700);
                             break;
                         default:
-                            Debugger.Break();
+                            if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                             throw new NotImplementedException();
                     }
                 }

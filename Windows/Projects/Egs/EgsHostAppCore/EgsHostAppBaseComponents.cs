@@ -35,6 +35,7 @@
             }
         }
 
+        [DataMember]
         public CameraViewWindowModel CameraViewWindowModel { get; private set; }
         public CameraViewWindow CameraViewWindow { get; private set; }
         public SettingsWindow SettingsWindow { get; private set; }
@@ -50,7 +51,7 @@
         protected virtual void OnIsToStartTutorialWhenHostApplicationStartChanged(EventArgs e)
         {
             var t = IsToStartTutorialWhenHostApplicationStartChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToStartTutorialWhenHostApplicationStart");
+            OnPropertyChanged(nameof(IsToStartTutorialWhenHostApplicationStart));
         }
         [DataMember]
         public bool IsToStartTutorialWhenHostApplicationStart
@@ -79,7 +80,7 @@
         internal override void RaiseMultipleObjectsPropertyChanged()
         {
             base.RaiseMultipleObjectsPropertyChanged();
-            OnPropertyChanged("CameraViewWindowModel");
+            OnPropertyChanged(nameof(CameraViewWindowModel));
         }
 
         public EgsHostAppBaseComponents()
@@ -194,36 +195,39 @@
             CameraViewWindowModel.CanResizeChanged += delegate { OnCanResizeCameraViewWindowChanged(); };
             OnCanResizeCameraViewWindowChanged();
 
-            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectedItemChanged += delegate
+            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.ValueUpdated += delegate
             {
                 CameraViewWindowModel.StartCheckingIsShowingCameraViewWindow();
             };
-            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(
-                e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods);
-            CameraViewWindowModel.WindowStateUsersControlMethod.SelectedItemChanged += delegate
+            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods;
+            CameraViewWindowModel.WindowStateUsersControlMethod.ValueUpdated += delegate
             {
                 CameraViewWindowModel.StartCheckingIsShowingCameraViewWindow();
             };
-            CameraViewWindowModel.WindowStateUsersControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateUsersControlMethods.ManualOnOff);
+            CameraViewWindowModel.WindowStateUsersControlMethod.Value = CameraViewWindowStateUsersControlMethods.ManualOnOff;
 
             Device.IsHidDeviceConnectedChanged += Device_IsHidDeviceConnectedChanged;
             // NOTE: Update is necessary here, too.
             if (ApplicationCommonSettings.IsInternalRelease) { UpdateDeviceFirmwareCommand.CanPerform = Device.IsHidDeviceConnected ? true : false; }
 
-            CultureInfoAndDescription.SelectedItemChanged += delegate
+            CultureInfoAndDescription.ValueUpdated += delegate
             {
                 SettingsWindow.ReloadDataContext();
                 CameraViewWindow.ReloadDataContext();
             };
 
-            CameraViewWindow.Closed += delegate
+            if (false)
             {
-                if (IsToDisposeThisWhenCameraViewWindowClosed)
+                CameraViewWindow.Closed += delegate
                 {
-                    CameraViewWindow = null;
-                    this.Dispose();
-                }
-            };
+                    if (IsToDisposeThisWhenCameraViewWindowClosed)
+                    {
+                        CameraViewWindow = null;
+                        // TODO: MUSTDO: Application does not exit, if users click "close window" on the icon of CameraView on the task bar!!
+                        this.Dispose();
+                    }
+                };
+            }
 
             if (ApplicationCommonSettings.IsDebugging)
             {
@@ -261,7 +265,6 @@
         internal bool GetHasToUpdateDeviceFirmware()
         {
             if (Device == null) { Debugger.Break(); throw new InvalidOperationException("Device == null"); }
-            if (DeviceSettings == null) { Debugger.Break(); throw new InvalidOperationException("DeviceSettings == null"); }
 
             if (Device.IsHidDeviceConnected == false) { return false; }
             switch (DeviceFirmwareUpdateCondition)
@@ -271,7 +274,7 @@
                         var firmwareVersionInImageFile = new Version(ApplicationCommonSettings.FirmwareVersionInImageFileString);
                         var ret =
                             (firmwareVersionInImageFile > Device.FirmwareVersionAsVersion)
-                            && (DeviceSettings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue != EgsDeviceTouchInterfaceKind.Mouse);
+                            && (Device.Settings.TouchInterfaceKind.Value != TouchInterfaceKinds.Mouse);
                         return ret;
                     }
                     break;
@@ -289,7 +292,6 @@
         internal void StartDeviceFirmwareUpdate()
         {
             if (Device == null) { Debugger.Break(); throw new InvalidOperationException("Device == null"); }
-            if (DeviceSettings == null) { Debugger.Break(); throw new InvalidOperationException("DeviceSettings == null"); }
 
             // NOTE: To call a code to exit "Tutorial" application, it raises such an ad-hoc event.
             var t = IsStartingDeviceFirmwareUpdate; if (t != null) { t(this, EventArgs.Empty); }
@@ -307,7 +309,7 @@
             Device.IsHidDeviceConnectedChanged -= Device_IsHidDeviceConnectedChanged;
             IsToDisposeThisWhenCameraViewWindowClosed = false;
             SettingsWindow.Close();
-            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized);
+            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized;
 
             var dfuWindow = new Window();
             dfuWindow.Content = dfuUserControl;
@@ -360,7 +362,7 @@
 
             dfuWindow.ShowDialog();
 
-            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods);
+            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods;
 
             // NOTE: Whether it completes or fails, it exits the host application.
             throw new EgsHostApplicationIsClosingException(dfuUserControl.Model.LastResult.Message);
@@ -385,8 +387,8 @@
                 if (SettingsWindow != null) { SettingsWindow.CloseToExitApplication(); SettingsWindow = null; }
                 if (CameraViewWindow != null) { CameraViewWindow.Close(); CameraViewWindow = null; }
             }
-            disposed = true;
             base.Dispose(disposing);
+            disposed = true;
         }
         #endregion
 

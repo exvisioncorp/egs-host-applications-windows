@@ -30,7 +30,7 @@
         protected virtual void OnFromChanged(EventArgs e)
         {
             var t = FromChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("From");
+            OnPropertyChanged(nameof(From));
         }
         [DataMember]
         public T From
@@ -59,7 +59,7 @@
         protected virtual void OnToChanged(EventArgs e)
         {
             var t = ToChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("To");
+            OnPropertyChanged(nameof(To));
         }
         [DataMember]
         public T To
@@ -96,8 +96,8 @@
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Maximum(={1}) < newMinimum(={0}).  Minimum = From = To = Maximum = newMinimum = {0}", value, _Maximum));
                     if (CanRaiseDebbugerBreak) { Debugger.Break(); }
                     _Minimum = _From = _To = _Maximum = value;
-                    OnPropertyChanged("Maximum");
-                    OnPropertyChanged("Minimum");
+                    OnPropertyChanged(nameof(Maximum));
+                    OnPropertyChanged(nameof(Minimum));
                     OnToChanged(EventArgs.Empty);
                     OnFromChanged(EventArgs.Empty);
                 }
@@ -105,7 +105,7 @@
                 {
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] To(={1}) < newMinimum(={0}).  Minimum = From = To = newMinimum = {0}", value, _To));
                     _Minimum = _From = _To = value;
-                    OnPropertyChanged("Minimum");
+                    OnPropertyChanged(nameof(Minimum));
                     OnToChanged(EventArgs.Empty);
                     OnFromChanged(EventArgs.Empty);
                 }
@@ -113,13 +113,13 @@
                 {
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] From(={1}) < newMinimum(={0}).  Minimum = From = newMinimum = {0}", value, _From));
                     _Minimum = _From = value;
-                    OnPropertyChanged("Minimum");
+                    OnPropertyChanged(nameof(Minimum));
                     OnFromChanged(EventArgs.Empty);
                 }
                 else
                 {
                     _Minimum = value;
-                    OnPropertyChanged("Minimum");
+                    OnPropertyChanged(nameof(Minimum));
                 }
             }
         }
@@ -138,8 +138,8 @@
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < Minimum(={1}).  Maximum = To = From = Minimum = newMaximum = {0}", value, _Minimum));
                     if (CanRaiseDebbugerBreak) { Debugger.Break(); }
                     _Maximum = _To = _From = _Minimum = value;
-                    OnPropertyChanged("Minimum");
-                    OnPropertyChanged("Maximum");
+                    OnPropertyChanged(nameof(Minimum));
+                    OnPropertyChanged(nameof(Maximum));
                     OnFromChanged(EventArgs.Empty);
                     OnToChanged(EventArgs.Empty);
                 }
@@ -147,7 +147,7 @@
                 {
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < From(={1}).  Maximum = To = From = newMaximum = {0}", value, _From));
                     _Maximum = _To = _From = value;
-                    OnPropertyChanged("Maximum");
+                    OnPropertyChanged(nameof(Maximum));
                     OnFromChanged(EventArgs.Empty);
                     OnToChanged(EventArgs.Empty);
                 }
@@ -155,13 +155,13 @@
                 {
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < To(={1}).  Maximum = To = newMaximum = {0}", value, _To));
                     _Maximum = _To = value;
-                    OnPropertyChanged("Maximum");
+                    OnPropertyChanged(nameof(Maximum));
                     OnToChanged(EventArgs.Empty);
                 }
                 else
                 {
                     _Maximum = value;
-                    OnPropertyChanged("Maximum");
+                    OnPropertyChanged(nameof(Maximum));
                 }
             }
         }
@@ -172,7 +172,7 @@
         public T SmallChange
         {
             get { return _SmallChange; }
-            set { _SmallChange = value; OnPropertyChanged("SmallChange"); }
+            set { _SmallChange = value; OnPropertyChanged(nameof(SmallChange)); }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -181,7 +181,7 @@
         public T LargeChange
         {
             get { return _LargeChange; }
-            set { _LargeChange = value; OnPropertyChanged("LargeChange"); }
+            set { _LargeChange = value; OnPropertyChanged(nameof(LargeChange)); }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -190,7 +190,7 @@
         public T TickFrequency
         {
             get { return _TickFrequency; }
-            set { _TickFrequency = value; OnPropertyChanged("TickFrequency"); }
+            set { _TickFrequency = value; OnPropertyChanged(nameof(TickFrequency)); }
         }
 
         public RangedRangeType()

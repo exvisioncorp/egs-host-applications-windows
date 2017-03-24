@@ -16,7 +16,7 @@
         protected virtual void OnVideoCaptureDeviceIndexChanged(EventArgs e)
         {
             var t = VideoCaptureDeviceIndexChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("VideoCaptureDeviceIndex");
+            OnPropertyChanged(nameof(VideoCaptureDeviceIndex));
         }
         public uint? VideoCaptureDeviceIndex
         {
@@ -33,7 +33,7 @@
         protected virtual void OnVideoCaptureDeviceNameChanged(EventArgs e)
         {
             var t = VideoCaptureDeviceNameChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("VideoCaptureDeviceName");
+            OnPropertyChanged(nameof(VideoCaptureDeviceName));
         }
         public string VideoCaptureDeviceName
         {
@@ -50,7 +50,7 @@
         protected virtual void OnVideoCaptureDeviceDevicePathChanged(EventArgs e)
         {
             var t = VideoCaptureDeviceDevicePathChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("VideoCaptureDeviceDevicePath");
+            OnPropertyChanged(nameof(VideoCaptureDeviceDevicePath));
         }
         public string VideoCaptureDeviceDevicePath
         {

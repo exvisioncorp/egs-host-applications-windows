@@ -193,45 +193,6 @@ namespace DotNetUtility
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Linq.Expressions;
-    using System.ComponentModel;
-
-    public static class Name
-    {
-        public static string Of<T, TResult>(this Expression<Func<T, TResult>> accessor)
-        {
-            return GetNameOfExpression(accessor.Body);
-        }
-
-        public static string Of<T>(this Expression<Func<T>> accessor)
-        {
-            return GetNameOfExpression(accessor.Body);
-        }
-
-        public static string Of<T, TResult>(this T obj, Expression<Func<T, TResult>> propertyAccessor)
-        {
-            return GetNameOfExpression(propertyAccessor.Body);
-        }
-
-        static string GetNameOfExpression(Expression expression)
-        {
-            if (expression.NodeType == ExpressionType.MemberAccess)
-            {
-                var memberExpression = expression as MemberExpression;
-                if (memberExpression == null) { return ""; }
-                return memberExpression.Member.Name;
-            }
-            return "";
-        }
-    }
-}
-
-namespace DotNetUtility
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.ComponentModel;
     using System.Collections.ObjectModel;
     using System.Runtime.Serialization;
@@ -253,7 +214,7 @@ namespace DotNetUtility
         protected virtual void OnOptionsChanged(EventArgs e)
         {
             var t = OptionsChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Options");
+            OnPropertyChanged(nameof(Options));
         }
 
         /// <summary>
@@ -278,7 +239,7 @@ namespace DotNetUtility
         protected virtual void OnSelectedIndexChanged(EventArgs e)
         {
             var t = SelectedIndexChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("SelectedIndex");
+            OnPropertyChanged(nameof(SelectedIndex));
         }
         [DataMember]
         public int SelectedIndex
@@ -287,8 +248,8 @@ namespace DotNetUtility
             set
             {
                 _SelectedIndex = value;
-                OnSelectedIndexChanged(EventArgs.Empty);
                 OnSelectedItemChanged(EventArgs.Empty);
+                OnSelectedIndexChanged(EventArgs.Empty);
             }
         }
 
@@ -297,7 +258,7 @@ namespace DotNetUtility
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
             var t = SelectedItemChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("SelectedItem");
+            OnPropertyChanged(nameof(SelectedItem));
         }
         public T SelectedItem
         {
@@ -315,6 +276,9 @@ namespace DotNetUtility
             var result = Options.Single(predicate);
             if (result == null) { return false; }
             SelectedIndex = Options.IndexOf(result);
+#if DEBUG
+            if (SelectedItem != result) { System.Diagnostics.Debugger.Break(); }
+#endif
             return true;
         }
     }
@@ -349,7 +313,7 @@ namespace DotNetUtility
         protected virtual void OnValueChanged(EventArgs e)
         {
             var t = ValueChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Value");
+            OnPropertyChanged(nameof(Value));
         }
         [DataMember]
         public T Value
@@ -386,21 +350,21 @@ namespace DotNetUtility
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Maximum(={1}) < newMinimum(={0}).  Minimum = Value = Maximum = newMinimum = {0}", value, _Maximum));
                     if (CanRaiseDebbugerBreak) { Debugger.Break(); }
                     _Minimum = _Value = _Maximum = value;
-                    OnPropertyChanged("Maximum");
-                    OnPropertyChanged("Minimum");
+                    OnPropertyChanged(nameof(Maximum));
+                    OnPropertyChanged(nameof(Minimum));
                     OnValueChanged(EventArgs.Empty);
                 }
                 else if (_Value.CompareTo(value) < 0)
                 {
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Value(={1}) < newMinimum(={0}).  Minimum = Value = newMinimum = {0}", value, _Value));
                     _Minimum = _Value = value;
-                    OnPropertyChanged("Minimum");
+                    OnPropertyChanged(nameof(Minimum));
                     OnValueChanged(EventArgs.Empty);
                 }
                 else
                 {
                     _Minimum = value;
-                    OnPropertyChanged("Minimum");
+                    OnPropertyChanged(nameof(Minimum));
                 }
             }
         }
@@ -419,21 +383,21 @@ namespace DotNetUtility
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < Minimum(={1}).  Maximum = Value = Minimum = newMaximum = {0}", value, _Minimum));
                     if (CanRaiseDebbugerBreak) { Debugger.Break(); }
                     _Maximum = _Value = _Minimum = value;
-                    OnPropertyChanged("Minimum");
-                    OnPropertyChanged("Maximum");
+                    OnPropertyChanged(nameof(Minimum));
+                    OnPropertyChanged(nameof(Maximum));
                     OnValueChanged(EventArgs.Empty);
                 }
                 else if (value.CompareTo(_Value) < 0)
                 {
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < Value(={1}).  Maximum = Value = newMaximum = {0}", value, _Value));
                     _Maximum = _Value = value;
-                    OnPropertyChanged("Maximum");
+                    OnPropertyChanged(nameof(Maximum));
                     OnValueChanged(EventArgs.Empty);
                 }
                 else
                 {
                     _Maximum = value;
-                    OnPropertyChanged("Maximum");
+                    OnPropertyChanged(nameof(Maximum));
                 }
             }
         }
@@ -444,7 +408,7 @@ namespace DotNetUtility
         public T SmallChange
         {
             get { return _SmallChange; }
-            set { _SmallChange = value; OnPropertyChanged("SmallChange"); }
+            set { _SmallChange = value; OnPropertyChanged(nameof(SmallChange)); }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -453,7 +417,7 @@ namespace DotNetUtility
         public T LargeChange
         {
             get { return _LargeChange; }
-            set { _LargeChange = value; OnPropertyChanged("LargeChange"); }
+            set { _LargeChange = value; OnPropertyChanged(nameof(LargeChange)); }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -462,7 +426,7 @@ namespace DotNetUtility
         public T TickFrequency
         {
             get { return _TickFrequency; }
-            set { _TickFrequency = value; OnPropertyChanged("TickFrequency"); }
+            set { _TickFrequency = value; OnPropertyChanged(nameof(TickFrequency)); }
         }
 
         public RangedNumericType()
@@ -696,7 +660,7 @@ namespace DotNetUtility
         protected virtual void OnFromChanged(EventArgs e)
         {
             var t = FromChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("From");
+            OnPropertyChanged(nameof(From));
         }
         [DataMember]
         public T From
@@ -725,7 +689,7 @@ namespace DotNetUtility
         protected virtual void OnToChanged(EventArgs e)
         {
             var t = ToChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("To");
+            OnPropertyChanged(nameof(To));
         }
         [DataMember]
         public T To
@@ -762,8 +726,8 @@ namespace DotNetUtility
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Maximum(={1}) < newMinimum(={0}).  Minimum = From = To = Maximum = newMinimum = {0}", value, _Maximum));
                     if (CanRaiseDebbugerBreak) { Debugger.Break(); }
                     _Minimum = _From = _To = _Maximum = value;
-                    OnPropertyChanged("Maximum");
-                    OnPropertyChanged("Minimum");
+                    OnPropertyChanged(nameof(Maximum));
+                    OnPropertyChanged(nameof(Minimum));
                     OnToChanged(EventArgs.Empty);
                     OnFromChanged(EventArgs.Empty);
                 }
@@ -771,7 +735,7 @@ namespace DotNetUtility
                 {
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] To(={1}) < newMinimum(={0}).  Minimum = From = To = newMinimum = {0}", value, _To));
                     _Minimum = _From = _To = value;
-                    OnPropertyChanged("Minimum");
+                    OnPropertyChanged(nameof(Minimum));
                     OnToChanged(EventArgs.Empty);
                     OnFromChanged(EventArgs.Empty);
                 }
@@ -779,13 +743,13 @@ namespace DotNetUtility
                 {
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] From(={1}) < newMinimum(={0}).  Minimum = From = newMinimum = {0}", value, _From));
                     _Minimum = _From = value;
-                    OnPropertyChanged("Minimum");
+                    OnPropertyChanged(nameof(Minimum));
                     OnFromChanged(EventArgs.Empty);
                 }
                 else
                 {
                     _Minimum = value;
-                    OnPropertyChanged("Minimum");
+                    OnPropertyChanged(nameof(Minimum));
                 }
             }
         }
@@ -804,8 +768,8 @@ namespace DotNetUtility
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < Minimum(={1}).  Maximum = To = From = Minimum = newMaximum = {0}", value, _Minimum));
                     if (CanRaiseDebbugerBreak) { Debugger.Break(); }
                     _Maximum = _To = _From = _Minimum = value;
-                    OnPropertyChanged("Minimum");
-                    OnPropertyChanged("Maximum");
+                    OnPropertyChanged(nameof(Minimum));
+                    OnPropertyChanged(nameof(Maximum));
                     OnFromChanged(EventArgs.Empty);
                     OnToChanged(EventArgs.Empty);
                 }
@@ -813,7 +777,7 @@ namespace DotNetUtility
                 {
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < From(={1}).  Maximum = To = From = newMaximum = {0}", value, _From));
                     _Maximum = _To = _From = value;
-                    OnPropertyChanged("Maximum");
+                    OnPropertyChanged(nameof(Maximum));
                     OnFromChanged(EventArgs.Empty);
                     OnToChanged(EventArgs.Empty);
                 }
@@ -821,13 +785,13 @@ namespace DotNetUtility
                 {
                     Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < To(={1}).  Maximum = To = newMaximum = {0}", value, _To));
                     _Maximum = _To = value;
-                    OnPropertyChanged("Maximum");
+                    OnPropertyChanged(nameof(Maximum));
                     OnToChanged(EventArgs.Empty);
                 }
                 else
                 {
                     _Maximum = value;
-                    OnPropertyChanged("Maximum");
+                    OnPropertyChanged(nameof(Maximum));
                 }
             }
         }
@@ -838,7 +802,7 @@ namespace DotNetUtility
         public T SmallChange
         {
             get { return _SmallChange; }
-            set { _SmallChange = value; OnPropertyChanged("SmallChange"); }
+            set { _SmallChange = value; OnPropertyChanged(nameof(SmallChange)); }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -847,7 +811,7 @@ namespace DotNetUtility
         public T LargeChange
         {
             get { return _LargeChange; }
-            set { _LargeChange = value; OnPropertyChanged("LargeChange"); }
+            set { _LargeChange = value; OnPropertyChanged(nameof(LargeChange)); }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -856,7 +820,7 @@ namespace DotNetUtility
         public T TickFrequency
         {
             get { return _TickFrequency; }
-            set { _TickFrequency = value; OnPropertyChanged("TickFrequency"); }
+            set { _TickFrequency = value; OnPropertyChanged(nameof(TickFrequency)); }
         }
 
         public RangedRangeType()
@@ -978,6 +942,107 @@ namespace DotNetUtility
         }
     }
 }
+namespace DotNetUtility
+{
+    using System;
+    using System.Diagnostics;
+
+    /// <summary>
+    /// Save [DataMember] properties with Json.NET
+    /// </summary>
+    public static class SettingsSerialization
+    {
+        public static string GetDefaultSettingsFilePath()
+        {
+            var assemblyInfo = System.Reflection.Assembly.GetEntryAssembly();
+            var assemblyInfoGetName = assemblyInfo.GetName();
+
+            var appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var companyName = ((System.Reflection.AssemblyCompanyAttribute)(Attribute.GetCustomAttribute(assemblyInfo, typeof(System.Reflection.AssemblyCompanyAttribute)))).Company;
+            foreach (var c in System.IO.Path.GetInvalidPathChars()) { companyName = companyName.Replace(c.ToString(), ""); }
+            companyName = companyName.Replace(" ", "_");
+            var assemblyName = assemblyInfoGetName.Name;
+            var version = assemblyInfoGetName.Version.ToString();
+            var settingsFileName = assemblyName + "_Settings.json";
+            var settingsFileFullPath = "";
+            settingsFileFullPath = System.IO.Path.Combine(settingsFileFullPath, appDataFolderPath);
+            settingsFileFullPath = System.IO.Path.Combine(settingsFileFullPath, companyName);
+            settingsFileFullPath = System.IO.Path.Combine(settingsFileFullPath, assemblyName);
+            settingsFileFullPath = System.IO.Path.Combine(settingsFileFullPath, version);
+            settingsFileFullPath = System.IO.Path.Combine(settingsFileFullPath, settingsFileName);
+            return settingsFileFullPath;
+        }
+
+        public static bool SaveSettingsJsonFile(object obj)
+        {
+            try
+            {
+                var path = GetDefaultSettingsFilePath();
+                var contents = Newtonsoft.Json.JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented);
+                System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
+                System.IO.File.WriteAllText(path, contents);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public static bool DeleteSettingsJsonFile()
+        {
+            try
+            {
+                var path = GetDefaultSettingsFilePath();
+                System.IO.File.Delete(path);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public static bool LoadSettingsJsonFile(object obj)
+        {
+            try
+            {
+                var path = GetDefaultSettingsFilePath();
+                if (System.IO.File.Exists(path) == false) { return false; }
+                var contents = System.IO.File.ReadAllText(path);
+
+                if (false)
+                {
+                    // TODO: Fix a problem that ObservableCollection can be duplicated.
+                    var jss = new Newtonsoft.Json.JsonSerializerSettings();
+                    // NOTE: If it is set to "Error", just unknown parameters in Json file can occur exceptions.
+                    // To absorb the difference of the version of the Settings object, let it cancel the exception.
+                    // Save the settings by the latest format, when the application exits.
+                    //jss.MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Error; // default == Ignore
+                    // NOTE: When there is not the description of the value in Json or the value is null, settings in constructors are used.  It can solve problems in JSON file by the settings in constructor.
+                    // default == Include
+                    jss.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                    // NOTE: I don't understand how "Reuse" works, so I don't use it.
+                    // TODO: Check the behavior.
+                    //jss.ObjectCreationHandling = Newtonsoft.Json.ObjectCreationHandling.Reuse; // default == Auto
+                    jss.ObjectCreationHandling = Newtonsoft.Json.ObjectCreationHandling.Replace;
+                    // Now I use not Deserialize but PopulateObject.
+                }
+
+                Newtonsoft.Json.JsonConvert.PopulateObject(contents, obj);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+    }
+}
+
 namespace DotNetUtility
 {
     using System;

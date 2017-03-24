@@ -158,18 +158,22 @@
                     var msg = (NarrationInformation)prop.GetValue(messages);
                     var filePath = CurrentResources.SoundFilesFolderPath + msg.OggAudioFileName;
                     var hr = audioPlayer.StartAsync(filePath);
-                    if (hr == false) { hasAllFiles = false; }
+                    if (hr == false)
+                    {
+                        hasAllFiles = false;
+                        break;
+                    }
                 }
                 audioPlayer.Stop();
             }
             catch (Exception ex)
             {
+                hasAllFiles = false;
                 MessageBox.Show(ex.Message);
             }
             if (hasAllFiles == false)
             {
-                if (Application.Current != null) { Application.Current.Shutdown(); }
-                return;
+                throw new Exception("Application could not find one or more sound files, or application could not play the sound file on the current sound device.");
             }
         }
 
@@ -179,16 +183,19 @@
 
             RefToHostApp = hostApp;
 
-            CheckIfAllSoundFilesExistOrNot();
 
-            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized);
-            RefToHostApp.CameraViewBordersAndPointersAreDrawnBy.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewBordersAndPointersAreDrawnByKind.HostApplication);
-            RefToHostApp.DeviceSettings.IsToSendTouchScreenHidReport.Value = true;
+            if (ApplicationCommonSettings.IsDebuggingInternal) { CheckIfAllSoundFilesExistOrNot(); }
+
+
+            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized;
+            RefToHostApp.CameraViewBordersAndPointersAreDrawnBy.Value = CameraViewBordersAndPointersAreDrawnByKind.HostApplication;
+
+            RefToHostApp.Device.Settings.IsToSendTouchScreenHidReport.Value = true;
             // In Windows 10, users cannot often tap by sending Hovering State
-            if (false) { RefToHostApp.DeviceSettings.IsToSendHoveringStateOnTouchScreenHidReport.Value = true; }
-            RefToHostApp.DeviceSettings.IsToSendEgsGestureHidReport.Value = true;
+            if (false) { RefToHostApp.Device.Settings.IsToSendHoveringStateOnTouchScreenHidReport.Value = true; }
+            RefToHostApp.Device.Settings.IsToSendEgsGestureHidReport.Value = true;
             // Now this settings cannot be set from SettingsWindow, so I comment out the next line.
-            RefToHostApp.DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+            RefToHostApp.Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
             Launcher.InitializeOnceAtStartup(this);
 
             RefToHostApp.OnePersonBothHandsViewModel.RightHand.IsToUpdateVelocities = false;
@@ -211,17 +218,17 @@
 
         public void EnableUpdatingCameraViewImageButHideWindow()
         {
-            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized);
+            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized;
             RefToHostApp.Device.Settings.IsToDetectFaces.Value = true;
-            if (RefToHostApp.Device.FirmwareVersionAsVersion >= new Version(1, 1, 0, 0)) { RefToHostApp.Device.Settings.IsToDetectHands.Value = true; }
+            RefToHostApp.Device.Settings.IsToDetectHands.Value = true;
         }
 
         public void EnableUpdatingCameraViewImageAndShowWindow()
         {
-            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.SelectSingleItemByPredicate(e => e.EnumValue == CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods);
+            RefToHostApp.CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods;
             RefToHostApp.CameraViewWindowModel.SetWindowStateToNormal();
             RefToHostApp.Device.Settings.IsToDetectFaces.Value = true;
-            if (RefToHostApp.Device.FirmwareVersionAsVersion >= new Version(1, 1, 0, 0)) { RefToHostApp.Device.Settings.IsToDetectHands.Value = true; }
+            RefToHostApp.Device.Settings.IsToDetectHands.Value = true;
         }
     }
 }

@@ -8,13 +8,11 @@
     {
         static void Main(string[] args)
         {
-            var DeviceSettings = new EgsDeviceSettings();
-            DeviceSettings.InitializeOnceAtStartup();
-            DeviceSettings.IsToDetectFaces.Value = true;
-            DeviceSettings.IsToDetectHands.Value = true;
-            DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
-            DeviceSettings.CameraViewImageSourceBitmapSize.OptionalValue.SelectedIndex = 1;
-            var Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
+            EgsDevice Device = EgsDevice.GetDefaultEgsDevice();
+            Device.Settings.IsToDetectFaces.Value = true;
+            Device.Settings.IsToDetectHands.Value = true;
+            Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
+            Device.Settings.CameraViewImageSourceBitmapSize.Value = Egs.PropertyTypes.CameraViewImageSourceBitmapSizes.Size_384x240;
 
             Device.EgsGestureHidReport.ReportUpdated += (sender, e) =>
             {
@@ -42,9 +40,9 @@
 
             Console.ReadKey();
 
-            DeviceSettings.IsToDetectFaces.Value = false;
-            DeviceSettings.IsToDetectHands.Value = false;
-            DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+            Device.Settings.IsToDetectFaces.Value = false;
+            Device.Settings.IsToDetectHands.Value = false;
+            Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
             EgsDevice.CloseDefaultEgsDevice();
         }
     }

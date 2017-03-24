@@ -17,7 +17,7 @@
     /// The classes derived from this class have information to set settings and get state of the device.
     /// </summary>
     [DataContract]
-    public abstract class HidAccessPropertyBase : INotifyPropertyChanged
+    public abstract class HidAccessPropertyBase : ValueWithDescriptionBase
     {
         internal static Dictionary<string, HidAccessPropertyPrimitiveTypeIds> TypeAbbreviationName_EnumValue_Dict { get; private set; }
         internal static Dictionary<Type, string> Type_TypeAbbreviationName_Dict { get; private set; }
@@ -48,51 +48,11 @@
             Type_TypeAbbreviationName_Dict[typeof(System.Single)] = TypeNameStringFloat;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            var t = PropertyChanged;
-            if (t != null) { t(this, new PropertyChangedEventArgs(propertyName)); }
-        }
-
         internal const int ByteArrayDataLength = 64;
         internal const int TypeIdOffsetInByteArrayData = 4;
         internal const int DataLengthOffsetInByteArrayData = 8;
         internal const int SendingDataOffsetInDataOffsetInByteArrayData = 12;
         internal const int OneValueOffsetInByteArrayData = 16;
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        string _Description;
-        /// <summary>
-        /// The key to Resource.ResourceManager.GetString.
-        /// </summary>
-        public string DescriptionKey { get; set; }
-        /// <summary>
-        /// In this base class, Resources.ResourceManager.GetString(DescriptionKey, Resources.Culture) is returned.  The list of key and value is described in some excel sheets.  
-        /// EgsSourceCodeGeneration.exe runs in a build event, and it converts the excel sheets and generates the multi-lingual "Resource.resx" files.
-        /// </summary>
-        public virtual string Description
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_Description) == false) { return _Description; }
-                return string.IsNullOrEmpty(DescriptionKey) ? "" : Resources.ResourceManager.GetString(DescriptionKey, Resources.Culture);
-            }
-            private set { _Description = value; OnPropertyChanged("Description"); }
-        }
-        public override string ToString() { return Description; }
-
-        internal delegate void HidAccessPropertyBaseValueChangedEventHandler(HidAccessPropertyBase sender, EventArgs e);
-        internal event HidAccessPropertyBaseValueChangedEventHandler ValueUpdated;
-        protected virtual void OnValueUpdated()
-        {
-            var t = ValueUpdated; if (t != null) { t(this, EventArgs.Empty); }
-            OnPropertyChanged("Value");
-        }
-        internal virtual void RaiseValueUpdatedOnGetHidFeatureReport()
-        {
-            OnValueUpdated();
-        }
 
         // NOTE: About from ReportId to SendingDataOffsetInData, initial values (when this object is constructed) are used.  When users access get property of the value data, ByteArrayData is always converted and returned.
         internal byte[] ByteArrayData { get; set; }
@@ -156,9 +116,16 @@
             get { return _SendingDataOffsetInData; }
             set { var bytes = BitConverter.GetBytes(value); bytes.CopyTo(ByteArrayData, SendingDataOffsetInDataOffsetInByteArrayData); _SendingDataOffsetInData = value; }
         }
+
         internal bool IsReadOnly { get; set; }
         internal string NameOfProperty { get; set; }
         public Version AvailableFirmwareVersion { get; internal set; }
+
+        internal virtual void RaiseValueUpdatedOnGetHidFeatureReport()
+        {
+            OnValueUpdated();
+        }
+
         internal HidAccessPropertyBase()
         {
             ByteArrayData = new byte[ByteArrayDataLength];
@@ -373,9 +340,8 @@
     [DataContract]
     public class HidAccessPropertyPoint : HidAccessPropertyBase
     {
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt XRange { get; private set; }
-        [DataMember]
         public int X
         {
             get
@@ -389,12 +355,11 @@
                 var XBytes = BitConverter.GetBytes(XRange.Value);
                 XBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 0);
                 OnValueUpdated();
-                OnPropertyChanged("X");
+                OnPropertyChanged(nameof(X));
             }
         }
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt YRange { get; private set; }
-        [DataMember]
         public int Y
         {
             get
@@ -408,11 +373,12 @@
                 var YBytes = BitConverter.GetBytes(YRange.Value);
                 YBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 4);
                 OnValueUpdated();
-                OnPropertyChanged("Y");
+                OnPropertyChanged(nameof(Y));
             }
         }
 
-        public System.Drawing.Point Point
+        [DataMember(Order = 100)]
+        public System.Drawing.Point Value
         {
             get { return new System.Drawing.Point(X, Y); }
             internal set
@@ -425,9 +391,9 @@
                 XRange.Value = (int)value.X;
                 YRange.Value = (int)value.Y;
                 OnValueUpdated();
-                OnPropertyChanged("X");
-                OnPropertyChanged("Y");
-                OnPropertyChanged("Point");
+                OnPropertyChanged(nameof(X));
+                OnPropertyChanged(nameof(Y));
+                OnPropertyChanged(nameof(Value));
             }
         }
 
@@ -441,9 +407,8 @@
     [DataContract]
     public class HidAccessPropertySize : HidAccessPropertyBase
     {
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt WidthRange { get; private set; }
-        [DataMember]
         public int Width
         {
             get
@@ -457,12 +422,11 @@
                 var widthBytes = BitConverter.GetBytes(WidthRange.Value);
                 widthBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 0);
                 OnValueUpdated();
-                OnPropertyChanged("Width");
+                OnPropertyChanged(nameof(Width));
             }
         }
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt HeightRange { get; private set; }
-        [DataMember]
         public int Height
         {
             get
@@ -476,11 +440,12 @@
                 var heightBytes = BitConverter.GetBytes(HeightRange.Value);
                 heightBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 4);
                 OnValueUpdated();
-                OnPropertyChanged("Height");
+                OnPropertyChanged(nameof(Height));
             }
         }
 
-        public System.Drawing.Size Size
+        [DataMember(Order = 100)]
+        public System.Drawing.Size Value
         {
             get { return new System.Drawing.Size(Width, Height); }
             internal set
@@ -493,9 +458,9 @@
                 WidthRange.Value = (int)value.Width;
                 HeightRange.Value = (int)value.Height;
                 OnValueUpdated();
-                OnPropertyChanged("Width");
-                OnPropertyChanged("Height");
-                OnPropertyChanged("Size");
+                OnPropertyChanged(nameof(Width));
+                OnPropertyChanged(nameof(Height));
+                OnPropertyChanged(nameof(Value));
             }
         }
 
@@ -509,9 +474,8 @@
     [DataContract]
     public class HidAccessPropertyRect : HidAccessPropertyBase
     {
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt XRange { get; private set; }
-        [DataMember]
         public int X
         {
             get
@@ -525,12 +489,11 @@
                 var XBytes = BitConverter.GetBytes(XRange.Value);
                 XBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 0);
                 OnValueUpdated();
-                OnPropertyChanged("X");
+                OnPropertyChanged(nameof(X));
             }
         }
-        [DataMember]
+        [DataMember(Order = 10)]
         public RangedInt YRange { get; private set; }
-        [DataMember]
         public int Y
         {
             get
@@ -544,12 +507,11 @@
                 var YBytes = BitConverter.GetBytes(YRange.Value);
                 YBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 4);
                 OnValueUpdated();
-                OnPropertyChanged("Y");
+                OnPropertyChanged(nameof(Y));
             }
         }
-        [DataMember]
+        [DataMember(Order = 20)]
         public RangedInt WidthRange { get; private set; }
-        [DataMember]
         public int Width
         {
             get
@@ -563,12 +525,11 @@
                 var widthBytes = BitConverter.GetBytes(WidthRange.Value);
                 widthBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 8);
                 OnValueUpdated();
-                OnPropertyChanged("Width");
+                OnPropertyChanged(nameof(Width));
             }
         }
-        [DataMember]
+        [DataMember(Order = 20)]
         public RangedInt HeightRange { get; private set; }
-        [DataMember]
         public int Height
         {
             get
@@ -582,11 +543,12 @@
                 var heightBytes = BitConverter.GetBytes(HeightRange.Value);
                 heightBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 12);
                 OnValueUpdated();
-                OnPropertyChanged("Height");
+                OnPropertyChanged(nameof(Height));
             }
         }
 
-        public System.Drawing.Rectangle Rect
+        [DataMember(Order = 100)]
+        public System.Drawing.Rectangle Value
         {
             get { return new System.Drawing.Rectangle(X, Y, Width, Height); }
             internal set
@@ -605,11 +567,11 @@
                 WidthRange.Value = (int)value.Width;
                 HeightRange.Value = (int)value.Height;
                 OnValueUpdated();
-                OnPropertyChanged("X");
-                OnPropertyChanged("Y");
-                OnPropertyChanged("Width");
-                OnPropertyChanged("Height");
-                OnPropertyChanged("Rect");
+                OnPropertyChanged(nameof(X));
+                OnPropertyChanged(nameof(Y));
+                OnPropertyChanged(nameof(Width));
+                OnPropertyChanged(nameof(Height));
+                OnPropertyChanged(nameof(Value));
             }
         }
 
@@ -646,6 +608,7 @@
         public HidAccessPropertyRangedInt()
         {
             RangedValue = new RangedInt();
+            RangedValue.ValueChanged += (sender, e) => { OnValueChanged(e); };
         }
 
         protected virtual void OnValueChanged(EventArgs e)
@@ -653,12 +616,6 @@
             var valueBytes = BitConverter.GetBytes(RangedValue.Value);
             valueBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData);
             OnValueUpdated();
-        }
-
-        public void InitializeOnceAtStartup()
-        {
-            RangedValue.ValueChanged += (sender, e) => { OnValueChanged(e); };
-            OnValueChanged(EventArgs.Empty);
         }
     }
 
@@ -671,6 +628,7 @@
         public HidAccessPropertyRangedSingle()
         {
             RangedValue = new RangedFloat();
+            RangedValue.ValueChanged += (sender, e) => { OnValueChanged(e); };
         }
 
         protected virtual void OnValueChanged(EventArgs e)
@@ -678,12 +636,6 @@
             var valueBytes = BitConverter.GetBytes(RangedValue.Value);
             valueBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData);
             OnValueUpdated();
-        }
-
-        public void InitializeOnceAtStartup()
-        {
-            RangedValue.ValueChanged += (sender, e) => { OnValueChanged(e); };
-            OnValueChanged(EventArgs.Empty);
         }
     }
 
@@ -696,6 +648,8 @@
         public HidAccessPropertyRangedIntRange()
         {
             RangedRange = new RangedIntRange();
+            RangedRange.FromChanged += (sender, e) => { OnValueFromChanged(e); };
+            RangedRange.ToChanged += (sender, e) => { OnValueToChanged(e); };
         }
 
         protected virtual void OnValueFromChanged(EventArgs e)
@@ -710,69 +664,6 @@
             var toBytes = BitConverter.GetBytes(RangedRange.To);
             toBytes.CopyTo(ByteArrayData, OneValueOffsetInByteArrayData + 4);
             OnValueUpdated();
-        }
-
-        public void InitializeOnceAtStartup()
-        {
-            RangedRange.FromChanged += (sender, e) => { OnValueFromChanged(e); };
-            RangedRange.ToChanged += (sender, e) => { OnValueToChanged(e); };
-            OnValueFromChanged(EventArgs.Empty);
-            OnValueToChanged(EventArgs.Empty);
-        }
-    }
-
-    [DataContract]
-    public class HidAccessPropertyOptional<T> : HidAccessPropertyBase
-        where T : HidAccessPropertyOptionalTypeParameterBase, new()
-    {
-        [DataMember]
-        public OptionalValue<T> OptionalValue { get; set; }
-
-        public byte ValueOfSelectedItem
-        {
-            get
-            {
-                return OptionalValue.SelectedItem.Value;
-            }
-            set
-            {
-                var hr = OptionalValue.SelectSingleItemByPredicate(e => e.Value == valueInByteArrayData);
-                if (hr)
-                {
-                    ByteArrayData[OneValueOffsetInByteArrayData] = ValueOfSelectedItem;
-                    RaiseValueUpdatedOnGetHidFeatureReport();
-                }
-            }
-        }
-
-        byte valueInByteArrayData { get { return ByteArrayData[OneValueOffsetInByteArrayData]; } }
-
-        internal override void RaiseValueUpdatedOnGetHidFeatureReport()
-        {
-            OptionalValue.SelectSingleItemByPredicate(e => e.Value == valueInByteArrayData);
-            // OnValueUpdated is called by the above line.
-        }
-
-        public HidAccessPropertyOptional()
-        {
-            OptionalValue = new OptionalValue<T>();
-        }
-
-        protected virtual void OnOptionalValueSelectedItemChanged(EventArgs e)
-        {
-            if (OptionalValue.Options.Count == 0) { return; }
-            if (OptionalValue.SelectedItem == null) { OptionalValue.SelectedIndex = 0; }
-            if (valueInByteArrayData != ValueOfSelectedItem)
-            {
-                ByteArrayData[OneValueOffsetInByteArrayData] = OptionalValue.SelectedItem.Value;
-                OnValueUpdated();
-            }
-        }
-
-        public void InitializeOnceAtStartup()
-        {
-            OptionalValue.SelectedItemChanged += (sender, e) => { OnOptionalValueSelectedItemChanged(e); };
-            OnOptionalValueSelectedItemChanged(EventArgs.Empty);
         }
     }
 
@@ -797,12 +688,12 @@
         public float Left
         {
             get { return (float)_Value.XRange.From; }
-            set { _Value.XRange.From = value; UpdateLeftBytes(); OnValueUpdated(); OnPropertyChanged("Left"); }
+            set { _Value.XRange.From = value; UpdateLeftBytes(); OnValueUpdated(); OnPropertyChanged(nameof(Left)); }
         }
         public float Right
         {
             get { return (float)_Value.XRange.To; }
-            set { _Value.XRange.To = value; UpdateWidthBytes(); OnValueUpdated(); OnPropertyChanged("Right"); }
+            set { _Value.XRange.To = value; UpdateWidthBytes(); OnValueUpdated(); OnPropertyChanged(nameof(Right)); }
         }
         void UpdateHeightBytes()
         {
@@ -819,12 +710,12 @@
         public float Top
         {
             get { return (float)_Value.YRange.From; }
-            set { _Value.YRange.From = value; UpdateTopBytes(); OnValueUpdated(); OnPropertyChanged("Top"); }
+            set { _Value.YRange.From = value; UpdateTopBytes(); OnValueUpdated(); OnPropertyChanged(nameof(Top)); }
         }
         public float Bottom
         {
             get { return (float)_Value.YRange.To; }
-            set { _Value.YRange.To = value; UpdateHeightBytes(); OnValueUpdated(); OnPropertyChanged("Bottom"); }
+            set { _Value.YRange.To = value; UpdateHeightBytes(); OnValueUpdated(); OnPropertyChanged(nameof(Bottom)); }
         }
 
         [DataMember]
@@ -841,12 +732,12 @@
                 UpdateTopBytes();
                 // need not to call UpdateWidthBytes and UpdateHeightBytes
                 OnValueUpdated();
-                OnPropertyChanged("Left");
-                OnPropertyChanged("Right");
-                OnPropertyChanged("Top");
-                OnPropertyChanged("Bottom");
-                OnPropertyChanged("Value");
-                OnPropertyChanged("ValuesAsString");
+                OnPropertyChanged(nameof(Left));
+                OnPropertyChanged(nameof(Right));
+                OnPropertyChanged(nameof(Top));
+                OnPropertyChanged(nameof(Bottom));
+                OnPropertyChanged(nameof(Value));
+                OnPropertyChanged(nameof(ValueAsString));
             }
         }
 
@@ -870,12 +761,12 @@
                 UpdateTopBytes();
                 // need not to call UpdateWidthBytes and UpdateHeightBytes
                 OnValueUpdated();
-                OnPropertyChanged("Left");
-                OnPropertyChanged("Right");
-                OnPropertyChanged("Top");
-                OnPropertyChanged("Bottom");
-                OnPropertyChanged("Value");
-                OnPropertyChanged("ValuesAsString");
+                OnPropertyChanged(nameof(Left));
+                OnPropertyChanged(nameof(Right));
+                OnPropertyChanged(nameof(Top));
+                OnPropertyChanged(nameof(Bottom));
+                OnPropertyChanged(nameof(Value));
+                OnPropertyChanged(nameof(ValueAsString));
             }
         }
 
@@ -886,10 +777,6 @@
             UpdateTopBytes();
             // need not to call UpdateWidthBytes and UpdateHeightBytes
             OnValueUpdated();
-        }
-
-        public void InitializeOnceAtStartup()
-        {
         }
     }
 }

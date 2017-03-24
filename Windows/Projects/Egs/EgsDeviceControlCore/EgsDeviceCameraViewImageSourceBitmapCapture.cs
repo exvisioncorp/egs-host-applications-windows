@@ -38,7 +38,7 @@
         protected virtual void OnIsCameraDeviceConnectedChanged(EventArgs e)
         {
             var t = IsCameraDeviceConnectedChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsCameraDeviceConnected");
+            OnPropertyChanged(nameof(IsCameraDeviceConnected));
         }
         public bool IsCameraDeviceConnected
         {
@@ -57,7 +57,7 @@
         protected virtual void OnIsToUpdateImageSourceChanged(EventArgs e)
         {
             var t = IsToUpdateImageSourceChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToUpdateImageSource");
+            OnPropertyChanged(nameof(IsToUpdateImageSource));
         }
         /// <summary>
         /// When this value is set true and device can work correctly, image source will be updated continuously.
@@ -76,7 +76,7 @@
         protected virtual void OnIsUpdatingImageSourceChanged(EventArgs e)
         {
             var t = IsUpdatingImageSourceChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsUpdatingImageSource");
+            OnPropertyChanged(nameof(IsUpdatingImageSource));
         }
         public bool IsUpdatingImageSource
         {
@@ -123,14 +123,14 @@
         protected virtual void OnCameraViewImageSourceBitmapChanged(EventArgs e)
         {
             var t = CameraViewImageSourceBitmapChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CameraViewImageSourceBitmap");
+            OnPropertyChanged(nameof(CameraViewImageSourceBitmap));
         }
         protected virtual void OnCameraViewImageSourceBitmapSizeOrPixelFormatChanged(EventArgs e)
         {
             var t = CameraViewImageSourceBitmapSizeOrPixelFormatChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CameraViewImageSourceBitmap");
-            OnPropertyChanged("CameraViewImageSourceBitmapSize");
-            OnPropertyChanged("CameraViewImageSourceBitmapPixelFormat");
+            OnPropertyChanged(nameof(CameraViewImageSourceBitmap));
+            OnPropertyChanged(nameof(CameraViewImageSourceBitmapSize));
+            OnPropertyChanged(nameof(CameraViewImageSourceBitmapPixelFormat));
         }
 
         /// <summary>
@@ -168,6 +168,24 @@
             }
         }
 
+        int UvcIsWorkingMonitorIntervalInMilliseconds { get; set; }
+        System.Windows.Forms.Timer UvcIsWorkingMonitorTimer { get; set; }
+        Stopwatch UvcIsWorkingMonitorStopwatch { get; set; }
+        internal bool IsRestartingUvc { get; private set; }
+        void StartUvcIsWorkingMonitorTimer()
+        {
+            UvcIsWorkingMonitorStopwatch.Reset();
+            UvcIsWorkingMonitorStopwatch.Start();
+            UvcIsWorkingMonitorTimer.Start();
+        }
+        void StopUvcIsWorkingMonitorTimer()
+        {
+            UvcIsWorkingMonitorTimer.Stop();
+            UvcIsWorkingMonitorStopwatch.Stop();
+            UvcIsWorkingMonitorStopwatch.Reset();
+        }
+
+
         internal EgsDeviceCameraViewImageSourceBitmapCapture()
         {
             AForgeVideoCaptureInstance = null;
@@ -180,6 +198,38 @@
             _CameraViewImageSourceBitmapPixelFormat = _CameraViewImageSourceBitmap.PixelFormat;
 
             _IsCameraDeviceConnected = false;
+
+            //OnDeviceDisconnectedDelayTimer.Interval = 2000;
+            UvcIsWorkingMonitorIntervalInMilliseconds = EgsDevice.DefaultEgsDevicesManager.DeviceConnectionDelayTimersInterval * 2;
+            UvcIsWorkingMonitorTimer = new System.Windows.Forms.Timer() { Interval = UvcIsWorkingMonitorIntervalInMilliseconds };
+            UvcIsWorkingMonitorStopwatch = new Stopwatch();
+            IsRestartingUvc = false;
+        }
+
+        void UvcIsWorkingMonitorTimer_Tick(object sender, EventArgs e)
+        {
+            if (UvcIsWorkingMonitorStopwatch.ElapsedMilliseconds > UvcIsWorkingMonitorIntervalInMilliseconds)
+            {
+                StopUvcIsWorkingMonitorTimer();
+                if (Device.IsUpdatingFirmware) { return; }
+                try
+                {
+                    IsRestartingUvc = true;
+                    Device.ResetDevice();
+                    Device.ResetHidReportObjects();
+                    Device.StopFaceDetectionAndRestartUvcAndRestartFaceDetection();
+                    Device.Settings.IsToDetectFaces.Value = true;
+                }
+                catch (Exception ex)
+                {
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    throw new Egs.EgsDeviceOperationException("Could not restart UVC device.", ex);
+                }
+                finally
+                {
+                    IsRestartingUvc = false;
+                }
+            }
         }
 
         internal void InitializeOnceAtStartup(EgsDevice device)
@@ -216,6 +266,8 @@
             if (AForgeVideoCaptureInstance != null)
             {
                 // NOTE: newは1箇所のみで、newした直後にイベントハンドラをアタッチしているので、ここで呼び出してOK。
+                StopUvcIsWorkingMonitorTimer();
+                UvcIsWorkingMonitorTimer.Tick -= UvcIsWorkingMonitorTimer_Tick;
                 AForgeVideoCaptureInstance.NewFrame -= AForgeVideoCaptureInstance_NewFrame;
                 StopAForgeVideoCaptureInstance();
                 AForgeVideoCaptureInstance = null;
@@ -241,6 +293,8 @@
                 AForgeVideoCaptureInstance = new AForge.Video.DirectShow.VideoCaptureDevice(VideoCaptureDeviceDevicePath);
                 if (AForgeVideoCaptureInstance == null) { if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); } throw new EgsDeviceOperationException("AForgeVideoCaptureInstance == null."); }
                 AForgeVideoCaptureInstance.NewFrame += AForgeVideoCaptureInstance_NewFrame;
+                StartUvcIsWorkingMonitorTimer();
+                UvcIsWorkingMonitorTimer.Tick += UvcIsWorkingMonitorTimer_Tick;
 
                 // TODO: MUSTDO: AForgeVideoCaptureInstance.VideoResolution = AForgeVideoCaptureInstance.VideoCapabilities[someIndex]; で解像度が変わるが、
                 // AForgeVideoCaptureInstance.IsRunning == true のままでは変更できない。
@@ -303,6 +357,8 @@
         void AForgeVideoCaptureInstance_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
         {
             CameraViewImageSourceBitmap = (System.Drawing.Bitmap)eventArgs.Frame;
+            UvcIsWorkingMonitorStopwatch.Reset();
+            UvcIsWorkingMonitorStopwatch.Start();
         }
 
         internal void DisposeWithClearingVideoCaptureDeviceInformationOnDeviceDisconnected()

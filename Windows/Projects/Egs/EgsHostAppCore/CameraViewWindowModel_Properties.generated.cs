@@ -17,7 +17,7 @@
         protected virtual void OnCanDragMoveChanged(EventArgs e)
         {
             var t = CanDragMoveChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CanDragMove");
+            OnPropertyChanged(nameof(CanDragMove));
         }
         [DataMember]
         public bool CanDragMove
@@ -35,7 +35,7 @@
         protected virtual void OnCanResizeChanged(EventArgs e)
         {
             var t = CanResizeChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CanResize");
+            OnPropertyChanged(nameof(CanResize));
         }
         [DataMember]
         public bool CanResize
@@ -53,7 +53,7 @@
         protected virtual void OnTopmostChanged(EventArgs e)
         {
             var t = TopmostChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Topmost");
+            OnPropertyChanged(nameof(Topmost));
         }
         [DataMember]
         public bool Topmost
@@ -66,74 +66,82 @@
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        int _Left;
+        double _Left;
         public event EventHandler LeftChanged;
         protected virtual void OnLeftChanged(EventArgs e)
         {
             var t = LeftChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Left");
+            OnPropertyChanged(nameof(Left));
         }
-        [DataMember]
-        public int Left
+        public double Left
         {
             get { return _Left; }
             set
             {
-                _Left = value; OnLeftChanged(EventArgs.Empty);
+                if (value != _Left)
+                {
+                    _Left = value; OnLeftChanged(EventArgs.Empty);
+                }
             }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        int _Top;
+        double _Top;
         public event EventHandler TopChanged;
         protected virtual void OnTopChanged(EventArgs e)
         {
             var t = TopChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Top");
+            OnPropertyChanged(nameof(Top));
         }
-        [DataMember]
-        public int Top
+        public double Top
         {
             get { return _Top; }
             set
             {
-                _Top = value; OnTopChanged(EventArgs.Empty);
+                if (value != _Top)
+                {
+                    _Top = value; OnTopChanged(EventArgs.Empty);
+                }
             }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        int _Width;
+        double _Width;
         public event EventHandler WidthChanged;
         protected virtual void OnWidthChanged(EventArgs e)
         {
             var t = WidthChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Width");
+            OnPropertyChanged(nameof(Width));
         }
-        [DataMember]
-        public int Width
+        public double Width
         {
             get { return _Width; }
             set
             {
-                _Width = value; OnWidthChanged(EventArgs.Empty);
+                if (value != _Width)
+                {
+                    _Width = value; OnWidthChanged(EventArgs.Empty);
+                }
             }
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        int _Height;
+        double _Height;
         public event EventHandler HeightChanged;
         protected virtual void OnHeightChanged(EventArgs e)
         {
             var t = HeightChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Height");
+            OnPropertyChanged(nameof(Height));
         }
-        [DataMember]
-        public int Height
+        public double Height
         {
             get { return _Height; }
             set
             {
-                _Height = value; OnHeightChanged(EventArgs.Empty);
+                if (value != _Height)
+                {
+                    _Height = value; OnHeightChanged(EventArgs.Empty);
+                }
             }
         }
 
@@ -143,7 +151,7 @@
         protected virtual void OnCanShowMenuChanged(EventArgs e)
         {
             var t = CanShowMenuChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CanShowMenu");
+            OnPropertyChanged(nameof(CanShowMenu));
         }
         [DataMember]
         public bool CanShowMenu

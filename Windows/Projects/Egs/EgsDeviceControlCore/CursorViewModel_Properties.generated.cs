@@ -16,7 +16,7 @@
         protected virtual void OnRightOrLeftChanged(EventArgs e)
         {
             var t = RightOrLeftChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("RightOrLeft");
+            OnPropertyChanged(nameof(RightOrLeft));
         }
         [DataMember]
         public RightOrLeftKind RightOrLeft
@@ -24,7 +24,7 @@
             get { return _RightOrLeft; }
             set
             {
-                if (value != _RightOrLeft)
+                if (_RightOrLeft != value)
                 {
                     _RightOrLeft = value; OnRightOrLeftChanged(EventArgs.Empty);
                 }
@@ -37,7 +37,7 @@
         protected virtual void OnIsToShowCursorChanged(EventArgs e)
         {
             var t = IsToShowCursorChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToShowCursor");
+            OnPropertyChanged(nameof(IsToShowCursor));
         }
         [DataMember]
         public bool IsToShowCursor
@@ -45,7 +45,7 @@
             get { return _IsToShowCursor; }
             set
             {
-                if (value != _IsToShowCursor)
+                if (_IsToShowCursor != value)
                 {
                     _IsToShowCursor = value; OnIsToShowCursorChanged(EventArgs.Empty);
                 }
@@ -58,7 +58,7 @@
         protected virtual void OnIsToDetectLongTouchChanged(EventArgs e)
         {
             var t = IsToDetectLongTouchChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToDetectLongTouch");
+            OnPropertyChanged(nameof(IsToDetectLongTouch));
         }
         [DataMember]
         public bool IsToDetectLongTouch
@@ -66,7 +66,7 @@
             get { return _IsToDetectLongTouch; }
             set
             {
-                if (value != _IsToDetectLongTouch)
+                if (_IsToDetectLongTouch != value)
                 {
                     _IsToDetectLongTouch = value; OnIsToDetectLongTouchChanged(EventArgs.Empty);
                 }
@@ -79,7 +79,7 @@
         protected virtual void OnIsToUpdateVelocitiesChanged(EventArgs e)
         {
             var t = IsToUpdateVelocitiesChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToUpdateVelocities");
+            OnPropertyChanged(nameof(IsToUpdateVelocities));
         }
         [DataMember]
         public bool IsToUpdateVelocities
@@ -87,7 +87,7 @@
             get { return _IsToUpdateVelocities; }
             set
             {
-                if (value != _IsToUpdateVelocities)
+                if (_IsToUpdateVelocities != value)
                 {
                     _IsToUpdateVelocities = value; OnIsToUpdateVelocitiesChanged(EventArgs.Empty);
                 }
@@ -100,7 +100,7 @@
         protected virtual void OnLongTapElapsedThresholdInMillisecondsChanged(EventArgs e)
         {
             var t = LongTapElapsedThresholdInMillisecondsChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("LongTapElapsedThresholdInMilliseconds");
+            OnPropertyChanged(nameof(LongTapElapsedThresholdInMilliseconds));
         }
         [DataMember]
         public double LongTapElapsedThresholdInMilliseconds
@@ -108,7 +108,7 @@
             get { return _LongTapElapsedThresholdInMilliseconds; }
             set
             {
-                if (value != _LongTapElapsedThresholdInMilliseconds)
+                if (_LongTapElapsedThresholdInMilliseconds != value)
                 {
                     _LongTapElapsedThresholdInMilliseconds = value; OnLongTapElapsedThresholdInMillisecondsChanged(EventArgs.Empty);
                 }
@@ -121,7 +121,7 @@
         protected virtual void OnCurrentCursorImageSetIndexChanged(EventArgs e)
         {
             var t = CurrentCursorImageSetIndexChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("CurrentCursorImageSetIndex");
+            OnPropertyChanged(nameof(CurrentCursorImageSetIndex));
         }
         public int CurrentCursorImageSetIndex
         {

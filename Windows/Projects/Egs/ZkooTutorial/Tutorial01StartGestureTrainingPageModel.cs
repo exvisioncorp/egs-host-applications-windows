@@ -22,13 +22,13 @@
         public Visibility PracticeSlideShow01VideoUserControlVisibility
         {
             get { return _PracticeSlideShow01VideoUserControlVisibility; }
-            set { _PracticeSlideShow01VideoUserControlVisibility = value; OnPropertyChanged("PracticeSlideShow01VideoUserControlVisibility"); }
+            set { _PracticeSlideShow01VideoUserControlVisibility = value; OnPropertyChanged(nameof(PracticeSlideShow01VideoUserControlVisibility)); }
         }
         Visibility _PracticeSlideShow02VideoUserControlVisibility;
         public Visibility PracticeSlideShow02VideoUserControlVisibility
         {
             get { return _PracticeSlideShow02VideoUserControlVisibility; }
-            set { _PracticeSlideShow02VideoUserControlVisibility = value; OnPropertyChanged("PracticeSlideShow02VideoUserControlVisibility"); }
+            set { _PracticeSlideShow02VideoUserControlVisibility = value; OnPropertyChanged(nameof(PracticeSlideShow02VideoUserControlVisibility)); }
         }
 
         public Tutorial01StartGestureTrainingPageModel()

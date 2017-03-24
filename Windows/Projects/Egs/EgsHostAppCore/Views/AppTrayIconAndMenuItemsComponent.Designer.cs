@@ -16,6 +16,8 @@
             if (disposing && (components != null))
             {
                 notifyIconInTray.Visible = false;
+                ownerEgsHostAppBaseComponents.CameraViewWindowModel.WindowStateChanged -= CameraViewWindowModel_WindowStateChanged;
+                ownerEgsHostAppBaseComponents.SettingsWindow.IsVisibleChanged -= SettingsWindow_IsVisibleChanged;
                 components.Dispose();
                 if (deviceIsConnectedIcon != null) { deviceIsConnectedIcon.Dispose(); deviceIsConnectedIcon = null; }
                 if (deviceIsNotConnectedIcon != null) { deviceIsNotConnectedIcon.Dispose(); deviceIsNotConnectedIcon = null; }

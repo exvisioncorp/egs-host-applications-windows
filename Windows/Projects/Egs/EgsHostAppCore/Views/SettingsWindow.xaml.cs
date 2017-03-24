@@ -45,11 +45,11 @@
                 if ((bool)e.NewValue == true)
                 {
                     // TODO: Maybe it is OK.  I forgot why it uses Dispatcher.
-                    this.Dispatcher.Invoke(new Action(() =>
+                    this.Dispatcher.Invoke(() =>
                     {
                         this.WindowState = WindowState.Normal;
                         this.Activate();
-                    }));
+                    });
                 }
             };
 
@@ -67,6 +67,11 @@
         public void CloseToExitApplication()
         {
             isClosingToExitApplication = true;
+
+            // http://stackoverflow.com/questions/31362077/loadfromcontext-occurred/31760355#31760355
+            // If "NotMarshalable" occurs in VS 2015 and so on,
+            // please uncheck the following option:
+            // Tools –> Options –> Debugging –> General –> Enable UI Debugging Tools for XAML
             base.Close();
         }
 

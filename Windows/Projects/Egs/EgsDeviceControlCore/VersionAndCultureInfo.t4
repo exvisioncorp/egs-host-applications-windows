@@ -17,7 +17,7 @@ string HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString = ExvisionEgsH
 string ZkooHostAppExeAssemblyVersionMajorMinorString = ExvisionEgsZkooHostAppMajorVersion + "." + ExvisionEgsZkooHostAppMinorVersion;
 string ZkooHostAppExeAssemblyVersionMajorMinorBuildString = ExvisionEgsZkooHostAppMajorVersion + "." + ExvisionEgsZkooHostAppMinorVersion + "." + buildVersion;
 string ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString = ExvisionEgsZkooHostAppMajorVersion + "." + ExvisionEgsZkooHostAppMinorVersion + "." + buildVersion + "." + revisionVersion;
-string FirmwareVersionInImageFileString = "1.1.8109.0";
+string FirmwareVersionInImageFileString = "1.1.8722.0";
 bool IsDeveloperRelease = false;
 
 // NOTE: C# code (not by but) in T4 template, cannot use "#if DEBUG" and so on.

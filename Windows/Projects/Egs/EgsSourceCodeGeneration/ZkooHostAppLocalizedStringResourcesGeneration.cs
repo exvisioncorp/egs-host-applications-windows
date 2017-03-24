@@ -6,7 +6,6 @@
     using System.Text;
     using System.IO;
     using NPOI.XSSF.UserModel;
-    using DotNetUtility;
 
     public class HostApplicationsResourcesStringsOneRecord
     {
@@ -100,16 +99,16 @@
                     var item = new HostApplicationsResourcesStringsOneRecord();
                     var row = sheet.GetRow(rowIndex);
                     var cells = row.Cells;
-                    item.Index = int.Parse(row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.Index)));
-                    item.UseOnWindows = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.UseOnWindows)) == "true";
-                    item.UseOnAndroid = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.UseOnAndroid)) == "true";
-                    item.RelativeFolderPath = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.RelativeFolderPath));
-                    item.Namespace = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.Namespace));
-                    item.OwnerClass = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.OwnerClass));
-                    item.TargetObjectIdentifier00 = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.TargetObjectIdentifier00));
-                    item.TargetObjectIdentifier01 = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.TargetObjectIdentifier01));
-                    item.Property = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.Property));
-                    item.ResourceKeyOnWindows = row.GetCellString(headerCellString_ColumnIndex_Dict, Name.Of(() => h.ResourceKeyOnWindows));
+                    item.Index = int.Parse(row.GetCellString(headerCellString_ColumnIndex_Dict, nameof(h.Index)));
+                    item.UseOnWindows = row.GetCellString(headerCellString_ColumnIndex_Dict, nameof(h.UseOnWindows)) == "true";
+                    item.UseOnAndroid = row.GetCellString(headerCellString_ColumnIndex_Dict, nameof(h.UseOnAndroid)) == "true";
+                    item.RelativeFolderPath = row.GetCellString(headerCellString_ColumnIndex_Dict, nameof(h.RelativeFolderPath));
+                    item.Namespace = row.GetCellString(headerCellString_ColumnIndex_Dict, nameof(h.Namespace));
+                    item.OwnerClass = row.GetCellString(headerCellString_ColumnIndex_Dict, nameof(h.OwnerClass));
+                    item.TargetObjectIdentifier00 = row.GetCellString(headerCellString_ColumnIndex_Dict, nameof(h.TargetObjectIdentifier00));
+                    item.TargetObjectIdentifier01 = row.GetCellString(headerCellString_ColumnIndex_Dict, nameof(h.TargetObjectIdentifier01));
+                    item.Property = row.GetCellString(headerCellString_ColumnIndex_Dict, nameof(h.Property));
+                    item.ResourceKeyOnWindows = row.GetCellString(headerCellString_ColumnIndex_Dict, nameof(h.ResourceKeyOnWindows));
                     foreach (var culture in cultureList)
                     {
                         var value = row.GetCellString(headerCellString_ColumnIndex_Dict, "Value_" + culture);

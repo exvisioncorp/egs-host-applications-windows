@@ -24,7 +24,7 @@
         protected virtual void OnOptionsChanged(EventArgs e)
         {
             var t = OptionsChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Options");
+            OnPropertyChanged(nameof(Options));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@
         protected virtual void OnSelectedIndexChanged(EventArgs e)
         {
             var t = SelectedIndexChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("SelectedIndex");
+            OnPropertyChanged(nameof(SelectedIndex));
         }
         [DataMember]
         public int SelectedIndex
@@ -58,8 +58,8 @@
             set
             {
                 _SelectedIndex = value;
-                OnSelectedIndexChanged(EventArgs.Empty);
                 OnSelectedItemChanged(EventArgs.Empty);
+                OnSelectedIndexChanged(EventArgs.Empty);
             }
         }
 
@@ -68,7 +68,7 @@
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
             var t = SelectedItemChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("SelectedItem");
+            OnPropertyChanged(nameof(SelectedItem));
         }
         public T SelectedItem
         {
@@ -86,6 +86,9 @@
             var result = Options.Single(predicate);
             if (result == null) { return false; }
             SelectedIndex = Options.IndexOf(result);
+#if DEBUG
+            if (SelectedItem != result) { System.Diagnostics.Debugger.Break(); }
+#endif
             return true;
         }
     }

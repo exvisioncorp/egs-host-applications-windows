@@ -68,50 +68,6 @@
             var t = HidAccessPropertyUpdated; if (t != null) { t(this, e); }
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        EgsDeviceSettings _Settings;
-        public event EventHandler SettingsChanged;
-        protected virtual void OnSettingsChanged(EventArgs e)
-        {
-            var t = SettingsChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("Settings");
-        }
-        /// <summary>
-        /// The current settings of this device.
-        /// </summary>
-        public EgsDeviceSettings Settings
-        {
-            get { return _Settings; }
-        }
-
-        /// <summary>
-        /// Update the settings of this device.  If the device is already connected, the settings will be set to the device immediately.  If the device is not connected, it will be set when the device is re-connected.
-        /// </summary>
-        public void SetSettings(EgsDeviceSettings value)
-        {
-            // TODO: Use Rx?
-            if (_Settings != null)
-            {
-                _Settings.HidAccessPropertyUpdated -= EgsDeviceSettings_HidAccessPropertyUpdated;
-                _Settings.refToCurrentConnectedEgsDevice = null;
-                _Settings = null;
-            }
-            value.refToCurrentConnectedEgsDevice = this;
-            value.HidAccessPropertyUpdated += EgsDeviceSettings_HidAccessPropertyUpdated;
-            _Settings = value;
-
-            // NOTE: When device is connected and then settings is updated, the app sets the settings from host to device.
-            if (IsHidDeviceConnected)
-            {
-                SetAllSettingsToDeviceAndReadStatusFromDevice();
-            }
-            TouchScreenHidReport.Reset();
-            EgsGestureHidReport.Reset();
-
-            // NOTE: It need not check if ImageSource is updating or not.
-            OnSettingsChanged(EventArgs.Empty);
-        }
-
         /// <summary>
         /// This number depends on "TouchInterfaceKind".  MultiTouch mode returns 0.  Mouse mode and SingleTouch mode return 1.  If settings is not set, it returns 0.
         /// </summary>
@@ -119,8 +75,24 @@
         {
             get
             {
-                var ret = (Settings == null) ? 0 : (int)Settings.TrackableHandsCount.Value;
-                return ret;
+                if (Settings == null) { return 0; }
+                // TODO: MUSTDO: fix firmware.  Settings.TrackableHandsCount can be wrong value!!
+                if (false) { return (int)Settings.TrackableHandsCount.Value; }
+                switch (Settings.TouchInterfaceKind.Value)
+                {
+                    case PropertyTypes.TouchInterfaceKinds.MultiTouch:
+                        return 2;
+                        break;
+                    case PropertyTypes.TouchInterfaceKinds.SingleTouch:
+                        return 1;
+                        break;
+                    case PropertyTypes.TouchInterfaceKinds.Mouse:
+                        return 1;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                        break;
+                }
             }
         }
 
@@ -222,58 +194,20 @@
             }
         }
 
-        #region Temperature
-        System.IO.StreamWriter TemperatureStreamWriter { get; set; }
-        DateTime StartTime { get; set; }
-        void CloseTemperatureStreamWriter()
-        {
-            if (TemperatureStreamWriter != null)
-            {
-                TemperatureStreamWriter.Flush();
-                TemperatureStreamWriter.Close();
-                TemperatureStreamWriter = null;
-            }
-        }
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool _IsToWriteLogOfTemperature = false;
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool IsToWriteLogOfTemperature
-        {
-            get { return _IsToWriteLogOfTemperature; }
-            set
-            {
-                _IsToWriteLogOfTemperature = value;
-                CloseTemperatureStreamWriter();
-
-                if (_IsToWriteLogOfTemperature)
-                {
-                    var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    var zkooTestResultFolderPath = System.IO.Path.Combine(desktopPath, @"ZkooTestResults");
-                    if (System.IO.Directory.Exists(zkooTestResultFolderPath) == false)
-                    {
-                        System.IO.Directory.CreateDirectory(zkooTestResultFolderPath);
-                    }
-                    var fileName = @"ZkooDeviceTemperature_";
-                    fileName += DateTime.Now.ToString("yyMMdd-HHmmss", CultureInfo.InvariantCulture);
-                    fileName += ".csv";
-                    var fullPath = System.IO.Path.Combine(zkooTestResultFolderPath, fileName);
-                    TemperatureStreamWriter = new System.IO.StreamWriter(fullPath);
-                    StartTime = DateTime.Now;
-                    TemperatureStreamWriter.WriteLine("DateTime.Now, Elapsed[sec], Temperature[C], Temperature[F}");
-                }
-                OnPropertyChanged("IsToWriteLogOfTemperature");
-            }
-        }
-        #endregion
-
         /// <summary>
-        /// To get EgsDevice easily, please use this method.
+        /// Please use this method insted of "new EgsDevice()".
         /// </summary>
-        public static EgsDevice GetDefaultEgsDevice(EgsDeviceSettings settings)
+        public static EgsDevice GetDefaultEgsDevice()
         {
             var ret = DefaultEgsDevicesManager.CreateNewEgsDeviceAndAddToDeviceList();
-            ret.SetSettings(settings);
             DefaultEgsDevicesManager.UpdateNotInitializedFirstEgsDeviceOnSomeDeviceConnected();
+            return ret;
+        }
+        [Obsolete]
+        public static EgsDevice GetDefaultEgsDevice(EgsDeviceSettings settings)
+        {
+            var ret = GetDefaultEgsDevice();
+            ret.SetSettings(settings);
             return ret;
         }
         /// <summary>
@@ -303,11 +237,10 @@
 
             _IsUpdatingFirmware = false;
 
-            _IsDetectingFaces = false;
-            _IsDetectingHands = false;
             _IsSendingTouchScreenHidReport = false;
             _IsSendingHoveringStateOnTouchScreenHidReport = false;
             _IsSendingEgsGestureHidReport = false;
+
             WaitTimeInMillisecondsBeforeSetFeatureReport = 2;
             WaitTimeInMillisecondsBeforeGetFeatureReport = 10;
 
@@ -318,20 +251,60 @@
             EgsGestureHidReport = new EgsDeviceEgsGestureHidReport();
 
             IsHidDeviceConnectedChanged += UpdateIsHidDeviceConnectedRelatedProperties;
+
+            _Settings = new EgsDeviceSettings();
+            _Settings.InitializeOnceAtStartup();
+            _Settings.CurrentConnectedEgsDevice = this;
+            _Settings.HidAccessPropertyUpdated += EgsDeviceSettings_HidAccessPropertyUpdated;
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        EgsDeviceSettings _Settings;
+        /// <summary>
+        /// The current settings of this device.
+        /// </summary>
+        [DataMember]
+        public EgsDeviceSettings Settings
+        {
+            get { return _Settings; }
+            private set { SetSettings(value); }
+        }
+
+        [Obsolete]
+        public void SetSettings(EgsDeviceSettings value)
+        {
+            Trace.Assert(value != null);
+
+            if (_Settings != null)
+            {
+                _Settings.HidAccessPropertyUpdated -= EgsDeviceSettings_HidAccessPropertyUpdated;
+                _Settings.CurrentConnectedEgsDevice = null;
+                _Settings = null;
+            }
+            value.CurrentConnectedEgsDevice = this;
+            value.HidAccessPropertyUpdated += EgsDeviceSettings_HidAccessPropertyUpdated;
+            _Settings = value;
+
+            // NOTE: When device is connected and then settings is updated, the app sets the settings from host to device.
+            if (IsHidDeviceConnected)
+            {
+                SetAllSettingsToDeviceAndReadStatusFromDevice();
+            }
+            TouchScreenHidReport.Reset();
+            EgsGestureHidReport.Reset();
         }
 
         internal void InitializeOnceAtStartup()
         {
-            HidReportsUpdate.InitializeOnceAtStartup(this);
+            if (HidReportsUpdate != null) { HidReportsUpdate.InitializeOnceAtStartup(this); }
             TouchScreenHidReport.InitializeOnceAtStartup(this);
             EgsGestureHidReport.InitializeOnceAtStartup(this);
 
             AddPropertiesToHidAccessPropertyList();
             InitializePropertiesByDefaultValue();
 
-            IsToMonitorTemperatureChanged += delegate { IsMonitoringTemperature = IsToMonitorTemperature && IsHidDeviceConnected; };
-            TemperatureInCelsius.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => TemperatureInCelsiusString)); };
-            TemperatureInFahrenheit.ValueUpdated += delegate { OnPropertyChanged(Name.Of(() => TemperatureInFahrenheitString)); };
+            TemperatureInCelsius.ValueUpdated += delegate { OnPropertyChanged(nameof(TemperatureInCelsiusString)); };
+            TemperatureInFahrenheit.ValueUpdated += delegate { OnPropertyChanged(nameof(TemperatureInFahrenheitString)); };
         }
 
         public event EventHandler HidReportObjectsReset;
@@ -380,25 +353,28 @@
             OnHidReportObjectsReset(EventArgs.Empty);
         }
 
+        public void ResetSettings()
+        {
+            Settings.Reset();
+            ResetHidReportObjects();
+        }
+
+        public event EventHandler TemperaturePropertiesUpdated;
+        protected void OnTemperaturePropertiesUpdated(EventArgs e)
+        {
+            var t = TemperaturePropertiesUpdated; if (t != null) { t(this, e); }
+        }
+
         /// <summary>
-        /// Sorry but this is internal.  But for DataBinding, it is public.  Only in newer device hardware can measure temperature.
+        /// MA2100 cannot measure temperature.  MA2150 can measure temperature.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void UpdateTemperatureProperties()
         {
-            if (IsHidDeviceConnected == false) { Debugger.Break(); throw new EgsDeviceOperationException("IsHidDeviceConnected == false"); }
+            if (IsMonitoringTemperature == false) { return; }
             GetReadonlyHidAccessPropertyByGetHidFeatureReport(TemperatureInCelsius);
             GetReadonlyHidAccessPropertyByGetHidFeatureReport(TemperatureInFahrenheit);
-            if (IsToWriteLogOfTemperature)
-            {
-                Trace.Assert(TemperatureStreamWriter != null);
-                TemperatureStreamWriter.WriteLine("{0}, {1}, {2}, {3}",
-                    DateTime.Now,
-                    (DateTime.Now - StartTime).TotalSeconds,
-                    TemperatureInCelsius.Value,
-                    TemperatureInFahrenheit.Value);
-                TemperatureStreamWriter.Flush();
-            }
+            OnTemperaturePropertiesUpdated(EventArgs.Empty);
         }
 
         void SetAllSettingsToDeviceAndReadStatusFromDevice()
@@ -470,12 +446,12 @@
         protected virtual void OnHidDeviceDevicePathChanged(EventArgs e)
         {
             var t = HidDeviceDevicePathChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("HidDeviceDevicePath");
+            OnPropertyChanged(nameof(HidDeviceDevicePath));
         }
         protected virtual void OnIsHidDeviceConnectedChanged(EventArgs e)
         {
             var t = IsHidDeviceConnectedChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsHidDeviceConnected");
+            OnPropertyChanged(nameof(IsHidDeviceConnected));
         }
         /// <summary>
         /// The "DevicePath" of the HID device of the connected device.
@@ -525,7 +501,7 @@
                 // NOTE: Just in case, I leave the code to get the value again.
                 GetReadonlyHidAccessPropertyByGetHidFeatureReport(Settings.CaptureImageSize);
                 System.Threading.Thread.Sleep(100);
-                GetReadonlyHidAccessPropertyByGetHidFeatureReport(Settings.CameraViewImageSourceRectInCapturedImage);
+                GetReadonlyHidAccessPropertyByGetHidFeatureReport(Settings.CameraViewImageSourceRectInCaptureImage);
             }
         }
 
@@ -534,9 +510,9 @@
             // NOTE: Stop gesture recognition, if the host application is not running.
             if (Settings != null)
             {
-                Settings.IsToDetectFaces.Value = false;
+                Settings.IsToDetectFacesOnDevice.Value = false;
                 // NOTE: If the firmware version is larger than 1.1, stopping hand detection changes the LED color from blue to red.
-                Settings.IsToDetectHands.Value = false;
+                Settings.IsToDetectHandsOnDevice.Value = false;
             }
             if (HidReportsUpdate != null)
             {
@@ -548,11 +524,8 @@
         static internal EgsDevice CreateEgsDeviceForXamlDesign()
         {
             var ret = new EgsDevice();
-            var settings = new EgsDeviceSettings();
-            settings.InitializeOnceAtStartup();
             ret.InitializeOnceAtStartup();
             ret.IndexInHidDevicePathList = 0;
-            ret.SetSettings(settings);
             ret.DeviceSerialNumber.Value = "EXV000000005";
             ret._HidDeviceDevicePath = "THISISSOMEHIDDEVICEPATH";
             ret._IsHidDeviceConnected = true;
@@ -565,5 +538,6 @@
     public sealed class EgsDeviceOperationException : Exception
     {
         public EgsDeviceOperationException(string message) : base(message) { }
+        public EgsDeviceOperationException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

@@ -35,7 +35,7 @@
         public EgsHostAppBaseComponents HostApp { get { return refToAppModel.RefToHostApp; } }
         internal void NotifyModelsAgain()
         {
-            OnPropertyChanged("HostApp");
+            OnPropertyChanged(nameof(HostApp));
             HostApp.RaiseMultipleObjectsPropertyChanged();
         }
 
@@ -43,7 +43,7 @@
         public Visibility ReplayPracticeNextButtonsUserControlVisibility
         {
             get { return _ReplayPracticeNextButtonsUserControlVisibility; }
-            set { _ReplayPracticeNextButtonsUserControlVisibility = value; OnPropertyChanged("ReplayPracticeNextButtonsUserControlVisibility"); }
+            set { _ReplayPracticeNextButtonsUserControlVisibility = value; OnPropertyChanged(nameof(ReplayPracticeNextButtonsUserControlVisibility)); }
         }
 
         internal Task CurrentTask { get; set; }
@@ -60,7 +60,7 @@
         public NarrationInformation CurrentMessage
         {
             get { return _CurrentMessage; }
-            private set { _CurrentMessage = value; OnPropertyChanged("CurrentMessage"); }
+            private set { _CurrentMessage = value; OnPropertyChanged(nameof(CurrentMessage)); }
         }
 
         IAudioPlayer BgmAudio { get; set; }
@@ -306,7 +306,7 @@
             refToAppModel.EnableUpdatingCameraViewImageButHideWindow();
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
-                refToAppModel.RefToHostApp.Device.Settings.CursorSpeedAndPrecisionMode.OptionalValue.SelectedIndex = 0;
+                refToAppModel.RefToHostApp.Device.Settings.CursorSpeedAndPrecisionMode.Value = PropertyTypes.CursorSpeedAndPrecisionModes.Beginner;
             }));
 
             CreateAudioPlayerInstances();

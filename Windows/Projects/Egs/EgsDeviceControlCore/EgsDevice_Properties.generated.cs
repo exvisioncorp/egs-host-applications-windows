@@ -16,12 +16,12 @@
         protected virtual void OnIndexInHidDevicePathListChanged(EventArgs e)
         {
             var t = IndexInHidDevicePathListChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IndexInHidDevicePathList");
+            OnPropertyChanged(nameof(IndexInHidDevicePathList));
         }
         public int IndexInHidDevicePathList
         {
             get { return _IndexInHidDevicePathList; }
-            private set
+            internal set
             {
                 _IndexInHidDevicePathList = value; OnIndexInHidDevicePathListChanged(EventArgs.Empty);
             }
@@ -33,12 +33,12 @@
         protected virtual void OnIsConnectedChanged(EventArgs e)
         {
             var t = IsConnectedChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsConnected");
+            OnPropertyChanged(nameof(IsConnected));
         }
         public bool IsConnected
         {
             get { return _IsConnected; }
-            private set
+            internal set
             {
                 _IsConnected = value; OnIsConnectedChanged(EventArgs.Empty);
             }
@@ -50,7 +50,7 @@
         protected internal virtual void OnIsUpdatingFirmwareChanged(EventArgs e)
         {
             var t = IsUpdatingFirmwareChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsUpdatingFirmware");
+            OnPropertyChanged(nameof(IsUpdatingFirmware));
         }
         internal bool IsUpdatingFirmware
         {
@@ -62,51 +62,17 @@
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        bool _IsDetectingFaces;
-        public event EventHandler IsDetectingFacesChanged;
-        protected virtual void OnIsDetectingFacesChanged(EventArgs e)
-        {
-            var t = IsDetectingFacesChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsDetectingFaces");
-        }
-        public bool IsDetectingFaces
-        {
-            get { return _IsDetectingFaces; }
-            private set
-            {
-                _IsDetectingFaces = value; OnIsDetectingFacesChanged(EventArgs.Empty);
-            }
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool _IsDetectingHands;
-        public event EventHandler IsDetectingHandsChanged;
-        protected virtual void OnIsDetectingHandsChanged(EventArgs e)
-        {
-            var t = IsDetectingHandsChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsDetectingHands");
-        }
-        public bool IsDetectingHands
-        {
-            get { return _IsDetectingHands; }
-            private set
-            {
-                _IsDetectingHands = value; OnIsDetectingHandsChanged(EventArgs.Empty);
-            }
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
         bool _IsSendingTouchScreenHidReport;
         public event EventHandler IsSendingTouchScreenHidReportChanged;
         protected virtual void OnIsSendingTouchScreenHidReportChanged(EventArgs e)
         {
             var t = IsSendingTouchScreenHidReportChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsSendingTouchScreenHidReport");
+            OnPropertyChanged(nameof(IsSendingTouchScreenHidReport));
         }
         public bool IsSendingTouchScreenHidReport
         {
             get { return _IsSendingTouchScreenHidReport; }
-            private set
+            internal set
             {
                 _IsSendingTouchScreenHidReport = value; OnIsSendingTouchScreenHidReportChanged(EventArgs.Empty);
             }
@@ -118,12 +84,12 @@
         protected virtual void OnIsSendingHoveringStateOnTouchScreenHidReportChanged(EventArgs e)
         {
             var t = IsSendingHoveringStateOnTouchScreenHidReportChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsSendingHoveringStateOnTouchScreenHidReport");
+            OnPropertyChanged(nameof(IsSendingHoveringStateOnTouchScreenHidReport));
         }
         public bool IsSendingHoveringStateOnTouchScreenHidReport
         {
             get { return _IsSendingHoveringStateOnTouchScreenHidReport; }
-            private set
+            internal set
             {
                 _IsSendingHoveringStateOnTouchScreenHidReport = value; OnIsSendingHoveringStateOnTouchScreenHidReportChanged(EventArgs.Empty);
             }
@@ -135,31 +101,14 @@
         protected virtual void OnIsSendingEgsGestureHidReportChanged(EventArgs e)
         {
             var t = IsSendingEgsGestureHidReportChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsSendingEgsGestureHidReport");
+            OnPropertyChanged(nameof(IsSendingEgsGestureHidReport));
         }
         public bool IsSendingEgsGestureHidReport
         {
             get { return _IsSendingEgsGestureHidReport; }
-            private set
+            internal set
             {
                 _IsSendingEgsGestureHidReport = value; OnIsSendingEgsGestureHidReportChanged(EventArgs.Empty);
-            }
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool _IsToMonitorTemperature;
-        public event EventHandler IsToMonitorTemperatureChanged;
-        protected virtual void OnIsToMonitorTemperatureChanged(EventArgs e)
-        {
-            var t = IsToMonitorTemperatureChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsToMonitorTemperature");
-        }
-        public bool IsToMonitorTemperature
-        {
-            get { return _IsToMonitorTemperature; }
-            set
-            {
-                _IsToMonitorTemperature = value; OnIsToMonitorTemperatureChanged(EventArgs.Empty);
             }
         }
 
@@ -169,12 +118,12 @@
         protected virtual void OnIsMonitoringTemperatureChanged(EventArgs e)
         {
             var t = IsMonitoringTemperatureChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsMonitoringTemperature");
+            OnPropertyChanged(nameof(IsMonitoringTemperature));
         }
         public bool IsMonitoringTemperature
         {
             get { return _IsMonitoringTemperature; }
-            private set
+            internal set
             {
                 _IsMonitoringTemperature = value; OnIsMonitoringTemperatureChanged(EventArgs.Empty);
             }

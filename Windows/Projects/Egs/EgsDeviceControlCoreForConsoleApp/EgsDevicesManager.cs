@@ -43,7 +43,7 @@
                     throw new ArgumentOutOfRangeException("TemperatureMonitoringTimerInterval", "Interval must be from 1[sec] to 60[sec]");
                 }
                 EachDeviceStatusMonitoringTimer.Interval = (int)(value * 1000.0);
-                OnPropertyChanged("TemperatureMonitoringTimerIntervalTotalSeconds");
+                OnPropertyChanged(nameof(TemperatureMonitoringTimerIntervalTotalSeconds));
             }
         }
 #endif
@@ -55,16 +55,12 @@
             SetupDi = new Win32SetupDiForEgsDevice();
 
 #if false
-            EachDeviceStatusMonitoringTimer = new System.Windows.Forms.Timer() { Interval = ApplicationCommonSettings.IsDebugging ? 1000 : 60000 };
+            EachDeviceStatusMonitoringTimer = new System.Windows.Forms.Timer() { Interval = ApplicationCommonSettings.IsDebugging ? 1000 : 5000 };
             EachDeviceStatusMonitoringTimer.Tick += delegate
             {
-                foreach (var device in DeviceList)
-                {
-                    var isMonitoringTemperature = device.IsToMonitorTemperature && device.IsHidDeviceConnected;
-                    if (isMonitoringTemperature == false) { continue; }
-                    device.UpdateTemperatureProperties();
-                }
+                foreach (var device in DeviceList) { device.UpdateTemperatureProperties(); }
             };
+            EachDeviceStatusMonitoringTimer.Start();
 #endif
         }
 

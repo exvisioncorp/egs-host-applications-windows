@@ -35,8 +35,8 @@
                 _CanPerform = value;
                 CommandManager.InvalidateRequerySuggested();
                 //var t = CanExecuteChanged; if (t != null) { t(this, EventArgs.Empty); }
-                //OnPropertyChanged("CanPerform");
-                //OnPropertyChanged("CanExecute");
+                //OnPropertyChanged(nameof(CanPerform));
+                //OnPropertyChanged(nameof(CanExecute));
             }
         }
         bool _IsPerforming = false;
@@ -48,9 +48,9 @@
                 _IsPerforming = value;
                 CommandManager.InvalidateRequerySuggested();
                 //var t = CanExecuteChanged; if (t != null) { t(this, EventArgs.Empty); }
-                //OnPropertyChanged("IsPerforming");
-                //OnPropertyChanged("CanPerform");
-                //OnPropertyChanged("CanExecute");
+                //OnPropertyChanged(nameof(IsPerforming));
+                //OnPropertyChanged(nameof(CanPerform));
+                //OnPropertyChanged(nameof(CanExecute));
             }
         }
 

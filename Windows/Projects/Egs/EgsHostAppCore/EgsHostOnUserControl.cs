@@ -29,57 +29,101 @@
         }
 
         #region Host Settings
-        // TODO: NOTE: DataMember is not described.  But have to think again.
-        public OptionalValue<CultureInfoAndDescriptionDetail> CultureInfoAndDescription { get; private set; }
+        // NOTE: Currently disabled
+        //[DataMember]
+        public CultureInfoAndDescriptionOptions CultureInfoAndDescription { get; private set; }
         [DataMember]
-        public OptionalValue<MouseCursorPositionUpdatedByGestureCursorMethodDetail> MouseCursorPositionUpdatedByGestureCursorMethod { get; private set; }
+        public MouseCursorPositionUpdatedByGestureCursorMethodOptions MouseCursorPositionUpdatedByGestureCursorMethod { get; private set; }
         [DataMember]
-        public OptionalValue<CursorDrawingTimingMethodDetail> CursorDrawingTimingMethod { get; private set; }
+        public CursorDrawingTimingMethodOptions CursorDrawingTimingMethod { get; private set; }
         [DataMember]
-        public OptionalValue<CameraViewBordersAndPointersAreDrawnByDetail> CameraViewBordersAndPointersAreDrawnBy { get; private set; }
+        public CameraViewBordersAndPointersAreDrawnByOptions CameraViewBordersAndPointersAreDrawnBy { get; private set; }
         #endregion
 
         [DataMember]
         public EgsDevice Device { get; private set; }
-
-        [DataMember]
-        public EgsDeviceSettings DeviceSettings { get; private set; }
-
-
         // TODO: better implementation
         [DataMember]
         public CameraViewUserControlModel CameraViewUserControlModel { get; private set; }
         [DataMember]
         public OnePersonBothHandsViewModel OnePersonBothHandsViewModel { get; private set; }
+        [DataMember]
         public long DrawingCursorsMinimumIntervalInMilliseconds { get; set; }
+        [DataMember]
+        public TimeSpan WaitTimeTillMouseCursorHideOnMouseMode { get; set; }
+
+        #region Temperature
+        System.IO.StreamWriter TemperatureStreamWriter { get; set; }
+        DateTime StartTime { get; set; }
+        void CloseTemperatureStreamWriter()
+        {
+            if (TemperatureStreamWriter != null)
+            {
+                TemperatureStreamWriter.Flush();
+                TemperatureStreamWriter.Close();
+                TemperatureStreamWriter = null;
+            }
+        }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        bool _IsToWriteLogOfTemperature = false;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool IsToWriteLogOfTemperature
+        {
+            get { return _IsToWriteLogOfTemperature; }
+            set
+            {
+                _IsToWriteLogOfTemperature = value;
+                CloseTemperatureStreamWriter();
+
+                if (_IsToWriteLogOfTemperature)
+                {
+                    var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    var zkooTestResultFolderPath = System.IO.Path.Combine(desktopPath, @"ZkooTestResults");
+                    if (System.IO.Directory.Exists(zkooTestResultFolderPath) == false)
+                    {
+                        System.IO.Directory.CreateDirectory(zkooTestResultFolderPath);
+                    }
+                    var fileName = @"ZkooDeviceTemperature_";
+                    fileName += DateTime.Now.ToString("yyMMdd-HHmmss", CultureInfo.InvariantCulture);
+                    fileName += ".csv";
+                    var fullPath = System.IO.Path.Combine(zkooTestResultFolderPath, fileName);
+                    TemperatureStreamWriter = new System.IO.StreamWriter(fullPath);
+                    StartTime = DateTime.Now;
+                    TemperatureStreamWriter.WriteLine("DateTime.Now, Elapsed[sec], Temperature[C], Temperature[F}");
+                }
+                OnPropertyChanged(nameof(IsToWriteLogOfTemperature));
+            }
+        }
+        #endregion
+
         Stopwatch drawingCursorsStopwatch { get; set; }
         public IList<CursorForm> CursorViews { get; protected set; }
         internal TimerPrecisionLogger PrecisionLogger { get; private set; }
-
-        public TimeSpan WaitTimeTillMouseCursorHideOnMouseMode { get; set; }
 
         // NOTE: These commands are sent to device.  So they can be put in "EgsDeviceControlCore".  But the namespace of ICommand is System.Windows.Input of WPF, so they are written here.
         public SimpleDelegateCommand ResetSettingsCommand { get; private set; }
         public SimpleDelegateCommand SaveSettingsToFlashCommand { get; private set; }
         public SimpleDelegateCommand ResetDeviceCommand { get; private set; }
+        public SimpleDelegateCommand SendManySettingsPacketsCommand { get; private set; }
 
 
         internal virtual void RaiseMultipleObjectsPropertyChanged()
         {
-            OnPropertyChanged("Device");
-            OnPropertyChanged("CameraViewUserControlModel");
+            OnPropertyChanged(nameof(Device));
+            OnPropertyChanged(nameof(CameraViewUserControlModel));
             CameraViewUserControlModel.RaiseMultipleObjectsPropertyChanged();
-            OnPropertyChanged("OnePersonBothHandsViewModel");
+            OnPropertyChanged(nameof(OnePersonBothHandsViewModel));
         }
 
         public EgsHostOnUserControl()
         {
-            CultureInfoAndDescription = new OptionalValue<CultureInfoAndDescriptionDetail>();
-            MouseCursorPositionUpdatedByGestureCursorMethod = new OptionalValue<MouseCursorPositionUpdatedByGestureCursorMethodDetail>();
-            CursorDrawingTimingMethod = new OptionalValue<CursorDrawingTimingMethodDetail>();
-            CameraViewBordersAndPointersAreDrawnBy = new OptionalValue<CameraViewBordersAndPointersAreDrawnByDetail>();
+            Device = EgsDevice.GetDefaultEgsDevice();
 
-            DeviceSettings = new EgsDeviceSettings();
+            CultureInfoAndDescription = new CultureInfoAndDescriptionOptions();
+            MouseCursorPositionUpdatedByGestureCursorMethod = new MouseCursorPositionUpdatedByGestureCursorMethodOptions();
+            CursorDrawingTimingMethod = new CursorDrawingTimingMethodOptions();
+            CameraViewBordersAndPointersAreDrawnBy = new CameraViewBordersAndPointersAreDrawnByOptions();
+
             CameraViewUserControlModel = new CameraViewUserControlModel();
             OnePersonBothHandsViewModel = new OnePersonBothHandsViewModel();
             CursorViews = new List<CursorForm>();
@@ -88,24 +132,21 @@
             PrecisionLogger = new TimerPrecisionLogger();
 
 
-            CultureInfoAndDescription.Options = CultureInfoAndDescriptionDetail.GetDefaultList();
-            MouseCursorPositionUpdatedByGestureCursorMethod.Options = MouseCursorPositionUpdatedByGestureCursorMethodDetail.GetDefaultList();
-            CursorDrawingTimingMethod.Options = CursorDrawingTimingMethodDetail.GetDefaultList();
-            CameraViewBordersAndPointersAreDrawnBy.Options = CameraViewBordersAndPointersAreDrawnByDetail.GetDefaultList();
-
             //CultureInfoAndDescription.SelectSingleItemByPredicate(e => e.CultureInfoString == ApplicationCommonSettings.DefaultCultureInfoName);
-            MouseCursorPositionUpdatedByGestureCursorMethod.SelectedIndex = 0;
-            CursorDrawingTimingMethod.SelectedIndex = 0;
-            CameraViewBordersAndPointersAreDrawnBy.SelectedIndex = 0;
+            MouseCursorPositionUpdatedByGestureCursorMethod.Value = MouseCursorPositionUpdatedByGestureCursorMethods.None;
+            CursorDrawingTimingMethod.Value = CursorDrawingTimingMethods.ByHidReportUpdatedEvent;
+            CameraViewBordersAndPointersAreDrawnBy.Value = CameraViewBordersAndPointersAreDrawnByKind.HostApplication;
             WaitTimeTillMouseCursorHideOnMouseMode = TimeSpan.FromSeconds(10);
 
             ResetSettingsCommand = new SimpleDelegateCommand();
             SaveSettingsToFlashCommand = new SimpleDelegateCommand();
             ResetDeviceCommand = new SimpleDelegateCommand();
+            SendManySettingsPacketsCommand = new SimpleDelegateCommand();
 
             ResetSettingsCommand.CanPerform = true;
             SaveSettingsToFlashCommand.CanPerform = false;
             ResetDeviceCommand.CanPerform = false;
+            SendManySettingsPacketsCommand.CanPerform = false;
 
             ResetSettingsCommand.PerformEventHandler += delegate
             {
@@ -122,6 +163,21 @@
                 if (MessageBox.Show(Resources.CommonStrings_ResetDeviceConfirmation, Resources.CommonStrings_Confirmation, MessageBoxButton.OKCancel) != MessageBoxResult.OK) { return; }
                 Device.ResetDevice();
             };
+            SendManySettingsPacketsCommand.PerformEventHandler += delegate
+            {
+                SendManySettingsPacketsAsync();
+            };
+
+            Device.IsHidDeviceConnectedChanged += Device_IsHidDeviceConnectedChanged;
+
+            // NOTE: The next 2 lines are necessary.
+            SaveSettingsToFlashCommand.CanPerform = Device.IsHidDeviceConnected;
+            ResetDeviceCommand.CanPerform = Device.IsHidDeviceConnected;
+            SendManySettingsPacketsCommand.CanPerform = Device.IsHidDeviceConnected;
+
+            CursorDrawingTimingMethod.ValueUpdated += delegate { OnCursorDrawingTimingMethod_SelectedItemChanged(); };
+            CameraViewBordersAndPointersAreDrawnBy.ValueUpdated += CameraViewBordersAndPointersAreDrawnBy_SelectedItemChanged;
+            CultureInfoAndDescription.ValueUpdated += delegate { BindableResources.Current.ChangeCulture(CultureInfoAndDescription.Value); };
 
             // TODO: MUSTDO: When users cancel DFU, exceptions occur in Timer thread basically, and the app cannot deal with them.  So it is necessary to attach them to event handlers.
             // The design of EgsDevicesManager is not completed.  So I don't think this is good way.
@@ -132,78 +188,133 @@
             };
         }
 
+        bool isSendingManySettingsPackets = false;
+        async void SendManySettingsPacketsAsync()
+        {
+            await System.Threading.Tasks.Task.Run(() =>
+            {
+                if (isSendingManySettingsPackets)
+                {
+                    MessageBox.Show("The application is still doing previous task (sending many settings packets).");
+                    return;
+                }
+                isSendingManySettingsPackets = true;
+                var elapsed = Stopwatch.StartNew();
+                int i = 0;
+                for (i = 0; i < 10000; i++)
+                {
+                    if (disposed) { return; }
+                    if (elapsed.ElapsedMilliseconds > 1000)
+                    {
+                        MessageBox.Show("Elapsed > 1000[ms].  The application will stop this test.");
+                        break;
+                    }
+                    if (Device == null)
+                    {
+                        MessageBox.Show("Device == null.  The application will stop this test.");
+                        break;
+                    }
+                    if (Device.CameraViewImageSourceBitmapCapture == null)
+                    {
+                        MessageBox.Show("Device.CameraViewImageSourceBitmapCapture == null.  The application will stop this test.");
+                        break;
+                    }
+                    if (Device.CameraViewImageSourceBitmapCapture.IsRestartingUvc)
+                    {
+                        MessageBox.Show("UVC is restarting.  The application will stop this test.");
+                        break;
+                    }
+                    Device.Settings.StatusLedBrightnessMaximum.Value = (byte)((i * 5) % 256);
+                    elapsed.Restart();
+                }
+                if (i == 10000)
+                {
+                    MessageBox.Show("Completed sending many settings packets!");
+                }
+                isSendingManySettingsPackets = false;
+            });
+        }
+
         public virtual void InitializeOnceAtStartup()
         {
-            DeviceSettings.InitializeOnceAtStartup();
-            Device = EgsDevice.GetDefaultEgsDevice(DeviceSettings);
+            Device.EgsGestureHidReport.ReportUpdated += Device_EgsGestureHidReport_ReportUpdated;
+
+            if (false)
+            {
+                // NOTE: Even if it is Mouse mode, the application should draw not the OS protocol (TouchScreenHidRpoert) but the vendor-specific protocol (EgsGestureHidReport)!
+                Device.TouchScreenHidReport.ReportUpdated += delegate
+                {
+                    if (Device.Settings.TouchInterfaceKind.Value == TouchInterfaceKinds.Mouse) { OnDeviceTouchScreenHidReportReportUpdated(); }
+                };
+            }
+
+            Device.HidReportObjectsReset += Device_HidReportObjectsReset;
+            Device.TemperaturePropertiesUpdated += TemperatureInCelsius_TemperaturePropertiesUpdated;
 
             InitializeCursorModelsAndCursorViews();
+        }
 
-            Device.IsHidDeviceConnectedChanged += delegate
+        void TemperatureInCelsius_TemperaturePropertiesUpdated(object sender, EventArgs e)
+        {
+            if (IsToWriteLogOfTemperature)
             {
-                SaveSettingsToFlashCommand.CanPerform = Device.IsHidDeviceConnected;
-                ResetDeviceCommand.CanPerform = Device.IsHidDeviceConnected;
-            };
-            // NOTE: The next 2 lines are necessary.
+                Trace.Assert(TemperatureStreamWriter != null);
+                TemperatureStreamWriter.WriteLine("{0}, {1}, {2}, {3}",
+                    DateTime.Now,
+                    (DateTime.Now - StartTime).TotalSeconds,
+                    Device.TemperatureInCelsius.Value,
+                    Device.TemperatureInFahrenheit.Value);
+                TemperatureStreamWriter.Flush();
+            }
+        }
+
+        void CameraViewBordersAndPointersAreDrawnBy_SelectedItemChanged(object sender, EventArgs e)
+        {
+            switch (CameraViewBordersAndPointersAreDrawnBy.Value)
+            {
+                case CameraViewBordersAndPointersAreDrawnByKind.HostApplication:
+                    CameraViewUserControlModel.IsToDrawImageSet = true;
+                    if (Device.Settings != null)
+                    {
+                        Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
+                    }
+                    break;
+                case CameraViewBordersAndPointersAreDrawnByKind.Device:
+                    CameraViewUserControlModel.IsToDrawImageSet = false;
+                    if (Device.Settings != null)
+                    {
+                        Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
+                    }
+                    break;
+                default:
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    throw new NotImplementedException();
+            }
+        }
+
+        void Device_IsHidDeviceConnectedChanged(object sender, EventArgs e)
+        {
             SaveSettingsToFlashCommand.CanPerform = Device.IsHidDeviceConnected;
             ResetDeviceCommand.CanPerform = Device.IsHidDeviceConnected;
-
-            Device.EgsGestureHidReport.ReportUpdated += delegate
-            {
-                OnDeviceEgsGestureHidReportReportUpdated();
-            };
-#if false
-            // NOTE: Even if it is Mouse mode, the application should draw not the OS protocol (TouchScreenHidRpoert) but the vendor-specific protocol (EgsGestureHidReport)!
-            Device.TouchScreenHidReport.ReportUpdated += delegate
-            {
-                if (DeviceSettings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue == EgsDeviceTouchInterfaceKind.Mouse) { OnDeviceTouchScreenHidReportReportUpdated(); }
-            };
-#endif
-
-            Device.HidReportObjectsReset += delegate
-            {
-                OnDeviceEgsGestureHidReportReportUpdated();
-                // NOTE: Some people can use OS protocol, so I enable the next line.
-                OnDeviceTouchScreenHidReportReportUpdated();
-                // NOTE: The next 2 lines are necessary.  When a device is disconnected, they clear Borders and Pointers and so on in the Camera View.
-                CameraViewUserControlModel.Reset();
-                RaiseMultipleObjectsPropertyChanged();
-            };
-
-            CursorDrawingTimingMethod.SelectedItemChanged += delegate { OnCursorDrawingTimingMethod_SelectedItemChanged(); };
-
-            CameraViewBordersAndPointersAreDrawnBy.SelectedItemChanged += delegate
-            {
-                switch (CameraViewBordersAndPointersAreDrawnBy.SelectedItem.EnumValue)
-                {
-                    case CameraViewBordersAndPointersAreDrawnByKind.HostApplication:
-                        CameraViewUserControlModel.IsToDrawImageSet = true;
-                        if (DeviceSettings != null)
-                        {
-                            DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = false;
-                        }
-                        break;
-                    case CameraViewBordersAndPointersAreDrawnByKind.Device:
-                        CameraViewUserControlModel.IsToDrawImageSet = false;
-                        if (DeviceSettings != null)
-                        {
-                            DeviceSettings.IsToDrawBordersOnCameraViewImageByDevice.Value = true;
-                        }
-                        break;
-                    default:
-                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                        throw new NotImplementedException();
-                }
-            };
-            CultureInfoAndDescription.SelectedItemChanged += delegate
-            {
-                BindableResources.Current.ChangeCulture(CultureInfoAndDescription.SelectedItem.CultureInfoString);
-            };
+            SendManySettingsPacketsCommand.CanPerform = Device.IsHidDeviceConnected;
+        }
+        void Device_EgsGestureHidReport_ReportUpdated(object sender, EventArgs e)
+        {
+            OnDeviceEgsGestureHidReportReportUpdated();
+        }
+        void Device_HidReportObjectsReset(object sender, EventArgs e)
+        {
+            OnDeviceEgsGestureHidReportReportUpdated();
+            // NOTE: Some people can use OS protocol, so I enable the next line.
+            OnDeviceTouchScreenHidReportReportUpdated();
+            // NOTE: The next 2 lines are necessary.  When a device is disconnected, they clear Borders and Pointers and so on in the Camera View.
+            CameraViewUserControlModel.Reset();
+            RaiseMultipleObjectsPropertyChanged();
         }
 
         void OnCursorDrawingTimingMethod_SelectedItemChanged()
         {
-            var value = CursorDrawingTimingMethod.SelectedItem.EnumValue;
+            var value = CursorDrawingTimingMethod.Value;
             switch (value)
             {
                 case CursorDrawingTimingMethods.ByHidReportUpdatedEvent:
@@ -225,12 +336,12 @@
         public virtual void Reset()
         {
             // TODO: This is very old memo and it says "Do it at first", but I forgot the reason.
-            DeviceSettings.Reset();
+            Device.ResetSettings();
             // TODO: Very old memo says "Do not change!", should check the reason and test it again.
             //CultureInfoAndDescription.SelectedIndex = 0;
-            CameraViewBordersAndPointersAreDrawnBy.SelectedIndex = 0;
-            MouseCursorPositionUpdatedByGestureCursorMethod.SelectedIndex = 0;
-            CursorDrawingTimingMethod.SelectedIndex = 0;
+            CameraViewBordersAndPointersAreDrawnBy.Value = CameraViewBordersAndPointersAreDrawnByKind.HostApplication;
+            MouseCursorPositionUpdatedByGestureCursorMethod.Value = MouseCursorPositionUpdatedByGestureCursorMethods.None;
+            CursorDrawingTimingMethod.Value = CursorDrawingTimingMethods.ByHidReportUpdatedEvent;
             OnePersonBothHandsViewModel.CursorImageSetInformationOptionalValue.SelectedIndex = 0;
         }
 
@@ -259,12 +370,12 @@
             // Some applications can use MouseMove event, so mouse cursor position is important.
             // So the application can let the mouse cursor track (first found / right / left) gesture cursor. 
             // MUSTDO: In some PCs, the position is not updated to the correct value.   Should be fixed.
-            if (MouseCursorPositionUpdatedByGestureCursorMethod.SelectedItem.EnumValue != MouseCursorPositionUpdatedByGestureCursorMethods.None
-                && DeviceSettings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue != EgsDeviceTouchInterfaceKind.Mouse
+            if (MouseCursorPositionUpdatedByGestureCursorMethod.Value != MouseCursorPositionUpdatedByGestureCursorMethods.None
+                && Device.Settings.TouchInterfaceKind.Value != TouchInterfaceKinds.Mouse
                 && OnePersonBothHandsViewModel != null)
             {
                 CursorViewModel hand = null;
-                switch (MouseCursorPositionUpdatedByGestureCursorMethod.SelectedItem.EnumValue)
+                switch (MouseCursorPositionUpdatedByGestureCursorMethod.Value)
                 {
                     case MouseCursorPositionUpdatedByGestureCursorMethods.FirstFoundHand:
                         hand = OnePersonBothHandsViewModel.FirstFoundHand;
@@ -328,11 +439,12 @@
                 for (int i = 0; i < Device.TrackableHandsCount; i++) { CursorViews[i].UpdatePosition(); }
                 drawingCursorsStopwatch.Reset(); drawingCursorsStopwatch.Start();
             }
-            if (Device.Settings.TouchInterfaceKind.OptionalValue.SelectedItem.EnumValue == EgsDeviceTouchInterfaceKind.Mouse)
+            if (Device.Settings.TouchInterfaceKind.Value == TouchInterfaceKinds.Mouse)
             {
                 if (DateTime.Now - Device.LastUpdateTime > WaitTimeTillMouseCursorHideOnMouseMode)
                 {
-                    CursorViews[0].Hide();
+                    OnePersonBothHandsViewModel.Hands[0].IsVisible = false;
+                    CursorViews[0].UpdatePosition();
                 }
             }
         }
@@ -360,6 +472,15 @@
             if (disposing)
             {
                 if (hasOnDisposingCalled == false) { OnDisposing(EventArgs.Empty); hasOnDisposingCalled = true; }
+                isSendingManySettingsPackets = false;
+
+                Device.IsHidDeviceConnectedChanged -= Device_IsHidDeviceConnectedChanged;
+                Device.EgsGestureHidReport.ReportUpdated -= Device_EgsGestureHidReport_ReportUpdated;
+                Device.HidReportObjectsReset -= Device_HidReportObjectsReset;
+
+                CameraViewUserControlModel = null;
+                OnePersonBothHandsViewModel = null;
+
                 EgsDevice.DefaultEgsDevicesManager.Dispose();
                 CloseCursorViews();
             }

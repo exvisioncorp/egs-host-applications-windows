@@ -16,14 +16,12 @@
     public partial class ZkooHostAppWithTutorialApplication : Application
     {
         EgsHostAppBaseComponents hostAppComponents { get; set; }
+        ZkooTutorialModel zkooTutorialModel { get; set; }
+        MainNavigationWindow navigator { get; set; }
 
         public ZkooHostAppWithTutorialApplication()
             : base()
         {
-            ZkooTutorialModel zkooTutorialModel = null;
-            MainNavigationWindow navigator = null;
-            hostAppComponents = null;
-
             // TODO: Check the correct way to catch all exceptions and show it "We're sorry" dialog.  But the next way is still meaningless now, and sometimes this code can cause a problem that application cannot exit.
             //AppDomain.CurrentDomain.UnhandledException += (sender, e) => { ShutdownApplicationByException((Exception)e.ExceptionObject); };
 
@@ -39,66 +37,27 @@
                     return;
                 }
 
-                try
-                {
-                    hostAppComponents = new EgsHostAppBaseComponents();
-                    hostAppComponents.InitializeOnceAtStartup();
-
-                    ZkooHostApp.Properties.Settings.Default.Reload();
-                    if (string.IsNullOrEmpty(ZkooHostApp.Properties.Settings.Default.WholeSettingsAsJsonString) == false)
-                    {
-#if false
-                        // TODO: Fix a problem that ObservableCollection can be duplicated.
-                        var jss = new Newtonsoft.Json.JsonSerializerSettings();
-                        // NOTE: If it is set to "Error", just unknown parameters in Json file can occur exceptions.
-                        // To absorb the difference of the version of the Settings object, let it cancel the exception.
-                        // Save the settings by the latest format, when the application exits.
-                        //jss.MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Error; // default == Ignore
-                        // NOTE: When there is not the description of the value in Json or the value is null, settings in constructors are used.  It can solve problems in JSON file by the settings in constructor.
-                        jss.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore; // default == Include
-                        // NOTE: I don't understand how "Reuse" works, so I don't use it.
-                        // TODO: Check the behavior.
-                        //jss.ObjectCreationHandling = Newtonsoft.Json.ObjectCreationHandling.Reuse; // default == Auto
-                        jss.ObjectCreationHandling = Newtonsoft.Json.ObjectCreationHandling.Replace;
-#endif
-                        // Now I use not Deserialize but PopulateObject.
-                        Newtonsoft.Json.JsonConvert.PopulateObject(ZkooHostApp.Properties.Settings.Default.WholeSettingsAsJsonString, hostAppComponents);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                    if (ApplicationCommonSettings.IsDebugging) { MessageBox.Show("Failed to load the last settings.", EgsHostAppBaseComponents.EgsHostApplicationName); }
-
-                    // It construct the object again.
-                    if (hostAppComponents != null) { hostAppComponents.Dispose(); hostAppComponents = null; }
-                    hostAppComponents = new EgsHostAppBaseComponents();
-                    hostAppComponents.InitializeOnceAtStartup();
-                    // NOTE: In some PCs, the host application fails to start in Tutorial.  So the Tutorial exits unexpectedly, it does not start Tutorial from next time.
-                    hostAppComponents.IsToStartTutorialWhenHostApplicationStart = false;
-                    // NOTE: Save the default settings.
-                    ZkooHostApp.Properties.Settings.Default.WholeSettingsAsJsonString = Newtonsoft.Json.JsonConvert.SerializeObject(hostAppComponents, Newtonsoft.Json.Formatting.Indented);
-                    ZkooHostApp.Properties.Settings.Default.Save();
-                }
-
+                hostAppComponents = new EgsHostAppBaseComponents();
+                hostAppComponents.InitializeOnceAtStartup();
+                if (SettingsSerialization.LoadSettingsJsonFile(hostAppComponents) == false) { hostAppComponents.Reset(); }
 
                 EgsHostAppBaseComponents.EgsHostApplicationName = "ZKOO";
                 hostAppComponents.AppTrayIconAndMenuItems.TextOfNotifyIconInTray = EgsHostAppBaseComponents.EgsHostApplicationName;
-                base.MainWindow = hostAppComponents.CameraViewWindow;
+
+                hostAppComponents.CameraViewWindow.Closed += delegate { hostAppComponents.Dispose(); };
 
                 hostAppComponents.Disposing += delegate
                 {
                     if (navigator != null)
                     {
                         // detach static event
-                        Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= navigator.OnDisplaySettingsChanged;
+                        Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= SystemEvents_DisplaySettingsChanged;
                     }
                     // Save hostAppComponents before Dispose().
-                    // EgsDevice.Dispose() calls "Settings.IsToDetectFace.Value = false".
-                    var str = Newtonsoft.Json.JsonConvert.SerializeObject(hostAppComponents, Newtonsoft.Json.Formatting.Indented);
-                    ZkooHostApp.Properties.Settings.Default.WholeSettingsAsJsonString = str;
-                    ZkooHostApp.Properties.Settings.Default.Save();
-                    if (Application.Current != null) { Application.Current.Shutdown(); }
+                    SettingsSerialization.SaveSettingsJsonFile(hostAppComponents);
+                    zkooTutorialModel = null;
+                    // NOTE: IMPORTANT!
+                    if (navigator != null) { navigator.Close(); navigator = null; }
                 };
 
                 base.Exit += delegate
@@ -123,7 +82,7 @@
                         zkooTutorialModel = new ZkooTutorialModel(hostAppComponents);
                         navigator = new MainNavigationWindow();
                         // attach static event
-                        Microsoft.Win32.SystemEvents.DisplaySettingsChanged += navigator.OnDisplaySettingsChanged;
+                        Microsoft.Win32.SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
                         // NOTE: TODO: When exceptions occur in Initialize, we have to distinguish whether from Settings files or from source code.
                         zkooTutorialModel.TutorialAppHeaderMenu.InitializeOnceAtStartup(navigator, zkooTutorialModel);
                         zkooTutorialModel.InitializeOnceAtStartup(hostAppComponents);
@@ -157,47 +116,40 @@
             }
         }
 
+        void SystemEvents_DisplaySettingsChanged(object sender, EventArgs e)
+        {
+            if (navigator != null) { navigator.OnDisplaySettingsChanged(sender, e); }
+            if (hostAppComponents != null && hostAppComponents.CameraViewWindowModel != null)
+            {
+                hostAppComponents.CameraViewWindowModel.ResetLocationAndSizeIfNotInsideAnyScreen();
+            }
+        }
+
         void ShutdownApplicationByException(Exception ex)
         {
             if (ex is EgsHostApplicationIsClosingException)
             {
+                // NOTE: Assuming that this is the correct way to shutdown the application.
                 MessageBox.Show(Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ApplicationWillExit, EgsHostAppBaseComponents.EgsHostApplicationName, MessageBoxButton.OK);
-                if (hostAppComponents != null)
-                {
-                    hostAppComponents.Dispose();
-                    hostAppComponents = null;
-                }
-                else
-                {
-                    if (Application.Current != null) { Application.Current.Shutdown(); }
-                }
-                return;
+                if (hostAppComponents != null) { hostAppComponents.Dispose(); hostAppComponents = null; }
             }
-            try
+            else
             {
-                // TODO: Should make a reporting system to Exvision
-                if (true)
+                // NOTE: This is not handled exceptions.  At first it saves safer settings, and then it shows "we're sorry" window.
+                try
                 {
+                    // NOTE: But in some cases, application is already shutdown, so this code itself can occur exceptions
                     var window = new NotHandledExceptionReportWindow();
                     window.Initialize(ex);
                     window.ShowDialog();
                 }
-                using (hostAppComponents = new EgsHostAppBaseComponents())
+                catch (Exception ex2)
                 {
-                    hostAppComponents.InitializeOnceAtStartup();
-                    // NOTE: If some unknown problems occur, it does not start the tutorial application from next time.
-                    hostAppComponents.IsToStartTutorialWhenHostApplicationStart = false;
-
-                    var str = Newtonsoft.Json.JsonConvert.SerializeObject(hostAppComponents, Newtonsoft.Json.Formatting.Indented);
-                    ZkooHostApp.Properties.Settings.Default.WholeSettingsAsJsonString = str;
-                    ZkooHostApp.Properties.Settings.Default.Save();
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    MessageBox.Show(ex2.Message);
                 }
             }
-            catch (Exception ex2)
-            {
-                Debug.WriteLine(ex2.Message);
-            }
-            if (Application.Current != null) { Application.Current.Shutdown(); }
+            DuplicatedProcessStartBlocking.ReleaseMutex();
         }
     }
 }

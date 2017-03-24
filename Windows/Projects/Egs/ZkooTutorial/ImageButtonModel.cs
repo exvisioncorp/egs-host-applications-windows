@@ -29,7 +29,7 @@
         protected virtual void OnIsEnabledChanged(EventArgs e)
         {
             var t = IsEnabledChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsEnabled");
+            OnPropertyChanged(nameof(IsEnabled));
         }
         public bool IsEnabled
         {
@@ -50,7 +50,7 @@
         protected virtual void OnIsPressedChanged(EventArgs e)
         {
             var t = IsPressedChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsPressed");
+            OnPropertyChanged(nameof(IsPressed));
         }
         public bool IsPressed
         {
@@ -72,7 +72,7 @@
         protected virtual void OnIsHoveredChanged(EventArgs e)
         {
             var t = IsHoveredChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsHovered");
+            OnPropertyChanged(nameof(IsHovered));
         }
         public bool IsHovered
         {
@@ -94,7 +94,7 @@
         protected virtual void OnIsSelectedChanged(EventArgs e)
         {
             var t = IsSelectedChanged; if (t != null) { t(this, e); }
-            OnPropertyChanged("IsSelected");
+            OnPropertyChanged(nameof(IsSelected));
         }
         public bool IsSelected
         {
@@ -122,7 +122,7 @@
                 UpdateImageSourceSelected();
                 UpdateImageSourceEnabled();
                 UpdateImageSource();
-                OnPropertyChanged("ImageSourceRelativeFolderPath");
+                OnPropertyChanged(nameof(ImageSourceRelativeFolderPath));
             }
         }
 
@@ -138,14 +138,14 @@
                 _ImageSourceDisabledFileName = value;
                 UpdateImageSourceDisabled();
                 UpdateImageSource();
-                OnPropertyChanged("ImageSourceDisabledFileName");
+                OnPropertyChanged(nameof(ImageSourceDisabledFileName));
             }
         }
         void UpdateImageSourceDisabled()
         {
             var newImageSourceFilePath = _ImageSourceRelativeFolderPath + _ImageSourceDisabledFileName;
             ImageSourceDisabled = BitmapImageUtility.LoadBitmapImageFromFile(newImageSourceFilePath);
-            OnPropertyChanged("ImageSourceDisabled");
+            OnPropertyChanged(nameof(ImageSourceDisabled));
         }
         #endregion
 
@@ -161,14 +161,14 @@
                 _ImageSourcePressedFileName = value;
                 UpdateImageSourcePressed();
                 UpdateImageSource();
-                OnPropertyChanged("ImageSourcePressedFileName");
+                OnPropertyChanged(nameof(ImageSourcePressedFileName));
             }
         }
         void UpdateImageSourcePressed()
         {
             var newImageSourceFilePath = _ImageSourceRelativeFolderPath + _ImageSourcePressedFileName;
             ImageSourcePressed = BitmapImageUtility.LoadBitmapImageFromFile(newImageSourceFilePath);
-            OnPropertyChanged("ImageSourcePressed");
+            OnPropertyChanged(nameof(ImageSourcePressed));
         }
         #endregion
 
@@ -184,14 +184,14 @@
                 _ImageSourceHoveredFileName = value;
                 UpdateImageSourceHovered();
                 UpdateImageSource();
-                OnPropertyChanged("ImageSourceHoveredFileName");
+                OnPropertyChanged(nameof(ImageSourceHoveredFileName));
             }
         }
         void UpdateImageSourceHovered()
         {
             var newImageSourceFilePath = _ImageSourceRelativeFolderPath + _ImageSourceHoveredFileName;
             ImageSourceHovered = BitmapImageUtility.LoadBitmapImageFromFile(newImageSourceFilePath);
-            OnPropertyChanged("ImageSourceHovered");
+            OnPropertyChanged(nameof(ImageSourceHovered));
         }
         #endregion
 
@@ -207,14 +207,14 @@
                 _ImageSourceSelectedFileName = value;
                 UpdateImageSourceSelected();
                 UpdateImageSource();
-                OnPropertyChanged("ImageSourceSelectedFileName");
+                OnPropertyChanged(nameof(ImageSourceSelectedFileName));
             }
         }
         void UpdateImageSourceSelected()
         {
             var newImageSourceFilePath = _ImageSourceRelativeFolderPath + _ImageSourceSelectedFileName;
             ImageSourceSelected = BitmapImageUtility.LoadBitmapImageFromFile(newImageSourceFilePath);
-            OnPropertyChanged("ImageSourceSelected");
+            OnPropertyChanged(nameof(ImageSourceSelected));
         }
         #endregion
 
@@ -230,14 +230,14 @@
                 _ImageSourceEnabledFileName = value;
                 UpdateImageSourceEnabled();
                 UpdateImageSource();
-                OnPropertyChanged("ImageSourceEnabledFileName");
+                OnPropertyChanged(nameof(ImageSourceEnabledFileName));
             }
         }
         void UpdateImageSourceEnabled()
         {
             var newImageSourceFilePath = _ImageSourceRelativeFolderPath + _ImageSourceEnabledFileName;
             ImageSourceEnabled = BitmapImageUtility.LoadBitmapImageFromFile(newImageSourceFilePath);
-            OnPropertyChanged("ImageSourceEnabled");
+            OnPropertyChanged(nameof(ImageSourceEnabled));
         }
         #endregion
 
@@ -253,7 +253,7 @@
             else { newImageSource = ImageSourceEnabled; if (isToShowDebugMessage) { Debug.WriteLine("Enabled"); } }
 
             ImageSource = newImageSource;
-            OnPropertyChanged("ImageSource");
+            OnPropertyChanged(nameof(ImageSource));
         }
 
         public ImageButtonModel()

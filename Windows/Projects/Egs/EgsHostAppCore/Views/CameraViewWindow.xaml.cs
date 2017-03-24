@@ -195,7 +195,7 @@
 
             cameraViewWindowModel.WindowStateChanged += delegate
             {
-            	// TODO: MUSTDO: find the better way
+                // TODO: MUSTDO: find the better way
                 this.Dispatcher.Invoke(() =>
                 {
                     if (WindowState == WindowState.Maximized)
@@ -216,14 +216,22 @@
 
             newCameraViewUserControlModel.Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapSizeOrPixelFormatChanged += (sender, e) =>
             {
-                var bmp = newCameraViewUserControlModel.Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmap;
-                Resizing.ContentAspectRatio = (double)bmp.Width / (double)bmp.Height;
-                // TODO: MUSTDO: check
-                if (false && ApplicationCommonSettings.IsDebuggingInternal) { Debugger.Break(); }
-                return;
-                var centerX = (Resizing.Left + Resizing.Right) / 2;
-                Resizing.Left = centerX - bmp.Width / 2;
-                Resizing.Right = centerX + bmp.Width / 2;
+                try
+                {
+                    var size = newCameraViewUserControlModel.Device.CameraViewImageSourceBitmapCapture.CameraViewImageSourceBitmapSize;
+                    Resizing.ContentAspectRatio = (double)size.Width / (double)size.Height;
+                    // TODO: MUSTDO: the next return is necessary, currently.
+                    return;
+                    var centerX = (Resizing.Left + Resizing.Right) / 2;
+                    // NOTE: cannot use Application.Current.Dispatcher.Invoke
+                    Resizing.Left = centerX - size.Width / 2;
+                    Resizing.Right = centerX + size.Width / 2;
+                }
+                catch (Exception ex)
+                {
+                    if (ApplicationCommonSettings.IsDebuggingInternal) { Debugger.Break(); }
+                    Console.WriteLine(ex.Message);
+                }
             };
 
             this.Activated += (Sender, e) =>

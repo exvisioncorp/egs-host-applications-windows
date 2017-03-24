@@ -27,6 +27,7 @@
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\Debug\EgsHostAppCore.xml</DocumentationFile>
+    <NoWarn>162,1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -84,7 +85,6 @@
     </Compile>
     <Compile Include="DotNetUtility\SliderOnDragCompleted.cs" />
     <Compile Include="DotNetUtility\SystemDrawingExtension.cs" />
-    <Compile Include="EgsHostEnumTypes.cs" />
     <Compile Include="EgsDeviceFirmwareUpdateImageFileModel.cs" />
     <Compile Include="EgsDeviceFirmwareUpdateModel.cs" />
     <Compile Include="EgsHostOnUserControl.cs" />
@@ -117,6 +117,9 @@
     </Compile>
     <Compile Include="Views\CameraViewWithoutDataBindingUserControl.xaml.cs">
       <DependentUpon>CameraViewWithoutDataBindingUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EgsDeviceFaceDetectionOnHostUserControl.xaml.cs">
+      <DependentUpon>EgsDeviceFaceDetectionOnHostUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EgsDeviceFirmwareUpdateUserControl.xaml.cs">
       <DependentUpon>EgsDeviceFirmwareUpdateUserControl.xaml</DependentUpon>
@@ -206,6 +209,10 @@
     <Page Include="Views\CommonResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EgsDeviceFaceDetectionOnHostUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EgsDeviceFirmwareUpdateUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>

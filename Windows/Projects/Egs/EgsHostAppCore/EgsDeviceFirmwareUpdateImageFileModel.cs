@@ -22,7 +22,7 @@
         /// ChipSet (0=MA2100, 1=MA2150), added from payloadHeaderFormatRevision=0x01 ??
         /// </summary>
         public byte ChipSet { get; private set; }
-        public Egs.PropertyTypes.HardwareTypeDetail HardwareType { get; private set; }
+        public Egs.PropertyTypes.HardwareTypes HardwareType { get; private set; }
         public byte[] LoadedImageAsByteArray { get; private set; }
         public uint PayloadLength { get; private set; }
         public uint CrcWord { get; private set; }

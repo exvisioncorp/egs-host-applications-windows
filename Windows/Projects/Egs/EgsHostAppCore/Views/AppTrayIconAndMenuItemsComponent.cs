@@ -106,14 +106,8 @@
                     Debug.WriteLine(ex.Message);
                 }
             };
-            ownerEgsHostAppBaseComponents.CameraViewWindowModel.WindowStateChanged += (sender, e) =>
-            {
-                CameraViewMenuItem.Checked = ownerEgsHostAppBaseComponents.CameraViewWindowModel.IsNormalOrElseMinimized;
-            };
-            ownerEgsHostAppBaseComponents.SettingsWindow.IsVisibleChanged += (sender, e) =>
-            {
-                SettingsMenuItem.Checked = ownerEgsHostAppBaseComponents.SettingsWindow.IsVisible;
-            };
+            ownerEgsHostAppBaseComponents.CameraViewWindowModel.WindowStateChanged += CameraViewWindowModel_WindowStateChanged;
+            ownerEgsHostAppBaseComponents.SettingsWindow.IsVisibleChanged += SettingsWindow_IsVisibleChanged;
 
             notifyIconInTray.MouseDoubleClick += (sender, e) =>
             {
@@ -137,6 +131,16 @@
             notifyIconInTray.Icon = ownerEgsHostAppBaseComponents.Device.IsConnected ? deviceIsConnectedIcon : deviceIsNotConnectedIcon;
             IsConnectedMenuItemLabel.Text = ownerEgsHostAppBaseComponents.Device.DeviceStatusString;
             CameraViewMenuItem.Checked = ownerEgsHostAppBaseComponents.CameraViewWindowModel.IsNormalOrElseMinimized;
+            SettingsMenuItem.Checked = ownerEgsHostAppBaseComponents.SettingsWindow.IsVisible;
+        }
+
+        void CameraViewWindowModel_WindowStateChanged(object sender, EventArgs e)
+        {
+            CameraViewMenuItem.Checked = ownerEgsHostAppBaseComponents.CameraViewWindowModel.IsNormalOrElseMinimized;
+        }
+
+        void SettingsWindow_IsVisibleChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        {
             SettingsMenuItem.Checked = ownerEgsHostAppBaseComponents.SettingsWindow.IsVisible;
         }
     }

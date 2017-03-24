@@ -36,15 +36,6 @@
             You can use this like "{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsHostSettings_...}" in data binding in XAML files.
             </summary>
         </member>
-        <member name="M:Egs.BindableResources.OnPropertyChanged(System.String)">
-            <summary>OnPropertyChanged to raise PropertyChanged event</summary>
-        </member>
-        <member name="M:Egs.BindableResources.ChangeCulture(System.String)">
-            <summary>
-            Set Properties.Resources.Culture by CultureInfo.GetCultureInfo(name)
-            </summary>
-            <param name="name">CultureInfo.Name.  e.g. "en", "ja" and "zh-Hans"...  If you set this value to null or empty, CultureInfo.InstalledUICulture will be used.</param>
-        </member>
         <member name="P:Egs.BindableResources.Current">
             <summary>
             static readonly instance of this class.
@@ -58,10 +49,19 @@
         <member name="E:Egs.BindableResources.PropertyChanged">
             <summary>Implementation of INotifyPropertyChanged.PropertyChanged.</summary>
         </member>
+        <member name="M:Egs.BindableResources.OnPropertyChanged(System.String)">
+            <summary>OnPropertyChanged to raise PropertyChanged event</summary>
+        </member>
         <member name="E:Egs.BindableResources.CultureChanged">
             <summary>
             When ChangeCulture() is called, this event raises.
             </summary>
+        </member>
+        <member name="M:Egs.BindableResources.ChangeCulture(System.String)">
+            <summary>
+            Set Properties.Resources.Culture by CultureInfo.GetCultureInfo(name)
+            </summary>
+            <param name="name">CultureInfo.Name.  e.g. "en", "ja" and "zh-Hans"...  If you set this value to null or empty, CultureInfo.InstalledUICulture will be used.</param>
         </member>
         <member name="T:Egs.CursorTapKind">
             <summary>
@@ -164,6 +164,11 @@
         <member name="M:Egs.DotNetUtility.RangedRangeType`1.Equals(System.Object)">
             <summary>Value, Minimum, Maximum, SmallChange, LargeChange and TickFrequency are compared.</summary>
         </member>
+        <member name="T:Egs.DotNetUtility.SettingsSerialization">
+            <summary>
+            Save [DataMember] properties with Json.NET
+            </summary>
+        </member>
         <member name="T:Egs.Win32.MonitorDpiType">
             <summary>
             Identifies dots per inch (dpi) type.  Refer to https://msdn.microsoft.com/en-us/library/windows/desktop/dn280511(v=vs.85).aspx
@@ -206,6 +211,11 @@
             If the function succeeds, the return value is a handle to the DC for the specified window's client area.  
             If the function fails, the return value is NULL.
             </returns>
+        </member>
+        <member name="T:Egs.Win32.NativeMethods.SetWindowPosFlags">
+            <summary>
+            Refer to https://msdn.microsoft.com/ja-jp/library/cc411206.aspx
+            </summary>
         </member>
         <member name="M:Egs.Win32.NativeMethods.SetWindowPos(System.IntPtr,System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,Egs.Win32.NativeMethods.SetWindowPosFlags)">
             <summary>
@@ -438,11 +448,6 @@
             Frees the memory reserved for the DeviceInfoSet returned by SetupDiGetClassDevs.
             </summary>
         </member>
-        <member name="T:Egs.Win32.NativeMethods.SetWindowPosFlags">
-            <summary>
-            Refer to https://msdn.microsoft.com/ja-jp/library/cc411206.aspx
-            </summary>
-        </member>
         <member name="T:Egs.EgsDevice">
             <summary>
             The instance of EgsDevice class receives information from EGS device and reconstruct current state of the device.  Main roles are 
@@ -450,63 +455,6 @@
             (2) Querying bitmap images for "Camera View"
             (3) Receiving HID gesture information and notifies the updates to other components
             (4) Changing settings of the device through "EgsDeviceSettings Settings" object as a member of EgsDevice
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDevice.SetSettings(Egs.EgsDeviceSettings)">
-            <summary>
-            Update the settings of this device.  If the device is already connected, the settings will be set to the device immediately.  If the device is not connected, it will be set when the device is re-connected.
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDevice.GetDefaultEgsDevice(Egs.EgsDeviceSettings)">
-            <summary>
-            To get EgsDevice easily, please use this method.
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDevice.CloseDefaultEgsDevice">
-            <summary>
-            Device should be closed by this method, when applications exit.
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDevice.#ctor">
-            <summary>
-            This class object is not deserializable, and should be created by EgsDevicesManager.
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDevice.SaveSettingsToFlash">
-            <summary>
-            In some Android device or some applications, host application is not allowed to run on the device.  
-            But the device can send mouse or touch report only by the device (without host), in that case, the default settings are load from the flash in the device.
-            With this method, host application can send a command to save the current settings (saved and managed in host) into the flash in the device.
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDevice.ResetDevice">
-            <summary>
-            Send a reset command to connected Device.
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDevice.ResetHidReportObjects">
-            <summary>
-            Reset TouchScreenHidReport and EgsGestureHidReport properties.
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDevice.UpdateTemperatureProperties">
-            <summary>
-            Sorry but this is internal.  But for DataBinding, it is public.  Only in newer device hardware can measure temperature.
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDevice.UpdateHidDeviceConnectionStatus">
-            <summary>
-            Call this method about all registered devices, after calling MessageReceivingForm.SetupDi.Update(); in EgsDevicesManagers
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDevice.TrySetIsCameraDeviceConnectedToTrue">
-            <summary>
-            This method should be called only from EgsDevicesManager.  This updates only connection state of "Camera".
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDevice.SetIsCameraDeviceConnectedToFalse">
-            <summary>
-            This method should be called only from EgsDevicesManager.  This updates only connection state of "Camera".
             </summary>
         </member>
         <member name="P:Egs.EgsDevice.TrackableHandsCountMaximum">
@@ -517,11 +465,6 @@
         <member name="P:Egs.EgsDevice.DetectableFacesCountMaximum">
             <summary>
             EGS device can detect 5 faces in one image, and the device selects only one face as a device user.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDevice.Settings">
-            <summary>
-            The current settings of this device.
             </summary>
         </member>
         <member name="P:Egs.EgsDevice.TrackableHandsCount">
@@ -544,9 +487,66 @@
             HID report for applications by this SDK users.
             </summary>
         </member>
+        <member name="M:Egs.EgsDevice.GetDefaultEgsDevice">
+            <summary>
+            Please use this method insted of "new EgsDevice()".
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.CloseDefaultEgsDevice">
+            <summary>
+            Device should be closed by this method, when applications exit.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.#ctor">
+            <summary>
+            This class object is not deserializable, and should be created by EgsDevicesManager.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDevice.Settings">
+            <summary>
+            The current settings of this device.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.SaveSettingsToFlash">
+            <summary>
+            In some Android device or some applications, host application is not allowed to run on the device.  
+            But the device can send mouse or touch report only by the device (without host), in that case, the default settings are load from the flash in the device.
+            With this method, host application can send a command to save the current settings (saved and managed in host) into the flash in the device.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.ResetDevice">
+            <summary>
+            Send a reset command to connected Device.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.ResetHidReportObjects">
+            <summary>
+            Reset TouchScreenHidReport and EgsGestureHidReport properties.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.UpdateTemperatureProperties">
+            <summary>
+            MA2100 cannot measure temperature.  MA2150 can measure temperature.
+            </summary>
+        </member>
         <member name="P:Egs.EgsDevice.HidDeviceDevicePath">
             <summary>
             The "DevicePath" of the HID device of the connected device.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.UpdateHidDeviceConnectionStatus">
+            <summary>
+            Call this method about all registered devices, after calling MessageReceivingForm.SetupDi.Update(); in EgsDevicesManagers
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.TrySetIsCameraDeviceConnectedToTrue">
+            <summary>
+            This method should be called only from EgsDevicesManager.  This updates only connection state of "Camera".
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDevice.SetIsCameraDeviceConnectedToFalse">
+            <summary>
+            This method should be called only from EgsDevicesManager.  This updates only connection state of "Camera".
             </summary>
         </member>
         <member name="P:Egs.EgsDevice.TemperatureInCelsiusString">
@@ -558,16 +558,6 @@
         <member name="T:Egs.EgsDeviceCameraViewImageSourceBitmapCapture">
             <summary>
             It opens camera device and gets images for WinForms bitmap.  EgsDevice has an object of this class.  Basically this class is managed by EgsDevice.
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDeviceCameraViewImageSourceBitmapCapture.GetDeepCopiedBitmap(System.Boolean)">
-            <summary>
-            Return deep-copied bitmap data.
-            </summary>
-        </member>
-        <member name="M:Egs.EgsDeviceCameraViewImageSourceBitmapCapture.DeepCopyBitmap(System.Drawing.Bitmap,System.Drawing.Bitmap,System.Boolean)">
-            <summary>
-            Deep-copy bitmap data.  Bitmaps must have same size and pixel format.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceCameraViewImageSourceBitmapCapture.IsToUpdateImageSource">
@@ -596,51 +586,36 @@
             So please do not call the Dispose() method by yourself to the return value of this property.
             </summary>
         </member>
+        <member name="M:Egs.EgsDeviceCameraViewImageSourceBitmapCapture.GetDeepCopiedBitmap(System.Boolean)">
+            <summary>
+            Return deep-copied bitmap data.
+            </summary>
+        </member>
+        <member name="M:Egs.EgsDeviceCameraViewImageSourceBitmapCapture.DeepCopyBitmap(System.Drawing.Bitmap,System.Drawing.Bitmap,System.Boolean)">
+            <summary>
+            Deep-copy bitmap data.  Bitmaps must have same size and pixel format.
+            </summary>
+        </member>
         <member name="T:Egs.EgsDeviceEgsGestureHidReport">
             <summary>
             Vendor specific HID report for applications of EgsSDK users.  This class does not implement INotifyProperty.  Just this reconstructs the recognition state from byte array reports.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceEgsGestureHidReport.tx">
-            <summary>X_host = sx * (X_device - tx).  Translation Offset X of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+            <summary>X_host = sx * (X_device - tx).  Translation Offset X of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         </member>
         <member name="P:Egs.EgsDeviceEgsGestureHidReport.sx">
-            <summary>X_host = sx * (X_device - tx).  Scaling X of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+            <summary>X_host = sx * (X_device - tx).  Scaling X of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         </member>
         <member name="P:Egs.EgsDeviceEgsGestureHidReport.ty">
-            <summary>Y_host = sy * (Y_device - ty).  Translation Offset Y of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+            <summary>Y_host = sy * (Y_device - ty).  Translation Offset Y of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         </member>
         <member name="P:Egs.EgsDeviceEgsGestureHidReport.sy">
-            <summary>Y_host = sy * (Y_device - ty).  Scaling Y of Conversion from "Captured Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
+            <summary>Y_host = sy * (Y_device - ty).  Scaling Y of Conversion from "Capture Image Coordinate on Sensor in Device" to "Camera View Image Coordinate on Host"</summary>
         </member>
         <member name="T:Egs.EgsDeviceEgsGestureHidReportHand">
             <summary>
             Information about one hand made from Vendor Specific HID Report
-            </summary>
-        </member>
-        <member name="T:Egs.IHidReportForCursorViewModel">
-            <summary>
-            Implemented in EgsDeviceTouchScreenHidReport and EgsDeviceEgsGestureHidReport
-            </summary>
-        </member>
-        <member name="P:Egs.IHidReportForCursorViewModel.IsTracking">
-            <summary>
-            The device is tracking the hand or not
-            </summary>
-        </member>
-        <member name="P:Egs.IHidReportForCursorViewModel.X">
-            <summary>
-            Recognized hand's X position
-            </summary>
-        </member>
-        <member name="P:Egs.IHidReportForCursorViewModel.Y">
-            <summary>
-            Recognized hand's Y position
-            </summary>
-        </member>
-        <member name="P:Egs.IHidReportForCursorViewModel.IsTouching">
-            <summary>
-            Recognized hand is bended or not
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceEgsGestureHidReportHand.X">
@@ -648,6 +623,33 @@
         </member>
         <member name="P:Egs.EgsDeviceEgsGestureHidReportHand.Y">
             <summary>Y position on primary screen</summary>
+        </member>
+        <member name="F:Egs.HidReportIds.TouchScreen">
+            <summary>0x01</summary>
+        </member>
+        <member name="F:Egs.HidReportIds.Keyboard">
+            <summary>0x02</summary>
+        </member>
+        <member name="F:Egs.HidReportIds.Mouse">
+            <summary>0x03</summary>
+        </member>
+        <member name="F:Egs.HidReportIds.Gamepad">
+            <summary>0x04</summary>
+        </member>
+        <member name="F:Egs.HidReportIds.Joystick">
+            <summary>0x05</summary>
+        </member>
+        <member name="F:Egs.HidReportIds.EgsGesture">
+            <summary>0x0A</summary>
+        </member>
+        <member name="F:Egs.HidReportIds.EgsDeviceSettings">
+            <summary>0x0B</summary>
+        </member>
+        <member name="F:Egs.HidReportIds.EgsDeviceFirmwareUpdate">
+            <summary>0x0C.  (EgsDeviceQualityAssurance is also 0x0C.)</summary>
+        </member>
+        <member name="F:Egs.HidReportIds.EgsDeviceQualityAssurance">
+            <summary>0x0C.  (EgsDeviceFirmwareUpdate is also 0x0C.)</summary>
         </member>
         <member name="F:Egs.EgsGestureHidReportRecognitionState.NotDetecting">
             <summary>0x00</summary>
@@ -676,32 +678,25 @@
         <member name="F:Egs.EgsGestureHidReportMessageIds.DetectingOrTrackingHands">
             <summary>0x10</summary>
         </member>
-        <member name="F:Egs.PropertyTypes.HidReportIds.TouchScreen">
-            <summary>0x01</summary>
+        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.SensitivityAndSpecificity">
+            <summary>
+            -3 => High Sensitivity.  +3 => High Specificity
+            </summary>
         </member>
-        <member name="F:Egs.PropertyTypes.HidReportIds.Keyboard">
-            <summary>0x02</summary>
+        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.DetectorImageDetectableFaceWidthMinimum">
+            <summary>
+            Decided by detector's specification.  In some case, dectector can find smaller faces by enlarging input image.
+            </summary>
         </member>
-        <member name="F:Egs.PropertyTypes.HidReportIds.Mouse">
-            <summary>0x03</summary>
+        <member name="P:Egs.EgsDeviceFaceDetectionOnHost.HandDetectionScaleForEgsDeviceMaximum">
+            <summary>
+            Decided by device capability.
+            </summary>
         </member>
-        <member name="F:Egs.PropertyTypes.HidReportIds.Gamepad">
-            <summary>0x04</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.HidReportIds.Joystick">
-            <summary>0x05</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.HidReportIds.EgsGesture">
-            <summary>0x0A</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.HidReportIds.EgsDeviceSettings">
-            <summary>0x0B</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.HidReportIds.EgsDeviceFirmwareUpdate">
-            <summary>0x0C.  (EgsDeviceQualityAssurance is also 0x0C.)</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.HidReportIds.EgsDeviceQualityAssurance">
-            <summary>0x0C.  (EgsDeviceFirmwareUpdate is also 0x0C.)</summary>
+        <member name="M:Egs.EgsDeviceFaceDetectionOnHost.UpdateEgsDeviceSettingsHandDetectionAreas(System.Nullable{System.Drawing.Rectangle})">
+            <summary>
+            You can set "Hand Detection Areas" by setting "cameraViewImageFaceRect" detected by your method.
+            </summary>
         </member>
         <member name="T:Egs.EgsDeviceSettings">
             <summary>
@@ -771,1132 +766,1228 @@
             Suggestion from the device about whether the touch contact was an intended or accidental touch. Your device should reject accidental touches as thoroughly as it can and report that information by using the confidence usage. The operating system uses confidence to help improve accidental touch rejection.
             </summary>
         </member>
+        <member name="T:Egs.IHidReportForCursorViewModel">
+            <summary>
+            Implemented in EgsDeviceTouchScreenHidReport and EgsDeviceEgsGestureHidReport
+            </summary>
+        </member>
+        <member name="P:Egs.IHidReportForCursorViewModel.IsTracking">
+            <summary>
+            The device is tracking the hand or not
+            </summary>
+        </member>
+        <member name="P:Egs.IHidReportForCursorViewModel.X">
+            <summary>
+            Recognized hand's X position
+            </summary>
+        </member>
+        <member name="P:Egs.IHidReportForCursorViewModel.Y">
+            <summary>
+            Recognized hand's Y position
+            </summary>
+        </member>
+        <member name="P:Egs.IHidReportForCursorViewModel.IsTouching">
+            <summary>
+            Recognized hand is bended or not
+            </summary>
+        </member>
         <member name="T:Egs.EgsDeviceControlCore.Properties.Resources">
             <summary>
-              ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
+              A strongly-typed resource class, for looking up localized strings, etc.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.ResourceManager">
             <summary>
-              このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
+              Returns the cached ResourceManager instance used by this class.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.Culture">
             <summary>
-              厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
-              現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewBordersAndPointersAreDrawnByDetail_ByDevice_Description">
             <summary>
-              by Device (for Lower Spec PC) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to by Device (for Lower Spec PC).
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewBordersAndPointersAreDrawnByDetail_ByHostApplication_Description">
             <summary>
-              by Host Application に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to by Host Application.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewBordersAndPointersAreDrawnByDetail_Type_Description">
             <summary>
-              Draw Borders and Pointers of Camera View に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewImageSourceBitmapSizeDetail_Value0_Description">
-            <summary>
-              320*240 に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewImageSourceBitmapSizeDetail_Value1_Description">
-            <summary>
-              384*240 に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewImageSourceBitmapSizeDetail_Value2_Description">
-            <summary>
-              640*480 に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Draw Borders and Pointers of Camera View.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewUserControlModel_ImageSetIndex_Description">
             <summary>
-              Borders and Pointers Type に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Borders and Pointers Type.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewUserControlModel_IsToDrawImageSet_Description">
             <summary>
-              Show Borders and Pointers に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Show Borders and Pointers.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_CanDragMove_Description">
             <summary>
-              Enable Dragging に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Enable Dragging.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_CanDragMoveDisabled_Description">
             <summary>
-              Disable Dragging Camera View Window に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Disable Dragging Camera View Window.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_CanDragMoveEnabled_Description">
             <summary>
-              Enable Dragging Camera View Window に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Enable Dragging Camera View Window.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_CanResize_Description">
             <summary>
-              Enable Resizing に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Enable Resizing.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_CanShowMenu_Description">
             <summary>
-              Show Menu by Tap に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Show Menu by Tap.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_LocationAndSize_Description">
             <summary>
-              Window Position and Size に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Window Position and Size.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_Topmost_Description">
             <summary>
-              Bring Camera View to Front に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Bring Camera View to Front.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowModel_WindowStateControlMethodSetByUser_Description">
             <summary>
-              When to Show / Hide に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to When to Show / Hide.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_KeepMinimized_Description">
             <summary>
-              Keep Minimized に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Keep Minimized.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_KeepNormal_Description">
             <summary>
-              Keep Normal に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Keep Normal.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_Type_Description">
             <summary>
-              Camera View Window State Control By Applications に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Camera View Window State Control By Applications.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateHostApplicationsControlMethodDetail_UseUsersControlMethods_Description">
             <summary>
-              Use User Settings に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Use User Settings.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ManualOnOff_Description">
             <summary>
-              Show/Hide Manually by Selecting ZKOO Icon on Task Bar or System Tray.  Hide by Selecting &quot;Minimize&quot; Button on the Menu. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Show/Hide Manually by Selecting ZKOO Icon on Task Bar or System Tray.  Hide by Selecting &quot;Minimize&quot; Button on the Menu..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandDetectionStarts_ShowWhenHandTrackingStarts_Description">
             <summary>
-              Show When Face Recognition Starts, and Hide After Recognized.  Show During Hand Tracking. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Show When Face Recognition Starts, and Hide After Recognized.  Show During Hand Tracking..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandDetectionStarts_ShowWhenHandTrackingStarts_HideSoonAfterHandTrackingStarts_Description">
             <summary>
-              Show When Face Recognition Starts, and Hide After Recognized.  Show for a While After Hand Tracking Starts. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Show When Face Recognition Starts, and Hide After Recognized.  Show for a While After Hand Tracking Starts..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandTrackingStarts_Description">
             <summary>
-              Show When Face Recognition Starts.  Hide Soon After Hand Tracking Starts. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Show When Face Recognition Starts.  Hide Soon After Hand Tracking Starts..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandDetectionStarts_HideWhenHandDetectionEnds_HideSoonAfterHandTrackingStarts_Description">
             <summary>
-              Show When a Face is Recognized.  Hide Soon After Hand Tracking Starts. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Show When a Face is Recognized.  Hide Soon After Hand Tracking Starts..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandDetectionStarts_HideWhenHandDetectionEnds_HideWhenHandTrackingEnds_Description">
             <summary>
-              Show When a Face is Recognized. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Show When a Face is Recognized..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandTrackingStarts_HideSoonAfterHandTrackingStarts_Description">
             <summary>
-              Show for a While After Hand Tracking Starts. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Show for a While After Hand Tracking Starts..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenHandTrackingStarts_HideWhenHandTrackingEnds_Description">
             <summary>
-              Show During Hand Tracking. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Show During Hand Tracking..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_Type_Description">
             <summary>
-              Camera View Auto On/Off Control に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value1_Description">
-            <summary>
-              1x1 (not tested yet) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value2_Description">
-            <summary>
-              2x2 に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value3_Description">
-            <summary>
-              3x3 に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureBinningDetail_Value4_Description">
-            <summary>
-              4x4 に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureExposureModeDetail_Value0_Description">
-            <summary>
-              Auto に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureExposureModeDetail_Value1_Description">
-            <summary>
-              Manual に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureExposureModeDetail_Value2_Description">
-            <summary>
-              User Detected Faces に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureFpsDetail_Value0_Description">
-            <summary>
-              Auto に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureFpsDetail_Value100_Description">
-            <summary>
-              100 fps に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CaptureFpsDetail_Value120_Description">
-            <summary>
-              120 fps に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Camera View Auto On/Off Control.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Accept">
             <summary>
-              Accept に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Accept.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0FailedToStart">
             <summary>
-              {0} failed to start. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to {0} failed to start..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0IsAlreadyRunning">
             <summary>
-              {0} is already running. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to {0} is already running..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0IsLatest">
             <summary>
-              No update is available.  You have installed the latest {0} application. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to No update is available.  You have installed the latest {0} application..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0Started">
             <summary>
-              {0} started. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to {0} started..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ApplicationVersion">
             <summary>
-              Application Version に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Application Version.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ApplicationWillExit">
             <summary>
-              Application will exit. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Application will exit..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Auto">
             <summary>
-              Auto に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Auto.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Bottom">
             <summary>
-              Bottom に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Bottom.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_CameraView">
             <summary>
-              Camera View に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Camera View.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Cancel">
             <summary>
-              Cancel に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Cancel.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_CanDownloadNewApplication0">
             <summary>
-              New {0} application is available.  Please select OK to access {0} website to download new application. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to New {0} application is available.  Please select OK to access {0} website to download new application..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_CheckForApplicationUpdates">
             <summary>
-              Check for Updates に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Check for Updates.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Commands">
             <summary>
-              Commands に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Commands.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Confirmation">
             <summary>
-              Confirmation に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Confirmation.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_DecreaseFalseNegativeRate">
+            <summary>
+              Looks up a localized string similar to Easy Detection.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_DecreaseFalsePositiveRate">
+            <summary>
+              Looks up a localized string similar to Strict Detection.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Downloading">
             <summary>
-              Downloading に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Downloading.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Drag">
             <summary>
-              Drag に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Drag.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Exit">
             <summary>
-              Exit に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Exit.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Flick">
             <summary>
-              Flick に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Flick.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Gesture">
             <summary>
-              Gesture に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Gesture.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_GestureCursor">
             <summary>
-              Gesture Cursor に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Gesture Cursor.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Height">
             <summary>
-              Height に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Height.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_IsConnected">
             <summary>
-              Connected に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Connected.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_IsNotConnected">
             <summary>
-              Not Connected に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Not Connected.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Left">
             <summary>
-              Left に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Left.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Log">
             <summary>
-              Log に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Log.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Manual">
             <summary>
-              Manual に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Manual.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Maximum">
             <summary>
-              Maximum に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Maximum.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Minimize">
             <summary>
-              Minimize に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Minimize.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Minimum">
             <summary>
-              Minimum に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Minimum.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_More">
             <summary>
-              More に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to More.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Move">
             <summary>
-              Move に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Move.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Options">
             <summary>
-              Options に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Options.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseCheckYourNetworkConnection">
             <summary>
-              Please check your network connection. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Please check your network connection..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseConnectTheZkooCamera">
             <summary>
-              Please connect the ZKOO camera. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Please connect the ZKOO camera..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseConnectYourHostDeviceToInternetAndThenClickOk">
             <summary>
-              Please connect your host device to internet, and then click OK. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Please connect your host device to internet, and then click OK..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseStartHostApplicationsAfterZkooIsConnected">
              <summary>
-               Please connect ZKOO with PC 
-            before starting ZKOO application. に類似しているローカライズされた文字列を検索します。
+               Looks up a localized string similar to Please connect ZKOO with PC 
+            before starting ZKOO application..
              </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Preferences">
             <summary>
-              Preferences に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Preferences.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Progress">
             <summary>
-              Progress に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Progress.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ResetDevice">
             <summary>
-              Reset Device に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Reset Device.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ResetDeviceConfirmation">
             <summary>
-              Reset Device? に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Reset Device?.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ResetSettings">
             <summary>
-              Reset Settings に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Reset Settings.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ResetSettingsConfirmation">
             <summary>
-              Reset Settings to Default? に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Reset Settings to Default?.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Right">
             <summary>
-              Right に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Right.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_SaveSettingsToFlash">
             <summary>
-              Save Settings to Device に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Save Settings to Device.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_SaveSettingsToFlashConfirmation">
             <summary>
-              Save Settings to Device? に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Save Settings to Device?.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_SensitivityAndSpecificity">
+            <summary>
+              Looks up a localized string similar to Sensitivity and Specificity.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Settings">
             <summary>
-              Settings に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Settings.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Skip">
             <summary>
-              Skip に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Skip.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Start">
             <summary>
-              Start に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Start.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Tap">
             <summary>
-              Tap に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Tap.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Top">
             <summary>
-              Top に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Top.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Value">
             <summary>
-              Value に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Value.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Width">
             <summary>
-              Width に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Width.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_WouldYouExitApplication0">
             <summary>
-              Would you exit {0}? に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Would you exit {0}?.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ZkooRecognizeYourHands">
             <summary>
-              ZKOO recognize your hands. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to ZKOO recognize your hands..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_Chinese_Description">
             <summary>
-              简体中文 に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to 简体中文.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_English_Description">
             <summary>
-              English に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to English.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_Japanese_Description">
             <summary>
-              日本語 に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to 日本語.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_Type_Description">
             <summary>
-              Language に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Language.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_UseOSCulture_Description">
             <summary>
-              Use OS Culture に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Use OS Culture.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorDrawingTimingMethodDetail_ByHidReportUpdatedEvent_Description">
             <summary>
-              Maximum に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Maximum.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorDrawingTimingMethodDetail_ByTimer30Fps_Description">
             <summary>
-              30 fps に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to 30 fps.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorDrawingTimingMethodDetail_ByTimer60Fps_Description">
             <summary>
-              60 fps に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to 60 fps.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorDrawingTimingMethodDetail_Type_Description">
             <summary>
-              Gesture Cursor Drawing Frequency (Smaller Value for Lower Spec PC) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorSpeedAndPrecisionModeDetail_Value0_Description">
-            <summary>
-              Beginner: For slower hand moving and easier tapping.  2 cursors cannot cross. に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorSpeedAndPrecisionModeDetail_Value1_Description">
-            <summary>
-              Standard: For standard speed hand moving.  2 cursors can cross. に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CursorSpeedAndPrecisionModeDetail_Value2_Description">
-            <summary>
-              Fruit Ninja: Good for Fruit Ninja Game.  Cut fruits by fast moving opened hand. に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value0_Description">
-            <summary>
-              0: Landscape に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value1_Description">
-            <summary>
-              90: Portrait (flipped) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value2_Description">
-            <summary>
-              180: Landscape (flipped) に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceRotationAngleInClockwiseDetail_Value3_Description">
-            <summary>
-              270: Portrait に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceUsageDetail_Value0_Description">
-            <summary>
-              Gesture Camera に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.DeviceUsageDetail_Value1_Description">
-            <summary>
-              Web Camera に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Gesture Cursor Drawing Frequency (Smaller Value for Lower Spec PC).
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_CameraDeviceDevicePath_Description">
             <summary>
-              Camera Device DevicePath に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Camera Device DevicePath.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_DeviceSerialNumber_Description">
             <summary>
-              Device Serial Number に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Device Serial Number.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_DeviceStatusDetailString_Description">
             <summary>
-              Device Status に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Device Status.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_FirmwareVersion_Description">
             <summary>
-              Firmware Version に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Firmware Version.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HardwareType_Description">
             <summary>
-              Hardware Type に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Hardware Type.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HardwareType_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to No Information.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HardwareType_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to ZKOO for Kickstarter Backers.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HardwareType_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to MA2150 + IMX208.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HardwareType_Options_3_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to MA2150 + IMX208 + PIC.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_HidDeviceDevicePath_Description">
             <summary>
-              Touch Device DevicePath に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Touch Device DevicePath.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_TemperatureInCelsius_Description">
             <summary>
-              Temperature [C] に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Temperature [C].
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDevice_TemperatureInFahrenheit_Description">
             <summary>
-              Temperature [F] に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Temperature [F].
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage">
+            <summary>
+              Looks up a localized string similar to (Longer Distance Needs More CPU Usage).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFaceDetectionOnHost_MaxDetectableDistanceInMeter_Description">
+            <summary>
+              Looks up a localized string similar to Max Detectable Distance [m].
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_AppWillRetrySendingImageAgain">
             <summary>
-              The application will retry sending image file again. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to The application will retry sending image file again..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DeviceFirmwareUpdate">
             <summary>
-              Device Firmware Update に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Device Firmware Update.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DfuCanceled">
             <summary>
-              Device firmware update was canceled. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Device firmware update was canceled..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DfuCompleted">
             <summary>
-              Device firmware update was completed. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Device firmware update was completed..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DfuFailed">
             <summary>
-              Device firmware update was failed. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Device firmware update was failed..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DfuImageFileIsInvalid">
             <summary>
-              Image file is invalid. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Image file is invalid..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DoNotDisconnectTheDevice">
             <summary>
-              Please do not disconnect ZKOO from AC adapter and PC. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Please do not disconnect ZKOO from AC adapter and PC..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_PleaseUpdateDeviceFirmware">
             <summary>
-              Please update device firmware to use ZKOO and ZKOO application by selecting OK.  During update, you need to reboot ZKOO a few times. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Please update device firmware to use ZKOO and ZKOO application by selecting OK.  During update, you need to reboot ZKOO a few times..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_RestartDfuFromBeginning">
             <summary>
-              Please restart the firmware update process from the beginning. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Please restart the firmware update process from the beginning..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_UpdateDeviceFirmware">
             <summary>
-              Update Device Firmware に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Update Device Firmware.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsReboot">
             <summary>
-              ZKOO needs reboot. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to ZKOO needs reboot..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsToConnectPowerCable">
             <summary>
-              Please connect ZKOO with AC adapter and PC and check LED is on. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Please connect ZKOO with AC adapter and PC and check LED is on..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsToDisconnectPowerCable">
             <summary>
-              Please disconnect ZKOO from AC adapter and PC and check LED is off. に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Please disconnect ZKOO from AC adapter and PC and check LED is off..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Description">
             <summary>
-              Source Image Resolution に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Source Image Resolution.
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceRectInCapturedImage_Description">
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_0_DescriptionKey">
             <summary>
-              Camera View Image Source Rect in Captured Image に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to 320*240.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 384*240.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 640*480.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceRectInCaptureImage_Description">
+            <summary>
+              Looks up a localized string similar to Camera View Image Source Rect in Capture Image.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureBinning_Description">
             <summary>
-              Binning Mode に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Binning Mode.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureBinning_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 1x1 (not tested yet).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureBinning_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 2x2.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureBinning_Options_3_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 3x3.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureBinning_Options_4_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 4x4.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureExposureMode_Description">
             <summary>
-              Exposure Mode に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Exposure Mode.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureExposureMode_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Auto.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureExposureMode_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Manual.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureExposureMode_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to User Detected Faces.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureFps_Description">
             <summary>
-              Camera Frame Per Second に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Camera Frame Per Second.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureFps_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Auto.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureFps_Options_100_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 100 fps.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureFps_Options_120_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 120 fps.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureImageSize_Description">
             <summary>
-              Capture Image Size に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Capture Image Size.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CaptureManualExposureParameters_Description">
             <summary>
-              Exposure Parameters に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Exposure Parameters.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Description">
             <summary>
-              Gesture Usage に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Gesture Usage.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Beginner: For slower hand moving and easier tapping.  2 cursors cannot cross..
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Standard: For standard speed hand moving.  2 cursors can cross..
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Fruit Ninja: Good for Fruit Ninja Game.  Cut fruits by fast moving opened hand..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Description">
             <summary>
-              Primary Screen Orientation に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Primary Screen Orientation.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 0: Landscape.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 90: Portrait (flipped).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 180: Landscape (flipped).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Options_3_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to 270: Portrait.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Description">
             <summary>
-              Use ZKOO for に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Use ZKOO for.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Gesture Camera.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Web Camera.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionAreaOnFixed_Description">
             <summary>
-              Face Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Face Detection Area (when fixed).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionMethod_Description">
+            <summary>
+              Looks up a localized string similar to Face Detection Method.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to ZKOO Device.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Host Application (Higher Accuracy).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionMethod_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Custom Solution by SDK Users.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionScaleOnFixed_Description">
             <summary>
-              Face Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Face Detection Scale (when fixed).
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionMethodKind_Description">
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Description">
             <summary>
-              How to Select a Player に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to How to Select a Player.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Auto: Select a person who moves a hand automatically.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to One by One: Select a person one by one to find who moves a hand.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceSelectionOnDeviceMethod_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Most Center: Select the most center person in Camera View.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Description">
             <summary>
-              Gesture by Fast Moving Hands に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Gesture by Fast Moving Hands.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to None.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Touch.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HandDetectionParameters_Description">
             <summary>
-              Hand Detection Parameters に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Hand Detection Parameters.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HostMachineOperatingSystem_Description">
             <summary>
-              Host Machine OS に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Host Machine OS.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HostMachineOperatingSystem_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Windows.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_HostMachineOperatingSystem_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Android.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToDetectFaces_Description">
             <summary>
-              Detect Faces に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Detect Faces.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToDetectFacesOnDevice_Description">
+            <summary>
+              Looks up a localized string similar to Detect Faces on Device.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToDetectHands_Description">
             <summary>
-              Detect Hands に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Detect Hands.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToDetectHandsOnDevice_Description">
+            <summary>
+              Looks up a localized string similar to Detect Hands on Device.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description">
             <summary>
-              Draw Borders on Camera View Image By Device に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Draw Borders on Camera View Image By Device.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixFaceDetectionRegion_Description">
             <summary>
-              Fix Face Detection Region に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Fix Face Detection Region.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixHandDetectionRegions_Description">
             <summary>
-              Fix Hand Detection Regions に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Fix Hand Detection Regions.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixHandTrackingAreas_Description">
             <summary>
-              Fix Hand Tracking Areas に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Fix Hand Tracking Areas.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToFixScreenMappedAreas_Description">
             <summary>
-              Fix Screen Mapped Areas に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Fix Screen Mapped Areas.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToMonitorTemperature_Description">
+            <summary>
+              Looks up a localized string similar to Measure Temperature.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToSendEgsGestureHidReport_Description">
             <summary>
-              Send Touch Information to Apps に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Send Touch Information to Apps.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToSendHoveringStateOnTouchScreenHidReport_Description">
             <summary>
-              Send Hovering State on Touch Information to OS (On Windows 10, problems can happen) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Send Hovering State on Touch Information to OS (On Windows 10, problems can happen).
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_IsToSendTouchScreenHidReport_Description">
             <summary>
-              Send Touch Information to OS に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Send Touch Information to OS.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandCloseHand_Description">
             <summary>
-              Left Hand Close Hand に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Left Hand Close Hand.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandDetectionAreaOnFixed_Description">
             <summary>
-              Left Hand Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Left Hand Detection Area (when fixed).
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandDetectionScaleOnFixed_Description">
             <summary>
-              Left Hand Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Left Hand Detection Scale (when fixed).
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandInnerRotation_Description">
             <summary>
-              Left Hand Inner Rotation に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Left Hand Inner Rotation.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandOuterRotation_Description">
             <summary>
-              Left Hand Outer Rotation に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Left Hand Outer Rotation.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandScreenMappedAreaOnFixed_Description">
             <summary>
-              Left Hand Screen Mapped Area (when fixed) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Left Hand Screen Mapped Area (when fixed).
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LeftHandTrackingAreaOnFixed_Description">
             <summary>
-              Left Hand Tracking Area (when fixed) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Left Hand Tracking Area (when fixed).
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LensEquivalentFocalLengthInMillimeters_Description">
             <summary>
-              Focal Length [mm] に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Focal Length [mm].
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_LensFNumber_Description">
             <summary>
-              F Number に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to F Number.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_ModelSetId_Description">
             <summary>
-              Model Set ID に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Model Set ID.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_ModelSetId_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Five Fingers for TV.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_ModelSetId_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Wands?.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_PowerMode_Description">
             <summary>
-              Power Mode に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Power Mode.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_PowerMode_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Active.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_PowerMode_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to StandingBy.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandCloseHand_Description">
             <summary>
-              Right Hand Close Hand に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Right Hand Close Hand.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandDetectionAreaOnFixed_Description">
             <summary>
-              Right Hand Detection Area (when fixed) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Right Hand Detection Area (when fixed).
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandDetectionScaleOnFixed_Description">
             <summary>
-              Right Hand Detection Scale (when fixed) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Right Hand Detection Scale (when fixed).
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandInnerRotation_Description">
             <summary>
-              Right Hand Inner Rotation に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Right Hand Inner Rotation.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandOuterRotation_Description">
             <summary>
-              Right Hand Outer Rotation に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Right Hand Outer Rotation.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandScreenMappedAreaOnFixed_Description">
             <summary>
-              Right Hand Screen Mapped Area (when fixed) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Right Hand Screen Mapped Area (when fixed).
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_RightHandTrackingAreaOnFixed_Description">
             <summary>
-              Right Hand Tracking Area (when fixed) に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Right Hand Tracking Area (when fixed).
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_ScreenMappedAreaResolutionSize_Description">
             <summary>
-              Screen Mapped Area Resolution Size on Device に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Screen Mapped Area Resolution Size on Device.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_SensorExposureTimeInMilliseconds_Description">
             <summary>
-              Exposure [ms] に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Exposure [ms].
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_SensorOnePixelSideLengthInMillimeters_Description">
             <summary>
-              One Pixel Side Length [mm] に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to One Pixel Side Length [mm].
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_StatusLedBrightnessMaximum_Description">
             <summary>
-              Brightness of Status LED に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Brightness of Status LED.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TouchInterfaceKind_Description">
             <summary>
-              Touch Interface Kind に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Touch Interface Kind.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TouchInterfaceKind_Options_0_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to MultiTouch.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TouchInterfaceKind_Options_1_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to SingleTouch (for Android).
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TouchInterfaceKind_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Mouse.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TouchTargetScreenSize_Description">
             <summary>
-              Touch Target Screen Size に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Touch Target Screen Size.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_TrackableHandsCount_Description">
             <summary>
-              The Number of Trackable Objects に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to The Number of Trackable Objects.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_UsbProtocolRevision_Description">
             <summary>
-              USB Communication Protocol Revision に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceSelectionMethodKindDetail_Value0_Description">
-            <summary>
-              Auto: Select a person who moves a hand automatically に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceSelectionMethodKindDetail_Value1_Description">
-            <summary>
-              One by One: Select a person one by one to find who moves a hand に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FaceSelectionMethodKindDetail_Value2_Description">
-            <summary>
-              Most Center: Select the most center person in Camera View に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FastMovingHandsGestureModeDetail_Value0_Description">
-            <summary>
-              None に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.FastMovingHandsGestureModeDetail_Value1_Description">
-            <summary>
-              Touch に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value0_Description">
-            <summary>
-              No Information に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value1_Description">
-            <summary>
-              ZKOO for Kickstarter Backers に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value2_Description">
-            <summary>
-              MA2150 + IMX208 に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HardwareTypeDetail_Value3_Description">
-            <summary>
-              MA2150 + IMX208 + PIC に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HostMachineOperatingSystemDetail_Value0_Description">
-            <summary>
-              Windows に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.HostMachineOperatingSystemDetail_Value1_Description">
-            <summary>
-              Android に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.ModelSetIdDetail_Value0_Description">
-            <summary>
-              Five Fingers for TV に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.ModelSetIdDetail_Value1_Description">
-            <summary>
-              Wands? に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to USB Communication Protocol Revision.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_FirstFoundHand_Description">
             <summary>
-              First Found Hand に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to First Found Hand.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_LeftHand_Description">
             <summary>
-              Left Hand に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Left Hand.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_None_Description">
             <summary>
-              None に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to None.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_RightHand_Description">
             <summary>
-              Right Hand に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Right Hand.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.MouseCursorPositionUpdatedByGestureCursorMethodDetail_Type_Description">
             <summary>
-              Move Mouse Cursor&apos;s Position to Follow Gesture Cursor&apos;s Position に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Move Mouse Cursor&apos;s Position to Follow Gesture Cursor&apos;s Position.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.OnePersonBothHandsViewModel_GestureCursorType_Description">
             <summary>
-              Gesture Cursor Type に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Gesture Cursor Type.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.OnePersonBothHandsViewModel_IsToShowGestureCursors_Description">
             <summary>
-              Show Gesture Cursors に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.PowerModeDetail_Value0_Description">
-            <summary>
-              Active に類似しているローカライズされた文字列を検索します。
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.PowerModeDetail_Value1_Description">
-            <summary>
-              StandingBy に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Show Gesture Cursors.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_AdvancedSettings_Description">
             <summary>
-              Advanced に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Advanced.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_AnalogGain_Description">
             <summary>
-              Analog Gain (1-32):  に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Analog Gain (1-32): .
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_BasicSettings_Description">
             <summary>
-              Basic に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Basic.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_CameraViewSettings_Description">
             <summary>
-              Camera View に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Camera View.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_DeveloperSettings_Description">
             <summary>
-              Developer に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Developer.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_ExvisionSettings_Description">
             <summary>
-              Exvision に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Exvision.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_OptionsForLowerSpecPc_Description">
             <summary>
-              Options for Lower Spec PC に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Options for Lower Spec PC.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_StartTutorial_Description">
             <summary>
-              Start Tutorial に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Start Tutorial.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.SettingsUserControl_TutorialAppSettings_Description">
             <summary>
-              Tutorial App に類似しているローカライズされた文字列を検索します。
+              Looks up a localized string similar to Tutorial App.
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.TouchInterfaceKindDetail_Value0_Description">
+        <member name="T:Egs.PropertyTypes.ValueWithDescriptionBase">
             <summary>
-              MultiTouch に類似しているローカライズされた文字列を検索します。
+            Value with Description, but only Description is defined in this base class.
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.TouchInterfaceKindDetail_Value1_Description">
+        <member name="P:Egs.PropertyTypes.ValueWithDescriptionBase.DescriptionKey">
             <summary>
-              SingleTouch (for Android) に類似しているローカライズされた文字列を検索します。
+            The key to Resource.ResourceManager.GetString.
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.TouchInterfaceKindDetail_Value2_Description">
+        <member name="P:Egs.PropertyTypes.ValueWithDescriptionBase.Description">
             <summary>
-              Mouse に類似しているローカライズされた文字列を検索します。
+            Unless Description is set, Description returns Resources.ResourceManager.GetString(DescriptionKey, Resources.Culture). 
+            The list of key and value is described in some excel sheets.  
+            EgsSourceCodeGeneration.exe runs in a build event, and it converts the excel sheets and generates the multi-lingual "Resource.resx" files.
+            </summary>
+        </member>
+        <member name="T:Egs.PropertyTypes.ValueWithDescription`1">
+            <summary>
+            Value with Description.
             </summary>
         </member>
         <member name="T:Egs.PropertyTypes.HidAccessPropertyBase">
             <summary>
             The classes derived from this class have information to set settings and get state of the device.
-            </summary>
-        </member>
-        <member name="P:Egs.PropertyTypes.HidAccessPropertyBase.DescriptionKey">
-            <summary>
-            The key to Resource.ResourceManager.GetString.
-            </summary>
-        </member>
-        <member name="P:Egs.PropertyTypes.HidAccessPropertyBase.Description">
-            <summary>
-            In this base class, Resources.ResourceManager.GetString(DescriptionKey, Resources.Culture) is returned.  The list of key and value is described in some excel sheets.  
-            EgsSourceCodeGeneration.exe runs in a build event, and it converts the excel sheets and generates the multi-lingual "Resource.resx" files.
             </summary>
         </member>
         <member name="P:Egs.PropertyTypes.HidAccessPropertyRatioRect.ValueAsString">
@@ -1907,6 +1998,11 @@
         <member name="T:Egs.Views.CursorForm">
             <summary>
             This class shows "Gesture Cursor".  This class must be initialized by InitializeOnceAtStartup() method.
+            </summary>
+        </member>
+        <member name="P:Egs.Views.CursorForm.CursorImageInformationSetList">
+            <summary>
+            List of ImageInformationSet.  One ImageInformationSet has "open hand" and "closed hand" images and so on.  And this list has the list of the image set, i.e. "00_Defalut", "01_Blue", "02_Blue" and so on.
             </summary>
         </member>
         <member name="M:Egs.Views.CursorForm.InitializeOnceAtStartup(Egs.CursorViewModel,System.Collections.Generic.IList{Egs.Views.ImageInformationSet})">
@@ -1936,11 +2032,6 @@
             the contents of this method with the code editor.
             </summary>
         </member>
-        <member name="P:Egs.Views.CursorForm.CursorImageInformationSetList">
-            <summary>
-            List of ImageInformationSet.  One ImageInformationSet has "open hand" and "closed hand" images and so on.  And this list has the list of the image set, i.e. "00_Defalut", "01_Blue", "02_Blue" and so on.
-            </summary>
-        </member>
         <member name="T:Egs.Views.ImageInformation">
             <summary>
             Information about one image.  This class does not have image data itself.
@@ -1961,16 +2052,16 @@
             Error message when CreateFile() failed
             </summary>
         </member>
+        <member name="P:Egs.Win32SetupDiForEgsDevice.HidDevicePathList">
+            <summary>
+            The list of HidEgsGestureInterface VendorSpecificCollection's DevicePath
+            </summary>
+        </member>
         <member name="M:Egs.Win32SetupDiForEgsDevice.GetInstalledDeviceDevicePathListByInterfaceClassGuid(System.Guid)">
             <summary>
             Use SetupDi API functions to retrieve the device path name of an attached device that belongs to a device interface class.
             </summary>
             <param name="interfaceClassGuid"> an interface class GUID. </param>
-        </member>
-        <member name="P:Egs.Win32SetupDiForEgsDevice.HidDevicePathList">
-            <summary>
-            The list of HidEgsGestureInterface VendorSpecificCollection's DevicePath
-            </summary>
         </member>
         <member name="P:Egs.Win32SetupDiForEgsDevice.AllConnectedHidDeviceFirstDeviceDevicePathList">
             <summary>

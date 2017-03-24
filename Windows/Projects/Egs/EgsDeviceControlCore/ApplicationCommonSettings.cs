@@ -16,15 +16,15 @@
         /// <summary>This dll's major version and minor version as string.</summary>
         public const string HostAppCoreDllAssemblyVersionMajorMinorString = "0.9";
         /// <summary>This dll's major version, minor version and build number as string.</summary>
-        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildString = "0.9.8505";
+        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildString = "0.9.8722";
         /// <summary>This dll's major version, minor version, build number and revision as string.</summary>
-        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString = "0.9.8505.0";
+        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString = "0.9.8722.0";
         /// <summary>Host application's major version, minor version, build number and revision as string.</summary>
-        public const string ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString = "0.9.8505.0";
+        public const string ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString = "0.9.8722.0";
         /// <summary>Default CultureInfo.Name as string.</summary>
         public const string DefaultCultureInfoName = "en";
         /// <summary>Firmware version in an image file of this application.</summary>
-        public const string FirmwareVersionInImageFileString = "1.1.8109.0";
+        public const string FirmwareVersionInImageFileString = "1.1.8722.0";
 
         internal const bool IsDeveloperRelease = false;
         internal const bool IsInternalRelease = false;
@@ -42,7 +42,7 @@
             // but now the app interprets only "emulation by mouse", so it does not draw anything when ZKOO sends any reports.
 #if DEBUG
             IsDebugging = true;
-            IsDebuggingInternal = true;
+            IsDebuggingInternal = IsInternalRelease;
             IsToEmulateReportByActualMouseRawInputToDebugViews = false;
 #else
             IsDebugging = false;

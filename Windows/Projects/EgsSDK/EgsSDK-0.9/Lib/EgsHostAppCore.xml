@@ -25,30 +25,6 @@
             Load a bitmap image from a file more safely
             </summary>
         </member>
-        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ManualOnOff">
-            <summary>0: Manual Show / Hide by Icons on Task Bar and System Tray.  Hide by the Minimize Button on the Menu</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandTrackingStart">
-            <summary>1: Show When Face Recognition Starts.  Hide Soon After Hand Tracking Starts</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandDetectionStart_ShowWhenHandTrackingStart">
-            <summary>2: Show When Face Recognition Starts, and Hide if Recognized.  Show in Hand Tracking</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandDetectionStart_ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart">
-            <summary>3: Show When Face Recognition Starts, and Hide if Recognized.  Show for a While After Hand Tracking Starts</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandDetectionStart_HideWhenHandDetectionEnd_HideWhenHandTrackingEnd">
-            <summary>4: Show if Faces are Recognized.</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandDetectionStart_HideWhenHandDetectionEnd_HideSoonAfterHandTrackingStart">
-            <summary>5: Show if Faces are Recognized.  Hide Soon After Hand Tracking Starts</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideWhenHandTrackingEnd">
-            <summary>6: Show in Hand Tracking</summary>
-        </member>
-        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart">
-            <summary>7: Show for a While After Hand Tracking Starts</summary>
-        </member>
         <member name="P:Egs.EgsDeviceFirmwareUpdateImageFileModel.ImageType">
             <summary>
             3: App1
@@ -89,6 +65,30 @@
             <summary>
             ViewModel which has information about one person and his two hands
             </summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ManualOnOff">
+            <summary>0: Manual Show / Hide by Icons on Task Bar and System Tray.  Hide by the Minimize Button on the Menu</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandTrackingStart">
+            <summary>1: Show When Face Recognition Starts.  Hide Soon After Hand Tracking Starts</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandDetectionStart_ShowWhenHandTrackingStart">
+            <summary>2: Show When Face Recognition Starts, and Hide if Recognized.  Show in Hand Tracking</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandDetectionStart_ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart">
+            <summary>3: Show When Face Recognition Starts, and Hide if Recognized.  Show for a While After Hand Tracking Starts</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandDetectionStart_HideWhenHandDetectionEnd_HideWhenHandTrackingEnd">
+            <summary>4: Show if Faces are Recognized.</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandDetectionStart_HideWhenHandDetectionEnd_HideSoonAfterHandTrackingStart">
+            <summary>5: Show if Faces are Recognized.  Hide Soon After Hand Tracking Starts</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideWhenHandTrackingEnd">
+            <summary>6: Show in Hand Tracking</summary>
+        </member>
+        <member name="F:Egs.PropertyTypes.CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart">
+            <summary>7: Show for a While After Hand Tracking Starts</summary>
         </member>
         <member name="T:Egs.Views.ApplicationUpdateProgressWindow">
             <summary>
@@ -207,6 +207,19 @@
             </summary>
         </member>
         <member name="M:Egs.Views.SettingsWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Egs.EgsHostAppCore.Views.EgsDeviceFaceDetectionOnHostUserControl">
+            <summary>
+            Interaction logic for EgsDeviceFaceDetectionOnHostUserControl.xaml
+            </summary>
+            <summary>
+            EgsDeviceFaceDetectionOnHostUserControl
+            </summary>
+        </member>
+        <member name="M:Egs.EgsHostAppCore.Views.EgsDeviceFaceDetectionOnHostUserControl.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
