@@ -19,8 +19,7 @@ SET CultureInfoName=
         break;
     case "zh-Hans":
 #>
-REM SET CultureInfoName=-zh-Hans
-SET CultureInfoName=
+SET CultureInfoName=-zh-Hans
 <#
         break;
 }
