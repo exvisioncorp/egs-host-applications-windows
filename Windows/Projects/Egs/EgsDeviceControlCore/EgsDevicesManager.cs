@@ -176,6 +176,7 @@
             {
                 // NOTE: The exception occurs from inside of Timer, so the application thread cannot catch it.  EgsDevicesManager.Dispose() is called and then the application exit in the event handler of EgsDevicesManager.Disposing.
                 System.Windows.Forms.MessageBox.Show(Resources.CommonStrings_ApplicationWillExit, "ZKOO", System.Windows.Forms.MessageBoxButtons.OK);
+                // NOTE! EgsHostAppBaseComponents should save Settings before disposing this object!
                 this.Dispose();
             }
             catch (Exception ex)
@@ -235,6 +236,7 @@
         public event EventHandler Disposed;
         protected virtual void OnDisposing(EventArgs e) { var t = Disposing; if (t != null) { t(this, e); } }
         protected virtual void OnDisposed(EventArgs e) { var t = Disposed; if (t != null) { t(this, e); } }
+        protected bool hasOnDisposingCalled = false;
         private bool disposed = false;
         public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }
         protected virtual void Dispose(bool disposing)
@@ -242,9 +244,14 @@
             if (disposed) { return; }
             if (disposing)
             {
-                // dispose managed objects, and dispose objects that implement IDisposable
-                OnDisposing(EventArgs.Empty);
+                if (hasOnDisposingCalled == false)
+                {
+                    hasOnDisposingCalled = true;
+                    OnDisposing(EventArgs.Empty);
+                    if (disposed) { return; }
+                }
 
+                // dispose managed objects, and dispose objects that implement IDisposable
                 if (EachDeviceStatusMonitoringTimer != null) { EachDeviceStatusMonitoringTimer.Dispose(); EachDeviceStatusMonitoringTimer = null; }
                 if (OnDeviceConnectedDelayTimer != null) { OnDeviceConnectedDelayTimer.Stop(); OnDeviceConnectedDelayTimer.Dispose(); OnDeviceConnectedDelayTimer = null; }
                 if (OnDeviceDisconnectedDelayTimer != null) { OnDeviceDisconnectedDelayTimer.Stop(); OnDeviceDisconnectedDelayTimer.Dispose(); OnDeviceDisconnectedDelayTimer = null; }

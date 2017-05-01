@@ -53,8 +53,17 @@
                         // detach static event
                         Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= SystemEvents_DisplaySettingsChanged;
                     }
-                    // Save hostAppComponents before Dispose().
-                    SettingsSerialization.SaveSettingsJsonFile(hostAppComponents);
+
+                    // NOTE: Save settings before Dispose().
+                    if (hostAppComponents.Device == null || hostAppComponents.Device.FaceDetectionOnHost == null || hostAppComponents.Device.Settings == null || hostAppComponents.CameraViewUserControlModel == null || hostAppComponents.OnePersonBothHandsViewModel == null)
+                    {
+                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    }
+                    else
+                    {
+                        SettingsSerialization.SaveSettingsJsonFile(hostAppComponents);
+                    }
+
                     zkooTutorialModel = null;
                     // NOTE: IMPORTANT!
                     if (navigator != null) { navigator.Close(); navigator = null; }

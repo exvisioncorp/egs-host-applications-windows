@@ -103,6 +103,7 @@
         public event EventHandler Disposed;
         protected virtual void OnDisposing(EventArgs e) { var t = Disposing; if (t != null) { t(this, e); } }
         protected virtual void OnDisposed(EventArgs e) { var t = Disposed; if (t != null) { t(this, e); } }
+        protected bool hasOnDisposingCalled = false;
         private bool disposed = false;
         public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }
         protected virtual void Dispose(bool disposing)
@@ -110,9 +111,14 @@
             if (disposed) { return; }
             if (disposing)
             {
-                // dispose managed objects, and dispose objects that implement IDisposable
-                OnDisposing(EventArgs.Empty);
+                if (hasOnDisposingCalled == false)
+                {
+                    hasOnDisposingCalled = true;
+                    OnDisposing(EventArgs.Empty);
+                    if (disposed) { return; }
+                }
 
+                // dispose managed objects, and dispose objects that implement IDisposable
 #if false
                 if (EachDeviceStatusMonitoringTimer != null) { EachDeviceStatusMonitoringTimer.Dispose(); EachDeviceStatusMonitoringTimer = null; }
 #endif
