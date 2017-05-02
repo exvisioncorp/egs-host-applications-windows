@@ -382,7 +382,14 @@
             if (disposed) { return; }
             if (disposing)
             {
-                if (hasOnDisposingCalled == false) { OnDisposing(EventArgs.Empty); hasOnDisposingCalled = true; }
+                if (hasOnDisposingCalled == false)
+                {
+                    hasOnDisposingCalled = true;
+                    OnDisposing(EventArgs.Empty);
+                    if (disposed) { return; }
+                }
+
+                // dispose managed objects, and dispose objects that implement IDisposable
                 if (AppTrayIconAndMenuItems != null) { AppTrayIconAndMenuItems.Dispose(); AppTrayIconAndMenuItems = null; }
                 if (SettingsWindow != null) { SettingsWindow.CloseToExitApplication(); SettingsWindow = null; }
                 if (CameraViewWindow != null) { CameraViewWindow.Close(); CameraViewWindow = null; }

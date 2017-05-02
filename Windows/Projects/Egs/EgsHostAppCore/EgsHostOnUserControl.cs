@@ -179,9 +179,11 @@
             CameraViewBordersAndPointersAreDrawnBy.ValueUpdated += CameraViewBordersAndPointersAreDrawnBy_SelectedItemChanged;
             CultureInfoAndDescription.ValueUpdated += delegate { BindableResources.Current.ChangeCulture(CultureInfoAndDescription.Value); };
 
-            // TODO: MUSTDO: When users cancel DFU, exceptions occur in Timer thread basically, and the app cannot deal with them.  So it is necessary to attach them to event handlers.
+            // TODO: MUSTDO: When users cancel DFU, exceptions occur in Timer thread basically,
+            // and the app cannot deal with them.
+            // So it is necessary to attach them to event handlers.
             // The design of EgsDevicesManager is not completed.  So I don't think this is good way.
-            EgsDevice.DefaultEgsDevicesManager.Disposed += delegate
+            EgsDevice.DefaultEgsDevicesManager.Disposing += delegate
             {
                 if (false && ApplicationCommonSettings.IsDebuggingInternal) { Debugger.Break(); }
                 this.Dispose();
@@ -471,7 +473,14 @@
             if (disposed) { return; }
             if (disposing)
             {
-                if (hasOnDisposingCalled == false) { OnDisposing(EventArgs.Empty); hasOnDisposingCalled = true; }
+                if (hasOnDisposingCalled == false)
+                {
+                    hasOnDisposingCalled = true;
+                    OnDisposing(EventArgs.Empty);
+                    if (disposed) { return; }
+                }
+
+                // dispose managed objects, and dispose objects that implement IDisposable
                 isSendingManySettingsPackets = false;
 
                 Device.IsHidDeviceConnectedChanged -= Device_IsHidDeviceConnectedChanged;

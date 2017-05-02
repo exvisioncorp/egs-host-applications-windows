@@ -48,7 +48,14 @@
                 hostAppComponents.Disposing += delegate
                 {
                     // NOTE: Save settings before Dispose().
-                    SettingsSerialization.SaveSettingsJsonFile(hostAppComponents);
+                    if (hostAppComponents.Device == null || hostAppComponents.Device.FaceDetectionOnHost == null || hostAppComponents.Device.Settings == null || hostAppComponents.CameraViewUserControlModel == null || hostAppComponents.OnePersonBothHandsViewModel == null)
+                    {
+                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    }
+                    else
+                    {
+                        SettingsSerialization.SaveSettingsJsonFile(hostAppComponents);
+                    }
                 };
 
                 base.Exit += delegate
