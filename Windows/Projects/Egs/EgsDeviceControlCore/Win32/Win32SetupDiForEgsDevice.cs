@@ -390,14 +390,12 @@ namespace Egs
                 Debug.WriteLine("SetupDi.MatchedConnectedHidDeviceFirstDeviceDevicePathList.Count != SetupDi.MatchedConnectedCameraDeviceDevicePathList.Count");
             }
 
-#if false
             // TODO: MUSTDO: Should check the relation between multiple camera devices and multiple HID devices
             if (false && MatchedConnectedHidDeviceFirstDeviceDevicePathList.Count >= 2)
             {
                 Debugger.Break();
-                Debug.WriteLine("Sorry, but you can connect only one Exvision Gesture Camera into a PC currently.");
+                Debug.WriteLine("Sorry, but you can connect only one " + ApplicationCommonSettings.HostApplicationName + " Camera into a PC currently.");
             }
-#endif
 
             Debug.WriteLine("Called: Win32HidSimpleAccess.UpdateDevicePath()");
             HidDevicePathList = FindHidDevicePathList().Distinct().ToList();

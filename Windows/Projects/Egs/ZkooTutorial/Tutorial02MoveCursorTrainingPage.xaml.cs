@@ -52,7 +52,7 @@
             this.Loaded += (sender, e) =>
             {
                 navigator.SetWindowFullScreen();
-                navigator.Title = "ZKOO Tutorial: Move Cursor Practice";
+                navigator.Title = $"{ApplicationCommonSettings.HostApplicationName} Tutorial: Move Cursor Practice";
                 viewModel.OnLoaded();
                 PracticeSlideShow01VideoUserControl.Replay();
             };

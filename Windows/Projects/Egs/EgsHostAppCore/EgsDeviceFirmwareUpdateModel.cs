@@ -252,7 +252,7 @@
             var ofd = new Microsoft.Win32.OpenFileDialog();
             ofd.FileName = "piemonteApp1.bin";
             ofd.InitialDirectory = @"";  //@"C:\"
-            ofd.Filter = "Exvision Firmware Update Binary(*.bin;*.exvbin)|*.bin;*.binexv|All files(*.*)|*.*";
+            ofd.Filter = "Firmware Update Binary(*.bin;*.exvbin)|*.bin;*.binexv|All files(*.*)|*.*";
             ofd.FilterIndex = 2;
             // TODO: use Resources
             ofd.Title = "Select file to upload to device";

@@ -35,7 +35,7 @@
                 Text="{Binding RightTextBlockText}" Margin="1062,176,0,0" Width="758" Height="334"
                 HorizontalAlignment="Left" VerticalAlignment="Top" />
         <!--<StackPanel Margin="1062,176,0,0" Width="758" Height="334" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="ZKOO will be in the center of the screen." />
+            <TextBlock Text="EGS Device will be in the center of the screen." />
             <TextBlock Text="Sit away 7ft." />
             <TextBlock Text="Toward the front of the camera, in the middle." />
             <TextBlock Text="To adjust the angle of the camera to see the Installation Guide." />

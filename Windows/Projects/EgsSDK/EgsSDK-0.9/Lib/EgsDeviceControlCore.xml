@@ -9,6 +9,18 @@
             Application common settings and constants for attributes defined in AssemblyInfo.cs in each project.
             </summary>
         </member>
+        <member name="F:Egs.ApplicationCommonSettings.SellerName">
+            <summary>Seller name.</summary>
+        </member>
+        <member name="F:Egs.ApplicationCommonSettings.SellerShortName">
+            <summary>Seller short name.</summary>
+        </member>
+        <member name="F:Egs.ApplicationCommonSettings.SellerSupportNavigateUriString">
+            <summary>Seller support navigate URI.</summary>
+        </member>
+        <member name="F:Egs.ApplicationCommonSettings.HostApplicationName">
+            <summary>Host application name.</summary>
+        </member>
         <member name="F:Egs.ApplicationCommonSettings.HostAppCoreDllAssemblyVersionMajorMinorString">
             <summary>This dll's major version and minor version as string.</summary>
         </member>

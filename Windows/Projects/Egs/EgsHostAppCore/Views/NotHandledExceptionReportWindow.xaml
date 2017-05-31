@@ -9,11 +9,8 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" x:Name="MessageTextBlock" Margin="10" TextWrapping="Wrap">
-            ZKOO application has encountered a problem and needs to exit. We are sorry for the inconvenience. <LineBreak /><LineBreak />
-            We appreciate if you copy following error messages and send them to 
-                <Hyperlink x:Name="SendMailHyperlink"
-                    NavigateUri="mailto:support@zkoocamera.com?subject=ZKOO Error Report&amp;"
-                    RequestNavigate="OnNavigate">support@zkoocamera.com</Hyperlink> by email.  We will use it for our next development.</TextBlock>
+            Application has encountered a problem and needs to exit. We are sorry for the inconvenience. <LineBreak /><LineBreak />
+            We appreciate if you copy following error messages and send them to <Hyperlink x:Name="SendMailHyperlink" RequestNavigate="OnNavigate">customer support</Hyperlink> by email.  We will use it for our next development.</TextBlock>
         <GroupBox Grid.Row="1" Margin="0,0" Header="Error Log">
             <TextBox x:Name="ExceptionTextBox" Margin="3" TextWrapping="Wrap"
                     ScrollViewer.HorizontalScrollBarVisibility="Hidden"

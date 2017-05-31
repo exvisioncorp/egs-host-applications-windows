@@ -46,12 +46,12 @@
 
         public void OnResourcesCultureChanged()
         {
-            EgsHostApplicationNameMenuItemLabel.Text = EgsHostAppBaseComponents.EgsHostApplicationName;
+            EgsHostApplicationNameMenuItemLabel.Text = ApplicationCommonSettings.HostApplicationName;
             IsConnectedMenuItemLabel.Text = ownerEgsHostAppBaseComponents.Device.DeviceStatusString;
             CameraViewMenuItem.Text = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_CameraView;
             SettingsMenuItem.Text = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Settings;
             ExitMenuItem.Text = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Exit;
-            TextOfNotifyIconInTray = EgsHostAppBaseComponents.EgsHostApplicationName;
+            TextOfNotifyIconInTray = ApplicationCommonSettings.HostApplicationName;
         }
 
         void InitializeMenuItems()

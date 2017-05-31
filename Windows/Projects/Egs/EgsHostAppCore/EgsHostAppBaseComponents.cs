@@ -21,16 +21,11 @@
     [DataContract]
     public class EgsHostAppBaseComponents : EgsHostOnUserControl
     {
-        public static string EgsHostApplicationName { get; set; }
-        static EgsHostAppBaseComponents()
-        {
-            EgsHostApplicationName = "ZKOO";
-        }
         public static string MessageOfOnlyOneInstanceCanRun
         {
             get
             {
-                var ret = string.Format(System.Globalization.CultureInfo.InvariantCulture, Resources.CommonStrings_Application0IsAlreadyRunning, EgsHostApplicationName);
+                var ret = string.Format(System.Globalization.CultureInfo.InvariantCulture, Resources.CommonStrings_Application0IsAlreadyRunning, ApplicationCommonSettings.HostApplicationName);
                 return ret;
             }
         }
@@ -138,15 +133,15 @@
                 if (isLatestVersionInstalled)
                 {
                     // NOTE: The latest version is installed.
-                    var msg = string.Format(System.Globalization.CultureInfo.InvariantCulture, Resources.CommonStrings_Application0IsLatest, EgsHostAppBaseComponents.EgsHostApplicationName);
-                    MessageBox.Show(msg, EgsHostAppBaseComponents.EgsHostApplicationName, MessageBoxButton.OK);
+                    var msg = string.Format(System.Globalization.CultureInfo.InvariantCulture, Resources.CommonStrings_Application0IsLatest, ApplicationCommonSettings.HostApplicationName);
+                    MessageBox.Show(msg, ApplicationCommonSettings.HostApplicationName, MessageBoxButton.OK);
                 }
                 else
                 {
                     // NOTE: A newer version exists.
                     var t = IsStartingHostApplicationUpdate; if (t != null) { t(this, EventArgs.Empty); }
-                    var msg = string.Format(System.Globalization.CultureInfo.InvariantCulture, Resources.CommonStrings_CanDownloadNewApplication0, EgsHostAppBaseComponents.EgsHostApplicationName);
-                    if (MessageBox.Show(msg, EgsHostAppBaseComponents.EgsHostApplicationName, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    var msg = string.Format(System.Globalization.CultureInfo.InvariantCulture, Resources.CommonStrings_CanDownloadNewApplication0, ApplicationCommonSettings.HostApplicationName);
+                    if (MessageBox.Show(msg, ApplicationCommonSettings.HostApplicationName, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
                         var appUpdateProgressWindow = new ApplicationUpdateProgressWindow();
                         appUpdateProgressWindow.DataContext = appUpdate;
@@ -181,7 +176,7 @@
             {
                 if (false)
                 {
-                    var message = string.Format(CultureInfo.InvariantCulture, Resources.CommonStrings_WouldYouExitApplication0, EgsHostApplicationName);
+                    var message = string.Format(CultureInfo.InvariantCulture, Resources.CommonStrings_WouldYouExitApplication0, ApplicationCommonSettings.HostApplicationName);
                     if (MessageBox.Show(message, Resources.CommonStrings_Confirmation, MessageBoxButton.OKCancel) != MessageBoxResult.OK) { return; }
                 }
                 this.Dispose();
@@ -318,7 +313,7 @@
             dfuWindow.SizeToContent = SizeToContent.Height;
             dfuWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             dfuWindow.ResizeMode = ResizeMode.NoResize;
-            dfuWindow.Title = "ZKOO - " + Resources.EgsDeviceFirmwareUpdateModel_DeviceFirmwareUpdate;
+            dfuWindow.Title = ApplicationCommonSettings.HostApplicationName + " - " + Resources.EgsDeviceFirmwareUpdateModel_DeviceFirmwareUpdate;
             dfuWindow.MouseLeftButtonDown += (sender, e) => { dfuWindow.DragMove(); };
 
             dfuUserControl.Model.ProgressReport.RunWorkerCompleted += (sender, e) =>

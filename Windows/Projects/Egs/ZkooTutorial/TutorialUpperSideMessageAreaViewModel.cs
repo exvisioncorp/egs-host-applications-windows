@@ -49,7 +49,7 @@
             : base()
         {
             // TODO: make localized string
-            RightTextBlockText = "ZKOO will be in the center of the screen.\n"
+            RightTextBlockText = $"{ApplicationCommonSettings.HostApplicationName} will be in the center of the screen.\n"
                 + "Sit away 7ft.\n"
                 + "Toward the front of the camera, in the middle.\n"
                 + "To adjust the angle of the camera to see the Installation Guide.\n";

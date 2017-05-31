@@ -11,10 +11,9 @@
         <StackPanel.LayoutTransform>
             <ScaleTransform ScaleX="2" ScaleY="2" />
         </StackPanel.LayoutTransform>
-        <TextBlock x:Name="TutorialExitingWindowTextBlock" TextWrapping="Wrap"
-                Text="You can start Tutorial from Settings > Basic.&#10;&#10;Settings menu can be opened by tapping on Camera View or right-clicking ZKOO icon on the notification area." />
+        <TextBlock x:Name="TutorialExitingWindowTextBlock" TextWrapping="Wrap" />
         <CheckBox x:FieldModifier="public" x:Name="TutorialExitingWindowCheckBox" Margin="10" IsThreeState="False"
-                VerticalContentAlignment="Center" Content="Start Tutorial again when ZKOO application is launched.">
+                VerticalContentAlignment="Center" Content="Start Tutorial again when this application is launched.">
         </CheckBox>
         <Button x:Name="CloseButton" Content="OK" Width="80" Margin="0,0,0,5" />
     </StackPanel>
