@@ -193,13 +193,13 @@
                         MessageText = "";
                         break;
                     case EgsDeviceFirmwareUpdateUserActions.ConnectDevice:
-                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsToConnectPowerCable;
+                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_DeviceNeedsToConnectPowerCable;
                         break;
                     case EgsDeviceFirmwareUpdateUserActions.DisconnectDevice:
-                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsToDisconnectPowerCable;
+                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_DeviceNeedsToDisconnectPowerCable;
                         break;
                     case EgsDeviceFirmwareUpdateUserActions.DoNotDisconnectDevice:
-                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_DoNotDisconnectTheDevice;
+                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_DoNotDisconnectDevice;
                         break;
                     default:
                         if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }

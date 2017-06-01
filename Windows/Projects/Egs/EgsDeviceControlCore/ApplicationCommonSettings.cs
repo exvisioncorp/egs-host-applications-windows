@@ -14,22 +14,22 @@
     public static class ApplicationCommonSettings
     {
         /// <summary>Seller name.</summary>
-        public const string SellerName = "Exvision Corporation";
+        public static string SellerName = "Exvision Corporation";
         /// <summary>Seller short name.</summary>
-        public const string SellerShortName = "Exvision";
+        public static string SellerShortName = "Exvision";
         /// <summary>Seller support navigate URI.</summary>
-        public const string SellerSupportNavigateUriString = @"mailto:support@zkoocamera.com?subject=ZKOO Application Error Report&amp;";
+        public static string SellerSupportNavigateUriString = @"mailto:support@zkoocamera.com?subject=Gesture Camera Application Error Report&amp;";
         /// <summary>Host application name.</summary>
-        public static string HostApplicationName = "ZKOO";
+        public static string HostApplicationName = "Gesture Camera";
 
         /// <summary>This dll's major version and minor version as string.</summary>
         public const string HostAppCoreDllAssemblyVersionMajorMinorString = "0.9";
         /// <summary>This dll's major version, minor version and build number as string.</summary>
-        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildString = "0.9.8930";
+        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildString = "0.9.9001";
         /// <summary>This dll's major version, minor version, build number and revision as string.</summary>
-        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString = "0.9.8930.0";
+        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString = "0.9.9001.0";
         /// <summary>Host application's major version, minor version, build number and revision as string.</summary>
-        public const string ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString = "0.9.8930.0";
+        public const string ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString = "0.9.9001.0";
         /// <summary>Default CultureInfo.Name as string.</summary>
         public const string DefaultCultureInfoName = "en";
         /// <summary>Firmware version in an image file of this application.</summary>

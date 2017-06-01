@@ -20,11 +20,11 @@ namespace Egs
     public static class ApplicationCommonSettings
     {
         /// <summary>Seller name.</summary>
-        public const string SellerName = "<#= SellerName #>";
+        public static string SellerName = "<#= SellerName #>";
         /// <summary>Seller short name.</summary>
-        public const string SellerShortName = "<#= SellerShortName #>";
+        public static string SellerShortName = "<#= SellerShortName #>";
         /// <summary>Seller support navigate URI.</summary>
-        public const string SellerSupportNavigateUriString = @"<#= SellerSupportNavigateUri #>";
+        public static string SellerSupportNavigateUriString = @"<#= SellerSupportNavigateUri #>";
         /// <summary>Host application name.</summary>
         public static string HostApplicationName = "<#= HostApplicationName #>";
 

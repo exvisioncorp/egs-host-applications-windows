@@ -26,7 +26,7 @@
 
             try { this.Icon = Egs.DotNetUtility.BitmapImageUtility.LoadBitmapImageFromFile("Resources/SettingsWindowIcon.png"); }
             catch { }
-            this.Title = ApplicationCommonSettings.HostApplicationName + " " + Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Settings;
+            this.Title = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Settings;
 
             isClosingToExitApplication = false;
 

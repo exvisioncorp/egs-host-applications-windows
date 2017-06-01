@@ -177,19 +177,17 @@
     <value>接続されていません</value>
     <comment>Not Connected</comment>
   </data>
-  <data name="CommonStrings_PleaseConnectTheZkooCamera" xml:space="preserve">
-    <value>ZKOOカメラを接続してください。</value>
-    <comment>Please connect the ZKOO camera.</comment>
+  <data name="CommonStrings_PleaseConnectTheGestureCamera" xml:space="preserve">
+    <value>ジェスチャーカメラを接続してください。</value>
+    <comment>Please connect the Gesture Camera.</comment>
   </data>
-  <data name="CommonStrings_PleaseStartHostApplicationsAfterZkooIsConnected" xml:space="preserve">
-    <value>ZKOOをPCに接続してから
-アプリケーションを起動してください。</value>
-    <comment>Please connect ZKOO with PC 
-before starting ZKOO application.</comment>
+  <data name="CommonStrings_PleaseStartHostApplicationAfterGestureCameraIsConnected" xml:space="preserve">
+    <value>ジェスチャーカメラをPCに接続してからアプリケーションを起動してください。</value>
+    <comment>Please connect Gesture Camera with PC before starting this application.</comment>
   </data>
-  <data name="CommonStrings_ZkooRecognizeYourHands" xml:space="preserve">
-    <value>ZKOOがあなたの手を認識しました</value>
-    <comment>ZKOO recognize your hands.</comment>
+  <data name="CommonStrings_GestureCameraRecognizeYourHands" xml:space="preserve">
+    <value>Gesture Cameraがあなたの手を認識しました</value>
+    <comment>Gesture Camera recognize your hands.</comment>
   </data>
   <data name="CommonStrings_GestureCursor" xml:space="preserve">
     <value>ジェスチャーカーソル</value>
@@ -412,24 +410,24 @@ before starting ZKOO application.</comment>
     <comment>Device Firmware Update</comment>
   </data>
   <data name="EgsDeviceFirmwareUpdateModel_PleaseUpdateDeviceFirmware" xml:space="preserve">
-    <value>ZKOOとZKOOアプリケーションを使うために、OKボタンを押して、デバイスのファームウェアを更新してください。更新の途中で、ZKOOを数回再起動する必要があります。</value>
-    <comment>Please update device firmware to use ZKOO and ZKOO application by selecting OK.  During update, you need to reboot ZKOO a few times.</comment>
+    <value>ジェスチャーカメラとアプリケーションを使うために、OKボタンを押して、デバイスのファームウェアを更新してください。更新の途中で、ジェスチャーカメラを数回再起動する必要があります。</value>
+    <comment>Please update device firmware to use Gesture Camera and this application by selecting OK.  During update, you need to reboot Gesture Camera a few times.</comment>
   </data>
-  <data name="EgsDeviceFirmwareUpdateModel_DoNotDisconnectTheDevice" xml:space="preserve">
-    <value>ZKOOデバイスを、ACアダプタとPCから取り外さないでください。</value>
-    <comment>Please do not disconnect ZKOO from AC adapter and PC.</comment>
+  <data name="EgsDeviceFirmwareUpdateModel_DoNotDisconnectDevice" xml:space="preserve">
+    <value>ジェスチャーカメラを、ACアダプタとPCから取り外さないでください。</value>
+    <comment>Please do not disconnect Gesture Camera from AC adapter and PC.</comment>
   </data>
-  <data name="EgsDeviceFirmwareUpdateModel_ZkooNeedsReboot" xml:space="preserve">
-    <value>ZKOOの再起動が必要です。</value>
-    <comment>ZKOO needs reboot.</comment>
+  <data name="EgsDeviceFirmwareUpdateModel_DeviceNeedsReboot" xml:space="preserve">
+    <value>ジェスチャーカメラの再起動が必要です。</value>
+    <comment>Gesture Camera needs reboot.</comment>
   </data>
-  <data name="EgsDeviceFirmwareUpdateModel_ZkooNeedsToDisconnectPowerCable" xml:space="preserve">
-    <value>ZKOOをACアダプタとPCから取り外して、LEDが消えていることを確認してください。</value>
-    <comment>Please disconnect ZKOO from AC adapter and PC and check LED is off.</comment>
+  <data name="EgsDeviceFirmwareUpdateModel_DeviceNeedsToDisconnectPowerCable" xml:space="preserve">
+    <value>ジェスチャーカメラをACアダプタとPCから取り外して、LEDが消えていることを確認してください。</value>
+    <comment>Please disconnect Gesture Camera from AC adapter and PC and check LED is off.</comment>
   </data>
-  <data name="EgsDeviceFirmwareUpdateModel_ZkooNeedsToConnectPowerCable" xml:space="preserve">
-    <value>ZKOOをACアダプタとPCに接続して、LEDが点灯していることを確認してください。</value>
-    <comment>Please connect ZKOO with AC adapter and PC and check LED is on.</comment>
+  <data name="EgsDeviceFirmwareUpdateModel_DeviceNeedsToConnectPowerCable" xml:space="preserve">
+    <value>ジェスチャーカメラをACアダプタとPCに接続して、LEDが点灯していることを確認してください。</value>
+    <comment>Please connect Gesture Camera with AC adapter and PC and check LED is on.</comment>
   </data>
   <data name="EgsDeviceFirmwareUpdateModel_DfuImageFileIsInvalid" xml:space="preserve">
     <value>イメージファイルが正しくありません。</value>
@@ -552,8 +550,8 @@ before starting ZKOO application.</comment>
     <comment>Camera View Auto On/Off Control</comment>
   </data>
   <data name="CameraViewWindowStateUsersControlMethodDetail_ManualOnOff_Description" xml:space="preserve">
-    <value>タスクバーもしくはシステムトレイ上のZKOOアイコンを選択し、手動で表示・非表示にする。メニュー上の最小化ボタンで非表示にする。</value>
-    <comment>Show/Hide Manually by Selecting ZKOO Icon on Task Bar or System Tray.  Hide by Selecting &quot;Minimize&quot; Button on the Menu.</comment>
+    <value>タスクバーもしくはシステムトレイ上のアイコンを選択し、手動で表示・非表示にする。メニュー上の最小化ボタンで非表示にする。</value>
+    <comment>Show/Hide Manually by Selecting Icon on Task Bar or System Tray.  Hide by Selecting &quot;Minimize&quot; Button on the Menu.</comment>
   </data>
   <data name="CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandTrackingStarts_Description" xml:space="preserve">
     <value>顔認識開始時に表示する。手のトラッキングを開始後まもなく非表示にする。</value>
@@ -732,8 +730,8 @@ before starting ZKOO application.</comment>
     <comment>270: Portrait</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Description" xml:space="preserve">
-    <value>ZKOOデバイスのモード</value>
-    <comment>Use ZKOO for</comment>
+    <value>デバイスのモード</value>
+    <comment>Use Device for</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey" xml:space="preserve">
     <value>ジェスチャーカメラ</value>
@@ -752,8 +750,8 @@ before starting ZKOO application.</comment>
     <comment>Face Detection Method</comment>
   </data>
   <data name="EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey" xml:space="preserve">
-    <value>ZKOOデバイス</value>
-    <comment>ZKOO Device</comment>
+    <value>カメラデバイス</value>
+    <comment>Camera Device</comment>
   </data>
   <data name="EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey" xml:space="preserve">
     <value>ホストアプリケーション (高精度)</value>

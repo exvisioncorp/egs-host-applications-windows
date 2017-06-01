@@ -86,8 +86,8 @@
             ownerEgsHostAppBaseComponents = egsHostAppBaseComponents;
 
             // TODO: low priority.  Decide the specification about multiple device connections.
-            deviceIsConnectedIcon = new Icon("Resources/ZkooHandIcon_DeviceIsConnected.ico", new Size(16, 16));
-            deviceIsNotConnectedIcon = new Icon("Resources/ZkooHandIcon_DeviceIsDisconnected.ico", new Size(16, 16));
+            deviceIsConnectedIcon = new Icon("Resources/HandIcon_DeviceIsConnected.ico", new Size(16, 16));
+            deviceIsNotConnectedIcon = new Icon("Resources/HandIcon_DeviceIsDisconnected.ico", new Size(16, 16));
 
             OnResourcesCultureChanged();
 

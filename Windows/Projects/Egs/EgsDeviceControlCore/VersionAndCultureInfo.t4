@@ -1,6 +1,12 @@
 ﻿<#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ assembly name="EnvDTE" #>
 <#
+string SellerName = "Exvision Corporation";
+string SellerShortName = "Exvision";
+string SellerSupportNavigateUri = @"mailto:support@zkoocamera.com?subject=Gesture Camera Application Error Report&amp;";
+string HostApplicationName = "Gesture Camera";
+//string HostApplicationName = "ZKOO";
+
 int projectStartYear = 2010;
 int ExvisionEgsHostAppCoreDllMajorVersion = 0;
 int ExvisionEgsHostAppCoreDllMinorVersion = 9;

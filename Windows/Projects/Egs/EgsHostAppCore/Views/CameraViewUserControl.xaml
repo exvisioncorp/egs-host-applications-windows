@@ -40,7 +40,7 @@
                         Visibility="{Binding IsCameraDeviceConnected, Converter={StaticResource TrueToCollapsedFalseToVisibleConverter}}"
                         HorizontalAlignment="Center" VerticalAlignment="Center" Width="320" Height="240">
                     <TextBlock
-                            Text="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_PleaseStartHostApplicationsAfterZkooIsConnected}"
+                            Text="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_PleaseStartHostApplicationAfterGestureCameraIsConnected}"
                             FontSize="20" Foreground="White" Background="Transparent" Padding="0,0,0,50"
                             HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"
                             TextAlignment="Left" />

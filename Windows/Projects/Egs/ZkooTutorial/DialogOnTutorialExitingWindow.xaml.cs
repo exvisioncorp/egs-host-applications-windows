@@ -28,7 +28,7 @@
             msg1 += Properties.Resources.ZkooTutorialModel_SettingsMenuCanBeOpenedBy + Environment.NewLine;
             TutorialExitingWindowTextBlock.Text = msg1;
 
-            TutorialExitingWindowCheckBox.Content = Properties.Resources.ZkooTutorialModel_StartTutorialAgainWhenZkooApplicationIsLaunched;
+            TutorialExitingWindowCheckBox.Content = Properties.Resources.ZkooTutorialModel_StartTutorialAgainWhenThisApplicationIsLaunched;
 
             CloseButton.Click += delegate { this.Close(); };
         }

@@ -265,7 +265,10 @@
         {
             OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_0_DescriptionKey) });
             OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_1_DescriptionKey) });
-            OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_2_DescriptionKey) });
+            if (ApplicationCommonSettings.HostApplicationName == "ZKOO" || ApplicationCommonSettings.IsDeveloperRelease)
+            {
+                OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_2_DescriptionKey) });
+            }
             if (ApplicationCommonSettings.IsInternalRelease)
             {
                 OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)3, DescriptionKey = "" });

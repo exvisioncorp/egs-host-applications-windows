@@ -103,6 +103,8 @@
                     MessageBox.Show(ex2.Message);
                 }
             }
+            if (hostAppComponents != null) { hostAppComponents.Dispose(); hostAppComponents = null; }
+            if (Application.Current != null) { Application.Current.Shutdown(); }
             DuplicatedProcessStartBlocking.ReleaseMutex();
         }
     }

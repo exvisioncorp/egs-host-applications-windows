@@ -351,7 +351,7 @@
         {
             if (IsHidDeviceConnected == false)
             {
-                Console.WriteLine(Resources.CommonStrings_PleaseConnectTheZkooCamera);
+                Console.WriteLine(Resources.CommonStrings_PleaseConnectTheGestureCamera);
                 return;
             }
             SetHidFeatureReport(HostToDeviceCommandFeatureReport.SaveSettingsToFlashCommandFeatureReport.ByteArrayData);
@@ -364,7 +364,7 @@
         {
             if (IsHidDeviceConnected == false)
             {
-                Console.WriteLine(Resources.CommonStrings_PleaseConnectTheZkooCamera);
+                Console.WriteLine(Resources.CommonStrings_PleaseConnectTheGestureCamera);
                 return;
             }
             SetHidFeatureReport(HostToDeviceCommandFeatureReport.ResetDeviceCommandFeatureReport.ByteArrayData);

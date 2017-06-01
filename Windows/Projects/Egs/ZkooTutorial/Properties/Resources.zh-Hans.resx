@@ -198,12 +198,12 @@
     <comment>You can start this Tutorial again from Settings &gt; Basic.</comment>
   </data>
   <data name="ZkooTutorialModel_SettingsMenuCanBeOpenedBy" xml:space="preserve">
-    <value>设置菜单可通过点击相机视图或右击在系统托盘上的ZKOO图标来打开。</value>
-    <comment>Settings menu can be opened by tapping on Camera View or right-clicking ZKOO icon on the notification area.</comment>
+    <value>设置菜单可通过点击相机视图或右击在系统托盘上的图标来打开。</value>
+    <comment>Settings menu can be opened by tapping on Camera View or right-clicking icon on the notification area.</comment>
   </data>
-  <data name="ZkooTutorialModel_StartTutorialAgainWhenZkooApplicationIsLaunched" xml:space="preserve">
-    <value>下次启动ZKOO时再次显示教程。</value>
-    <comment>Start Tutorial again when ZKOO application is launched.</comment>
+  <data name="ZkooTutorialModel_StartTutorialAgainWhenThisApplicationIsLaunched" xml:space="preserve">
+    <value>下次启动时再次显示教程。</value>
+    <comment>Start Tutorial again when this application is launched.</comment>
   </data>
   <data name="ZkooTutorialModel_TryAgainDetail" xml:space="preserve">
     <value>请将ZKOO安装在屏幕的中央附近。
