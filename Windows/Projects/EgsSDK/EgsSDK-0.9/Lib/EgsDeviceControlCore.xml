@@ -906,7 +906,7 @@
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ManualOnOff_Description">
             <summary>
-              Looks up a localized string similar to Show/Hide Manually by Selecting ZKOO Icon on Task Bar or System Tray.  Hide by Selecting &quot;Minimize&quot; Button on the Menu..
+              Looks up a localized string similar to Show/Hide Manually by Selecting Icon on Task Bar or System Tray.  Hide by Selecting &quot;Minimize&quot; Button on the Menu..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CameraViewWindowStateUsersControlMethodDetail_ShowWhenFaceDetectionStarts_HideSoonAfterHandDetectionStarts_ShowWhenHandTrackingStarts_Description">
@@ -1059,6 +1059,11 @@
               Looks up a localized string similar to Gesture.
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_GestureCameraRecognizeYourHands">
+            <summary>
+              Looks up a localized string similar to Gesture Camera recognize your hands..
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_GestureCursor">
             <summary>
               Looks up a localized string similar to Gesture Cursor.
@@ -1129,9 +1134,9 @@
               Looks up a localized string similar to Please check your network connection..
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseConnectTheZkooCamera">
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseConnectTheGestureCamera">
             <summary>
-              Looks up a localized string similar to Please connect the ZKOO camera..
+              Looks up a localized string similar to Please connect the Gesture Camera..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseConnectYourHostDeviceToInternetAndThenClickOk">
@@ -1139,11 +1144,10 @@
               Looks up a localized string similar to Please connect your host device to internet, and then click OK..
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseStartHostApplicationsAfterZkooIsConnected">
-             <summary>
-               Looks up a localized string similar to Please connect ZKOO with PC 
-            before starting ZKOO application..
-             </summary>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_PleaseStartHostApplicationAfterGestureCameraIsConnected">
+            <summary>
+              Looks up a localized string similar to Please connect Gesture Camera with PC before starting this application..
+            </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Preferences">
             <summary>
@@ -1233,11 +1237,6 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_WouldYouExitApplication0">
             <summary>
               Looks up a localized string similar to Would you exit {0}?.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ZkooRecognizeYourHands">
-            <summary>
-              Looks up a localized string similar to ZKOO recognize your hands..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_Chinese_Description">
@@ -1365,6 +1364,21 @@
               Looks up a localized string similar to Device Firmware Update.
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DeviceNeedsReboot">
+            <summary>
+              Looks up a localized string similar to Gesture Camera needs reboot..
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DeviceNeedsToConnectPowerCable">
+            <summary>
+              Looks up a localized string similar to Please connect Gesture Camera with AC adapter and PC and check LED is on..
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DeviceNeedsToDisconnectPowerCable">
+            <summary>
+              Looks up a localized string similar to Please disconnect Gesture Camera from AC adapter and PC and check LED is off..
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DfuCanceled">
             <summary>
               Looks up a localized string similar to Device firmware update was canceled..
@@ -1385,14 +1399,14 @@
               Looks up a localized string similar to Image file is invalid..
             </summary>
         </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DoNotDisconnectTheDevice">
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_DoNotDisconnectDevice">
             <summary>
-              Looks up a localized string similar to Please do not disconnect ZKOO from AC adapter and PC..
+              Looks up a localized string similar to Please do not disconnect Gesture Camera from AC adapter and PC..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_PleaseUpdateDeviceFirmware">
             <summary>
-              Looks up a localized string similar to Please update device firmware to use ZKOO and ZKOO application by selecting OK.  During update, you need to reboot ZKOO a few times..
+              Looks up a localized string similar to Please update device firmware to use Gesture Camera and this application by selecting OK.  During update, you need to reboot Gesture Camera a few times..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_RestartDfuFromBeginning">
@@ -1403,21 +1417,6 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_UpdateDeviceFirmware">
             <summary>
               Looks up a localized string similar to Update Device Firmware.
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsReboot">
-            <summary>
-              Looks up a localized string similar to ZKOO needs reboot..
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsToConnectPowerCable">
-            <summary>
-              Looks up a localized string similar to Please connect ZKOO with AC adapter and PC and check LED is on..
-            </summary>
-        </member>
-        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsToDisconnectPowerCable">
-            <summary>
-              Looks up a localized string similar to Please disconnect ZKOO from AC adapter and PC and check LED is off..
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_CameraViewImageSourceBitmapSize_Description">
@@ -1567,7 +1566,7 @@
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Description">
             <summary>
-              Looks up a localized string similar to Use ZKOO for.
+              Looks up a localized string similar to Use Device for.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey">
@@ -1592,7 +1591,7 @@
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey">
             <summary>
-              Looks up a localized string similar to ZKOO Device.
+              Looks up a localized string similar to Camera Device.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey">
