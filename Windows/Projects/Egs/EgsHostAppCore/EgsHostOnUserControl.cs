@@ -78,12 +78,12 @@
                 if (_IsToWriteLogOfTemperature)
                 {
                     var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    var zkooTestResultFolderPath = System.IO.Path.Combine(desktopPath, @"ZkooTestResults");
+                    var zkooTestResultFolderPath = System.IO.Path.Combine(desktopPath, ApplicationCommonSettings.HostApplicationName + "TestResults");
                     if (System.IO.Directory.Exists(zkooTestResultFolderPath) == false)
                     {
                         System.IO.Directory.CreateDirectory(zkooTestResultFolderPath);
                     }
-                    var fileName = @"ZkooDeviceTemperature_";
+                    var fileName = ApplicationCommonSettings.HostApplicationName + "DeviceTemperature_";
                     fileName += DateTime.Now.ToString("yyMMdd-HHmmss", CultureInfo.InvariantCulture);
                     fileName += ".csv";
                     var fullPath = System.IO.Path.Combine(zkooTestResultFolderPath, fileName);

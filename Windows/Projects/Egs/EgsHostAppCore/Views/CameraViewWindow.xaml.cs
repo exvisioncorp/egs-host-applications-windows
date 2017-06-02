@@ -52,7 +52,7 @@
 
             try { this.Icon = Egs.DotNetUtility.BitmapImageUtility.LoadBitmapImageFromFile("Resources/CameraViewWindowIcon.png"); }
             catch { }
-            this.Title = "ZKOO " + Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_CameraView;
+            this.Title = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_CameraView;
 
             mainMenuItemsPanel.Visibility = Visibility.Collapsed;
 

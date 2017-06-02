@@ -20,13 +20,15 @@
             InitializeComponent();
 
             this.Title = Properties.Resources.ZkooTutorialModel_TutorialWindowTitle;
+            TutorialExitingWindowTextBlock.Text = "You can start Tutorial from Settings > Basic." + Environment.NewLine + Environment.NewLine;
+            TutorialExitingWindowTextBlock.Text += "Settings menu can be opened by tapping on Camera View or right-clicking " + ApplicationCommonSettings.HostApplicationName + " icon on the notification area.";
 
             var msg1 = Properties.Resources.ZkooTutorialModel_YouCanStartTutorialFromSettingsBasic + Environment.NewLine;
             msg1 += Environment.NewLine;
             msg1 += Properties.Resources.ZkooTutorialModel_SettingsMenuCanBeOpenedBy + Environment.NewLine;
             TutorialExitingWindowTextBlock.Text = msg1;
 
-            TutorialExitingWindowCheckBox.Content = Properties.Resources.ZkooTutorialModel_StartTutorialAgainWhenZkooApplicationIsLaunched;
+            TutorialExitingWindowCheckBox.Content = Properties.Resources.ZkooTutorialModel_StartTutorialAgainWhenThisApplicationIsLaunched;
 
             CloseButton.Click += delegate { this.Close(); };
         }

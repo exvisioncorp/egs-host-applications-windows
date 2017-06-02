@@ -39,8 +39,7 @@
                 hostAppComponents.InitializeOnceAtStartup();
                 if (SettingsSerialization.LoadSettingsJsonFile(hostAppComponents) == false) { hostAppComponents.Reset(); }
 
-                EgsHostAppBaseComponents.EgsHostApplicationName = "ZKOO";
-                hostAppComponents.AppTrayIconAndMenuItems.TextOfNotifyIconInTray = EgsHostAppBaseComponents.EgsHostApplicationName;
+                hostAppComponents.AppTrayIconAndMenuItems.TextOfNotifyIconInTray = ApplicationCommonSettings.HostApplicationName;
 
                 hostAppComponents.CameraViewWindow.Closed += delegate { hostAppComponents.Dispose(); };
 
@@ -85,7 +84,7 @@
             if (ex is EgsHostApplicationIsClosingException)
             {
                 // NOTE: Assuming that this is the correct way to shutdown the application.
-                MessageBox.Show(Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ApplicationWillExit, EgsHostAppBaseComponents.EgsHostApplicationName, MessageBoxButton.OK);
+                MessageBox.Show(Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_ApplicationWillExit, ApplicationCommonSettings.HostApplicationName, MessageBoxButton.OK);
                 if (hostAppComponents != null) { hostAppComponents.Dispose(); hostAppComponents = null; }
             }
             else
@@ -104,6 +103,8 @@
                     MessageBox.Show(ex2.Message);
                 }
             }
+            if (hostAppComponents != null) { hostAppComponents.Dispose(); hostAppComponents = null; }
+            if (Application.Current != null) { Application.Current.Shutdown(); }
             DuplicatedProcessStartBlocking.ReleaseMutex();
         }
     }

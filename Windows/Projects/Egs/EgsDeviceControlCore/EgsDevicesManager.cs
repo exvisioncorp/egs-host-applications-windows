@@ -175,7 +175,7 @@
             catch (EgsHostApplicationIsClosingException)
             {
                 // NOTE: The exception occurs from inside of Timer, so the application thread cannot catch it.  EgsDevicesManager.Dispose() is called and then the application exit in the event handler of EgsDevicesManager.Disposing.
-                System.Windows.Forms.MessageBox.Show(Resources.CommonStrings_ApplicationWillExit, "ZKOO", System.Windows.Forms.MessageBoxButtons.OK);
+                System.Windows.Forms.MessageBox.Show(Resources.CommonStrings_ApplicationWillExit, ApplicationCommonSettings.HostApplicationName, System.Windows.Forms.MessageBoxButtons.OK);
                 // NOTE! EgsHostAppBaseComponents should save Settings before disposing this object!
                 this.Dispose();
             }

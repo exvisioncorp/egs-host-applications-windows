@@ -198,12 +198,12 @@
     <comment>You can start this Tutorial again from Settings &gt; Basic.</comment>
   </data>
   <data name="ZkooTutorialModel_SettingsMenuCanBeOpenedBy" xml:space="preserve">
-    <value>Settings menu can be opened by tapping on Camera View or right-clicking ZKOO icon on the notification area.</value>
-    <comment>Settings menu can be opened by tapping on Camera View or right-clicking ZKOO icon on the notification area.</comment>
+    <value>Settings menu can be opened by tapping on Camera View or right-clicking icon on the notification area.</value>
+    <comment>Settings menu can be opened by tapping on Camera View or right-clicking icon on the notification area.</comment>
   </data>
-  <data name="ZkooTutorialModel_StartTutorialAgainWhenZkooApplicationIsLaunched" xml:space="preserve">
-    <value>Start Tutorial again when ZKOO application is launched.</value>
-    <comment>Start Tutorial again when ZKOO application is launched.</comment>
+  <data name="ZkooTutorialModel_StartTutorialAgainWhenThisApplicationIsLaunched" xml:space="preserve">
+    <value>Start Tutorial again when this application is launched.</value>
+    <comment>Start Tutorial again when this application is launched.</comment>
   </data>
   <data name="ZkooTutorialModel_TryAgainDetail" xml:space="preserve">
     <value>ZKOO will be in the center of the screen.

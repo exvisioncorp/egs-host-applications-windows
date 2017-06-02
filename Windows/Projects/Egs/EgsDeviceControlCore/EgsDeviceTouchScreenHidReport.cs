@@ -135,7 +135,7 @@
         internal void UpdateByRawMouse(ref NativeMethods.RAWMOUSE mouse)
         {
             // MUSTDO: remember the purpose of this method.
-            // NOTE: mouse.lLastX and mouse.lLastY are different between mouse operation and ZKOO HID operation.
+            // NOTE: mouse.lLastX and mouse.lLastY are different between mouse operation and EGS HID operation.
             // By input from EgsDevice,    mouse.usFlags == NativeMethods.RawMouseFlags.MOUSE_MOVE_ABSOLUTE. Absolute coordinate.
             // By input from normal mouse, mouse.usFlags == NativeMethods.RawMouseFlags.MOUSE_MOVE_RELATIVE. Relative coordinate, i.e. displacement from previous position.
             if (mouse.usFlags != NativeMethods.RawMouseFlags.MOUSE_MOVE_ABSOLUTE && mouse.usFlags != NativeMethods.RawMouseFlags.MOUSE_MOVE_RELATIVE)

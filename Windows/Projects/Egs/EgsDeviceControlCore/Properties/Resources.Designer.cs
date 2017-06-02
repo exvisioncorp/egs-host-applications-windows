@@ -216,7 +216,7 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show/Hide Manually by Selecting ZKOO Icon on Task Bar or System Tray.  Hide by Selecting &quot;Minimize&quot; Button on the Menu..
+        ///   Looks up a localized string similar to Show/Hide Manually by Selecting Icon on Task Bar or System Tray.  Hide by Selecting &quot;Minimize&quot; Button on the Menu..
         /// </summary>
         public static string CameraViewWindowStateUsersControlMethodDetail_ManualOnOff_Description {
             get {
@@ -503,6 +503,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gesture Camera recognize your hands..
+        /// </summary>
+        public static string CommonStrings_GestureCameraRecognizeYourHands {
+            get {
+                return ResourceManager.GetString("CommonStrings_GestureCameraRecognizeYourHands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gesture Cursor.
         /// </summary>
         public static string CommonStrings_GestureCursor {
@@ -629,11 +638,11 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please connect the ZKOO camera..
+        ///   Looks up a localized string similar to Please connect the Gesture Camera..
         /// </summary>
-        public static string CommonStrings_PleaseConnectTheZkooCamera {
+        public static string CommonStrings_PleaseConnectTheGestureCamera {
             get {
-                return ResourceManager.GetString("CommonStrings_PleaseConnectTheZkooCamera", resourceCulture);
+                return ResourceManager.GetString("CommonStrings_PleaseConnectTheGestureCamera", resourceCulture);
             }
         }
         
@@ -647,12 +656,11 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please connect ZKOO with PC 
-        ///before starting ZKOO application..
+        ///   Looks up a localized string similar to Please connect Gesture Camera with PC before starting this application..
         /// </summary>
-        public static string CommonStrings_PleaseStartHostApplicationsAfterZkooIsConnected {
+        public static string CommonStrings_PleaseStartHostApplicationAfterGestureCameraIsConnected {
             get {
-                return ResourceManager.GetString("CommonStrings_PleaseStartHostApplicationsAfterZkooIsConnected", resourceCulture);
+                return ResourceManager.GetString("CommonStrings_PleaseStartHostApplicationAfterGestureCameraIsConnected", resourceCulture);
             }
         }
         
@@ -815,15 +823,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string CommonStrings_WouldYouExitApplication0 {
             get {
                 return ResourceManager.GetString("CommonStrings_WouldYouExitApplication0", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ZKOO recognize your hands..
-        /// </summary>
-        public static string CommonStrings_ZkooRecognizeYourHands {
-            get {
-                return ResourceManager.GetString("CommonStrings_ZkooRecognizeYourHands", resourceCulture);
             }
         }
         
@@ -1053,6 +1052,33 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gesture Camera needs reboot..
+        /// </summary>
+        public static string EgsDeviceFirmwareUpdateModel_DeviceNeedsReboot {
+            get {
+                return ResourceManager.GetString("EgsDeviceFirmwareUpdateModel_DeviceNeedsReboot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please connect Gesture Camera with AC adapter and PC and check LED is on..
+        /// </summary>
+        public static string EgsDeviceFirmwareUpdateModel_DeviceNeedsToConnectPowerCable {
+            get {
+                return ResourceManager.GetString("EgsDeviceFirmwareUpdateModel_DeviceNeedsToConnectPowerCable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please disconnect Gesture Camera from AC adapter and PC and check LED is off..
+        /// </summary>
+        public static string EgsDeviceFirmwareUpdateModel_DeviceNeedsToDisconnectPowerCable {
+            get {
+                return ResourceManager.GetString("EgsDeviceFirmwareUpdateModel_DeviceNeedsToDisconnectPowerCable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Device firmware update was canceled..
         /// </summary>
         public static string EgsDeviceFirmwareUpdateModel_DfuCanceled {
@@ -1089,16 +1115,16 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please do not disconnect ZKOO from AC adapter and PC..
+        ///   Looks up a localized string similar to Please do not disconnect Gesture Camera from AC adapter and PC..
         /// </summary>
-        public static string EgsDeviceFirmwareUpdateModel_DoNotDisconnectTheDevice {
+        public static string EgsDeviceFirmwareUpdateModel_DoNotDisconnectDevice {
             get {
-                return ResourceManager.GetString("EgsDeviceFirmwareUpdateModel_DoNotDisconnectTheDevice", resourceCulture);
+                return ResourceManager.GetString("EgsDeviceFirmwareUpdateModel_DoNotDisconnectDevice", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please update device firmware to use ZKOO and ZKOO application by selecting OK.  During update, you need to reboot ZKOO a few times..
+        ///   Looks up a localized string similar to Please update device firmware to use Gesture Camera and this application by selecting OK.  During update, you need to reboot Gesture Camera a few times..
         /// </summary>
         public static string EgsDeviceFirmwareUpdateModel_PleaseUpdateDeviceFirmware {
             get {
@@ -1121,33 +1147,6 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDeviceFirmwareUpdateModel_UpdateDeviceFirmware {
             get {
                 return ResourceManager.GetString("EgsDeviceFirmwareUpdateModel_UpdateDeviceFirmware", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ZKOO needs reboot..
-        /// </summary>
-        public static string EgsDeviceFirmwareUpdateModel_ZkooNeedsReboot {
-            get {
-                return ResourceManager.GetString("EgsDeviceFirmwareUpdateModel_ZkooNeedsReboot", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please connect ZKOO with AC adapter and PC and check LED is on..
-        /// </summary>
-        public static string EgsDeviceFirmwareUpdateModel_ZkooNeedsToConnectPowerCable {
-            get {
-                return ResourceManager.GetString("EgsDeviceFirmwareUpdateModel_ZkooNeedsToConnectPowerCable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please disconnect ZKOO from AC adapter and PC and check LED is off..
-        /// </summary>
-        public static string EgsDeviceFirmwareUpdateModel_ZkooNeedsToDisconnectPowerCable {
-            get {
-                return ResourceManager.GetString("EgsDeviceFirmwareUpdateModel_ZkooNeedsToDisconnectPowerCable", resourceCulture);
             }
         }
         
@@ -1413,7 +1412,7 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use ZKOO for.
+        ///   Looks up a localized string similar to Use Device for.
         /// </summary>
         public static string EgsDeviceSettings_DeviceUsage_Description {
             get {
@@ -1458,7 +1457,7 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ZKOO Device.
+        ///   Looks up a localized string similar to Camera Device.
         /// </summary>
         public static string EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey {
             get {

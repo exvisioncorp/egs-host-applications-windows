@@ -91,7 +91,7 @@
             this.Loaded += delegate
             {
                 refToAppModel.EnableUpdatingCameraViewImageAndShowWindow();
-                refToNavigator.Title = "ZKOO by Exvision:  Apps Launcher on BlueStacks (beta version)";
+                refToNavigator.Title = $"{ApplicationCommonSettings.HostApplicationName} by {ApplicationCommonSettings.SellerShortName}:  Apps Launcher on BlueStacks (beta version)";
                 refToNavigator.SetWindowPositionToCenterOfTheScreen();
 
                 if (refToViewModel.IsExtractedAdvancedMode) { ExtractAdvancedButtons(); } else { ShrinkAdvancedButtons(); }

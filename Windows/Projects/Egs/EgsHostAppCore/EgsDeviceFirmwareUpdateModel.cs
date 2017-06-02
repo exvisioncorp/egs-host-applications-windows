@@ -193,13 +193,13 @@
                         MessageText = "";
                         break;
                     case EgsDeviceFirmwareUpdateUserActions.ConnectDevice:
-                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsToConnectPowerCable;
+                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_DeviceNeedsToConnectPowerCable;
                         break;
                     case EgsDeviceFirmwareUpdateUserActions.DisconnectDevice:
-                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_ZkooNeedsToDisconnectPowerCable;
+                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_DeviceNeedsToDisconnectPowerCable;
                         break;
                     case EgsDeviceFirmwareUpdateUserActions.DoNotDisconnectDevice:
-                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_DoNotDisconnectTheDevice;
+                        MessageText = Resources.EgsDeviceFirmwareUpdateModel_DoNotDisconnectDevice;
                         break;
                     default:
                         if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
@@ -252,7 +252,7 @@
             var ofd = new Microsoft.Win32.OpenFileDialog();
             ofd.FileName = "piemonteApp1.bin";
             ofd.InitialDirectory = @"";  //@"C:\"
-            ofd.Filter = "Exvision Firmware Update Binary(*.bin;*.exvbin)|*.bin;*.binexv|All files(*.*)|*.*";
+            ofd.Filter = "Firmware Update Binary(*.bin;*.exvbin)|*.bin;*.binexv|All files(*.*)|*.*";
             ofd.FilterIndex = 2;
             // TODO: use Resources
             ofd.Title = "Select file to upload to device";

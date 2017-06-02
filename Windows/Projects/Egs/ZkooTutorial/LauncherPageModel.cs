@@ -84,7 +84,7 @@
 
         public LauncherPageModel()
         {
-            PageTitle = "ZKOO by Exvision:  Apps Launcher on BlueStacks (beta version)";
+            PageTitle = $"{ApplicationCommonSettings.HostApplicationName} by {ApplicationCommonSettings.SellerShortName}:  Apps Launcher on BlueStacks (beta version)";
 
             IsExtractedAdvancedMode = false;
             IsToShowBlueStacksAppIcons = true;
@@ -92,13 +92,13 @@
             BeginnerModeButtonModel = new CursorSpeedAndPrecisionModeButtonModel()
             {
                 ButtonContentText = "Beginner",
-                ButtonDescriptionText = "First try this mode to get accustomed to the Exvision Gesture System.",
+                ButtonDescriptionText = "First try this mode to get accustomed to " + ApplicationCommonSettings.HostApplicationName,
                 ModeDescription = "Beginner",
             };
             StandardModeButtonModel = new CursorSpeedAndPrecisionModeButtonModel()
             {
                 ButtonContentText = "Standard",
-                ButtonDescriptionText = "Use this mode once you get accustomed to the Exvision Gesture System.",
+                ButtonDescriptionText = "Use this mode once you get accustomed to " + ApplicationCommonSettings.HostApplicationName,
                 ModeDescription = "Standard",
             };
             HighSpeedModeButtonModel = new CursorSpeedAndPrecisionModeButtonModel()
@@ -122,7 +122,7 @@
             TutorialAppButtonModel = new TextButtonModel()
             {
                 ButtonContentText = "Tutorial\r\nApp",
-                ButtonDescriptionText = "Tutorial application for the Exvision Gesture System.",
+                ButtonDescriptionText = "Tutorial application for " + ApplicationCommonSettings.HostApplicationName,
             };
             TutorialVideoButtonModel = new LaunchingOtherApplicationButtonModel()
             {

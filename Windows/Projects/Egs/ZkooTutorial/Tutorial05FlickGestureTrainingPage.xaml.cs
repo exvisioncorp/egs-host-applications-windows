@@ -44,7 +44,7 @@
             this.Loaded += (sender, e) =>
             {
                 navigator.SetWindowFullScreen();
-                navigator.Title = "ZKOO Tutorial: Flick Gesture Practice";
+                navigator.Title = $"{ApplicationCommonSettings.HostApplicationName} Tutorial: Flick Gesture Practice";
                 viewModel.OnLoaded();
             };
             this.Unloaded += (sender, e) =>

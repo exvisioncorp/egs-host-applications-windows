@@ -23,6 +23,10 @@
         {
             InitializeComponent();
 
+            bool isZkooOrEgsSdk = ApplicationCommonSettings.HostApplicationName == "ZKOO" || ApplicationCommonSettings.IsDeveloperRelease;
+            HardwareTypeGroupBox.Visibility = isZkooOrEgsSdk ? Visibility.Visible : Visibility.Collapsed;
+            CheckForEgsHostAppCoreUpdateCommandButton.Visibility = isZkooOrEgsSdk ? Visibility.Visible : Visibility.Collapsed;
+
             DeveloperSettingsTabItem.Visibility = (ApplicationCommonSettings.IsDeveloperRelease || ApplicationCommonSettings.IsDebugging) ? Visibility.Visible : Visibility.Collapsed;
         }
 

@@ -53,7 +53,7 @@
             this.Loaded += (sender, e) =>
             {
                 navigator.SetWindowFullScreen();
-                navigator.Title = "ZKOO Tutorial: Start Gesture Practice";
+                navigator.Title = $"{ApplicationCommonSettings.HostApplicationName} Tutorial: Start Gesture Practice";
                 viewModel.OnLoaded();
                 PracticeSlideShow01VideoUserControl.Replay();
             };

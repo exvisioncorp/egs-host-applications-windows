@@ -24,6 +24,11 @@
             TouchTargetScreenSize.Height = (int)System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
             FaceDetectionMethod.Value = FaceDetectionMethods.DefaultProcessOnEgsDevice;
             CaptureExposureMode.Value = CaptureExposureModes.Auto;
+
+            if (ApplicationCommonSettings.HostApplicationName != "ZKOO")
+            {
+                FaceSelectionOnDeviceMethod.Value = FaceSelectionOnDeviceMethods.MostCenter;
+            }
         }
 
         void AttachInternalEventHandlersAdditional()

@@ -25,16 +25,15 @@
                 Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_BasicSettings_Description}">
             <StackPanel>
 
-                <UniformGrid Columns="2">
-                    <GroupBox
+                <GroupBox
                             Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDevice_DeviceStatusDetailString_Description}">
-                        <Label Content="{Binding Device.DeviceStatusString}" Margin="5,0" />
-                    </GroupBox>
-                    <GroupBox
+                    <Label Content="{Binding Device.DeviceStatusString}" Margin="5,0" />
+                </GroupBox>
+
+                <GroupBox x:Name="HardwareTypeGroupBox"
                             Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDevice_HardwareType_Description}">
-                        <Label Content="{Binding Device.HardwareTypeString}" Margin="5,0" />
-                    </GroupBox>
-                </UniformGrid>
+                    <Label Content="{Binding Device.HardwareTypeString}" Margin="5,0" />
+                </GroupBox>
 
                 <GroupBox x:Name="tutorialAppSettingsGroupBox" Visibility="Collapsed"
                         Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.SettingsUserControl_TutorialAppSettings_Description}">
@@ -340,11 +339,11 @@
                 <GroupBox
                         Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Commands}">
                     <UniformGrid HorizontalAlignment="Right" Rows="1">
-                        <Button
+                        <Button x:Name="ResetSettingsCommandButton"
                                 Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_ResetSettings}"
                                 Height="40" Margin="5" Padding="20,0" Background="Transparent"
                                 Command="{Binding ResetSettingsCommand}" />
-                        <Button
+                        <Button x:Name="CheckForEgsHostAppCoreUpdateCommandButton"
                                 Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_CheckForApplicationUpdates}"
                                 Height="40" Margin="5" Padding="20,0" Background="Transparent"
                                 Command="{Binding CheckForEgsHostAppCoreUpdateCommand}" />

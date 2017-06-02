@@ -231,6 +231,15 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EgsDeviceFaceDetectionOnHost_Properties.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Resources\HandIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HandIcon_DeviceIsConnected.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HandIcon_DeviceIsDisconnected.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="version.txt">
       <DependentUpon>version.tt</DependentUpon>
       <AutoGen>True</AutoGen>

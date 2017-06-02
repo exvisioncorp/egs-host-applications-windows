@@ -198,12 +198,12 @@
     <comment>You can start this Tutorial again from Settings &gt; Basic.</comment>
   </data>
   <data name="ZkooTutorialModel_SettingsMenuCanBeOpenedBy" xml:space="preserve">
-    <value>設定画面を開くには、カメラビューをタップするか、システムトレイ上のZKOOアイコンを右クリック、「設定」を選択してください。</value>
-    <comment>Settings menu can be opened by tapping on Camera View or right-clicking ZKOO icon on the notification area.</comment>
+    <value>設定画面を開くには、カメラビューをタップするか、システムトレイ上のアイコンを右クリックし、「設定」を選択してください。</value>
+    <comment>Settings menu can be opened by tapping on Camera View or right-clicking icon on the notification area.</comment>
   </data>
-  <data name="ZkooTutorialModel_StartTutorialAgainWhenZkooApplicationIsLaunched" xml:space="preserve">
-    <value>ZKOOアプリ起動時に、チュートリアルを開始する。</value>
-    <comment>Start Tutorial again when ZKOO application is launched.</comment>
+  <data name="ZkooTutorialModel_StartTutorialAgainWhenThisApplicationIsLaunched" xml:space="preserve">
+    <value>アプリ起動時に、チュートリアルを開始する。</value>
+    <comment>Start Tutorial again when this application is launched.</comment>
   </data>
   <data name="ZkooTutorialModel_TryAgainDetail" xml:space="preserve">
     <value>ZKOOをスクリーンの中央部に置いてください。

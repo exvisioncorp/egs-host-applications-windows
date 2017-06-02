@@ -19,6 +19,15 @@ namespace Egs
     /// </summary>
     public static class ApplicationCommonSettings
     {
+        /// <summary>Seller name.</summary>
+        public static string SellerName = "<#= SellerName #>";
+        /// <summary>Seller short name.</summary>
+        public static string SellerShortName = "<#= SellerShortName #>";
+        /// <summary>Seller support navigate URI.</summary>
+        public static string SellerSupportNavigateUriString = @"<#= SellerSupportNavigateUri #>";
+        /// <summary>Host application name.</summary>
+        public static string HostApplicationName = "<#= HostApplicationName #>";
+
         /// <summary>This dll's major version and minor version as string.</summary>
         public const string HostAppCoreDllAssemblyVersionMajorMinorString = "<#= HostAppCoreDllAssemblyVersionMajorMinorString #>";
         /// <summary>This dll's major version, minor version and build number as string.</summary>
@@ -45,7 +54,7 @@ namespace Egs
             // NOTE: IsToEmulateReportByActualMouseRawInputToDebugViews shuold be used only in DEBUG configuration.
             // When I set this to true once, I could not understand the reason of that CameraView and GestureCursor do not appear.
             // Before the app interprets both "emulation by mouse" and "information from ZKOO" into HID reports,
-            // but now the app interprets only "emulation by mouse", so it does not draw anything when ZKOO sends any reports.
+            // but now the app interprets only "emulation by mouse", so it does not draw anything when EGS sends any reports.
 #if DEBUG
             IsDebugging = true;
             IsDebuggingInternal = IsInternalRelease;

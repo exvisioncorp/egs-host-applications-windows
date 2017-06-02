@@ -134,13 +134,13 @@
     <Content Include="Resources\SettingsWindowIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\ZkooHandIcon.ico">
+    <Content Include="Resources\HandIcon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\ZkooHandIcon_DeviceIsConnected.ico">
+    <Content Include="Resources\HandIcon_DeviceIsConnected.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\ZkooHandIcon_DeviceIsDisconnected.ico">
+    <Content Include="Resources\HandIcon_DeviceIsDisconnected.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="zh-Hans\EgsDeviceControlCore.resources.dll" />

@@ -18,7 +18,8 @@
         public NotHandledExceptionReportWindow()
         {
             InitializeComponent();
-            this.Title = EgsHostAppBaseComponents.EgsHostApplicationName;
+            this.Title = ApplicationCommonSettings.HostApplicationName;
+            SendMailHyperlink.NavigateUri = new Uri(ApplicationCommonSettings.SellerSupportNavigateUriString);
             ExitButton.Click += delegate { this.Close(); };
         }
 
@@ -27,7 +28,7 @@
             // NOTE: It shows messages in English.  It is OK.
             var text = "";
             text += "OS version: " + Environment.OSVersion + Environment.NewLine;
-            text += "ZkooHostApp.exe version: " + ApplicationCommonSettings.ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString + Environment.NewLine;
+            text += ApplicationCommonSettings.HostApplicationName + " Host Application Version: " + ApplicationCommonSettings.ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString + Environment.NewLine;
             text += "EgsHostAppCore.dll version: " + ApplicationCommonSettings.HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString + Environment.NewLine;
             text += "Exception Message: " + Environment.NewLine;
             text += ex.ToString();
