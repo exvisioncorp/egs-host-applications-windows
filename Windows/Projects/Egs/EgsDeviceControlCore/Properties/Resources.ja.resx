@@ -186,7 +186,7 @@
     <comment>Please connect Gesture Camera with PC before starting this application.</comment>
   </data>
   <data name="CommonStrings_GestureCameraRecognizeYourHands" xml:space="preserve">
-    <value>Gesture Cameraがあなたの手を認識しました</value>
+    <value>ジェスチャーカメラがあなたの手を認識しました。</value>
     <comment>Gesture Camera recognize your hands.</comment>
   </data>
   <data name="CommonStrings_GestureCursor" xml:space="preserve">
