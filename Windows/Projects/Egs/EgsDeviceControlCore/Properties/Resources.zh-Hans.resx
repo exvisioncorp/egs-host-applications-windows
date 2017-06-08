@@ -730,12 +730,16 @@
     <comment>270: Portrait</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Description" xml:space="preserve">
-    <value>用途选项</value>
+    <value>模式选择</value>
     <comment>Use Device for</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey" xml:space="preserve">
-    <value>手势摄像头</value>
-    <comment>Gesture Camera</comment>
+    <value>远程触控</value>
+    <comment>Remote Touch</comment>
+  </data>
+  <data name="EgsDeviceSettings_DeviceUsage_Options_2_DescriptionKey" xml:space="preserve">
+    <value>动作控制</value>
+    <comment>Motion Control</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey" xml:space="preserve">
     <value>网络摄像头</value>

@@ -370,6 +370,14 @@
                                     ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
                         </GroupBox>
 
+                        <GroupBox DataContext="{Binding Device.Settings.DeviceUsage}"
+                                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_DeviceUsage_Description}">
+                            <ListBox Style="{StaticResource listBoxWithRadioButton}"
+                                    ItemsSource="{Binding OptionalValue.Options}"
+                                    SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                                    ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                        </GroupBox>
+
                         <GroupBox DataContext="{Binding Device.Settings.TouchInterfaceKind}"
                                 Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_TouchInterfaceKind_Description}">
                             <ListBox Style="{StaticResource listBoxWithRadioButton}"

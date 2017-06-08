@@ -734,8 +734,12 @@
     <comment>Use Device for</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey" xml:space="preserve">
-    <value>Gesture Camera</value>
-    <comment>Gesture Camera</comment>
+    <value>Remote Touch</value>
+    <comment>Remote Touch</comment>
+  </data>
+  <data name="EgsDeviceSettings_DeviceUsage_Options_2_DescriptionKey" xml:space="preserve">
+    <value>Motion Control</value>
+    <comment>Motion Control</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey" xml:space="preserve">
     <value>Web Camera</value>

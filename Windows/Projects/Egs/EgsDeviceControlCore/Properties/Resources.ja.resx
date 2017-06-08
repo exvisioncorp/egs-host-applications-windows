@@ -734,8 +734,12 @@
     <comment>Use Device for</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey" xml:space="preserve">
-    <value>ジェスチャーカメラ</value>
-    <comment>Gesture Camera</comment>
+    <value>リモートタッチ</value>
+    <comment>Remote Touch</comment>
+  </data>
+  <data name="EgsDeviceSettings_DeviceUsage_Options_2_DescriptionKey" xml:space="preserve">
+    <value>モーションコントロール</value>
+    <comment>Motion Control</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey" xml:space="preserve">
     <value>ウェブカメラ</value>
