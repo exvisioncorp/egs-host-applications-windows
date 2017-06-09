@@ -28,6 +28,7 @@
             CheckForEgsHostAppCoreUpdateCommandButton.Visibility = isZkooOrEgsSdk ? Visibility.Visible : Visibility.Collapsed;
 
             DeveloperSettingsTabItem.Visibility = (ApplicationCommonSettings.IsDeveloperRelease || ApplicationCommonSettings.IsDebugging) ? Visibility.Visible : Visibility.Collapsed;
+            DeviceUsageGroupBox.Visibility = ApplicationCommonSettings.CanChangeDeviceUsage ? Visibility.Visible : Visibility.Collapsed;
         }
 
         internal void ReloadDataContext()

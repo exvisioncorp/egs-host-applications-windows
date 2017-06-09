@@ -101,7 +101,9 @@
     {
         RemoteTouch = 0,
         MotionControl = 2,
+#if false
         WebCamera = 1,
+#endif
     }
     public partial class DeviceUsageOptions : HidAccessPropertyEnumValue<DeviceUsages>
     {
@@ -110,7 +112,9 @@
         {
             OptionalValue.Options.Add(new ValueWithDescription<DeviceUsages>() { Value = (DeviceUsages)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey) });
             OptionalValue.Options.Add(new ValueWithDescription<DeviceUsages>() { Value = (DeviceUsages)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceUsage_Options_2_DescriptionKey) });
+#if false
             OptionalValue.Options.Add(new ValueWithDescription<DeviceUsages>() { Value = (DeviceUsages)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey) });
+#endif
         }
     }
 

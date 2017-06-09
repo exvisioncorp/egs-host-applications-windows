@@ -1025,9 +1025,14 @@ namespace DotNetUtility
 
         public static bool LoadSettingsJsonFile(object obj)
         {
+            var path = GetDefaultSettingsFilePath();
+            return LoadSettingsJsonFile(obj, path);
+        }
+
+        public static bool LoadSettingsJsonFile(object obj, string path)
+        {
             try
             {
-                var path = GetDefaultSettingsFilePath();
                 if (System.IO.File.Exists(path) == false) { return false; }
                 var contents = System.IO.File.ReadAllText(path);
 
