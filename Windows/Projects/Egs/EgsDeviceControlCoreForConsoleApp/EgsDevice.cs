@@ -137,7 +137,7 @@
         {
             if (item.AvailableFirmwareVersion > FirmwareVersionAsVersion)
             {
-                var msg = item.Description + " is available >= (" + item.AvailableFirmwareVersion + ").  Current firmware version is (" + FirmwareVersionString + ")";
+                var msg = item.Description + " is available >= (" + item.AvailableFirmwareVersion + ").  The firmware version of the connected device is (" + FirmwareVersionString + ")";
                 Console.WriteLine(msg);
                 return false;
             }

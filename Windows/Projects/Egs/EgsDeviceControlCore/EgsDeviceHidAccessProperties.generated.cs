@@ -53,6 +53,8 @@ namespace Egs
         [DataMember]
         public DeviceRotationAngleInClockwiseOptions DeviceRotationAngleInClockwise { get; private set; }
         [DataMember]
+        public DeviceUsageOptions DeviceUsage { get; private set; }
+        [DataMember]
         public ValueWithDescription<bool> IsToDetectFaces { get; private set; }
         [DataMember]
         public FaceDetectionMethodOptions FaceDetectionMethod { get; private set; }
@@ -132,6 +134,7 @@ namespace Egs
             HostMachineOperatingSystem = new HostMachineOperatingSystemOptions() { DescriptionKey = nameof(Resources.EgsDeviceSettings_HostMachineOperatingSystem_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0x30, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "HostMachineOperatingSystem", AvailableFirmwareVersion = new Version("1.0") };
             TouchInterfaceKind = new TouchInterfaceKindOptions() { DescriptionKey = nameof(Resources.EgsDeviceSettings_TouchInterfaceKind_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0x40, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "TouchInterfaceKind", AvailableFirmwareVersion = new Version("1.0") };
             DeviceRotationAngleInClockwise = new DeviceRotationAngleInClockwiseOptions() { DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceRotationAngleInClockwise_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0x50, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "DeviceRotationAngleInClockwise", AvailableFirmwareVersion = new Version("1.0") };
+            DeviceUsage = new DeviceUsageOptions() { DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceUsage_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0x90, ValueTypeOnDevice = "byte", DataLength = 1, IsReadOnly = false, NameOfProperty = "DeviceUsage", AvailableFirmwareVersion = new Version("1.1.9015") };
             IsToDetectFaces = new ValueWithDescription<bool>() { DescriptionKey = nameof(Resources.EgsDeviceSettings_IsToDetectFaces_Description) };
             FaceDetectionMethod = new FaceDetectionMethodOptions() { DescriptionKey = nameof(Resources.EgsDeviceSettings_FaceDetectionMethod_Description) };
             IsToDetectFacesOnDevice = new HidAccessPropertyBoolean() { DescriptionKey = nameof(Resources.EgsDeviceSettings_IsToDetectFacesOnDevice_Description), ReportId = 0x0B, MessageId = 0x00, CategoryId = 0x00, PropertyId = 0xA0, ValueTypeOnDevice = "bool", DataLength = 1, IsReadOnly = false, NameOfProperty = "IsToDetectFacesOnDevice", AvailableFirmwareVersion = new Version("1.0") };
@@ -183,6 +186,7 @@ namespace Egs
             HidAccessPropertyList.Add(HostMachineOperatingSystem);
             HidAccessPropertyList.Add(TouchInterfaceKind);
             HidAccessPropertyList.Add(DeviceRotationAngleInClockwise);
+            HidAccessPropertyList.Add(DeviceUsage);
             HidAccessPropertyList.Add(IsToDetectFacesOnDevice);
             HidAccessPropertyList.Add(IsToDetectHandsOnDevice);
             HidAccessPropertyList.Add(IsToSendTouchScreenHidReport);
@@ -231,6 +235,7 @@ namespace Egs
             HostMachineOperatingSystem.Value = 0;
             TouchInterfaceKind.Value = 0;
             DeviceRotationAngleInClockwise.Value = 0;
+            DeviceUsage.Value = 0;
             IsToDetectFaces.Value = true;
             IsToDetectFacesOnDevice.Value = false;
             IsToDetectHands.Value = true;

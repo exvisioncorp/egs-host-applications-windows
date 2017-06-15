@@ -157,7 +157,7 @@
         {
             if (item.AvailableFirmwareVersion > FirmwareVersionAsVersion)
             {
-                var msg = item.Description + " is available >= (" + item.AvailableFirmwareVersion + ").  Current firmware version is (" + FirmwareVersionString + ")";
+                var msg = item.Description + " is available >= (" + item.AvailableFirmwareVersion + ").  The firmware version of the connected device is (" + FirmwareVersionString + ")";
                 Console.WriteLine(msg);
                 return false;
             }
@@ -171,6 +171,13 @@
         {
             try
             {
+                if (ApplicationCommonSettings.IsDebuggingInternal)
+                {
+                    var str = "";
+                    str += DateTime.Now.ToString("[yyyy/MM/dd HH:mm:ss.fff] ");
+                    str += BitConverter.ToString(item.ByteArrayData);
+                    Debug.WriteLine(str);
+                }
                 if (FirmwareVersionAsVersion != new Version(0, 0, 0, 0))
                 {
                     if (CheckHidPropertyVersionAndCurrentFirmwareVersion(item) == false) { return false; }

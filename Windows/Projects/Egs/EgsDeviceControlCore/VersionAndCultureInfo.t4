@@ -24,6 +24,7 @@ string ZkooHostAppExeAssemblyVersionMajorMinorString = ExvisionEgsZkooHostAppMaj
 string ZkooHostAppExeAssemblyVersionMajorMinorBuildString = ExvisionEgsZkooHostAppMajorVersion + "." + ExvisionEgsZkooHostAppMinorVersion + "." + buildVersion;
 string ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString = ExvisionEgsZkooHostAppMajorVersion + "." + ExvisionEgsZkooHostAppMinorVersion + "." + buildVersion + "." + revisionVersion;
 string FirmwareVersionInImageFileString = "1.1.8722.0";
+string DevelopingFirmwareVersionString = "1.1.8722.0";
 
 // NOTE: C# code (not by but) in T4 template, cannot use "#if DEBUG" and so on.
 // TODO: So I'd like to get information about Build Configuration by the next line code, but it does not work.
@@ -45,7 +46,7 @@ string DefaultCultureInfoName = "en";
 //string DefaultCultureInfoName = "zh-Hans";
 //IsDeveloperRelease = true;
 //IsInternalRelease = true;
-//CanChangeDeviceUsage = true;
+CanChangeDeviceUsage = true;
 
 
 
@@ -54,6 +55,6 @@ IsDeveloperRelease = IsDeveloperRelease || IsInternalRelease;
 if (CanChangeDeviceUsage)
 {
     IsDeveloperRelease = true;
-    FirmwareVersionInImageFileString = "1.1.9009.0";
+    DevelopingFirmwareVersionString = "1.1.9015.0";
 }
 #>

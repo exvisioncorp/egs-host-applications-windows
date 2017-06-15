@@ -53,6 +53,8 @@ namespace Egs
         Unknown = 0x00,
         /// <summary>0x01</summary>
         StandingBy = 0x01,
+        /// <summary>0x02</summary>
+        ChangedSettingsByDevice = 0x02,
         /// <summary>0x08</summary>
         DetectingFaces = 0x08,
         /// <summary>0x10</summary>

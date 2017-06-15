@@ -40,6 +40,8 @@ namespace Egs
         public const string DefaultCultureInfoName = "<#= DefaultCultureInfoName #>";
         /// <summary>Firmware version in an image file of this application.</summary>
         public const string FirmwareVersionInImageFileString = "<#= FirmwareVersionInImageFileString #>";
+        /// <summary>Firmware version of current developing device.</summary>
+        internal const string DevelopingFirmwareVersionString = "<#= DevelopingFirmwareVersionString #>";
 
         internal const bool IsDeveloperRelease = <#= IsDeveloperRelease.ToString().ToLowerInvariant() #>;
         internal const bool IsInternalRelease = <#= IsInternalRelease.ToString().ToLowerInvariant() #>;
