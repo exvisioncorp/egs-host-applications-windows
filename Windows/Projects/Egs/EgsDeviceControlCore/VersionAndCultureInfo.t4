@@ -46,7 +46,8 @@ string DefaultCultureInfoName = "en";
 //string DefaultCultureInfoName = "zh-Hans";
 //IsDeveloperRelease = true;
 //IsInternalRelease = true;
-CanChangeDeviceUsage = true;
+//CanChangeDeviceUsage = true;
+//If you set CanChangeDeviceUsage to true, search by "ApplicationCommonSettings_CanChangeDeviceUsage" from the entire solution, and activate them.
 
 
 

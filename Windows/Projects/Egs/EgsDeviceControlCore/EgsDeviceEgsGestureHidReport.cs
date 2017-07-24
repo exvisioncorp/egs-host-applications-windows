@@ -369,10 +369,13 @@
                 for (int i = 4; i < hidReport.Length; i++) { targetProperty.ByteArrayData[i] = hidReport[i]; }
                 targetProperty.RaiseValueUpdatedOnGetHidFeatureReport();
             }
+
+#if ApplicationCommonSettings_CanChangeDeviceUsage
             if (targetProperty == Device.Settings.DeviceUsage && hidReport[16] == (byte)DeviceUsages.RemoteTouch)
             {
                 Device.Settings.DeviceUsage.Value = DeviceUsages.RemoteTouch;
             }
+#endif
         }
 
         void UpdateOnDetectingOrTrackingHands(byte[] hidReport)
