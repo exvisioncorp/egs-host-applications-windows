@@ -37,7 +37,13 @@
 
                 hostAppComponents = new EgsHostAppBaseComponents();
                 hostAppComponents.InitializeOnceAtStartup();
-                if (SettingsSerialization.LoadSettingsJsonFile(hostAppComponents) == false) { hostAppComponents.Reset(); }
+
+                if (SettingsSerialization.LoadSettingsJsonFile(hostAppComponents) == false)
+                {
+                    hostAppComponents.Reset();
+                    // You can modify the application default settings here.
+                    hostAppComponents.Device.Settings.CursorSpeedAndPrecisionMode.Value = Egs.PropertyTypes.CursorSpeedAndPrecisionModes.Standard;
+                }
 
                 hostAppComponents.AppTrayIconAndMenuItems.TextOfNotifyIconInTray = ApplicationCommonSettings.HostApplicationName;
 
