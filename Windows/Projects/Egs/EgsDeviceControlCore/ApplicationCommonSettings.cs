@@ -25,11 +25,11 @@
         /// <summary>This dll's major version and minor version as string.</summary>
         public const string HostAppCoreDllAssemblyVersionMajorMinorString = "0.9";
         /// <summary>This dll's major version, minor version and build number as string.</summary>
-        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildString = "0.9.9124";
+        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildString = "0.9.9126";
         /// <summary>This dll's major version, minor version, build number and revision as string.</summary>
-        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString = "0.9.9124.0";
+        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString = "0.9.9126.0";
         /// <summary>Host application's major version, minor version, build number and revision as string.</summary>
-        public const string ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString = "0.9.9124.0";
+        public const string ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString = "0.9.9126.0";
         /// <summary>Default CultureInfo.Name as string.</summary>
         public const string DefaultCultureInfoName = "en";
         /// <summary>Firmware version in an image file of this application.</summary>
