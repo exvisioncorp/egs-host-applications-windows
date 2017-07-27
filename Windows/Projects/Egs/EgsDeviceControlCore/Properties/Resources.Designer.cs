@@ -503,6 +503,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gesture Camera.
+        /// </summary>
+        public static string CommonStrings_GestureCamera {
+            get {
+                return ResourceManager.GetString("CommonStrings_GestureCamera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gesture Camera recognize your hands..
         /// </summary>
         public static string CommonStrings_GestureCameraRecognizeYourHands {
@@ -823,6 +832,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string CommonStrings_WouldYouExitApplication0 {
             get {
                 return ResourceManager.GetString("CommonStrings_WouldYouExitApplication0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZKOO.
+        /// </summary>
+        public static string CommonStrings_Zkoo {
+            get {
+                return ResourceManager.GetString("CommonStrings_Zkoo", resourceCulture);
             }
         }
         
