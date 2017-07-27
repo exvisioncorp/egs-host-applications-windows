@@ -29,6 +29,7 @@
             {
                 Egs.BindableResources.Current.ChangeCulture(ApplicationCommonSettings.DefaultCultureInfoName);
                 Egs.ZkooTutorial.BindableResources.Current.ChangeCulture(ApplicationCommonSettings.DefaultCultureInfoName);
+                ApplicationCommonSettings.HostApplicationName = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Zkoo;
 
                 if (DuplicatedProcessStartBlocking.TryGetMutexOnTheBeginningOfApplicationConstructor() == false)
                 {

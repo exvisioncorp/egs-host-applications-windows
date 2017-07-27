@@ -269,7 +269,7 @@
         {
             OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_0_DescriptionKey) });
             OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_1_DescriptionKey) });
-            if (ApplicationCommonSettings.HostApplicationName == "ZKOO" || ApplicationCommonSettings.IsDeveloperRelease)
+            if (ApplicationCommonSettings.HostApplicationName == Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Zkoo || ApplicationCommonSettings.IsDeveloperRelease)
             {
                 OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_2_DescriptionKey) });
             }

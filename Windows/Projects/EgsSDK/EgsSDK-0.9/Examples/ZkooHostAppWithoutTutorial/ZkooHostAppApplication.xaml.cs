@@ -27,6 +27,7 @@
                 //Egs.BindableResources.Current.ChangeCulture("en");
                 //Egs.BindableResources.Current.ChangeCulture("ja");
                 //Egs.BindableResources.Current.ChangeCulture("zh-Hans");
+                ApplicationCommonSettings.HostApplicationName = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_GestureCamera;
 
                 if (DuplicatedProcessStartBlocking.TryGetMutexOnTheBeginningOfApplicationConstructor() == false)
                 {
