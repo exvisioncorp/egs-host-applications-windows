@@ -25,7 +25,7 @@
             FaceDetectionMethod.Value = FaceDetectionMethods.DefaultProcessOnEgsDevice;
             CaptureExposureMode.Value = CaptureExposureModes.Auto;
 
-            if (ApplicationCommonSettings.HostApplicationName != "ZKOO")
+            if (ApplicationCommonSettings.HostApplicationName != Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Zkoo)
             {
                 FaceSelectionOnDeviceMethod.Value = FaceSelectionOnDeviceMethods.MostCenter;
             }

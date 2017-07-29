@@ -40,9 +40,12 @@ namespace Egs
         public const string DefaultCultureInfoName = "<#= DefaultCultureInfoName #>";
         /// <summary>Firmware version in an image file of this application.</summary>
         public const string FirmwareVersionInImageFileString = "<#= FirmwareVersionInImageFileString #>";
+        /// <summary>Firmware version of current developing device.</summary>
+        internal const string DevelopingFirmwareVersionString = "<#= DevelopingFirmwareVersionString #>";
 
         internal const bool IsDeveloperRelease = <#= IsDeveloperRelease.ToString().ToLowerInvariant() #>;
         internal const bool IsInternalRelease = <#= IsInternalRelease.ToString().ToLowerInvariant() #>;
+		internal const bool CanChangeDeviceUsage = <#= CanChangeDeviceUsage.ToString().ToLowerInvariant() #>;
 
         /// <summary>When you set this value to true, HostAppCore.dll shows "Developer" tab on SettingsWindow and output messages for debugging.</summary>
         public static bool IsDebugging { get; set; }

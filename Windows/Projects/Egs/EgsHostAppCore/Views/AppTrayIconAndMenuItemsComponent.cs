@@ -15,7 +15,7 @@
         Icon deviceIsConnectedIcon { get; set; }
         Icon deviceIsNotConnectedIcon { get; set; }
 
-        // NotifiIcon should not be changed by SDK users, because it shows the device state correctly, 
+        // Hide NotifyIcon object.
         //internal NotifyIcon NotifyIconInTray { get { return notifyIconInTray; } }
 
         Padding MenuItemLabelPadding { get; set; }
@@ -32,8 +32,6 @@
 
         EgsHostAppBaseComponents ownerEgsHostAppBaseComponents { get; set; }
 
-        public string TextOfNotifyIconInTray { get { return notifyIconInTray.Text; } set { notifyIconInTray.Text = value; } }
-
         public AppTrayIconAndMenuItemsComponent() : this(null) { }
         public AppTrayIconAndMenuItemsComponent(IContainer container)
         {
@@ -41,17 +39,17 @@
 
             InitializeComponent();
             InitializeMenuItems();
-            BindableResources.Current.CultureChanged += (sender, e) => { OnResourcesCultureChanged(); };
+            BindableResources.Current.CultureChanged += delegate { OnBindableResourcesCurrentCultureChanged(); };
         }
 
-        public void OnResourcesCultureChanged()
+        public void OnBindableResourcesCurrentCultureChanged()
         {
             EgsHostApplicationNameMenuItemLabel.Text = ApplicationCommonSettings.HostApplicationName;
             IsConnectedMenuItemLabel.Text = ownerEgsHostAppBaseComponents.Device.DeviceStatusString;
             CameraViewMenuItem.Text = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_CameraView;
             SettingsMenuItem.Text = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Settings;
             ExitMenuItem.Text = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Exit;
-            TextOfNotifyIconInTray = ApplicationCommonSettings.HostApplicationName;
+            notifyIconInTray.Text = ApplicationCommonSettings.HostApplicationName;
         }
 
         void InitializeMenuItems()
@@ -89,7 +87,7 @@
             deviceIsConnectedIcon = new Icon("Resources/HandIcon_DeviceIsConnected.ico", new Size(16, 16));
             deviceIsNotConnectedIcon = new Icon("Resources/HandIcon_DeviceIsDisconnected.ico", new Size(16, 16));
 
-            OnResourcesCultureChanged();
+            OnBindableResourcesCurrentCultureChanged();
 
             ownerEgsHostAppBaseComponents.Device.IsConnectedChanged += (sender, e) =>
             {

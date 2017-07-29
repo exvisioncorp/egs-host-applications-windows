@@ -23,38 +23,36 @@
 
             try
             {
+                Egs.BindableResources.Current.CultureChanged += delegate
+                {
+                    ApplicationCommonSettings.HostApplicationName = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_GestureCamera;
+                };
+
                 Egs.BindableResources.Current.ChangeCulture(ApplicationCommonSettings.DefaultCultureInfoName);
-                //Egs.BindableResources.Current.ChangeCulture("en");
-                //Egs.BindableResources.Current.ChangeCulture("ja");
-                //Egs.BindableResources.Current.ChangeCulture("zh-Hans");
 
                 if (DuplicatedProcessStartBlocking.TryGetMutexOnTheBeginningOfApplicationConstructor() == false)
                 {
-                    MessageBox.Show(EgsHostAppBaseComponents.MessageOfOnlyOneInstanceCanRun);
+                    var msg = string.Format(System.Globalization.CultureInfo.InvariantCulture, Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0IsAlreadyRunning, ApplicationCommonSettings.HostApplicationName);
+                    MessageBox.Show(msg, ApplicationCommonSettings.HostApplicationName);
                     if (Application.Current != null) { Application.Current.Shutdown(); }
                     return;
                 }
 
                 hostAppComponents = new EgsHostAppBaseComponents();
                 hostAppComponents.InitializeOnceAtStartup();
+                hostAppComponents.HasResetSettings += delegate
+                {
+                    // You can modify the application default settings here.
+                    hostAppComponents.Device.Settings.CursorSpeedAndPrecisionMode.Value = Egs.PropertyTypes.CursorSpeedAndPrecisionModes.Standard;
+                };
                 if (SettingsSerialization.LoadSettingsJsonFile(hostAppComponents) == false) { hostAppComponents.Reset(); }
-
-                hostAppComponents.AppTrayIconAndMenuItems.TextOfNotifyIconInTray = ApplicationCommonSettings.HostApplicationName;
 
                 hostAppComponents.CameraViewWindow.Closed += delegate { hostAppComponents.Dispose(); };
 
-                // NOTE: Not Disposed but Disposing
                 hostAppComponents.Disposing += delegate
                 {
-                    // NOTE: Save settings before Dispose().
-                    if (hostAppComponents.Device == null || hostAppComponents.Device.FaceDetectionOnHost == null || hostAppComponents.Device.Settings == null || hostAppComponents.CameraViewUserControlModel == null || hostAppComponents.OnePersonBothHandsViewModel == null)
-                    {
-                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                    }
-                    else
-                    {
-                        SettingsSerialization.SaveSettingsJsonFile(hostAppComponents);
-                    }
+                    // NOTE: Save settings before Dispose().  Target event is not Disposed but Disposing.
+                    if (hostAppComponents.CanSaveSettingsJsonFileSafely) { SettingsSerialization.SaveSettingsJsonFile(hostAppComponents); }
                 };
 
                 base.Exit += delegate

@@ -27,6 +27,12 @@
         {
             // NOTE: It shows messages in English.  It is OK.
             var text = "";
+            {
+                var cpuNameList = "";
+                var moc = new System.Management.ManagementClass("Win32_Processor").GetInstances();
+                foreach (var mo in moc) { cpuNameList += mo["Name"] + Environment.NewLine; }
+                text += "CPU: " + (string.IsNullOrEmpty(cpuNameList) ? "No Information" + Environment.NewLine : cpuNameList);
+            }
             text += "OS version: " + Environment.OSVersion + Environment.NewLine;
             text += ApplicationCommonSettings.HostApplicationName + " Host Application Version: " + ApplicationCommonSettings.ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString + Environment.NewLine;
             text += "EgsHostAppCore.dll version: " + ApplicationCommonSettings.HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString + Environment.NewLine;

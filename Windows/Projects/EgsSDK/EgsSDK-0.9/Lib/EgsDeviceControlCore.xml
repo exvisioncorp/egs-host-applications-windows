@@ -39,6 +39,9 @@
         <member name="F:Egs.ApplicationCommonSettings.FirmwareVersionInImageFileString">
             <summary>Firmware version in an image file of this application.</summary>
         </member>
+        <member name="F:Egs.ApplicationCommonSettings.DevelopingFirmwareVersionString">
+            <summary>Firmware version of current developing device.</summary>
+        </member>
         <member name="P:Egs.ApplicationCommonSettings.IsDebugging">
             <summary>When you set this value to true, HostAppCore.dll shows "Developer" tab on SettingsWindow and output messages for debugging.</summary>
         </member>
@@ -684,6 +687,9 @@
         <member name="F:Egs.EgsGestureHidReportMessageIds.StandingBy">
             <summary>0x01</summary>
         </member>
+        <member name="F:Egs.EgsGestureHidReportMessageIds.ChangedSettingsByDevice">
+            <summary>0x02</summary>
+        </member>
         <member name="F:Egs.EgsGestureHidReportMessageIds.DetectingFaces">
             <summary>0x08</summary>
         </member>
@@ -1059,6 +1065,11 @@
               Looks up a localized string similar to Gesture.
             </summary>
         </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_GestureCamera">
+            <summary>
+              Looks up a localized string similar to Gesture Camera.
+            </summary>
+        </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_GestureCameraRecognizeYourHands">
             <summary>
               Looks up a localized string similar to Gesture Camera recognize your hands..
@@ -1237,6 +1248,11 @@
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_WouldYouExitApplication0">
             <summary>
               Looks up a localized string similar to Would you exit {0}?.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Zkoo">
+            <summary>
+              Looks up a localized string similar to ZKOO.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.CultureInfoAndDescriptionDetail_Chinese_Description">
@@ -1571,12 +1587,17 @@
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey">
             <summary>
-              Looks up a localized string similar to Gesture Camera.
+              Looks up a localized string similar to Remote Touch.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey">
             <summary>
               Looks up a localized string similar to Web Camera.
+            </summary>
+        </member>
+        <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_DeviceUsage_Options_2_DescriptionKey">
+            <summary>
+              Looks up a localized string similar to Motion Control.
             </summary>
         </member>
         <member name="P:Egs.EgsDeviceControlCore.Properties.Resources.EgsDeviceSettings_FaceDetectionAreaOnFixed_Description">

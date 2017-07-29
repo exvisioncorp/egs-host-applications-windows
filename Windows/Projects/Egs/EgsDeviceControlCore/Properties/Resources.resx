@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CommonStrings_GestureCamera" xml:space="preserve">
+    <value>Gesture Camera</value>
+    <comment>Gesture Camera</comment>
+  </data>
+  <data name="CommonStrings_Zkoo" xml:space="preserve">
+    <value>ZKOO</value>
+    <comment>ZKOO</comment>
+  </data>
   <data name="CommonStrings_Application0Started" xml:space="preserve">
     <value>{0} started.</value>
     <comment>{0} started.</comment>
@@ -734,8 +742,12 @@
     <comment>Use Device for</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey" xml:space="preserve">
-    <value>Gesture Camera</value>
-    <comment>Gesture Camera</comment>
+    <value>Remote Touch</value>
+    <comment>Remote Touch</comment>
+  </data>
+  <data name="EgsDeviceSettings_DeviceUsage_Options_2_DescriptionKey" xml:space="preserve">
+    <value>Motion Control</value>
+    <comment>Motion Control</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey" xml:space="preserve">
     <value>Web Camera</value>

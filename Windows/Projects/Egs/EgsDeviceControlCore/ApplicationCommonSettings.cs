@@ -25,18 +25,21 @@
         /// <summary>This dll's major version and minor version as string.</summary>
         public const string HostAppCoreDllAssemblyVersionMajorMinorString = "0.9";
         /// <summary>This dll's major version, minor version and build number as string.</summary>
-        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildString = "0.9.9002";
+        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildString = "0.9.9129";
         /// <summary>This dll's major version, minor version, build number and revision as string.</summary>
-        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString = "0.9.9002.0";
+        public const string HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString = "0.9.9129.0";
         /// <summary>Host application's major version, minor version, build number and revision as string.</summary>
-        public const string ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString = "0.9.9002.0";
+        public const string ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString = "0.9.9129.0";
         /// <summary>Default CultureInfo.Name as string.</summary>
         public const string DefaultCultureInfoName = "en";
         /// <summary>Firmware version in an image file of this application.</summary>
         public const string FirmwareVersionInImageFileString = "1.1.8722.0";
+        /// <summary>Firmware version of current developing device.</summary>
+        internal const string DevelopingFirmwareVersionString = "1.1.8722.0";
 
         internal const bool IsDeveloperRelease = false;
         internal const bool IsInternalRelease = false;
+		internal const bool CanChangeDeviceUsage = false;
 
         /// <summary>When you set this value to true, HostAppCore.dll shows "Developer" tab on SettingsWindow and output messages for debugging.</summary>
         public static bool IsDebugging { get; set; }

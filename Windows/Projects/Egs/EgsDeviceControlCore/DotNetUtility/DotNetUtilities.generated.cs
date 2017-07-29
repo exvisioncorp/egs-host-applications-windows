@@ -952,7 +952,7 @@ namespace DotNetUtility
     /// </summary>
     public static class SettingsSerialization
     {
-        public static string GetDefaultSettingsFilePath()
+        public static string GetDefaultSettingsFolderPath()
         {
             var assemblyInfo = System.Reflection.Assembly.GetEntryAssembly();
             var assemblyInfoGetName = assemblyInfo.GetName();
@@ -963,21 +963,39 @@ namespace DotNetUtility
             companyName = companyName.Replace(" ", "_");
             var assemblyName = assemblyInfoGetName.Name;
             var version = assemblyInfoGetName.Version.ToString();
+            var settingsFileFolderPath = "";
+            settingsFileFolderPath = System.IO.Path.Combine(settingsFileFolderPath, appDataFolderPath);
+            settingsFileFolderPath = System.IO.Path.Combine(settingsFileFolderPath, companyName);
+            settingsFileFolderPath = System.IO.Path.Combine(settingsFileFolderPath, assemblyName);
+            settingsFileFolderPath = System.IO.Path.Combine(settingsFileFolderPath, version);
+            return settingsFileFolderPath;
+        }
+
+        public static string GetDefaultSettingsFileName()
+        {
+            var assemblyInfo = System.Reflection.Assembly.GetEntryAssembly();
+            var assemblyInfoGetName = assemblyInfo.GetName();
+            var assemblyName = assemblyInfoGetName.Name;
             var settingsFileName = assemblyName + "_Settings.json";
-            var settingsFileFullPath = "";
-            settingsFileFullPath = System.IO.Path.Combine(settingsFileFullPath, appDataFolderPath);
-            settingsFileFullPath = System.IO.Path.Combine(settingsFileFullPath, companyName);
-            settingsFileFullPath = System.IO.Path.Combine(settingsFileFullPath, assemblyName);
-            settingsFileFullPath = System.IO.Path.Combine(settingsFileFullPath, version);
-            settingsFileFullPath = System.IO.Path.Combine(settingsFileFullPath, settingsFileName);
-            return settingsFileFullPath;
+            return settingsFileName;
+        }
+
+        public static string GetDefaultSettingsFilePath()
+        {
+            var ret = "";
+            ret = System.IO.Path.Combine(GetDefaultSettingsFolderPath(), GetDefaultSettingsFileName());
+            return ret;
         }
 
         public static bool SaveSettingsJsonFile(object obj)
         {
+            return SaveSettingsJsonFile(obj, GetDefaultSettingsFilePath());
+        }
+
+        public static bool SaveSettingsJsonFile(object obj, string path)
+        {
             try
             {
-                var path = GetDefaultSettingsFilePath();
                 var contents = Newtonsoft.Json.JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented);
                 System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
                 System.IO.File.WriteAllText(path, contents);
@@ -1007,9 +1025,14 @@ namespace DotNetUtility
 
         public static bool LoadSettingsJsonFile(object obj)
         {
+            var path = GetDefaultSettingsFilePath();
+            return LoadSettingsJsonFile(obj, path);
+        }
+
+        public static bool LoadSettingsJsonFile(object obj, string path)
+        {
             try
             {
-                var path = GetDefaultSettingsFilePath();
                 if (System.IO.File.Exists(path) == false) { return false; }
                 var contents = System.IO.File.ReadAllText(path);
 

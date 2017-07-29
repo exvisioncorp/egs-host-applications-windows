@@ -24,25 +24,38 @@ string ZkooHostAppExeAssemblyVersionMajorMinorString = ExvisionEgsZkooHostAppMaj
 string ZkooHostAppExeAssemblyVersionMajorMinorBuildString = ExvisionEgsZkooHostAppMajorVersion + "." + ExvisionEgsZkooHostAppMinorVersion + "." + buildVersion;
 string ZkooHostAppExeAssemblyVersionMajorMinorBuildRevisionString = ExvisionEgsZkooHostAppMajorVersion + "." + ExvisionEgsZkooHostAppMinorVersion + "." + buildVersion + "." + revisionVersion;
 string FirmwareVersionInImageFileString = "1.1.8722.0";
-bool IsDeveloperRelease = false;
+string DevelopingFirmwareVersionString = "1.1.8722.0";
 
 // NOTE: C# code (not by but) in T4 template, cannot use "#if DEBUG" and so on.
 // TODO: So I'd like to get information about Build Configuration by the next line code, but it does not work.
 //var configurationName = ((this.Host as IServiceProvider).GetService(typeof(EnvDTE.DTE)) as EnvDTE.DTE).Solution.SolutionBuild.ActiveConfiguration.Name;
 //if (configurationName.Contains("D_") { DefaultCultureInfoName = configurationName.Replace("D_", ""); }
 
+// NOTE: To enable "Developer" tab, set "IsDeveloperRelease = true;".
+bool IsDeveloperRelease = false;
+// NOTE: To enable "Exvision" tab, set "IsInternalRelease = true;", and use "D_Internal" build configuration.
+bool IsInternalRelease = false;
+// NOTE: To enable "DeviceUsage" UI element, set "CanChangeDeviceUsage = true;", and use "D_GCam_en" build configuration.
+bool CanChangeDeviceUsage = false;
 
 
-// MUSTDO: Change the below settings, conver all T4 template files, and build the solution.  To enable "Developer" tab, set "IsDeveloperRelease = true;".
+
+// MUSTDO: Change the below settings, convert all T4 template files, and build the solution.
 string DefaultCultureInfoName = "en";
 //string DefaultCultureInfoName = "ja";
 //string DefaultCultureInfoName = "zh-Hans";
 //IsDeveloperRelease = true;
-
-
-
-// NOTE: To enable "Exvision" tab, set "IsInternalRelease = true;", and use "D_Internal" build configuration.
-bool IsInternalRelease = false;
 //IsInternalRelease = true;
+//CanChangeDeviceUsage = true;
+//If you set CanChangeDeviceUsage to true, search by "ApplicationCommonSettings_CanChangeDeviceUsage" from the entire solution, and activate them.
+
+
+
+// Dependent properties
 IsDeveloperRelease = IsDeveloperRelease || IsInternalRelease;
+if (CanChangeDeviceUsage)
+{
+    IsDeveloperRelease = true;
+    DevelopingFirmwareVersionString = "1.1.9015.0";
+}
 #>

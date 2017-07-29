@@ -23,11 +23,12 @@
         {
             InitializeComponent();
 
-            bool isZkooOrEgsSdk = ApplicationCommonSettings.HostApplicationName == "ZKOO" || ApplicationCommonSettings.IsDeveloperRelease;
+            bool isZkooOrEgsSdk = ApplicationCommonSettings.HostApplicationName == Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Zkoo || ApplicationCommonSettings.IsDeveloperRelease;
             HardwareTypeGroupBox.Visibility = isZkooOrEgsSdk ? Visibility.Visible : Visibility.Collapsed;
             CheckForEgsHostAppCoreUpdateCommandButton.Visibility = isZkooOrEgsSdk ? Visibility.Visible : Visibility.Collapsed;
 
             DeveloperSettingsTabItem.Visibility = (ApplicationCommonSettings.IsDeveloperRelease || ApplicationCommonSettings.IsDebugging) ? Visibility.Visible : Visibility.Collapsed;
+            DeviceUsageGroupBox.Visibility = ApplicationCommonSettings.CanChangeDeviceUsage ? Visibility.Visible : Visibility.Collapsed;
         }
 
         internal void ReloadDataContext()

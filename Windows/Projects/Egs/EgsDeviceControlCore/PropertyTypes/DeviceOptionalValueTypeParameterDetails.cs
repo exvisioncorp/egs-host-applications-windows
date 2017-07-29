@@ -97,11 +97,13 @@
         }
     }
 
-#if true
     public enum DeviceUsages : byte
     {
-        GestureCamera = 0,
+        RemoteTouch = 0,
+        MotionControl = 2,
+#if false
         WebCamera = 1,
+#endif
     }
     public partial class DeviceUsageOptions : HidAccessPropertyEnumValue<DeviceUsages>
     {
@@ -109,7 +111,10 @@
             : base()
         {
             OptionalValue.Options.Add(new ValueWithDescription<DeviceUsages>() { Value = (DeviceUsages)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey) });
+            OptionalValue.Options.Add(new ValueWithDescription<DeviceUsages>() { Value = (DeviceUsages)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceUsage_Options_2_DescriptionKey) });
+#if false
             OptionalValue.Options.Add(new ValueWithDescription<DeviceUsages>() { Value = (DeviceUsages)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey) });
+#endif
         }
     }
 
@@ -125,7 +130,6 @@
             OptionalValue.Options.Add(new ValueWithDescription<ModelSetIds>() { Value = 0, DescriptionKey = nameof(Resources.EgsDeviceSettings_ModelSetId_Options_0_DescriptionKey) });
         }
     }
-#endif
 
     public enum CaptureBinnings : byte
     {
@@ -265,7 +269,7 @@
         {
             OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)0, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_0_DescriptionKey) });
             OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)1, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_1_DescriptionKey) });
-            if (ApplicationCommonSettings.HostApplicationName == "ZKOO" || ApplicationCommonSettings.IsDeveloperRelease)
+            if (ApplicationCommonSettings.HostApplicationName == Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Zkoo || ApplicationCommonSettings.IsDeveloperRelease)
             {
                 OptionalValue.Options.Add(new ValueWithDescription<CursorSpeedAndPrecisionModes>() { Value = (CursorSpeedAndPrecisionModes)2, DescriptionKey = nameof(Resources.EgsDeviceSettings_CursorSpeedAndPrecisionMode_Options_2_DescriptionKey) });
             }

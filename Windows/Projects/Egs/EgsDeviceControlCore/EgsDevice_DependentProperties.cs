@@ -137,7 +137,7 @@
                     {
                         if (Settings.IsToDetectHandsOnDevice.Value != false) { Settings.IsToDetectHandsOnDevice.Value = false; }
                         {
-                            if (Settings.IsToDetectFacesOnDevice.Value == true)
+                            if (Settings.IsToDetectFacesOnDevice.Value)
                             {
                                 if (Settings.IsToDetectFacesOnDevice.Value != Settings.IsToDetectFaces) { Settings.IsToDetectFacesOnDevice.Value = Settings.IsToDetectFaces; }
                                 if (Settings.IsToFixHandDetectionRegions.Value != false) { Settings.IsToFixHandDetectionRegions.Value = false; }
@@ -340,13 +340,12 @@
                 }
             }
 
+            bool hr = false;
             try
             {
                 if (IsHidDeviceConnected && e.UpdatedProperty.IsReadOnly == false)
                 {
-                    if (CheckHidPropertyVersionAndCurrentFirmwareVersion(e.UpdatedProperty) == false) { return; }
-                    // NOTE: Important!!
-                    SetHidFeatureReport(e.UpdatedProperty.ByteArrayData);
+                    hr = SetHidAccessPropertyBySetHidFeatureReport(e.UpdatedProperty);
                 }
             }
             catch (Exception ex)
@@ -354,6 +353,17 @@
                 Debug.WriteLine(ex.Message);
                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
             }
+
+#if ApplicationCommonSettings_CanChangeDeviceUsage
+            // TODO: MUSTDO: test and debug
+            if (e.UpdatedProperty == Settings.DeviceUsage)
+            {
+                // TODO: MUSTDO: think again about specification
+                if (Settings.DeviceUsage.Value == DeviceUsages.RemoteTouch) { Settings.IsToDetectFaces.Value = true; }
+                else if (Settings.DeviceUsage.Value == DeviceUsages.MotionControl) { Settings.IsToDetectFaces.Value = false; }
+                ResetHidReportObjects();
+            }
+#endif
         }
     }
 }

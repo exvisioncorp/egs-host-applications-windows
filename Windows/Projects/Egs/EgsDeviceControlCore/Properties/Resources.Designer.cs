@@ -503,6 +503,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gesture Camera.
+        /// </summary>
+        public static string CommonStrings_GestureCamera {
+            get {
+                return ResourceManager.GetString("CommonStrings_GestureCamera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gesture Camera recognize your hands..
         /// </summary>
         public static string CommonStrings_GestureCameraRecognizeYourHands {
@@ -823,6 +832,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string CommonStrings_WouldYouExitApplication0 {
             get {
                 return ResourceManager.GetString("CommonStrings_WouldYouExitApplication0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZKOO.
+        /// </summary>
+        public static string CommonStrings_Zkoo {
+            get {
+                return ResourceManager.GetString("CommonStrings_Zkoo", resourceCulture);
             }
         }
         
@@ -1421,7 +1439,7 @@ namespace Egs.EgsDeviceControlCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gesture Camera.
+        ///   Looks up a localized string similar to Remote Touch.
         /// </summary>
         public static string EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey {
             get {
@@ -1435,6 +1453,15 @@ namespace Egs.EgsDeviceControlCore.Properties {
         public static string EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey {
             get {
                 return ResourceManager.GetString("EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Motion Control.
+        /// </summary>
+        public static string EgsDeviceSettings_DeviceUsage_Options_2_DescriptionKey {
+            get {
+                return ResourceManager.GetString("EgsDeviceSettings_DeviceUsage_Options_2_DescriptionKey", resourceCulture);
             }
         }
         

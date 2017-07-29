@@ -14,14 +14,23 @@
         [STAThread]
         static void Main()
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            Egs.BindableResources.Current.CultureChanged += delegate
+            {
+                ApplicationCommonSettings.HostApplicationName = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_GestureCamera;
+            };
+
+            Egs.BindableResources.Current.ChangeCulture(ApplicationCommonSettings.DefaultCultureInfoName);
+
             if (Egs.DotNetUtility.DuplicatedProcessStartBlocking.TryGetMutexOnTheBeginningOfApplicationConstructor() == false)
             {
-                MessageBox.Show("Only 1 instance can run at the same time.");
+                var msg = string.Format(System.Globalization.CultureInfo.InvariantCulture, Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0IsAlreadyRunning, ApplicationCommonSettings.HostApplicationName);
+                MessageBox.Show(msg, ApplicationCommonSettings.HostApplicationName);
                 return;
             }
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
             Egs.DotNetUtility.DuplicatedProcessStartBlocking.ReleaseMutex();

@@ -21,15 +21,6 @@
     [DataContract]
     public class EgsHostAppBaseComponents : EgsHostOnUserControl
     {
-        public static string MessageOfOnlyOneInstanceCanRun
-        {
-            get
-            {
-                var ret = string.Format(System.Globalization.CultureInfo.InvariantCulture, Resources.CommonStrings_Application0IsAlreadyRunning, ApplicationCommonSettings.HostApplicationName);
-                return ret;
-            }
-        }
-
         [DataMember]
         public CameraViewWindowModel CameraViewWindowModel { get; private set; }
         public CameraViewWindow CameraViewWindow { get; private set; }
@@ -233,11 +224,10 @@
 
         internal bool IsToDisposeThisWhenCameraViewWindowClosed { get; private set; }
 
-        public override void Reset()
+        protected override void ResetSettings()
         {
-            base.Reset();
+            base.ResetSettings();
             CameraViewWindowModel.Reset();
-            IsToStartTutorialWhenHostApplicationStart = true;
         }
 
         void Device_IsHidDeviceConnectedChanged(object sender, EventArgs e)

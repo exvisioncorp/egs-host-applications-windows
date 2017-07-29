@@ -29,7 +29,13 @@
         public FixedHandDetectionAreasExample01App()
             : base()
         {
+            Egs.BindableResources.Current.CultureChanged += delegate
+            {
+                ApplicationCommonSettings.HostApplicationName = "FixedHandDetectionAreasExample01";
+            };
+
             Egs.BindableResources.Current.ChangeCulture("");
+
             if (DuplicatedProcessStartBlocking.TryGetMutexOnTheBeginningOfApplicationConstructor() == false)
             {
                 Application.Current.Shutdown();

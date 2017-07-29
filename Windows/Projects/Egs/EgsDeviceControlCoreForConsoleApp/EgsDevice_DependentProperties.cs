@@ -333,9 +333,7 @@
             {
                 if (IsHidDeviceConnected && e.UpdatedProperty.IsReadOnly == false)
                 {
-                    if (CheckHidPropertyVersionAndCurrentFirmwareVersion(e.UpdatedProperty) == false) { return; }
-                    // NOTE: Important!!
-                    SetHidFeatureReport(e.UpdatedProperty.ByteArrayData);
+                    SetHidAccessPropertyBySetHidFeatureReport(e.UpdatedProperty);
                 }
             }
             catch (Exception ex)

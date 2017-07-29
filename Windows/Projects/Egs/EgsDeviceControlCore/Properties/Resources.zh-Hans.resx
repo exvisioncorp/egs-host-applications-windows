@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CommonStrings_GestureCamera" xml:space="preserve">
+    <value>手势摄像头</value>
+    <comment>Gesture Camera</comment>
+  </data>
+  <data name="CommonStrings_Zkoo" xml:space="preserve">
+    <value>ZKOO</value>
+    <comment>ZKOO</comment>
+  </data>
   <data name="CommonStrings_Application0Started" xml:space="preserve">
     <value>{0} 启动了</value>
     <comment>{0} started.</comment>
@@ -462,7 +470,7 @@
     <comment>by Host Application</comment>
   </data>
   <data name="CameraViewBordersAndPointersAreDrawnByDetail_ByDevice_Description" xml:space="preserve">
-    <value>由设备描画 (低负载)</value>
+    <value>由手势摄像头描画 (低负荷)</value>
     <comment>by Device (for Lower Spec PC)</comment>
   </data>
   <data name="EgsDeviceFaceDetectionOnHost_LongerDistanceNeedsMoreCpuUsage" xml:space="preserve">
@@ -514,7 +522,7 @@
     <comment>Left Hand</comment>
   </data>
   <data name="CursorDrawingTimingMethodDetail_Type_Description" xml:space="preserve">
-    <value>手势光标的描画频率 (较小的值意味着更低的负载)</value>
+    <value>手势光标的描画频率 (值越小负荷越小)</value>
     <comment>Gesture Cursor Drawing Frequency (Smaller Value for Lower Spec PC)</comment>
   </data>
   <data name="CursorDrawingTimingMethodDetail_ByHidReportUpdatedEvent_Description" xml:space="preserve">
@@ -730,12 +738,16 @@
     <comment>270: Portrait</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Description" xml:space="preserve">
-    <value>用途选项</value>
+    <value>模式选择</value>
     <comment>Use Device for</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Options_0_DescriptionKey" xml:space="preserve">
-    <value>手势摄像头</value>
-    <comment>Gesture Camera</comment>
+    <value>远程触控</value>
+    <comment>Remote Touch</comment>
+  </data>
+  <data name="EgsDeviceSettings_DeviceUsage_Options_2_DescriptionKey" xml:space="preserve">
+    <value>动作控制</value>
+    <comment>Motion Control</comment>
   </data>
   <data name="EgsDeviceSettings_DeviceUsage_Options_1_DescriptionKey" xml:space="preserve">
     <value>网络摄像头</value>
@@ -750,7 +762,7 @@
     <comment>Face Detection Method</comment>
   </data>
   <data name="EgsDeviceSettings_FaceDetectionMethod_Options_0_DescriptionKey" xml:space="preserve">
-    <value>相机设备</value>
+    <value>手势摄像头</value>
     <comment>Camera Device</comment>
   </data>
   <data name="EgsDeviceSettings_FaceDetectionMethod_Options_1_DescriptionKey" xml:space="preserve">
@@ -826,7 +838,7 @@
     <comment>Capture Image Size</comment>
   </data>
   <data name="EgsDeviceSettings_CaptureFps_Description" xml:space="preserve">
-    <value>摄像机帧每秒 (fps)</value>
+    <value>摄像头每秒帧数 (fps)</value>
     <comment>Camera Frame Per Second</comment>
   </data>
   <data name="EgsDeviceSettings_CaptureFps_Options_120_DescriptionKey" xml:space="preserve">

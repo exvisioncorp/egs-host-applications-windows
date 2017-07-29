@@ -205,7 +205,7 @@
         {
             try
             {
-                var firmwareVersion = new Version(ApplicationCommonSettings.FirmwareVersionInImageFileString);
+                var firmwareVersion = new Version(ApplicationCommonSettings.DevelopingFirmwareVersionString);
                 using (var writer = new System.IO.StreamWriter(OutputFilePath))
                 {
                     var EgsDevicePropertiesAll = InputRecordList.Where(e => e.OwnerClass == "EgsDevice").Where(e => string.IsNullOrEmpty(e.AccessModifierInLatestSdkForWindows) == false);

@@ -183,6 +183,11 @@
                 case EgsGestureHidReportMessageIds.StandingBy:
                     Reset();
                     break;
+                case EgsGestureHidReportMessageIds.ChangedSettingsByDevice:
+                    UpdateOnChangedSettingsByDevice(hidReport);
+                    MessageId = EgsGestureHidReportMessageIds.StandingBy;
+                    Reset();
+                    break;
                 case EgsGestureHidReportMessageIds.DetectingFaces:
                     if (Device.Settings.FaceDetectionMethod.Value == FaceDetectionMethods.DefaultProcessOnEgsDevice)
                     {
@@ -244,10 +249,24 @@
                                 break;
                         }
                         break;
+                    case EgsGestureHidReportMessageIds.ChangedSettingsByDevice:
+                        switch (MessageId)
+                        {
+                            case EgsGestureHidReportMessageIds.StandingBy:
+                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_StandingBy;
+                                break;
+                            default:
+                                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                                Debug.WriteLine("[Strange Transition] ChangedSettingsByDevice to any state except for StandingBy");
+                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.Unknown;
+                                break;
+                        }
+                        break;
                     case EgsGestureHidReportMessageIds.DetectingFaces:
                         switch (MessageId)
                         {
                             case EgsGestureHidReportMessageIds.StandingBy:
+                            case EgsGestureHidReportMessageIds.ChangedSettingsByDevice:
                                 eventInfo = EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_StandingBy;
                                 break;
                             case EgsGestureHidReportMessageIds.DetectingOrTrackingHands:
@@ -324,6 +343,39 @@
             {
                 Faces[SelectedFaceIndex].IsSelected = true;
             }
+        }
+
+        void UpdateOnChangedSettingsByDevice(byte[] hidReport)
+        {
+            // TODO: MUSTDO: test and debug
+            byte categoryId = hidReport[2];
+            byte propertyId = hidReport[3];
+            var targetProperty = Device.Settings.HidAccessPropertyList.SingleOrDefault(e => e.CategoryId == categoryId && e.PropertyId == propertyId);
+            if (targetProperty == null)
+            {
+                Debug.WriteLine($"[WARNING] Could not find the target HID property.  categoryId: {categoryId}  propertyId: {propertyId}");
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                return;
+            }
+            if (hidReport.Length != targetProperty.ByteArrayData.Length)
+            {
+                Debug.WriteLine($"[WARNING] hidReport.Length != targetProperty.ByteArrayData.Length.  hidReport.Length: {hidReport.Length}  targetProperty.ByteArrayData.Length: {targetProperty.ByteArrayData.Length}");
+                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                return;
+            }
+            if (false)
+            {
+                // This is general way but it cannot change the Device.Settings in the host appliaction
+                for (int i = 4; i < hidReport.Length; i++) { targetProperty.ByteArrayData[i] = hidReport[i]; }
+                targetProperty.RaiseValueUpdatedOnGetHidFeatureReport();
+            }
+
+#if ApplicationCommonSettings_CanChangeDeviceUsage
+            if (targetProperty == Device.Settings.DeviceUsage && hidReport[16] == (byte)DeviceUsages.RemoteTouch)
+            {
+                Device.Settings.DeviceUsage.Value = DeviceUsages.RemoteTouch;
+            }
+#endif
         }
 
         void UpdateOnDetectingOrTrackingHands(byte[] hidReport)

@@ -16,6 +16,12 @@
         public App()
             : base()
         {
+            Egs.BindableResources.Current.CultureChanged += delegate
+            {
+                ApplicationCommonSettings.HostApplicationName = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_GestureCamera;
+                //ApplicationCommonSettings.HostApplicationName = "WpfApplication1";
+            };
+
             // You can change the application CultureInfo to some cultures.
             // The next line lets it use OS culture
             Egs.BindableResources.Current.ChangeCulture("");
@@ -27,7 +33,8 @@
             if (DuplicatedProcessStartBlocking.TryGetMutexOnTheBeginningOfApplicationConstructor() == false)
             {
                 // Currently, the ZkooHostApp is not service, so only one instance can run.
-                MessageBox.Show(EgsHostAppBaseComponents.MessageOfOnlyOneInstanceCanRun);
+                var msg = string.Format(System.Globalization.CultureInfo.InvariantCulture, Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0IsAlreadyRunning, ApplicationCommonSettings.HostApplicationName);
+                MessageBox.Show(msg, ApplicationCommonSettings.HostApplicationName);
                 Application.Current.Shutdown();
                 return;
             }
@@ -36,25 +43,31 @@
             ApplicationCommonSettings.IsDebugging = true;
 
             // This object has all Views and Models
-            var host = new EgsHostAppBaseComponents();
+            var hostAppComponents = new EgsHostAppBaseComponents();
             // A lot of classes in "Egs" namespace have "InitializeOnceAtStartup..." methods.  Please call them.
-            host.InitializeOnceAtStartup();
+            hostAppComponents.InitializeOnceAtStartup();
+            hostAppComponents.HasResetSettings += delegate
+            {
+                // You can modify the application default settings here.
+                hostAppComponents.Device.Settings.CursorSpeedAndPrecisionMode.Value = Egs.PropertyTypes.CursorSpeedAndPrecisionModes.Standard;
+            };
 
-            host.CameraViewWindow.KeyDown += (sender, e) =>
+            hostAppComponents.CameraViewWindow.KeyDown += (sender, e) =>
             {
                 switch (e.Key)
                 {
                     case System.Windows.Input.Key.Escape:
                         // NOTE: The specification changed.
-                        // When you use EgsHostAppBaseComponents, it dispose itself when CameraViewWindow is closed.
-                        // So you need not to attach an event handler to call host.Dispose() to CameraViewWindow.Closed.
-                        host.CameraViewWindow.Close();
+                        // When you use EgsHostAppBaseComponents, it disposes itself when CameraViewWindow is closed.
+                        // So you need not to attach "event handler which calls host.Dispose()" to "event CameraViewWindow.Closed".
+                        hostAppComponents.CameraViewWindow.Close();
                         break;
                 }
             };
 
             this.Exit += delegate
             {
+                if (hostAppComponents != null) { hostAppComponents.Dispose(); hostAppComponents = null; }
                 DuplicatedProcessStartBlocking.ReleaseMutex();
             };
         }

@@ -227,10 +227,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EgsDeviceCameraViewImageSourceBitmapCapture_Properties.generated.cs</LastGenOutput>
     </None>
-    <Content Include="EgsDeviceFaceDetectionOnHost_Properties.tt">
+    <None Include="EgsDeviceFaceDetectionOnHost_Properties.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EgsDeviceFaceDetectionOnHost_Properties.generated.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Resources\HandIcon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
