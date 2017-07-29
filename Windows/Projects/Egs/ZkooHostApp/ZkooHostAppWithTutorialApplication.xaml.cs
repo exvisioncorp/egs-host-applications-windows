@@ -27,46 +27,48 @@
 
             try
             {
+                Egs.BindableResources.Current.CultureChanged += delegate
+                {
+                    ApplicationCommonSettings.HostApplicationName = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Zkoo;
+                    Egs.ZkooTutorial.BindableResources.Current.ChangeCulture(Egs.EgsDeviceControlCore.Properties.Resources.Culture.Name);
+                };
+
                 Egs.BindableResources.Current.ChangeCulture(ApplicationCommonSettings.DefaultCultureInfoName);
-                Egs.ZkooTutorial.BindableResources.Current.ChangeCulture(ApplicationCommonSettings.DefaultCultureInfoName);
-                ApplicationCommonSettings.HostApplicationName = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Zkoo;
 
                 if (DuplicatedProcessStartBlocking.TryGetMutexOnTheBeginningOfApplicationConstructor() == false)
                 {
-                    MessageBox.Show(EgsHostAppBaseComponents.MessageOfOnlyOneInstanceCanRun);
+                    var msg = string.Format(System.Globalization.CultureInfo.InvariantCulture, Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0IsAlreadyRunning, ApplicationCommonSettings.HostApplicationName);
+                    MessageBox.Show(msg, ApplicationCommonSettings.HostApplicationName);
                     if (Application.Current != null) { Application.Current.Shutdown(); }
                     return;
                 }
 
                 hostAppComponents = new EgsHostAppBaseComponents();
                 hostAppComponents.InitializeOnceAtStartup();
+                hostAppComponents.HasResetSettings += delegate
+                {
+                    // You can modify the application default settings here.
+                    hostAppComponents.Device.Settings.FaceDetectionMethod.Value = Egs.PropertyTypes.FaceDetectionMethods.DefaultProcessOnEgsHostApplication;
+                    hostAppComponents.IsToStartTutorialWhenHostApplicationStart = true;
+                };
                 if (SettingsSerialization.LoadSettingsJsonFile(hostAppComponents) == false) { hostAppComponents.Reset(); }
-
-                hostAppComponents.AppTrayIconAndMenuItems.TextOfNotifyIconInTray = ApplicationCommonSettings.HostApplicationName;
 
                 hostAppComponents.CameraViewWindow.Closed += delegate { hostAppComponents.Dispose(); };
 
                 hostAppComponents.Disposing += delegate
                 {
+                    // NOTE: Save settings before Dispose().  Target event is not Disposed but Disposing.
+                    if (hostAppComponents.CanSaveSettingsJsonFileSafely) { SettingsSerialization.SaveSettingsJsonFile(hostAppComponents); }
+
                     if (navigator != null)
                     {
                         // detach static event
                         Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= SystemEvents_DisplaySettingsChanged;
                     }
-
-                    // NOTE: Save settings before Dispose().
-                    if (hostAppComponents.Device == null || hostAppComponents.Device.FaceDetectionOnHost == null || hostAppComponents.Device.Settings == null || hostAppComponents.CameraViewUserControlModel == null || hostAppComponents.OnePersonBothHandsViewModel == null)
-                    {
-                        if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                    }
-                    else
-                    {
-                        SettingsSerialization.SaveSettingsJsonFile(hostAppComponents);
-                    }
-
-                    zkooTutorialModel = null;
                     // NOTE: IMPORTANT!
                     if (navigator != null) { navigator.Close(); navigator = null; }
+
+                    zkooTutorialModel = null;
                 };
 
                 base.Exit += delegate
@@ -107,10 +109,6 @@
                     zkooTutorialLaunchAction.Invoke();
                 };
 
-                Egs.BindableResources.Current.CultureChanged += delegate
-                {
-                    Egs.ZkooTutorial.BindableResources.Current.ChangeCulture(Egs.EgsDeviceControlCore.Properties.Resources.Culture.Name);
-                };
                 hostAppComponents.IsStartingDeviceFirmwareUpdate += delegate { if (navigator != null) { navigator.ExitTutorial(); } };
                 hostAppComponents.IsStartingHostApplicationUpdate += delegate { if (navigator != null) { navigator.ExitTutorial(); } };
 

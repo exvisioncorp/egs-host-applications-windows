@@ -45,6 +45,11 @@
             The minimum set of EGS host application, which can run on some UserControl or Window.
             </summary>
         </member>
+        <member name="M:Egs.EgsHostOnUserControl.Reset">
+            <summary>
+            Call ResetSettings() and then call OnResetSettings()
+            </summary>
+        </member>
         <member name="T:Egs.CameraViewUserControlModel">
             <summary>
             ViewModel of CameraViewUserControl.  When you use CameraViewUserControl,

@@ -24,6 +24,12 @@
         public App()
             : base()
         {
+            Egs.BindableResources.Current.CultureChanged += delegate
+            {
+                ApplicationCommonSettings.HostApplicationName = Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_GestureCamera;
+                //ApplicationCommonSettings.HostApplicationName = "WpfApplication2";
+            };
+
             // You can change the application CultureInfo to some cultures.
             // The next line lets it use OS culture
             Egs.BindableResources.Current.ChangeCulture("");
@@ -34,7 +40,8 @@
 
             if (DuplicatedProcessStartBlocking.TryGetMutexOnTheBeginningOfApplicationConstructor() == false)
             {
-                MessageBox.Show(EgsHostAppBaseComponents.MessageOfOnlyOneInstanceCanRun);
+                var msg = string.Format(System.Globalization.CultureInfo.InvariantCulture, Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0IsAlreadyRunning, ApplicationCommonSettings.HostApplicationName);
+                MessageBox.Show(msg, ApplicationCommonSettings.HostApplicationName);
                 Application.Current.Shutdown();
                 return;
             }

@@ -106,6 +106,22 @@
         public SimpleDelegateCommand ResetDeviceCommand { get; private set; }
         public SimpleDelegateCommand SendManySettingsPacketsCommand { get; private set; }
 
+        public bool CanSaveSettingsJsonFileSafely
+        {
+            get
+            {
+                if (Device == null
+                    || Device.FaceDetectionOnHost == null
+                    || Device.Settings == null
+                    || CameraViewUserControlModel == null
+                    || OnePersonBothHandsViewModel == null)
+                {
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    return false;
+                }
+                return true;
+            }
+        }
 
         internal virtual void RaiseMultipleObjectsPropertyChanged()
         {
@@ -335,7 +351,22 @@
             drawingCursorsStopwatch.Reset(); drawingCursorsStopwatch.Start();
         }
 
-        public virtual void Reset()
+        public event EventHandler HasResetSettings;
+        protected virtual void OnResetSettings(EventArgs e)
+        {
+            var t = HasResetSettings; if (t != null) { t(this, e); }
+        }
+
+        /// <summary>
+        /// Call ResetSettings() and then call OnResetSettings()
+        /// </summary>
+        public void Reset()
+        {
+            ResetSettings();
+            OnResetSettings(EventArgs.Empty);
+        }
+
+        protected virtual void ResetSettings()
         {
             // TODO: This is very old memo and it says "Do it at first", but I forgot the reason.
             Device.ResetSettings();

@@ -18,14 +18,17 @@
         public FaceDetectionCompletedEventExample1App()
             : base()
         {
+            Egs.BindableResources.Current.CultureChanged += delegate
+            {
+                ApplicationCommonSettings.HostApplicationName = "FaceDetectionCompletedEventExample1";
+            };
+
             Egs.BindableResources.Current.ChangeCulture("");
-            //Egs.BindableResources.Current.ChangeCulture("en");
-            //Egs.BindableResources.Current.ChangeCulture("ja");
-            //Egs.BindableResources.Current.ChangeCulture("zh-Hans");
 
             if (DuplicatedProcessStartBlocking.TryGetMutexOnTheBeginningOfApplicationConstructor() == false)
             {
-                MessageBox.Show(EgsHostAppBaseComponents.MessageOfOnlyOneInstanceCanRun);
+                var msg = string.Format(System.Globalization.CultureInfo.InvariantCulture, Egs.EgsDeviceControlCore.Properties.Resources.CommonStrings_Application0IsAlreadyRunning, ApplicationCommonSettings.HostApplicationName);
+                MessageBox.Show(msg, ApplicationCommonSettings.HostApplicationName);
                 Application.Current.Shutdown();
                 return;
             }
@@ -50,6 +53,7 @@
             this.Exit += delegate
             {
                 Window.Close();
+                if (Components != null) { Components.Dispose(); Components = null; }
                 DuplicatedProcessStartBlocking.ReleaseMutex();
             };
         }
