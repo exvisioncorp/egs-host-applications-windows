@@ -9,16 +9,20 @@
     using Egs.PropertyTypes;
     using Egs.Win32;
 
+    // Please use not value but tag
     public enum EgsDeviceRecognitionStateTransitionTypes
     {
         Unknown,
         NotChanged,
-        StandingBy_DetectingFaces,
-        DetectingFaces_StandingBy,
+        AnyStates_StandingBy,
+        StandingByOrChangedSettingsByDevice_DetectingFaces,
         DetectingFaces_DetectingHands,
         DetectingHands_DetectingFaces,
         DetectingHands_TrackingHands,
         TrackingHands_DetectingFaces,
+        // We designed this path does not exist.  Face detection restarts to correct face position and hand areas.
+        //TrackingHands_DetectingHands,
+        // TODO: MUSTDO: check the specification faces are detected not by device but by host app.
     }
 
     public class EgsGestureHidReportRecognitionStateChangedEventArgs : EventArgs
@@ -44,6 +48,8 @@
             var t = RecognitionStateChanged; if (t != null) { t(this, e); }
         }
         internal EgsGestureHidReportMessageIds MessageId { get; set; }
+        EgsGestureHidReportMessageIds MessageIdPrevious { get; set; }
+        IList<EgsGestureHidReportRecognitionState> HandRecognitionStatePreviousList { get; set; }
         public bool IsStandingBy { get { return MessageId == EgsGestureHidReportMessageIds.StandingBy; } }
         public bool IsFaceDetecting { get { return MessageId == EgsGestureHidReportMessageIds.DetectingFaces; } }
         public ushort FrameNumber { get; internal set; }
@@ -140,6 +146,7 @@
             Device = device;
             Faces = Enumerable.Range(0, Device.DetectableFacesCountMaximum).Select(e => new EgsDeviceEgsGestureHidReportFace()).ToList();
             Hands = Enumerable.Range(0, Device.TrackableHandsCountMaximum).Select(e => new EgsDeviceEgsGestureHidReportHand()).ToList();
+            HandRecognitionStatePreviousList = Enumerable.Range(0, Device.TrackableHandsCountMaximum).Select(e => EgsGestureHidReportRecognitionState.NotDetecting).ToList();
             UpdateHandXYScaleFactors();
             ResetInternal();
         }
@@ -147,8 +154,10 @@
         void ResetInternal()
         {
             // NOTE: Virtual methods should not be called in any constructors.  So I divided this method from the constuctor.  Reset() method should do the same thing, so it is called from Reset().
-            MessageId = EgsGestureHidReportMessageIds.StandingBy;
             ReportId = HidReportIds.EgsGesture;
+            MessageId = EgsGestureHidReportMessageIds.StandingBy;
+            MessageIdPrevious = EgsGestureHidReportMessageIds.StandingBy;
+            HandRecognitionStatePreviousList = Enumerable.Range(0, Device.TrackableHandsCountMaximum).Select(e => EgsGestureHidReportRecognitionState.NotDetecting).ToList();
             FrameNumber = 0;
             FramesPerSecond = 100.0;
             FaceDetectionArea = new System.Drawing.Rectangle();
@@ -163,16 +172,17 @@
         public void Reset()
         {
             ResetInternal();
-            OnRecognitionStateChanged(new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.StandingBy_DetectingFaces));
+            OnRecognitionStateChanged(new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.StandingByOrChangedSettingsByDevice_DetectingFaces));
             OnReportUpdated(EventArgs.Empty);
         }
 
         internal virtual void UpdateByHidReportAsByteArray(byte[] hidReport)
         {
             Trace.Assert(hidReport[0] == (byte)HidReportIds.EgsGesture);
-            var previousMessageId = MessageId;
-            var previousHand0RecognitionState = Hands[0].RecognitionState;
-            var previousHand1RecognitionState = Hands[1].RecognitionState;
+
+            MessageIdPrevious = MessageId;
+            HandRecognitionStatePreviousList[0] = Hands[0].RecognitionState;
+            HandRecognitionStatePreviousList[1] = Hands[1].RecognitionState;
 
             ReportId = (HidReportIds)hidReport[0];
             MessageId = (EgsGestureHidReportMessageIds)hidReport[1];
@@ -192,7 +202,7 @@
                     if (Device.Settings.FaceDetectionMethod.Value == FaceDetectionMethods.DefaultProcessOnEgsDevice)
                     {
                         // NOTE: In Kickstarter 1st released version, when MessageId is DetectingFaces, the app needed to reset this object by Timer.
-                        if (MessageId != previousMessageId)
+                        if (MessageId != MessageIdPrevious)
                         {
                             if (false) { Debug.WriteLine("DetectingFaces && MessageId has changed."); }
                             foreach (var face in Faces) { face.Reset(); }
@@ -216,30 +226,37 @@
             }
 
             OnReportUpdated(EventArgs.Empty);
-            if (previousMessageId != MessageId
-                || previousHand0RecognitionState != Hands[0].RecognitionState
-                || previousHand1RecognitionState != Hands[1].RecognitionState)
+            CheckRecognitionStateChanged();
+        }
+
+        void CheckRecognitionStateChanged()
+        {
+            if (MessageId == EgsGestureHidReportMessageIds.Unknown) { return; }
+            if (MessageIdPrevious == EgsGestureHidReportMessageIds.Unknown) { return; }
+            if (MessageIdPrevious != MessageId
+                || HandRecognitionStatePreviousList[0] != Hands[0].RecognitionState
+                || HandRecognitionStatePreviousList[1] != Hands[1].RecognitionState)
             {
-                bool isTrackingPrevious = ((previousHand0RecognitionState == EgsGestureHidReportRecognitionState.Tracking)
-                    || (previousHand1RecognitionState == EgsGestureHidReportRecognitionState.Tracking));
+                bool isTrackingPrevious = ((HandRecognitionStatePreviousList[0] == EgsGestureHidReportRecognitionState.Tracking)
+                    || (HandRecognitionStatePreviousList[1] == EgsGestureHidReportRecognitionState.Tracking));
                 bool isTracking = ((Hands[0].RecognitionState == EgsGestureHidReportRecognitionState.Tracking)
                     || (Hands[1].RecognitionState == EgsGestureHidReportRecognitionState.Tracking));
 
                 EgsDeviceRecognitionStateTransitionTypes eventInfo;
-                switch (previousMessageId)
+                switch (MessageIdPrevious)
                 {
                     case EgsGestureHidReportMessageIds.StandingBy:
                         switch (MessageId)
                         {
                             case EgsGestureHidReportMessageIds.DetectingFaces:
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.StandingBy_DetectingFaces;
+                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.StandingByOrChangedSettingsByDevice_DetectingFaces;
                                 break;
                             case EgsGestureHidReportMessageIds.DetectingOrTrackingHands:
                                 // MUSTDO: check.  it seems strange that device sends reports by this order.
                                 // NOTE (en): If this is correct specification, and if it does not return the value "this is transition to DetectinfFaces", later event handlers may not work well.
                                 // NOTE (ja): もしこういう仕様なら、DetectingFacesへの遷移だと返さないと、この後段のイベントハンドラで期待しない動作になってしまう。
                                 Debug.WriteLine("[Strange Transition] StandingBy to DetectingOrTrackingHands");
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.StandingBy_DetectingFaces;
+                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.StandingByOrChangedSettingsByDevice_DetectingFaces;
                                 // NOTE: So it returns this value.  It seems to work without any problems.
                                 eventInfo = EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_DetectingHands;
                                 break;
@@ -253,7 +270,7 @@
                         switch (MessageId)
                         {
                             case EgsGestureHidReportMessageIds.StandingBy:
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_StandingBy;
+                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.AnyStates_StandingBy;
                                 break;
                             default:
                                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
@@ -267,7 +284,7 @@
                         {
                             case EgsGestureHidReportMessageIds.StandingBy:
                             case EgsGestureHidReportMessageIds.ChangedSettingsByDevice:
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_StandingBy;
+                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.AnyStates_StandingBy;
                                 break;
                             case EgsGestureHidReportMessageIds.DetectingOrTrackingHands:
                                 eventInfo = EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_DetectingHands;
@@ -305,7 +322,10 @@
                         eventInfo = EgsDeviceRecognitionStateTransitionTypes.Unknown;
                         break;
                 }
-                OnRecognitionStateChanged(new EgsGestureHidReportRecognitionStateChangedEventArgs(eventInfo));
+                if (eventInfo != EgsDeviceRecognitionStateTransitionTypes.Unknown)
+                {
+                    OnRecognitionStateChanged(new EgsGestureHidReportRecognitionStateChangedEventArgs(eventInfo));
+                }
             }
         }
 
