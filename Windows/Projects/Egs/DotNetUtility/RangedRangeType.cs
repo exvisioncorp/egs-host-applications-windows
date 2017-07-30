@@ -40,12 +40,18 @@
             {
                 if (value.CompareTo(_Minimum) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newFrom(={0}) < Minimum(={1}).  From = Minimum = {1}", value, _Minimum));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newFrom(={0}) < Minimum(={1}).  From = Minimum = {1}", value, _Minimum));
+                    }
                     value = _Minimum;
                 }
                 else if (_To.CompareTo(value) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] To(={1}) < newFrom(={0}).  From = To = {1}", value, _To));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] To(={1}) < newFrom(={0}).  From = To = {1}", value, _To));
+                    }
                     value = _To;
                 }
                 _From = value;
@@ -69,12 +75,18 @@
             {
                 if (value.CompareTo(_From) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newTo(={0}) < From(={1}).  To = From = {1}", value, _From));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newTo(={0}) < From(={1}).  To = From = {1}", value, _From));
+                    }
                     value = _From;
                 }
                 else if (_Maximum.CompareTo(value) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Maximum(={1}) < newTo(={0}).  To = Maximum = {1}", value, _Maximum));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Maximum(={1}) < newTo(={0}).  To = Maximum = {1}", value, _Maximum));
+                    }
                     value = _Maximum;
                 }
                 _To = value;
@@ -93,7 +105,10 @@
                 // Latest setting has priority.  The set value does not depend on the previous object state.
                 if (_Maximum.CompareTo(value) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Maximum(={1}) < newMinimum(={0}).  Minimum = From = To = Maximum = newMinimum = {0}", value, _Maximum));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Maximum(={1}) < newMinimum(={0}).  Minimum = From = To = Maximum = newMinimum = {0}", value, _Maximum));
+                    }
                     if (CanRaiseDebbugerBreak) { Debugger.Break(); }
                     _Minimum = _From = _To = _Maximum = value;
                     OnPropertyChanged(nameof(Maximum));
@@ -103,7 +118,10 @@
                 }
                 else if (_To.CompareTo(value) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] To(={1}) < newMinimum(={0}).  Minimum = From = To = newMinimum = {0}", value, _To));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] To(={1}) < newMinimum(={0}).  Minimum = From = To = newMinimum = {0}", value, _To));
+                    }
                     _Minimum = _From = _To = value;
                     OnPropertyChanged(nameof(Minimum));
                     OnToChanged(EventArgs.Empty);
@@ -111,7 +129,10 @@
                 }
                 else if (_From.CompareTo(value) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] From(={1}) < newMinimum(={0}).  Minimum = From = newMinimum = {0}", value, _From));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] From(={1}) < newMinimum(={0}).  Minimum = From = newMinimum = {0}", value, _From));
+                    }
                     _Minimum = _From = value;
                     OnPropertyChanged(nameof(Minimum));
                     OnFromChanged(EventArgs.Empty);
@@ -135,7 +156,10 @@
                 // Latest setting has priority.  The set value does not depend on the previous object state.
                 if (value.CompareTo(_Minimum) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < Minimum(={1}).  Maximum = To = From = Minimum = newMaximum = {0}", value, _Minimum));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < Minimum(={1}).  Maximum = To = From = Minimum = newMaximum = {0}", value, _Minimum));
+                    }
                     if (CanRaiseDebbugerBreak) { Debugger.Break(); }
                     _Maximum = _To = _From = _Minimum = value;
                     OnPropertyChanged(nameof(Minimum));
@@ -145,7 +169,10 @@
                 }
                 else if (value.CompareTo(_From) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < From(={1}).  Maximum = To = From = newMaximum = {0}", value, _From));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < From(={1}).  Maximum = To = From = newMaximum = {0}", value, _From));
+                    }
                     _Maximum = _To = _From = value;
                     OnPropertyChanged(nameof(Maximum));
                     OnFromChanged(EventArgs.Empty);
@@ -153,7 +180,10 @@
                 }
                 else if (value.CompareTo(_To) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < To(={1}).  Maximum = To = newMaximum = {0}", value, _To));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < To(={1}).  Maximum = To = newMaximum = {0}", value, _To));
+                    }
                     _Maximum = _To = value;
                     OnPropertyChanged(nameof(Maximum));
                     OnToChanged(EventArgs.Empty);
