@@ -9,31 +9,6 @@
     using Egs.PropertyTypes;
     using Egs.Win32;
 
-    // Please use not value but tag
-    public enum EgsDeviceRecognitionStateTransitionTypes
-    {
-        Unknown,
-        NotChanged,
-        AnyStates_StandingBy,
-        StandingByOrChangedSettingsByDevice_DetectingFaces,
-        DetectingFaces_DetectingHands,
-        DetectingHands_DetectingFaces,
-        DetectingHands_TrackingHands,
-        TrackingHands_DetectingFaces,
-        // We designed this path does not exist.  Face detection restarts to correct face position and hand areas.
-        //TrackingHands_DetectingHands,
-        // TODO: MUSTDO: check the specification faces are detected not by device but by host app.
-    }
-
-    public class EgsGestureHidReportRecognitionStateChangedEventArgs : EventArgs
-    {
-        public EgsDeviceRecognitionStateTransitionTypes TransitionType { get; private set; }
-        public EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes newTransitionType)
-        {
-            TransitionType = newTransitionType;
-        }
-    }
-
     /// <summary>
     /// Vendor specific HID report for applications of EgsSDK users.  This class does not implement INotifyProperty.  Just this reconstructs the recognition state from byte array reports.
     /// </summary>
@@ -42,14 +17,15 @@
         internal EgsDevice Device { get; private set; }
         internal HidReportIds ReportId { get; private set; }
 
-        public event EventHandler<EgsGestureHidReportRecognitionStateChangedEventArgs> RecognitionStateChanged;
-        protected virtual void OnRecognitionStateChanged(EgsGestureHidReportRecognitionStateChangedEventArgs e)
+        public event EventHandler RecognitionStateChanged;
+        protected virtual void OnRecognitionStateChanged(EventArgs e)
         {
             var t = RecognitionStateChanged; if (t != null) { t(this, e); }
         }
         internal EgsGestureHidReportMessageIds MessageId { get; set; }
-        EgsGestureHidReportMessageIds MessageIdPrevious { get; set; }
-        IList<EgsGestureHidReportRecognitionState> HandRecognitionStatePreviousList { get; set; }
+        internal EgsGestureHidReportMessageIds MessageIdPrevious { get; private set; }
+        internal IList<EgsGestureHidReportRecognitionState> HandRecognitionStatePreviousList { get; private set; }
+
         public bool IsStandingBy { get { return MessageId == EgsGestureHidReportMessageIds.StandingBy; } }
         public bool IsFaceDetecting { get { return MessageId == EgsGestureHidReportMessageIds.DetectingFaces; } }
         public ushort FrameNumber { get; internal set; }
@@ -172,7 +148,7 @@
         public void Reset()
         {
             ResetInternal();
-            OnRecognitionStateChanged(new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.StandingByOrChangedSettingsByDevice_DetectingFaces));
+            OnRecognitionStateChanged(EventArgs.Empty);
             OnReportUpdated(EventArgs.Empty);
         }
 
@@ -180,7 +156,7 @@
         {
             Trace.Assert(hidReport[0] == (byte)HidReportIds.EgsGesture);
 
-            MessageIdPrevious = MessageId;
+            if (MessageId != EgsGestureHidReportMessageIds.Unknown) { MessageIdPrevious = MessageId; }
             HandRecognitionStatePreviousList[0] = Hands[0].RecognitionState;
             HandRecognitionStatePreviousList[1] = Hands[1].RecognitionState;
 
@@ -232,100 +208,12 @@
         void CheckRecognitionStateChanged()
         {
             if (MessageId == EgsGestureHidReportMessageIds.Unknown) { return; }
-            if (MessageIdPrevious == EgsGestureHidReportMessageIds.Unknown) { return; }
+            //if (MessageIdPrevious == EgsGestureHidReportMessageIds.Unknown) { return; }
             if (MessageIdPrevious != MessageId
                 || HandRecognitionStatePreviousList[0] != Hands[0].RecognitionState
                 || HandRecognitionStatePreviousList[1] != Hands[1].RecognitionState)
             {
-                bool isTrackingPrevious = ((HandRecognitionStatePreviousList[0] == EgsGestureHidReportRecognitionState.Tracking)
-                    || (HandRecognitionStatePreviousList[1] == EgsGestureHidReportRecognitionState.Tracking));
-                bool isTracking = ((Hands[0].RecognitionState == EgsGestureHidReportRecognitionState.Tracking)
-                    || (Hands[1].RecognitionState == EgsGestureHidReportRecognitionState.Tracking));
-
-                EgsDeviceRecognitionStateTransitionTypes eventInfo;
-                switch (MessageIdPrevious)
-                {
-                    case EgsGestureHidReportMessageIds.StandingBy:
-                        switch (MessageId)
-                        {
-                            case EgsGestureHidReportMessageIds.DetectingFaces:
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.StandingByOrChangedSettingsByDevice_DetectingFaces;
-                                break;
-                            case EgsGestureHidReportMessageIds.DetectingOrTrackingHands:
-                                // MUSTDO: check.  it seems strange that device sends reports by this order.
-                                // NOTE (en): If this is correct specification, and if it does not return the value "this is transition to DetectinfFaces", later event handlers may not work well.
-                                // NOTE (ja): もしこういう仕様なら、DetectingFacesへの遷移だと返さないと、この後段のイベントハンドラで期待しない動作になってしまう。
-                                Debug.WriteLine("[Strange Transition] StandingBy to DetectingOrTrackingHands");
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.StandingByOrChangedSettingsByDevice_DetectingFaces;
-                                // NOTE: So it returns this value.  It seems to work without any problems.
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_DetectingHands;
-                                break;
-                            case EgsGestureHidReportMessageIds.Unknown:
-                            default:
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.Unknown;
-                                break;
-                        }
-                        break;
-                    case EgsGestureHidReportMessageIds.ChangedSettingsByDevice:
-                        switch (MessageId)
-                        {
-                            case EgsGestureHidReportMessageIds.StandingBy:
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.AnyStates_StandingBy;
-                                break;
-                            default:
-                                if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
-                                Debug.WriteLine("[Strange Transition] ChangedSettingsByDevice to any state except for StandingBy");
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.Unknown;
-                                break;
-                        }
-                        break;
-                    case EgsGestureHidReportMessageIds.DetectingFaces:
-                        switch (MessageId)
-                        {
-                            case EgsGestureHidReportMessageIds.StandingBy:
-                            case EgsGestureHidReportMessageIds.ChangedSettingsByDevice:
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.AnyStates_StandingBy;
-                                break;
-                            case EgsGestureHidReportMessageIds.DetectingOrTrackingHands:
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_DetectingHands;
-                                break;
-                            case EgsGestureHidReportMessageIds.Unknown:
-                            default:
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.Unknown;
-                                break;
-                        }
-                        break;
-                    case EgsGestureHidReportMessageIds.DetectingOrTrackingHands:
-                        if (isTrackingPrevious == false)
-                        {
-                            if (isTracking)
-                            {
-                                eventInfo = EgsDeviceRecognitionStateTransitionTypes.DetectingHands_TrackingHands;
-                            }
-                            else
-                            {
-                                // Was Detecting
-                                if (MessageId == EgsGestureHidReportMessageIds.DetectingFaces) { eventInfo = EgsDeviceRecognitionStateTransitionTypes.DetectingHands_DetectingFaces; }
-                                else { eventInfo = EgsDeviceRecognitionStateTransitionTypes.Unknown; }
-                            }
-                        }
-                        else
-                        {
-                            // was tracking
-                            if (isTracking) { eventInfo = EgsDeviceRecognitionStateTransitionTypes.NotChanged; }
-                            else if (MessageId == EgsGestureHidReportMessageIds.DetectingFaces) { eventInfo = EgsDeviceRecognitionStateTransitionTypes.TrackingHands_DetectingFaces; }
-                            else { eventInfo = EgsDeviceRecognitionStateTransitionTypes.Unknown; }
-                        }
-                        break;
-                    case EgsGestureHidReportMessageIds.Unknown:
-                    default:
-                        eventInfo = EgsDeviceRecognitionStateTransitionTypes.Unknown;
-                        break;
-                }
-                if (eventInfo != EgsDeviceRecognitionStateTransitionTypes.Unknown)
-                {
-                    OnRecognitionStateChanged(new EgsGestureHidReportRecognitionStateChangedEventArgs(eventInfo));
-                }
+                OnRecognitionStateChanged(EventArgs.Empty);
             }
         }
 
