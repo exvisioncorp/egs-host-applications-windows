@@ -171,7 +171,7 @@
         {
             try
             {
-                if (ApplicationCommonSettings.IsDebuggingInternal)
+                if (false && ApplicationCommonSettings.IsDebuggingInternal)
                 {
                     var str = "";
                     str += DateTime.Now.ToString("[yyyy/MM/dd HH:mm:ss.fff] ");

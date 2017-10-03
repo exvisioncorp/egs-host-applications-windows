@@ -173,21 +173,12 @@
             _Topmost = !(ApplicationCommonSettings.IsDebugging);
             _CanShowMenu = true;
 
-
             WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods;
             WindowStateUsersControlMethod.Value = CameraViewWindowStateUsersControlMethods.ManualOnOff;
 
-            WindowStateHostApplicationsControlMethod.ValueUpdated += delegate
-            {
-                SetWindowStateToMinimizedDelayTimer.Stop();
-                // NOTE: "WindowState = WindowState.Normal" means that the app shows Camera View.   The app shows Camera View to notify that users can change the state manually.
-                if (WindowStateUsersControlMethod.Value == CameraViewWindowStateUsersControlMethods.ManualOnOff) { WindowState = WindowState.Normal; }
-            };
-            WindowStateUsersControlMethod.ValueUpdated += delegate
-            {
-                SetWindowStateToMinimizedDelayTimer.Stop();
-                if (WindowStateUsersControlMethod.Value == CameraViewWindowStateUsersControlMethods.ManualOnOff) { WindowState = WindowState.Normal; }
-            };
+            WindowStateHostApplicationsControlMethod.ValueUpdated += delegate { StartCheckingIsShowingCameraViewWindow(); };
+            WindowStateUsersControlMethod.ValueUpdated += delegate { StartCheckingIsShowingCameraViewWindow(); };
+
             MinimizeCommand.PerformEventHandler += delegate { ToggleWindowStateControlMethodOnAutoOrOff(); };
         }
 
@@ -266,6 +257,7 @@
 
         public void SetWindowStateToNormal()
         {
+            SetWindowStateToMinimizedDelayTimer.Stop();
             if (IsNormalOrElseMinimized != true) { IsNormalOrElseMinimized = true; }
         }
         public void SetWindowStateToMinimizedWithDelay()
@@ -275,18 +267,34 @@
 
         public void StartCheckingIsShowingCameraViewWindow()
         {
-            if (WindowStateUsersControlMethod.Value == CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart
-                || WindowStateUsersControlMethod.Value == CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideWhenHandTrackingEnd)
+            SetWindowStateToMinimizedDelayTimer.Stop();
+
+            switch (WindowStateHostApplicationsControlMethod.Value)
             {
-                SetWindowStateToMinimizedWithDelay();
+                case CameraViewWindowStateHostApplicationsControlMethods.KeepMinimized:
+                    WindowState = WindowState.Minimized;
+                    return;
+                case CameraViewWindowStateHostApplicationsControlMethods.KeepNormal:
+                    WindowState = WindowState.Normal;
+                    return;
+                case CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods:
+                    break;
+                default:
+                    if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
+                    throw new NotImplementedException();
             }
 
-            if (Device.IsDetectingFaces) { EgsGestureHidReport_RecognitionStateChanged(null, new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.StandingBy_DetectingFaces)); }
-            else if (Device.IsDetectingHands) { EgsGestureHidReport_RecognitionStateChanged(null, new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_DetectingHands)); }
-            else if (Device.IsTrackingOneOrMoreHands) { EgsGestureHidReport_RecognitionStateChanged(null, new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.DetectingHands_TrackingHands)); }
-            else { EgsGestureHidReport_RecognitionStateChanged(null, new EgsGestureHidReportRecognitionStateChangedEventArgs(EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_StandingBy)); }
+            // NOTE: "WindowState = WindowState.Normal" means that the app shows Camera View.   The app shows Camera View to notify that users can change the state manually.
+            if (WindowStateUsersControlMethod.Value == CameraViewWindowStateUsersControlMethods.ManualOnOff)
+            {
+                WindowState = WindowState.Normal;
+                return;
+            }
+
+            EgsGestureHidReport_RecognitionStateChanged(null, EventArgs.Empty);
         }
-        void EgsGestureHidReport_RecognitionStateChanged(object sender, EgsGestureHidReportRecognitionStateChangedEventArgs e)
+
+        void EgsGestureHidReport_RecognitionStateChanged(object sender, EventArgs e)
         {
             if (Device.EgsGestureHidReport.MessageId == EgsGestureHidReportMessageIds.Unknown)
             {
@@ -294,133 +302,79 @@
                 if (ApplicationCommonSettings.IsDebugging) { Debugger.Break(); }
                 return;
             }
-            // TODO: When users are watching some videos and they does not move their body, Camera View should be turned off.
-            // NOTE: If the Camera View blinks, doubt that the state can change backwards and forwards between StandingBy mode and DetectingFaces mode.
             if (Device.EgsGestureHidReport.MessageId == EgsGestureHidReportMessageIds.StandingBy)
             {
                 Debug.WriteLine("EgsGestureHidReportMessageIds.StandingBy");
-                if (false) { SetWindowStateToMinimizedWithDelay(); }
+                if (WindowStateUsersControlMethod.Value != CameraViewWindowStateUsersControlMethods.ManualOnOff)
+                {
+                    SetWindowStateToMinimizedWithDelay();
+                }
                 return;
             }
 
-            if (WindowStateUsersControlMethod.Value == CameraViewWindowStateUsersControlMethods.ManualOnOff)
-            {
-                return;
-            }
+            // NOTE: When users are watching some contents (ex. video) and they does not move their body, Camera View should be turned off.
+            // NOTE: If the Camera View blinks, doubt that the state can change backwards and forwards between StandingBy mode and DetectingFaces mode.
+            // NOTE: Not only the current state but the latest transition is used, because "When X end" needs the previous state.
+            // NOTE: "DetectingFaces_DetectingHands" means "check if user is starting gesture or not" AND "Face is detected, but user is not doing gesture".
+            // NOTE: "WhenHandDetectionEnd" means "face detection restarts or tracking is started".
+
+            Debug.Write(DateTime.Now.ToString("[yyyy/MM/dd HH:mm:ss.fff]"));
+            Debug.Write($"  Device.IsDetectingFaces: {Device.IsDetectingFaces:B5}");
+            Debug.Write($"  Device.IsDetectingHands: {Device.IsDetectingHands:B5}");
+            Debug.Write($"  Device.IsTrackingOneOrMoreHands: {Device.IsTrackingOneOrMoreHands:B5}");
+            Debug.WriteLine("");
 
             switch (WindowStateUsersControlMethod.Value)
             {
+                case CameraViewWindowStateUsersControlMethods.ManualOnOff:
+                    break;
                 case CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandTrackingStart:
-                    switch (e.TransitionType)
                     {
-                        case EgsDeviceRecognitionStateTransitionTypes.StandingBy_DetectingFaces:
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingHands_DetectingFaces:
-                        case EgsDeviceRecognitionStateTransitionTypes.TrackingHands_DetectingFaces:
-                            Debug.WriteLine("SetWindowStateToNormal");
-                            SetWindowStateToNormal();
-                            break;
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingHands_TrackingHands:
-                            SetWindowStateToMinimizedWithDelay();
-                            break;
-                        default:
-                            break;
+                        if (Device.IsTrackingOneOrMoreHands) { SetWindowStateToMinimizedWithDelay(); }
+                        else if (Device.IsDetectingHands) { SetWindowStateToNormal(); }
+                        else if (Device.IsDetectingFaces) { SetWindowStateToNormal(); }
                     }
                     break;
                 case CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandDetectionStart_ShowWhenHandTrackingStart:
-                    switch (e.TransitionType)
                     {
-                        case EgsDeviceRecognitionStateTransitionTypes.StandingBy_DetectingFaces:
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingHands_DetectingFaces:
-                        case EgsDeviceRecognitionStateTransitionTypes.TrackingHands_DetectingFaces:
-                            SetWindowStateToNormal();
-                            break;
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_DetectingHands:
-                            SetWindowStateToMinimizedWithDelay();
-                            break;
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingHands_TrackingHands:
-                            SetWindowStateToNormal();
-                            break;
-                        default:
-                            break;
+                        if (Device.IsTrackingOneOrMoreHands) { SetWindowStateToNormal(); }
+                        else if (Device.IsDetectingHands) { SetWindowStateToMinimizedWithDelay(); }
+                        else if (Device.IsDetectingFaces) { SetWindowStateToNormal(); }
                     }
                     break;
                 case CameraViewWindowStateUsersControlMethods.ShowWhenFaceDetectionStart_HideSoonAfterHandDetectionStart_ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart:
-                    switch (e.TransitionType)
                     {
-                        case EgsDeviceRecognitionStateTransitionTypes.StandingBy_DetectingFaces:
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingHands_DetectingFaces:
-                        case EgsDeviceRecognitionStateTransitionTypes.TrackingHands_DetectingFaces:
-                            SetWindowStateToNormal();
-                            break;
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_DetectingHands:
-                            SetWindowStateToMinimizedWithDelay();
-                            break;
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingHands_TrackingHands:
-                            SetWindowStateToNormal();
-                            SetWindowStateToMinimizedWithDelay();
-                            break;
-                        default:
-                            break;
+                        if (Device.IsTrackingOneOrMoreHands) { SetWindowStateToNormal(); SetWindowStateToMinimizedWithDelay(); }
+                        else if (Device.IsDetectingHands) { SetWindowStateToMinimizedWithDelay(); }
+                        else if (Device.IsDetectingFaces) { SetWindowStateToNormal(); }
                     }
                     break;
                 case CameraViewWindowStateUsersControlMethods.ShowWhenHandDetectionStart_HideWhenHandDetectionEnd_HideWhenHandTrackingEnd:
-                    switch (e.TransitionType)
                     {
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_DetectingHands:
-                            SetWindowStateToNormal();
-                            break;
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingHands_DetectingFaces:
-                            SetWindowStateToMinimizedWithDelay();
-                            break;
-                        case EgsDeviceRecognitionStateTransitionTypes.TrackingHands_DetectingFaces:
-                            SetWindowStateToMinimizedWithDelay();
-                            break;
-                        default:
-                            break;
+                        if (Device.IsTrackingOneOrMoreHands) { SetWindowStateToNormal(); SetWindowStateToMinimizedWithDelay(); }
+                        else if (Device.IsDetectingHands) { SetWindowStateToNormal(); }
+                        else if (Device.IsDetectingFaces) { SetWindowStateToMinimizedWithDelay(); }
                     }
                     break;
                 case CameraViewWindowStateUsersControlMethods.ShowWhenHandDetectionStart_HideWhenHandDetectionEnd_HideSoonAfterHandTrackingStart:
-                    switch (e.TransitionType)
                     {
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingFaces_DetectingHands:
-                            SetWindowStateToNormal();
-                            break;
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingHands_DetectingFaces:
-                            SetWindowStateToMinimizedWithDelay();
-                            break;
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingHands_TrackingHands:
-                            SetWindowStateToNormal();
-                            SetWindowStateToMinimizedWithDelay();
-                            break;
-                        default:
-                            break;
+                        if (Device.IsTrackingOneOrMoreHands) { SetWindowStateToNormal(); SetWindowStateToMinimizedWithDelay(); }
+                        else if (Device.IsDetectingHands) { SetWindowStateToNormal(); }
+                        else if (Device.IsDetectingFaces) { SetWindowStateToMinimizedWithDelay(); }
                     }
                     break;
                 case CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideWhenHandTrackingEnd:
-                    switch (e.TransitionType)
                     {
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingHands_TrackingHands:
-                            SetWindowStateToNormal();
-                            break;
-                        case EgsDeviceRecognitionStateTransitionTypes.TrackingHands_DetectingFaces:
-                            SetWindowStateToMinimizedWithDelay();
-                            break;
-                        default:
-                            break;
+                        if (Device.IsTrackingOneOrMoreHands) { SetWindowStateToNormal(); }
+                        else if (Device.IsDetectingHands) { SetWindowStateToMinimizedWithDelay(); }
+                        else if (Device.IsDetectingFaces) { SetWindowStateToMinimizedWithDelay(); }
                     }
                     break;
                 case CameraViewWindowStateUsersControlMethods.ShowWhenHandTrackingStart_HideSoonAfterHandTrackingStart:
-                    switch (e.TransitionType)
                     {
-                        case EgsDeviceRecognitionStateTransitionTypes.DetectingHands_TrackingHands:
-                            SetWindowStateToNormal();
-                            SetWindowStateToMinimizedWithDelay();
-                            break;
-                        case EgsDeviceRecognitionStateTransitionTypes.TrackingHands_DetectingFaces:
-                            SetWindowStateToMinimizedWithDelay();
-                            break;
-                        default:
-                            break;
+                        if (Device.IsTrackingOneOrMoreHands) { SetWindowStateToNormal(); SetWindowStateToMinimizedWithDelay(); }
+                        else if (Device.IsDetectingHands) { SetWindowStateToMinimizedWithDelay(); }
+                        else if (Device.IsDetectingFaces) { SetWindowStateToMinimizedWithDelay(); }
                     }
                     break;
                 default:

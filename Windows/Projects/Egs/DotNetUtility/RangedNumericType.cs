@@ -7,6 +7,11 @@
     using System.ComponentModel;
     using System.Runtime.Serialization;
 
+    public static class RangedTypesCommonSettings
+    {
+        public static bool IsToShowDebugMessages { get; set; } = false;
+    }
+
     [DataContract]
     public class RangedNumericType<T> : IComparable<T>, IEquatable<T>, INotifyPropertyChanged
         where T : IComparable<T>, IEquatable<T>
@@ -38,12 +43,18 @@
             {
                 if (value.CompareTo(_Minimum) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newValue(={0}) < Minimum(={1}).  Value = Minimum = {1}", value, _Minimum));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newValue(={0}) < Minimum(={1}).  Value = Minimum = {1}", value, _Minimum));
+                    }
                     value = _Minimum;
                 }
                 else if (_Maximum.CompareTo(value) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Maximum(={1}) < newValue(={0}).  Value = Maximum = {1}", value, _Maximum));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Maximum(={1}) < newValue(={0}).  Value = Maximum = {1}", value, _Maximum));
+                    }
                     value = _Maximum;
                 }
                 _Value = value;
@@ -62,7 +73,10 @@
                 // Latest setting has priority.  The set value does not depend on the previous object state.
                 if (_Maximum.CompareTo(value) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Maximum(={1}) < newMinimum(={0}).  Minimum = Value = Maximum = newMinimum = {0}", value, _Maximum));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Maximum(={1}) < newMinimum(={0}).  Minimum = Value = Maximum = newMinimum = {0}", value, _Maximum));
+                    }
                     if (CanRaiseDebbugerBreak) { Debugger.Break(); }
                     _Minimum = _Value = _Maximum = value;
                     OnPropertyChanged(nameof(Maximum));
@@ -71,7 +85,10 @@
                 }
                 else if (_Value.CompareTo(value) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Value(={1}) < newMinimum(={0}).  Minimum = Value = newMinimum = {0}", value, _Value));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] Value(={1}) < newMinimum(={0}).  Minimum = Value = newMinimum = {0}", value, _Value));
+                    }
                     _Minimum = _Value = value;
                     OnPropertyChanged(nameof(Minimum));
                     OnValueChanged(EventArgs.Empty);
@@ -95,7 +112,10 @@
                 // Latest setting has priority.  The set value does not depend on the previous object state.
                 if (value.CompareTo(_Minimum) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < Minimum(={1}).  Maximum = Value = Minimum = newMaximum = {0}", value, _Minimum));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < Minimum(={1}).  Maximum = Value = Minimum = newMaximum = {0}", value, _Minimum));
+                    }
                     if (CanRaiseDebbugerBreak) { Debugger.Break(); }
                     _Maximum = _Value = _Minimum = value;
                     OnPropertyChanged(nameof(Minimum));
@@ -104,7 +124,10 @@
                 }
                 else if (value.CompareTo(_Value) < 0)
                 {
-                    Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < Value(={1}).  Maximum = Value = newMaximum = {0}", value, _Value));
+                    if (RangedTypesCommonSettings.IsToShowDebugMessages)
+                    {
+                        Debug.WriteLine(string.Format(System.Globalization.CultureInfo.InvariantCulture, "[Warning] newMaximum(={0}) < Value(={1}).  Maximum = Value = newMaximum = {0}", value, _Value));
+                    }
                     _Maximum = _Value = value;
                     OnPropertyChanged(nameof(Maximum));
                     OnValueChanged(EventArgs.Empty);

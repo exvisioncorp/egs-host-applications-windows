@@ -173,24 +173,10 @@
                 this.Dispose();
             };
 
-            CameraViewWindowModel.CanDragMoveChanged += delegate
-            {
-                // do nothing
-            };
-
+            // do nothing
+            CameraViewWindowModel.CanDragMoveChanged += delegate { };
             CameraViewWindowModel.CanResizeChanged += delegate { OnCanResizeCameraViewWindowChanged(); };
             OnCanResizeCameraViewWindowChanged();
-
-            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.ValueUpdated += delegate
-            {
-                CameraViewWindowModel.StartCheckingIsShowingCameraViewWindow();
-            };
-            CameraViewWindowModel.WindowStateHostApplicationsControlMethod.Value = CameraViewWindowStateHostApplicationsControlMethods.UseUsersControlMethods;
-            CameraViewWindowModel.WindowStateUsersControlMethod.ValueUpdated += delegate
-            {
-                CameraViewWindowModel.StartCheckingIsShowingCameraViewWindow();
-            };
-            CameraViewWindowModel.WindowStateUsersControlMethod.Value = CameraViewWindowStateUsersControlMethods.ManualOnOff;
 
             Device.IsHidDeviceConnectedChanged += Device_IsHidDeviceConnectedChanged;
             // NOTE: Update is necessary here, too.
