@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -30,3 +31,16 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion(Egs.ApplicationCommonSettings.HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString)]
 [assembly: AssemblyFileVersion(Egs.ApplicationCommonSettings.HostAppCoreDllAssemblyVersionMajorMinorBuildRevisionString)]
+
+[assembly: InternalsVisibleTo("EgsHostAppCore")]
+[assembly: InternalsVisibleTo("EgsHostAppCore.Test")]
+[assembly: InternalsVisibleTo("ZkooTutorial")]
+[assembly: InternalsVisibleTo("ZkooHostApp")]
+[assembly: InternalsVisibleTo("EgsInternalHostAppExtensions")]
+[assembly: InternalsVisibleTo("ZkooHostAppInternal")]
+[assembly: InternalsVisibleTo("EgsHost")]
+[assembly: InternalsVisibleTo("PowerPointViewer")]
+[assembly: InternalsVisibleTo("ZkooDeviceFirmwareUpdate")]
+[assembly: InternalsVisibleTo("ZkooDeviceQualityAssurance")]
+[assembly: InternalsVisibleTo("ZkooHostServiceApp")]
+// NOTE: set "uiAccess="false"" in Projects/Egs/ZkooHostApp/Properties/app.manifest
