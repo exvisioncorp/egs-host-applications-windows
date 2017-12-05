@@ -78,6 +78,16 @@
             });
         }
 
+        public void MenuItemsRemoveAt(int index)
+        {
+            contextMenuStripFromNotifyIconInTray.Items.RemoveAt(index);
+        }
+
+        public void MenuItemsInsert(int index, ToolStripItem value)
+        {
+            contextMenuStripFromNotifyIconInTray.Items.Insert(index, value);
+        }
+
         internal void InitializeOnceAtStartup(EgsHostAppBaseComponents egsHostAppBaseComponents)
         {
             Trace.Assert(egsHostAppBaseComponents != null);

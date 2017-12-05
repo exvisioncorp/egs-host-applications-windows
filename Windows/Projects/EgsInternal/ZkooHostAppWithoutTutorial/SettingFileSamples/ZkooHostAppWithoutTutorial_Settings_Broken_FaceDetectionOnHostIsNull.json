@@ -1,0 +1,349 @@
+{
+  "CameraViewWindowModel": {
+    "CanDragMove": false,
+    "CanResize": false,
+    "Topmost": true,
+    "CanShowMenu": true,
+    "SetWindowStateToMinimizedDelayTimerInterval": "00:00:03",
+    "WindowStateUsersControlMethod": {
+      "OptionalValue": {
+        "SelectedIndex": 0
+      }
+    },
+    "LocationAndSize": "1478,108,394,252"
+  },
+  "IsToStartTutorialWhenHostApplicationStart": true,
+  "MouseCursorPositionUpdatedByGestureCursorMethod": {
+    "OptionalValue": {
+      "SelectedIndex": 0
+    }
+  },
+  "CursorDrawingTimingMethod": {
+    "OptionalValue": {
+      "SelectedIndex": 0
+    }
+  },
+  "CameraViewBordersAndPointersAreDrawnBy": {
+    "OptionalValue": {
+      "SelectedIndex": 0
+    }
+  },
+  "Device": {
+    "FaceDetectionOnHost": null,
+    "Settings": {
+      "UsbProtocolRevision": {
+        "Value": 1
+      },
+      "IsToMonitorTemperature": {
+        "Value": false
+      },
+      "PowerMode": {
+        "OptionalValue": {
+          "SelectedIndex": 0
+        }
+      },
+      "TouchInterfaceKind": {
+        "OptionalValue": {
+          "SelectedIndex": 0
+        }
+      },
+      "DeviceRotationAngleInClockwise": {
+        "OptionalValue": {
+          "SelectedIndex": 0
+        }
+      },
+      "IsToDetectFaces": {
+        "Value": true
+      },
+      "FaceDetectionMethod": {
+        "OptionalValue": {
+          "SelectedIndex": 1
+        }
+      },
+      "IsToDetectHands": {
+        "Value": true
+      },
+      "IsToSendTouchScreenHidReport": {
+        "Value": true
+      },
+      "IsToSendHoveringStateOnTouchScreenHidReport": {
+        "Value": false
+      },
+      "IsToSendEgsGestureHidReport": {
+        "Value": true
+      },
+      "CaptureBinning": {
+        "OptionalValue": {
+          "SelectedIndex": 0
+        }
+      },
+      "CaptureFps": {
+        "OptionalValue": {
+          "SelectedIndex": 0
+        }
+      },
+      "CaptureExposureMode": {
+        "OptionalValue": {
+          "SelectedIndex": 0
+        }
+      },
+      "CaptureManualExposureParameters": {
+        "Value": [
+          0.0
+        ]
+      },
+      "CameraViewImageSourceBitmapSize": {
+        "OptionalValue": {
+          "SelectedIndex": 2
+        }
+      },
+      "IsToDrawBordersOnCameraViewImageByDevice": {
+        "Value": false
+      },
+      "IsToFixFaceDetectionRegion": {
+        "Value": false
+      },
+      "FaceDetectionAreaOnFixed": {
+        "Value": {
+          "XRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.3,
+            "To": 0.7,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          },
+          "YRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.2,
+            "To": 0.6,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          }
+        }
+      },
+      "FaceDetectionScaleOnFixed": {
+        "RangedRange": {
+          "CanRaiseDebbugerBreak": false,
+          "From": 24,
+          "To": 150,
+          "Minimum": 24,
+          "Maximum": 240,
+          "SmallChange": 0,
+          "LargeChange": 0,
+          "TickFrequency": 0
+        }
+      },
+      "FaceSelectionOnDeviceMethod": {
+        "OptionalValue": {
+          "SelectedIndex": 0
+        }
+      },
+      "IsToFixHandDetectionRegions": {
+        "Value": true
+      },
+      "RightHandDetectionAreaOnFixed": {
+        "Value": {
+          "XRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.6,
+            "To": 0.9,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          },
+          "YRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.3,
+            "To": 0.9,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          }
+        }
+      },
+      "RightHandDetectionScaleOnFixed": {
+        "RangedValue": {
+          "CanRaiseDebbugerBreak": false,
+          "Value": 15,
+          "Minimum": 4,
+          "Maximum": 25,
+          "SmallChange": 1,
+          "LargeChange": 10,
+          "TickFrequency": 10
+        }
+      },
+      "LeftHandDetectionAreaOnFixed": {
+        "Value": {
+          "XRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.1,
+            "To": 0.4,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          },
+          "YRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.3,
+            "To": 0.9,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          }
+        }
+      },
+      "LeftHandDetectionScaleOnFixed": {
+        "RangedValue": {
+          "CanRaiseDebbugerBreak": false,
+          "Value": 15,
+          "Minimum": 4,
+          "Maximum": 25,
+          "SmallChange": 1,
+          "LargeChange": 10,
+          "TickFrequency": 10
+        }
+      },
+      "IsToFixHandTrackingAreas": {
+        "Value": false
+      },
+      "RightHandTrackingAreaOnFixed": {
+        "Value": {
+          "XRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.55,
+            "To": 0.95,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          },
+          "YRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.3,
+            "To": 0.85,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          }
+        }
+      },
+      "LeftHandTrackingAreaOnFixed": {
+        "Value": {
+          "XRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.05,
+            "To": 0.45,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          },
+          "YRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.3,
+            "To": 0.85,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          }
+        }
+      },
+      "IsToFixScreenMappedAreas": {
+        "Value": false
+      },
+      "RightHandScreenMappedAreaOnFixed": {
+        "Value": {
+          "XRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.65,
+            "To": 0.85,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          },
+          "YRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.5,
+            "To": 0.8,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          }
+        }
+      },
+      "LeftHandScreenMappedAreaOnFixed": {
+        "Value": {
+          "XRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.15,
+            "To": 0.35,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          },
+          "YRange": {
+            "CanRaiseDebbugerBreak": false,
+            "From": 0.5,
+            "To": 0.8,
+            "Minimum": 0.0,
+            "Maximum": 1.0,
+            "SmallChange": 0.0,
+            "LargeChange": 0.0,
+            "TickFrequency": 0.0
+          }
+        }
+      },
+      "CursorSpeedAndPrecisionMode": {
+        "OptionalValue": {
+          "SelectedIndex": 0
+        }
+      },
+      "FastMovingHandsGestureMode": {
+        "OptionalValue": {
+          "SelectedIndex": 0
+        }
+      },
+      "StatusLedBrightnessMaximum": {
+        "Value": 255
+      }
+    }
+  },
+  "CameraViewUserControlModel": {
+    "IsToDrawImageSet": true
+  },
+  "OnePersonBothHandsViewModel": {
+    "PersonId": 0,
+    "CursorImageSetInformationOptionalValue": {
+      "SelectedIndex": 0
+    },
+    "LongTapElapsedThresholdInMilliseconds": 800.0
+  },
+  "DrawingCursorsMinimumIntervalInMilliseconds": 8,
+  "WaitTimeTillMouseCursorHideOnMouseMode": "00:00:10"
+}

@@ -56,12 +56,29 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixedHandDetectionAreasExample01", "Projects\EgsSDK\EgsSDK-0.9\Examples\FixedHandDetectionAreasExample01\FixedHandDetectionAreasExample01.csproj", "{ADC01950-48A3-4AB6-BF36-117CD524D539}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FaceDetectionByDlibForWindows", "FaceDetectionByDlibForWindows", "{95B381A6-9071-4954-AF56-EFF33D702A23}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{1F628372-AF93-4B3C-8E5A-9FB04F1CBF2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DlibSharp", "..\FaceDetectionByDlibForWindows\Projects\DlibSharp\DlibSharp.csproj", "{BF03D6A2-F237-4CBA-B64C-A05B1939F99D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceDetectionCompletedEventExample1", "Projects\EgsSDK\EgsSDK-0.9\Examples\FaceDetectionCompletedEventExample1\FaceDetectionCompletedEventExample1.csproj", "{0D2DA9F4-E35D-4911-A5B1-A357E34528A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EgsInternal", "EgsInternal", "{8B86C286-E0BB-42D2-88E8-F8F7DB4AC495}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestureCameraHostApp", "Projects\Egs\GestureCameraHostApp\GestureCameraHostApp.csproj", "{DE9DA0D9-579D-4F30-90BB-040E43DB0A4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EgsInternalHostAppExtensions", "Projects\EgsInternal\EgsInternalHostAppExtensions\EgsInternalHostAppExtensions.csproj", "{9BA3B0E3-0E17-4133-BB57-766463F49EE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZkooHostAppInternal", "Projects\EgsInternal\ZkooHostAppInternal\ZkooHostAppInternal.csproj", "{71F93B2C-F345-4340-B3F2-67FBD5D4AF97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EgsSdkExamplesWpfApplication2", "Projects\EgsInternal\EgsSdkExamplesWpfApplication2\EgsSdkExamplesWpfApplication2.csproj", "{D67E280D-BD29-4FC6-B056-90B075FB1809}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfWindowResizeTest", "Projects\EgsInternal\WpfWindowResizeTest\WpfWindowResizeTest.csproj", "{3E46A4ED-20AB-4C12-ADC7-33917FF12801}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZkooHostAppWithoutTutorial", "Projects\EgsInternal\ZkooHostAppWithoutTutorial\ZkooHostAppWithoutTutorial.csproj", "{8B1A8CAB-8566-4E0C-B5EA-D89804F20B78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -137,6 +154,30 @@ Global
 		{0D2DA9F4-E35D-4911-A5B1-A357E34528A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D2DA9F4-E35D-4911-A5B1-A357E34528A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D2DA9F4-E35D-4911-A5B1-A357E34528A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE9DA0D9-579D-4F30-90BB-040E43DB0A4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE9DA0D9-579D-4F30-90BB-040E43DB0A4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE9DA0D9-579D-4F30-90BB-040E43DB0A4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE9DA0D9-579D-4F30-90BB-040E43DB0A4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BA3B0E3-0E17-4133-BB57-766463F49EE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BA3B0E3-0E17-4133-BB57-766463F49EE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BA3B0E3-0E17-4133-BB57-766463F49EE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BA3B0E3-0E17-4133-BB57-766463F49EE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71F93B2C-F345-4340-B3F2-67FBD5D4AF97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71F93B2C-F345-4340-B3F2-67FBD5D4AF97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71F93B2C-F345-4340-B3F2-67FBD5D4AF97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71F93B2C-F345-4340-B3F2-67FBD5D4AF97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D67E280D-BD29-4FC6-B056-90B075FB1809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D67E280D-BD29-4FC6-B056-90B075FB1809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D67E280D-BD29-4FC6-B056-90B075FB1809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D67E280D-BD29-4FC6-B056-90B075FB1809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E46A4ED-20AB-4C12-ADC7-33917FF12801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E46A4ED-20AB-4C12-ADC7-33917FF12801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E46A4ED-20AB-4C12-ADC7-33917FF12801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E46A4ED-20AB-4C12-ADC7-33917FF12801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B1A8CAB-8566-4E0C-B5EA-D89804F20B78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B1A8CAB-8566-4E0C-B5EA-D89804F20B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B1A8CAB-8566-4E0C-B5EA-D89804F20B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B1A8CAB-8566-4E0C-B5EA-D89804F20B78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,5 +206,12 @@ Global
 		{1F628372-AF93-4B3C-8E5A-9FB04F1CBF2F} = {95B381A6-9071-4954-AF56-EFF33D702A23}
 		{BF03D6A2-F237-4CBA-B64C-A05B1939F99D} = {1F628372-AF93-4B3C-8E5A-9FB04F1CBF2F}
 		{0D2DA9F4-E35D-4911-A5B1-A357E34528A9} = {FFD1CAEA-333A-48D9-9727-CA8245278084}
+		{8B86C286-E0BB-42D2-88E8-F8F7DB4AC495} = {9275081B-8C6E-43D0-B8B1-559E1E7AD26E}
+		{DE9DA0D9-579D-4F30-90BB-040E43DB0A4B} = {01EA5DF0-122F-4131-86EC-8320D7400F09}
+		{9BA3B0E3-0E17-4133-BB57-766463F49EE8} = {8B86C286-E0BB-42D2-88E8-F8F7DB4AC495}
+		{71F93B2C-F345-4340-B3F2-67FBD5D4AF97} = {8B86C286-E0BB-42D2-88E8-F8F7DB4AC495}
+		{D67E280D-BD29-4FC6-B056-90B075FB1809} = {8B86C286-E0BB-42D2-88E8-F8F7DB4AC495}
+		{3E46A4ED-20AB-4C12-ADC7-33917FF12801} = {8B86C286-E0BB-42D2-88E8-F8F7DB4AC495}
+		{8B1A8CAB-8566-4E0C-B5EA-D89804F20B78} = {8B86C286-E0BB-42D2-88E8-F8F7DB4AC495}
 	EndGlobalSection
 EndGlobal

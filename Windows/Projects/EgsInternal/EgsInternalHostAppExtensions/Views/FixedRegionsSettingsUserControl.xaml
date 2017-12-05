@@ -1,0 +1,484 @@
+﻿<UserControl x:ClassModifier="internal" x:Class="Egs.Views.FixedRegionsSettingsUserControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:deviceControl="clr-namespace:Egs;assembly=EgsDeviceControlCore" xmlns:local="clr-namespace:Egs"
+        xmlns:properties="clr-namespace:Egs.EgsDeviceControlCore.Properties"
+        xmlns:dotnetutilviews="clr-namespace:Egs.DotNetUtility.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" d:DesignWidth="800"
+        Background="White">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/EgsHostAppCore;component/Views/CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <GroupBox
+                Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Settings}">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Device.Settings.IsToDrawBordersOnCameraViewImageByDevice.Value}"
+                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDrawBordersOnCameraViewImageByDevice_Description}" />
+                    <CheckBox IsChecked="{Binding Device.Settings.IsToDetectFacesOnDevice.Value}"
+                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectFacesOnDevice_Description}" />
+                    <CheckBox IsChecked="{Binding Device.Settings.IsToDetectHandsOnDevice.Value}"
+                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToDetectHandsOnDevice_Description}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Device.Settings.IsToFixFaceDetectionRegion.Value}"
+                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToFixFaceDetectionRegion_Description}" />
+                    <CheckBox IsChecked="{Binding Device.Settings.IsToFixHandDetectionRegions.Value}"
+                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToFixHandDetectionRegions_Description}" />
+                    <CheckBox IsChecked="{Binding Device.Settings.IsToFixHandTrackingAreas.Value}"
+                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToFixHandTrackingAreas_Description}" />
+                    <CheckBox IsChecked="{Binding Device.Settings.IsToFixScreenMappedAreas.Value}"
+                            Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_IsToFixScreenMappedAreas_Description}" />
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <StackPanel>
+            <GroupBox
+                    Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceDetectionAreaOnFixed_Description}">
+                <UniformGrid DataContext="{Binding Device.Settings.FaceDetectionAreaOnFixed}" Columns="2">
+                    <StackPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Left}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=FaceDetectionAreaOnFixed_Left_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="FaceDetectionAreaOnFixed_Left_Slider" Value="{Binding Left, Mode=TwoWay}"
+                                    Minimum="0" Maximum="1" VerticalAlignment="Center" TickFrequency="0.01"
+                                    IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Right}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=FaceDetectionAreaOnFixed_Right_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="FaceDetectionAreaOnFixed_Right_Slider" Value="{Binding Right, Mode=TwoWay}"
+                                    Minimum="0" Maximum="1" VerticalAlignment="Center" TickFrequency="0.01"
+                                    IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Top}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=FaceDetectionAreaOnFixed_Top_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="FaceDetectionAreaOnFixed_Top_Slider" Value="{Binding Top, Mode=TwoWay}"
+                                    Minimum="0" Maximum="1" VerticalAlignment="Center" TickFrequency="0.01"
+                                    IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Bottom}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=FaceDetectionAreaOnFixed_Bottom_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="FaceDetectionAreaOnFixed_Bottom_Slider"
+                                    Value="{Binding Bottom, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </UniformGrid>
+            </GroupBox>
+
+            <GroupBox
+                    Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FaceDetectionScaleOnFixed_Description}">
+                <UniformGrid DataContext="{Binding Device.Settings.FaceDetectionScaleOnFixed.RangedRange}" Columns="2">
+                    <DockPanel>
+                        <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Top}" />
+                        <TextBox DockPanel.Dock="Right"
+                                Text="{Binding Value, ElementName=FaceDetectionScaleOnFixed_Top_Slider, StringFormat={}{0:G5}}"
+                                Width="50" IsReadOnly="True" TextAlignment="Center" VerticalContentAlignment="Center" />
+                        <Slider x:Name="FaceDetectionScaleOnFixed_Top_Slider" Value="{Binding From, Mode=TwoWay}"
+                                Minimum="24" Maximum="200" VerticalAlignment="Center" TickFrequency="1" LargeChange="10"
+                                IsSnapToTickEnabled="true" TickPlacement="Both" />
+                    </DockPanel>
+                    <DockPanel>
+                        <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Bottom}" />
+                        <TextBox DockPanel.Dock="Right"
+                                Text="{Binding Value, ElementName=FaceDetectionScaleOnFixed_Bottom_Slider, StringFormat={}{0:G5}}"
+                                Width="50" IsReadOnly="True" TextAlignment="Center" VerticalContentAlignment="Center" />
+                        <Slider x:Name="FaceDetectionScaleOnFixed_Bottom_Slider" Value="{Binding To, Mode=TwoWay}"
+                                Minimum="24" Maximum="200" VerticalAlignment="Center" TickFrequency="1" LargeChange="10"
+                                IsSnapToTickEnabled="true" TickPlacement="Both" />
+                    </DockPanel>
+
+                </UniformGrid>
+            </GroupBox>
+        </StackPanel>
+
+        <UniformGrid Rows="1" Columns="2">
+            <StackPanel>
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_LeftHandDetectionAreaOnFixed_Description}">
+                    <StackPanel DataContext="{Binding Device.Settings.LeftHandDetectionAreaOnFixed}">
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Left}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandDetectionAreaOnFixed_Left_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandDetectionAreaOnFixed_Left_Slider"
+                                    Value="{Binding Left, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Right}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandDetectionAreaOnFixed_Right_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandDetectionAreaOnFixed_Right_Slider"
+                                    Value="{Binding Right, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Top}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandDetectionAreaOnFixed_Top_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandDetectionAreaOnFixed_Top_Slider" Value="{Binding Top, Mode=TwoWay}"
+                                    Minimum="0" Maximum="1" VerticalAlignment="Center" TickFrequency="0.01"
+                                    IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Bottom}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandDetectionAreaOnFixed_Bottom_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandDetectionAreaOnFixed_Bottom_Slider"
+                                    Value="{Binding Bottom, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_LeftHandDetectionScaleOnFixed_Description}">
+                    <StackPanel DataContext="{Binding Device.Settings.LeftHandDetectionScaleOnFixed.RangedValue}">
+                        <DockPanel>
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandDetectionScaleOnFixed_Value_Slider}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandDetectionScaleOnFixed_Value_Slider"
+                                    Value="{Binding Value, Mode=TwoWay}" Minimum="4" Maximum="25"
+                                    VerticalAlignment="Center" TickFrequency="1" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_LeftHandTrackingAreaOnFixed_Description}">
+                    <StackPanel DataContext="{Binding Device.Settings.LeftHandTrackingAreaOnFixed}">
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Left}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandTrackingAreaOnFixed_Left_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandTrackingAreaOnFixed_Left_Slider" Value="{Binding Left, Mode=TwoWay}"
+                                    Minimum="0" Maximum="1" VerticalAlignment="Center" TickFrequency="0.01"
+                                    IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Right}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandTrackingAreaOnFixed_Right_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandTrackingAreaOnFixed_Right_Slider"
+                                    Value="{Binding Right, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Top}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandTrackingAreaOnFixed_Top_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandTrackingAreaOnFixed_Top_Slider" Value="{Binding Top, Mode=TwoWay}"
+                                    Minimum="0" Maximum="1" VerticalAlignment="Center" TickFrequency="0.01"
+                                    IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Bottom}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandTrackingAreaOnFixed_Bottom_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandTrackingAreaOnFixed_Bottom_Slider"
+                                    Value="{Binding Bottom, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_LeftHandScreenMappedAreaOnFixed_Description}">
+                    <StackPanel DataContext="{Binding Device.Settings.LeftHandScreenMappedAreaOnFixed}">
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Left}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandScreenMappedAreaOnFixed_Left_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandScreenMappedAreaOnFixed_Left_Slider"
+                                    Value="{Binding Left, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Right}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandScreenMappedAreaOnFixed_Right_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandScreenMappedAreaOnFixed_Right_Slider"
+                                    Value="{Binding Right, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Top}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandScreenMappedAreaOnFixed_Top_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandScreenMappedAreaOnFixed_Top_Slider"
+                                    Value="{Binding Top, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Bottom}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=LeftHandScreenMappedAreaOnFixed_Bottom_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="LeftHandScreenMappedAreaOnFixed_Bottom_Slider"
+                                    Value="{Binding Bottom, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+
+            <StackPanel>
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_RightHandDetectionAreaOnFixed_Description}">
+                    <StackPanel DataContext="{Binding Device.Settings.RightHandDetectionAreaOnFixed}">
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Left}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandDetectionAreaOnFixed_Left_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandDetectionAreaOnFixed_Left_Slider"
+                                    Value="{Binding Left, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Right}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandDetectionAreaOnFixed_Right_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandDetectionAreaOnFixed_Right_Slider"
+                                    Value="{Binding Right, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Top}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandDetectionAreaOnFixed_Top_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandDetectionAreaOnFixed_Top_Slider" Value="{Binding Top, Mode=TwoWay}"
+                                    Minimum="0" Maximum="1" VerticalAlignment="Center" TickFrequency="0.01"
+                                    IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Bottom}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandDetectionAreaOnFixed_Bottom_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandDetectionAreaOnFixed_Bottom_Slider"
+                                    Value="{Binding Bottom, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_RightHandDetectionScaleOnFixed_Description}">
+                    <StackPanel DataContext="{Binding Device.Settings.RightHandDetectionScaleOnFixed.RangedValue}">
+                        <DockPanel>
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandDetectionScaleOnFixed_Value_Slider}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandDetectionScaleOnFixed_Value_Slider"
+                                    Value="{Binding Value, Mode=TwoWay}" Minimum="4" Maximum="25"
+                                    VerticalAlignment="Center" TickFrequency="1" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_RightHandTrackingAreaOnFixed_Description}">
+                    <StackPanel DataContext="{Binding Device.Settings.RightHandTrackingAreaOnFixed}">
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Left}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandTrackingAreaOnFixed_Left_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandTrackingAreaOnFixed_Left_Slider"
+                                    Value="{Binding Left, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Right}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandTrackingAreaOnFixed_Right_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandTrackingAreaOnFixed_Right_Slider"
+                                    Value="{Binding Right, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Top}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandTrackingAreaOnFixed_Top_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandTrackingAreaOnFixed_Top_Slider" Value="{Binding Top, Mode=TwoWay}"
+                                    Minimum="0" Maximum="1" VerticalAlignment="Center" TickFrequency="0.01"
+                                    IsSnapToTickEnabled="true" TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Bottom}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandTrackingAreaOnFixed_Bottom_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandTrackingAreaOnFixed_Bottom_Slider"
+                                    Value="{Binding Bottom, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_RightHandScreenMappedAreaOnFixed_Description}">
+                    <StackPanel DataContext="{Binding Device.Settings.RightHandScreenMappedAreaOnFixed}">
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Left}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandScreenMappedAreaOnFixed_Left_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandScreenMappedAreaOnFixed_Left_Slider"
+                                    Value="{Binding Left, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Right}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandScreenMappedAreaOnFixed_Right_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandScreenMappedAreaOnFixed_Right_Slider"
+                                    Value="{Binding Right, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Top}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandScreenMappedAreaOnFixed_Top_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandScreenMappedAreaOnFixed_Top_Slider"
+                                    Value="{Binding Top, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left" VerticalContentAlignment="Center" Width="50" Margin="5,0"
+                                    Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Bottom}" />
+                            <TextBox DockPanel.Dock="Right"
+                                    Text="{Binding Value, ElementName=RightHandScreenMappedAreaOnFixed_Bottom_Slider, StringFormat={}{0:G5}}"
+                                    Width="50" IsReadOnly="True" TextAlignment="Center"
+                                    VerticalContentAlignment="Center" />
+                            <Slider x:Name="RightHandScreenMappedAreaOnFixed_Bottom_Slider"
+                                    Value="{Binding Bottom, Mode=TwoWay}" Minimum="0" Maximum="1"
+                                    VerticalAlignment="Center" TickFrequency="0.01" IsSnapToTickEnabled="true"
+                                    TickPlacement="Both" />
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </UniformGrid>
+    </StackPanel>
+</UserControl>

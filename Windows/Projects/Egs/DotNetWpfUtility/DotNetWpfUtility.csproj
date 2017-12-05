@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="ApplicationUpdateModel.cs" />
     <Compile Include="BitmapImageUtility.cs" />
+    <Compile Include="DpiExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleDelegateCommand.cs" />
     <Compile Include="Views\AspectRatioKeepingWindowResize.cs" />
