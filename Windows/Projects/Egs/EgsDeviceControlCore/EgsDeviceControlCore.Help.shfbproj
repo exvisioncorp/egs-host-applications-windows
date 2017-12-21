@@ -20,7 +20,7 @@
     <DocumentationSources>
       <DocumentationSource sourceFile="EgsDeviceControlCore.csproj" />
     </DocumentationSources>
-    <HelpFileVersion>0.9.8221</HelpFileVersion>
+    <HelpFileVersion>0.9.9621.0</HelpFileVersion>
     <MaximumGroupParts>3</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>Standard</SyntaxFilters>

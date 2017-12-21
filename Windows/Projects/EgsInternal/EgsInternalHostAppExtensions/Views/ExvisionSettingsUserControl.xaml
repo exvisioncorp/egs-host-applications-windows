@@ -1,0 +1,89 @@
+﻿<UserControl x:ClassModifier="internal" x:Class="Egs.Views.ExvisionSettingsUserControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:deviceControl="clr-namespace:Egs;assembly=EgsDeviceControlCore" xmlns:local="clr-namespace:Egs"
+        xmlns:localViews="clr-namespace:Egs.Views" xmlns:properties="clr-namespace:Egs.EgsDeviceControlCore.Properties"
+        xmlns:dotnetutilviews="clr-namespace:Egs.DotNetUtility.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" SnapsToDevicePixels="True"
+        Background="White">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/EgsHostAppCore;component/Views/CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <TabControl>
+        <TabItem Header="Fixed Detection Area">
+            <localViews:FixedRegionsSettingsUserControl />
+        </TabItem>
+
+        <TabItem Header="Settings 1">
+            <StackPanel>
+
+                <!--<GroupBox Header="Borders and Pointers Type" Visibility="Collapsed">
+                    <ListBox DataContext="{Binding CameraViewUserControlModel.ImageSetIndex}"
+                            Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding OptionalValue.Options}"
+                            SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                            ItemsPanel="{StaticResource ItemsPanelTemplateIsFiveColumnsUniformGrid}" />
+                </GroupBox>-->
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_Settings}">
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_PowerMode_Description}">
+                    <ListBox DataContext="{Binding Device.Settings.PowerMode}"
+                            Style="{StaticResource listBoxWithRadioButton}"
+                            ItemsSource="{Binding OptionalValue.Options}"
+                            SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                            ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                </GroupBox>
+
+                <GroupBox
+                        Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceSettings_FastMovingHandsGestureMode_Description}">
+                    <StackPanel>
+                        <ListBox DataContext="{Binding Device.Settings.FastMovingHandsGestureMode}"
+                                Style="{StaticResource listBoxWithRadioButton}"
+                                ItemsSource="{Binding OptionalValue.Options}"
+                                SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                                ItemsPanel="{StaticResource ItemsPanelTemplateIsWrapPanel}" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Advanced Commands">
+                    <UniformGrid HorizontalAlignment="Right" Rows="1">
+                        <Button
+                                Content="Send Many Settings Packets"
+                                Height="40" Margin="5" Padding="20,0" Background="Transparent"
+                                Command="{Binding SendManySettingsPacketsCommand}" />
+
+                        <Button
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CommonStrings_ResetDevice}"
+                                Height="40" Margin="5" Padding="20,0" Background="Transparent"
+                                Command="{Binding ResetDeviceCommand}" />
+
+                        <Button
+                                Content="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.EgsDeviceFirmwareUpdateModel_UpdateDeviceFirmware}"
+                                Height="40" Margin="5" Padding="20,0" Background="Transparent"
+                                Command="{Binding UpdateDeviceFirmwareCommand}" />
+                    </UniformGrid>
+                </GroupBox>
+
+            </StackPanel>
+        </TabItem>
+
+        <TabItem Header="CameraView Auto ON/OFF">
+            <GroupBox
+                    Header="{Binding Source={x:Static deviceControl:BindableResources.Current}, Path=Resources.CameraViewWindowStateUsersControlMethodDetail_Type_Description}">
+                <ListBox DataContext="{Binding CameraViewWindowModel.WindowStateUsersControlMethod}"
+                        Style="{StaticResource listBoxWithRadioButton}" ItemsSource="{Binding OptionalValue.Options}"
+                        SelectedIndex="{Binding OptionalValue.SelectedIndex, Mode=TwoWay}"
+                        ItemsPanel="{StaticResource ItemsPanelTemplateIsVerticalStackPanel}" />
+            </GroupBox>
+        </TabItem>
+    </TabControl>
+</UserControl>
